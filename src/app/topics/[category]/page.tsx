@@ -3,6 +3,8 @@ import BlogGrid from "@/components/BlogGrid";
 import TopicHeader from "@/components/TopicHeader";
 import { notFound } from "next/navigation";
 
+export const dynamic = "force-dynamic";
+
 const topicDescriptions: Record<string, string> = {
     "Predictie": "AI models for risk stratification and outcome forecasting.",
     "Diagnostiek": "Deep learning for medical imaging and early disease detection.",

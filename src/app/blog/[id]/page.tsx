@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Calendar, Tag } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 const categoryGradients: Record<string, string> = {
     "Predictie": "from-blue-600 to-cyan-500",
     "Diagnostiek": "from-purple-600 to-pink-500",
