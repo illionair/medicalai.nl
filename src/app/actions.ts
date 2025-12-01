@@ -1,0 +1,273 @@
+"use server";
+
+import { fetchRecentArticles } from "@/lib/pubmed";
+import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
+import { generateBlogPost } from "@/lib/ai";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import {
+    COOKIE_NAME_ADMIN_ACCESS,
+    COOKIE_NAME_SITE_ACCESS,
+    SITE_ACCESS_CODE,
+    ADMIN_PASSWORD
+} from "@/lib/auth";
+
+// --- Auth Actions ---
+
+export async function verifySiteAccess(formData: FormData) {
+    const code = formData.get("code") as string;
+
+    if (code === SITE_ACCESS_CODE) {
+        const cookieStore = await cookies();
+        cookieStore.set(COOKIE_NAME_SITE_ACCESS, "true", {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            maxAge: 60 * 60 * 24 * 30, // 30 days
+            path: "/",
+        });
+        redirect("/");
+    } else {
+        return { error: "Invalid access code" };
+    }
+}
+
+export async function verifyAdminLogin(formData: FormData) {
+    const password = formData.get("password") as string;
+
+    console.log("Login attempt:", password);
+    console.log("Expected:", ADMIN_PASSWORD);
+
+    if (password === ADMIN_PASSWORD) {
+        const cookieStore = await cookies();
+        cookieStore.set(COOKIE_NAME_ADMIN_ACCESS, "true", {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            maxAge: 60 * 60 * 24, // 1 day
+            path: "/",
+        });
+        return { success: true };
+    } else {
+        return { error: "Invalid password" };
+    }
+}
+
+// --- Blog Actions ---
+
+export async function fetchAndSaveArticles(term: string = "artificial intelligence medicine") {
+    const articles = await fetchRecentArticles(term);
+
+    let count = 0;
+    for (const article of articles) {
+        // Check if exists
+        const existing = await prisma.article.findUnique({
+            where: { pubmedId: article.pubmedId },
+        });
+
+        if (!existing) {
+            await prisma.article.create({
+                data: {
+                    pubmedId: article.pubmedId,
+                    title: article.title,
+                    abstract: article.abstract,
+                    authors: article.authors,
+                    journal: article.journal,
+                    url: article.url,
+                    status: "FETCHED",
+                },
+            });
+            count++;
+        }
+    }
+
+    revalidatePath("/admin");
+    return { success: true, count };
+}
+
+export async function getArticlesByStatus(status: string) {
+    return await prisma.article.findMany({
+        where: { status },
+        orderBy: { createdAt: "desc" },
+    });
+}
+
+export async function deleteArticle(id: string) {
+    await prisma.article.delete({ where: { id } });
+    revalidatePath("/admin");
+}
+
+export async function generateBlogs(articleIds: string[], instructions: string = "") {
+    let count = 0;
+    const logs: string[] = [];
+    logs.push(`Starting generateBlogs with IDs: ${JSON.stringify(articleIds)}`);
+    if (instructions) logs.push(`Custom Instructions: ${instructions}`);
+
+    // Debug: Check API Key presence (don't log full key)
+    logs.push(`GEMINI_API_KEY present: ${!!process.env.GEMINI_API_KEY}`);
+    logs.push(`Model used: gemini-1.5-flash`);
+
+    try {
+        const { listAvailableModels } = await import("@/lib/ai");
+        const availableModels = await listAvailableModels();
+        logs.push(`Available Models: ${JSON.stringify(availableModels)}`);
+    } catch (e) {
+        logs.push(`Failed to list models: ${e}`);
+    }
+
+    for (const id of articleIds) {
+        const article = await prisma.article.findUnique({ where: { id } });
+        if (!article) {
+            logs.push(`Article not found: ${id}`);
+            continue;
+        }
+
+        try {
+            logs.push(`Generating content for article: ${article.title}`);
+            // 1. Generate content
+            const content = await generateBlogPost({
+                title: article.title,
+                abstract: article.abstract,
+                authors: article.authors || "Unknown",
+            }, instructions);
+
+            if (!content) {
+                logs.push(`AI returned no content for article: ${id}`);
+                continue;
+            }
+            logs.push(`Generated content length: ${content.length}`);
+
+            // 2. Determine category
+            const categories = ["Predictie", "Diagnostiek", "Methodisch", "Ethiek"];
+            const category = categories[Math.floor(Math.random() * categories.length)];
+
+            // 3. Save BlogPost
+            logs.push("Creating BlogPost in DB...");
+            const blog = await prisma.blogPost.create({
+                data: {
+                    title: article.title,
+                    content: content,
+                    summary: article.abstract.substring(0, 200) + "...",
+                    category: "Predictie",
+                    published: false,
+                    articleId: article.id,
+                },
+            });
+            logs.push(`BlogPost created with ID: ${blog.id}`);
+
+            // 4. Update Article status
+            await prisma.article.update({
+                where: { id },
+                data: { status: "SELECTED" },
+            });
+
+            count++;
+        } catch (error: any) {
+            logs.push(`Failed to generate blog for article ${id}: ${error.message}`);
+        }
+    }
+
+    revalidatePath("/admin");
+    return { success: true, count, logs };
+}
+
+export async function getDraftBlogs() {
+    return await prisma.blogPost.findMany({
+        where: { published: false },
+        orderBy: { createdAt: "desc" },
+    });
+}
+
+export async function getPublishedBlogsAdmin() {
+    return await prisma.blogPost.findMany({
+        where: { published: true },
+        orderBy: { createdAt: "desc" },
+    });
+}
+
+export async function getBlogPost(id: string) {
+    return await prisma.blogPost.findUnique({ where: { id } });
+}
+
+export async function updateBlogPost(id: string, data: { title: string; content: string; category: string; scheduledFor?: string | null }) {
+    await prisma.blogPost.update({
+        where: { id },
+        data: {
+            title: data.title,
+            content: data.content,
+            category: data.category,
+            scheduledFor: data.scheduledFor ? new Date(data.scheduledFor) : null,
+        },
+    });
+    revalidatePath(`/admin/editor/${id}`);
+}
+
+export async function publishBlogPost(id: string) {
+    const blog = await prisma.blogPost.update({
+        where: { id },
+        data: { published: true },
+    });
+
+    await prisma.article.update({
+        where: { id: blog.articleId },
+        data: { status: "PUBLISHED" },
+    });
+
+    revalidatePath("/admin");
+    revalidatePath("/");
+}
+
+export async function createManualArticle(data: { title: string; abstract: string; authors: string; url?: string }) {
+    const id = Math.random().toString(36).substring(7); // Temporary ID generation
+
+    await prisma.article.create({
+        data: {
+            pubmedId: `manual-${id}`,
+            title: data.title,
+            abstract: data.abstract,
+            authors: data.authors,
+            journal: "Manual Entry",
+            url: data.url || "",
+            status: "FETCHED",
+        },
+    });
+
+    revalidatePath("/admin");
+    return { success: true };
+}
+
+export async function createEmptyBlogPost() {
+    const blog = await prisma.blogPost.create({
+        data: {
+            title: "Untitled Post",
+            content: "",
+            category: "Predictie",
+            published: false,
+            articleId: "manual-" + Date.now(), // Unique dummy ID
+        },
+    });
+    revalidatePath("/admin");
+    return blog.id;
+}
+
+export async function sendContactEmail(formData: FormData) {
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const subject = formData.get("subject") as string;
+    const message = formData.get("message") as string;
+
+    // In a real app, use nodemailer or Resend/SendGrid.
+    // For now, we log it. The user requested "without seeing my email", 
+    // which means the form shouldn't have mailto:s.s.mahes@outlook.com in HTML.
+    // This server action keeps the destination email hidden on the server.
+
+    console.log(`--- NEW CONTACT MESSAGE ---`);
+    console.log(`From: ${name} (${email})`);
+    console.log(`Subject: ${subject}`);
+    console.log(`Message: ${message}`);
+    console.log(`---------------------------`);
+
+    // Simulate delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    return { success: true };
+}

@@ -1,0 +1,165 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Vanilla CSS Reset */
+:root {
+  /* Apple-like Color Palette */
+  --background: #ffffff;
+  /* Pure White */
+  /* Slightly off-white for warmth/premium feel */
+  --foreground: #1d1d1f;
+
+  --card-bg: rgba(255, 255, 255, 0.6);
+  /* More transparent for glass feel */
+  --card-border: rgba(0, 0, 0, 0.05);
+
+  --accent: #0071e3;
+  /* Apple Blue */
+  --accent-hover: #0077ed;
+
+  --gray-50: #fbfbfd;
+  --gray-100: #f5f5f7;
+  --gray-200: #e8e8ed;
+  --gray-300: #86868b;
+  /* Secondary text */
+  --gray-400: #6e6e73;
+  --gray-500: #1d1d1f;
+
+  /* Enhanced Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  /* More translucent */
+  --glass-border: rgba(255, 255, 255, 0.8);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  /* Deeper shadow */
+  --blur: 40px;
+  /* Stronger blur */
+
+  /* Spacing & Radius */
+  --radius-lg: 24px;
+  /* Larger radius for modern feel */
+  --radius-md: 16px;
+  --radius-sm: 8px;
+
+  --font-sans: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #000000;
+    --foreground: #f5f5f7;
+
+    --card-bg: #1c1c1e;
+    --card-border: rgba(255, 255, 255, 0.1);
+
+    --gray-50: #1c1c1e;
+    --gray-100: #2c2c2e;
+    --gray-200: #3a3a3c;
+    --gray-300: #86868b;
+    --gray-400: #aeaeb2;
+    --gray-500: #d1d1d6;
+
+    --glass-bg: rgba(28, 28, 30, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.1);
+  }
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-family: var(--font-sans);
+  background-color: #ffffff !important;
+  /* Force pure white */
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Utilities */
+.glass {
+  background: rgba(255, 255, 255, 0.7) !important;
+  /* Visible semi-transparent white */
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+  /* Subtle shadow for depth */
+}
+
+.container {
+  max-width: 1080px;
+  /* Tighter container for reading focus */
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section-padding {
+  padding: 120px 0;
+  /* More breathing room */
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: #000000 !important;
+  /* Force pure black */
+}
+
+h1 {
+  font-size: 56px;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 40px;
+}
+
+h3 {
+  font-size: 24px;
+}
+
+p {
+  line-height: 1.7;
+  /* Better readability */
+  color: var(--gray-300);
+  font-size: 17px;
+  /* Apple standard body size */
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gray-200);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-300);
+}

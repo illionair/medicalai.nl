@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Article {
+  id          String   @id @default(cuid())
+  pubmedId    String   @unique
+  title       String
+  abstract    String
+  authors     String?
+  journal     String?
+  pubDate     DateTime?
+  url         String?
+  status      String   @default("FETCHED") // FETCHED, SELECTED, REJECTED, PUBLISHED
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  blogPost    BlogPost?
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  content     String   // Markdown content
+  summary     String?
+  category    String   // Predictie, Diagnostiek, Methodisch, Ethiek
+  isGuideline Boolean  @default(false)
+  imageUrl    String?
+  published   Boolean  @default(false)
+  scheduledFor DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  articleId   String   @unique
+  article     Article  @relation(fields: [articleId], references: [id])
+}
