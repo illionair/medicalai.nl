@@ -188,13 +188,14 @@ export async function getBlogPost(id: string) {
     return await prisma.blogPost.findUnique({ where: { id } });
 }
 
-export async function updateBlogPost(id: string, data: { title: string; content: string; category: string; scheduledFor?: string | null }) {
+export async function updateBlogPost(id: string, data: { title: string; content: string; category: string; isGuideline?: boolean; scheduledFor?: string | null }) {
     await prisma.blogPost.update({
         where: { id },
         data: {
             title: data.title,
             content: data.content,
             category: data.category,
+            isGuideline: data.isGuideline,
             scheduledFor: data.scheduledFor ? new Date(data.scheduledFor) : null,
         },
     });

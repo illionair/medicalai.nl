@@ -23,7 +23,7 @@ export default async function GuidelinesPage() {
             </div>
 
             {guidelines.length > 0 ? (
-                <BlogGrid initialPosts={guidelines} />
+                <BlogGrid blogs={guidelines} />
             ) : (
                 <div className="text-center py-20 bg-gray-50 rounded-3xl border border-gray-100">
                     <p className="text-gray-500">No guidelines published yet.</p>
