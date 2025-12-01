@@ -33,14 +33,30 @@ export async function fetchRecentArticles(term: string = 'artificial intelligenc
 
         const pubmedArticles = result.PubmedArticleSet.PubmedArticle;
 
+        // Helper to extract text recursively from XML objects
+        const extractText = (obj: any): string => {
+            if (!obj) return '';
+            if (typeof obj === 'string') return obj;
+            if (Array.isArray(obj)) return obj.map(extractText).join('');
+            if (typeof obj === 'object') {
+                if (obj._) return obj._; // Text content often in "_" property
+                // If it has children like "sup", "i", etc., we need to join them
+                return Object.values(obj).map(extractText).join('');
+            }
+            return String(obj);
+        };
+
         for (const article of pubmedArticles) {
             try {
                 const medline = article.MedlineCitation[0];
                 const articleData = medline.Article[0];
 
                 const pmid = medline.PMID[0]._;
-                const title = articleData.ArticleTitle[0];
-                const abstract = articleData.Abstract ? articleData.Abstract[0].AbstractText[0] : 'No abstract available.';
+                const rawTitle = articleData.ArticleTitle[0];
+                const title = extractText(rawTitle);
+
+                const rawAbstract = articleData.Abstract ? articleData.Abstract[0].AbstractText[0] : 'No abstract available.';
+                const abstract = extractText(rawAbstract);
 
                 // Authors
                 let authorsStr = 'Unknown';
