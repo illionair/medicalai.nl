@@ -2,13 +2,19 @@
 
 import { motion } from "framer-motion";
 
-import InteractiveGrid from "./InteractiveGrid";
-
 export default function Hero() {
     return (
-        <section className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden">
-            {/* Interactive Background */}
-            <InteractiveGrid />
+        <section className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden bg-white">
+            {/* Background Image */}
+            <div className="absolute inset-0 z-0">
+                <img
+                    src="/images/hand-robot.png"
+                    alt="Medical AI Future"
+                    className="w-full h-full object-cover object-center"
+                />
+                {/* Overlay for readability */}
+                <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-white/40 to-white/90"></div>
+            </div>
 
             {/* Content Overlay */}
             <div className="relative z-10 container section-padding flex flex-col items-center">
@@ -17,7 +23,7 @@ export default function Hero() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                 >
-                    <span className="inline-block py-1 px-3 rounded-full bg-white/10 text-blue-300 text-xs font-semibold tracking-wide uppercase mb-6 border border-white/20 backdrop-blur-md">
+                    <span className="inline-block py-1 px-3 rounded-full bg-blue-50/80 text-blue-600 text-xs font-bold tracking-wide uppercase mb-6 border border-blue-100 backdrop-blur-sm shadow-sm">
                         Medical Intelligence
                     </span>
                 </motion.div>
@@ -26,21 +32,20 @@ export default function Hero() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                    className="mb-6 max-w-4xl mx-auto text-white font-bold tracking-tight"
-                    style={{ fontSize: "clamp(48px, 6vw, 80px)", letterSpacing: "-0.03em", textShadow: "0 0 40px rgba(59, 130, 246, 0.5)" }}
+                    className="mb-6 max-w-4xl mx-auto text-slate-900 font-bold tracking-tight"
+                    style={{ fontSize: "clamp(48px, 6vw, 80px)", letterSpacing: "-0.03em" }}
                 >
                     The Future of <br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Medical AI</span>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Medical AI</span>
                 </motion.h1>
 
                 <motion.p
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-xl max-w-2xl mx-auto mb-10 text-gray-300"
+                    className="text-xl max-w-2xl mx-auto mb-10 text-slate-600 font-medium"
                 >
-                    Curated research, ethical analysis, and clinical applications. <br className="hidden md:block" />
-                    Bridging the gap between algorithms and patient care.
+                    Responsible AI for Better Care.
                 </motion.p>
 
                 <motion.div
@@ -51,19 +56,19 @@ export default function Hero() {
                 >
                     <a
                         href="#latest"
-                        className="px-8 py-4 rounded-full bg-white text-black font-bold hover:scale-105 transition-transform active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                        className="px-8 py-4 rounded-full bg-blue-600 text-white font-bold hover:bg-blue-700 hover:scale-105 transition-all active:scale-95 shadow-lg shadow-blue-600/20"
                     >
                         Read Latest
                     </a>
                     <a
                         href="/about"
-                        className="px-8 py-4 rounded-full bg-white/10 text-white font-medium hover:bg-white/20 transition-colors backdrop-blur-md border border-white/10"
+                        className="px-8 py-4 rounded-full bg-white/60 text-slate-700 font-medium hover:bg-white/80 transition-colors backdrop-blur-md border border-white/40 shadow-sm"
                     >
                         About Us
                     </a>
                     <a
                         href="/contact"
-                        className="px-8 py-4 rounded-full bg-white/10 text-white font-medium hover:bg-white/20 transition-colors backdrop-blur-md border border-white/10"
+                        className="px-8 py-4 rounded-full bg-white/60 text-slate-700 font-medium hover:bg-white/80 transition-colors backdrop-blur-md border border-white/40 shadow-sm"
                     >
                         Contact
                     </a>

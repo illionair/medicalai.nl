@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 
 const authors = [
     {
-        name: "Dr. S. Mahes",
+        name: "Drs. S. Mahes",
         role: "Editor-in-Chief",
-        bio: "Medical doctor and AI researcher with a passion for bridging technology and clinical practice.",
+        bio: "Medical doctor and AI researcher(PhD) with a passion for bridging technology and clinical practice.",
         initials: "SM"
     },
     {
