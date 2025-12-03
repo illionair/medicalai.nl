@@ -22,7 +22,7 @@ import {
     Link as LinkIcon, Image as ImageIcon, Table as TableIcon,
     Undo, Redo, Minus
 } from "lucide-react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 interface TiptapEditorProps {
     value: string;
@@ -83,15 +83,30 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
         }
     }, [value, editor]);
 
+    const fileInputRef = React.useRef<HTMLInputElement>(null);
+
     if (!editor) {
         return null;
     }
 
     const addImage = () => {
-        const url = window.prompt('URL');
-        if (url) {
-            editor.chain().focus().setImage({ src: url }).run();
+        fileInputRef.current?.click();
+    };
+
+    const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const result = e.target?.result as string;
+                if (result) {
+                    editor.chain().focus().setImage({ src: result }).run();
+                }
+            };
+            reader.readAsDataURL(file);
         }
+        // Reset input so same file can be selected again
+        event.target.value = '';
     };
 
     const setLink = () => {
@@ -107,6 +122,13 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
 
     return (
         <div className="border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm flex flex-col h-full">
+            <input
+                type="file"
+                ref={fileInputRef}
+                className="hidden"
+                accept="image/*"
+                onChange={handleImageUpload}
+            />
             {/* Toolbar */}
             <div className="bg-gray-50/80 border-b border-gray-200 p-2 flex flex-wrap gap-1 items-center sticky top-0 z-10 backdrop-blur-sm">
 

@@ -28,7 +28,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
     }
 
     return (
-        <article className="min-h-screen bg-white pb-20">
+        <article className="min-h-screen bg-white pb-64">
             {/* Header Section */}
             <div className="bg-slate-50 border-b border-slate-200 pt-32 pb-16">
                 <div className="container mx-auto px-4 max-w-6xl">
@@ -145,7 +145,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                         {/* Disclaimer */}
                         <div className="mt-8 pt-8 border-t border-slate-100 text-xs text-slate-400 italic">
                             <p>
-                                <strong>Disclaimer:</strong> De inhoud van dit artikel is met zorg samengesteld, deels met behulp van kunstmatige intelligentie, en gecontroleerd door medische professionals. Ondanks deze zorgvuldigheid kunnen er onjuistheden in de tekst sluipen. De informatie op deze website is uitsluitend bedoeld voor informatieve doeleinden en vervangt geen professioneel medisch advies, diagnose of behandeling. Raadpleeg voor medische beslissingen altijd de originele wetenschappelijke bronnen en/of een gekwalificeerde zorgverlener. Medical AI is niet aansprakelijk voor eventuele schade die voortvloeit uit het gebruik van de informatie op deze website.
+                                <strong>Disclaimer:</strong> Deze content is met zorg samengesteld (deels via AI) en gecontroleerd door artsen. Het is geen vervanging voor medisch advies. Raadpleeg altijd originele bronnen/richtlijnen. Medical AI is niet aansprakelijk voor onjuistheden.
                             </p>
                         </div>
                     </div>
