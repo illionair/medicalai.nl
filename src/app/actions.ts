@@ -184,8 +184,19 @@ export async function getPublishedBlogsAdmin() {
     });
 }
 
+export async function getTags() {
+    return await prisma.tag.findMany({ orderBy: { name: "asc" } });
+}
+
+export async function createTag(name: string) {
+    return await prisma.tag.create({ data: { name } });
+}
+
 export async function getBlogPost(id: string) {
-    return await prisma.blogPost.findUnique({ where: { id } });
+    return await prisma.blogPost.findUnique({
+        where: { id },
+        include: { tags: true }
+    });
 }
 
 export async function updateBlogPost(id: string, data: {
@@ -207,6 +218,7 @@ export async function updateBlogPost(id: string, data: {
     vendorUrl?: string;
     fdaStatus?: string;
     fdaNumber?: string;
+    tags?: string[]; // Array of Tag IDs
 }) {
     await prisma.blogPost.update({
         where: { id },
@@ -229,6 +241,9 @@ export async function updateBlogPost(id: string, data: {
             vendorUrl: data.vendorUrl,
             fdaStatus: data.fdaStatus,
             fdaNumber: data.fdaNumber,
+            tags: data.tags ? {
+                set: data.tags.map(tagId => ({ id: tagId }))
+            } : undefined
         },
     });
     revalidatePath(`/admin/editor/${id}`);

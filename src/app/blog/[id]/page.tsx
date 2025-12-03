@@ -48,6 +48,21 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                         {blog.modelType && <TrustBadge type="model" label="Model" value={blog.modelType} />}
                     </div>
 
+                    {/* Tags */}
+                    {blog.tags && blog.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-2 mb-6">
+                            {blog.tags.map((tag: any) => (
+                                <Link
+                                    key={tag.id}
+                                    href={`/blog?tag=${encodeURIComponent(tag.name)}`}
+                                    className="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm rounded-full transition-colors"
+                                >
+                                    #{tag.name}
+                                </Link>
+                            ))}
+                        </div>
+                    )}
+
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-brand-dark mb-6">
                         {blog.title}
                     </h1>

@@ -2,11 +2,12 @@
 
 import { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
-import { updateBlogPost, publishBlogPost, getBlogPost } from "@/app/actions";
+import { updateBlogPost, publishBlogPost, getBlogPost, getTags, createTag } from "@/app/actions";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import TiptapEditor from "@/components/TiptapEditor";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import MultiSelect from "@/components/MultiSelect";
 
 export default function EditorPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = use(params);
@@ -35,11 +36,19 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
     const [fdaStatus, setFdaStatus] = useState("");
     const [fdaNumber, setFdaNumber] = useState("");
 
+    // Tags
+    const [tags, setTags] = useState<string[]>([]);
+    const [availableTags, setAvailableTags] = useState<{ id: string; name: string }[]>([]);
+
     const [showAdvanced, setShowAdvanced] = useState(false);
 
     useEffect(() => {
         async function load() {
-            const data = await getBlogPost(id);
+            const [data, allTags] = await Promise.all([
+                getBlogPost(id),
+                getTags()
+            ]);
+
             if (data) {
                 setBlog(data);
                 setContent(data.content);
@@ -66,6 +75,14 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
                 setVendorUrl(data.vendorUrl || "");
                 setFdaStatus(data.fdaStatus || "");
                 setFdaNumber(data.fdaNumber || "");
+
+                // Load tags
+                if (data.tags) {
+                    setTags(data.tags.map((t: any) => t.id));
+                }
+            }
+            if (allTags) {
+                setAvailableTags(allTags);
             }
             setLoading(false);
         }
@@ -76,7 +93,8 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
         setSaving(true);
         await updateBlogPost(id, {
             title, content, category, isGuideline, scheduledFor: scheduledFor || null,
-            specialism, ceStatus, cost, modelType, doi, citation, developer, privacyType, integration, demoUrl, vendorUrl, fdaStatus, fdaNumber
+            specialism, ceStatus, cost, modelType, doi, citation, developer, privacyType, integration, demoUrl, vendorUrl, fdaStatus, fdaNumber,
+            tags
         });
         setSaving(false);
     }
@@ -85,10 +103,20 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
         setSaving(true);
         await updateBlogPost(id, {
             title, content, category, isGuideline, scheduledFor: scheduledFor || null,
-            specialism, ceStatus, cost, modelType, doi, citation, developer, privacyType, integration, demoUrl, vendorUrl, fdaStatus, fdaNumber
+            specialism, ceStatus, cost, modelType, doi, citation, developer, privacyType, integration, demoUrl, vendorUrl, fdaStatus, fdaNumber,
+            tags
         });
         await publishBlogPost(id);
         router.push("/admin");
+    }
+
+    async function handleCreateTag(name: string) {
+        const newTag = await createTag(name);
+        if (newTag) {
+            setAvailableTags(prev => [...prev, newTag]);
+            return newTag;
+        }
+        return null;
     }
 
     if (loading) return <div className="p-8 text-center">Loading editor...</div>;
@@ -152,7 +180,7 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
                             <div className="space-y-4">
                                 <h3 className="font-bold text-sm border-b pb-2">Taxonomy</h3>
                                 <div>
-                                    <label className="block text-xs font-medium text-gray-500 mb-1">Category</label>
+                                    <label className="block text-xs font-medium text-gray-500 mb-1">Main Category</label>
                                     <select value={category} onChange={(e) => setCategory(e.target.value)} className="w-full p-2 border rounded-lg text-sm text-black">
                                         <option value="Predictie">Predictie</option>
                                         <option value="Diagnostiek">Diagnostiek</option>
@@ -164,7 +192,17 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="block text-xs font-medium text-gray-500 mb-1">Specialism (Comma separated)</label>
+                                    <label className="block text-xs font-medium text-gray-500 mb-1">Tags (Multiple Categories)</label>
+                                    <MultiSelect
+                                        options={availableTags}
+                                        selected={tags}
+                                        onChange={setTags}
+                                        onCreate={handleCreateTag}
+                                        placeholder="Select or create tags..."
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-medium text-gray-500 mb-1">Specialism (Legacy)</label>
                                     <input type="text" value={specialism} onChange={(e) => setSpecialism(e.target.value)} className="w-full p-2 border rounded-lg text-sm text-black" placeholder="Radiologie, Cardiologie..." />
                                 </div>
                                 <div>
