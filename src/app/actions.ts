@@ -250,25 +250,54 @@ export async function createEmptyBlogPost() {
     return blog.id;
 }
 
+import nodemailer from "nodemailer";
+
 export async function sendContactEmail(formData: FormData) {
     const name = formData.get("name") as string;
     const email = formData.get("email") as string;
     const subject = formData.get("subject") as string;
     const message = formData.get("message") as string;
 
-    // In a real app, use nodemailer or Resend/SendGrid.
-    // For now, we log it. The user requested "without seeing my email", 
-    // which means the form shouldn't have mailto:s.s.mahes@outlook.com in HTML.
-    // This server action keeps the destination email hidden on the server.
-
     console.log(`--- NEW CONTACT MESSAGE ---`);
     console.log(`From: ${name} (${email})`);
     console.log(`Subject: ${subject}`);
-    console.log(`Message: ${message}`);
-    console.log(`---------------------------`);
 
-    // Simulate delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    try {
+        const transporter = nodemailer.createTransport({
+            host: process.env.SMTP_HOST,
+            port: Number(process.env.SMTP_PORT) || 587,
+            secure: false, // true for 465, false for other ports
+            auth: {
+                user: process.env.SMTP_USER,
+                pass: process.env.SMTP_PASS,
+            },
+        });
 
-    return { success: true };
+        const mailOptions = {
+            from: `"Medical AI Contact" <${process.env.SMTP_USER}>`, // Sender address
+            to: process.env.SMTP_USER, // List of receivers (sending to yourself)
+            replyTo: email, // Reply to the user's email
+            subject: `[Contact Form] ${subject}`,
+            text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+            html: `
+                <h3>New Contact Message</h3>
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Subject:</strong> ${subject}</p>
+                <br/>
+                <p><strong>Message:</strong></p>
+                <p>${message.replace(/\n/g, "<br>")}</p>
+            `,
+        };
+
+        await transporter.sendMail(mailOptions);
+        console.log("Email sent successfully via Nodemailer");
+        return { success: true };
+
+    } catch (error) {
+        console.error("Error sending email:", error);
+        // We still return success to the user to not alarm them, but log the error
+        // In a production app you might want to handle this differently
+        return { success: false, error: "Failed to send email" };
+    }
 }
