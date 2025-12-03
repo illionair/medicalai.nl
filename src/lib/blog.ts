@@ -29,6 +29,29 @@ export async function getPublishedBlogsByCategory(category: string) {
     });
 }
 
+export async function getBlogsForTopic(topic: string) {
+    return await prisma.blogPost.findMany({
+        where: {
+            published: true,
+            OR: [
+                { category: { equals: topic, mode: 'insensitive' } },
+                { specialism: { equals: topic, mode: 'insensitive' } },
+                { tags: { some: { name: { equals: topic, mode: 'insensitive' } } } }
+            ],
+            AND: [
+                {
+                    OR: [
+                        { scheduledFor: null },
+                        { scheduledFor: { lte: new Date() } }
+                    ]
+                }
+            ]
+        },
+        orderBy: { createdAt: "desc" },
+        include: { tags: true }
+    });
+}
+
 export async function getBlogById(id: string) {
     return await prisma.blogPost.findUnique({
         where: { id },

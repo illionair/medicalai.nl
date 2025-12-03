@@ -3,7 +3,7 @@ import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Calendar } from "lucide-react";
+import { ArrowLeft, Calendar, User } from "lucide-react";
 import TrustBadge from "@/components/TrustBadge";
 import BlogSidebar from "@/components/BlogSidebar";
 import EvidenceBox from "@/components/EvidenceBox";
@@ -40,27 +40,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                         Terug naar overzicht
                     </Link>
 
-
-
-                    {/* Tags */}
-                    {blog.tags && blog.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-2 mb-6">
-                            {blog.tags.map((tag: any) => (
-                                <Link
-                                    key={tag.id}
-                                    href={`/blog?tag=${encodeURIComponent(tag.name)}`}
-                                    className="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm rounded-full transition-colors"
-                                >
-                                    #{tag.name}
-                                </Link>
-                            ))}
-                        </div>
-                    )}
-
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-brand-dark mb-6">
-                        {blog.title}
-                    </h1>
-
                     {/* Subtitle/Summary if available, or just meta */}
                     <div className="flex items-center gap-4 text-slate-500 text-sm font-medium">
                         <span className="flex items-center gap-2">
@@ -73,12 +52,17 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                         </span>
                         <span>•</span>
                         <span>{blog.category}</span>
+                        <span>•</span>
+                        <span className="flex items-center gap-2">
+                            <User size={16} />
+                            {blog.article?.authors || "Drs. S. S. Mahes"}
+                        </span>
                     </div>
-                </div>
-            </div>
+                </div >
+            </div >
 
             {/* Main Content Layout */}
-            <div className="container mx-auto px-4 max-w-6xl py-12">
+            < div className="container mx-auto px-4 max-w-6xl py-12" >
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
                     {/* Content Column */}
                     <div className="lg:col-span-8">
@@ -99,8 +83,33 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                             </ReactMarkdown>
                         </div>
 
+                        {/* Author & CTA Section */}
+                        <div className="mt-12 p-6 bg-brand-secondary/5 rounded-2xl border border-brand-secondary/10">
+                            <div className="flex items-start gap-4">
+                                <div className="p-3 bg-brand-secondary/10 rounded-full text-brand-secondary">
+                                    <User size={24} />
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-bold text-brand-dark mb-1">
+                                        Auteur: {blog.article?.authors || "Drs. S. S. Mahes"}
+                                    </h3>
+                                    <p className="text-slate-600 text-sm mb-3">
+                                        Medical AI is een platform voor en door medische professionals.
+                                    </p>
+                                    <div className="text-sm font-medium text-brand-secondary">
+                                        <p className="italic">
+                                            "We zijn altijd op zoek naar meer auteurs. Wil jij jouw kennis delen met de community? Neem dan contact met ons op!"
+                                        </p>
+                                        <Link href="/contact" className="inline-block mt-2 hover:underline">
+                                            Word auteur &rarr;
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         {/* Community Section */}
-                        <div className="mt-16 p-8 bg-brand-dark/5 rounded-2xl border border-brand-dark/10 text-center">
+                        <div className="mt-8 p-8 bg-brand-dark/5 rounded-2xl border border-brand-dark/10 text-center">
                             <h3 className="text-xl font-bold text-brand-dark mb-2">Heb jij ervaring met deze tool?</h3>
                             <p className="text-slate-600 mb-6">Deel jouw inzichten met collega's en help de community.</p>
                             <a
@@ -154,7 +163,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                         />
                     </div>
                 </div>
-            </div>
-        </article>
+            </div >
+        </article >
     );
 }
