@@ -26,7 +26,7 @@ export default function BlogSidebar({ developer, demoUrl, vendorUrl, privacy, pr
                     Details
                 </h3>
                 <div className="flex flex-col gap-3">
-                    {specialism && <TrustBadge type="specialism" label="Specialisme" value={specialism} />}
+                    {specialism && <TrustBadge type="specialism" label="Specialisme" value={specialism} href={`/topics/${specialism}`} />}
                     {ceStatus && <TrustBadge type="status" label="CE Status" value={ceStatus} />}
                     {cost && <TrustBadge type="cost" label="Kosten" value={cost} />}
                     {modelType && <TrustBadge type="model" label="Model" value={modelType} />}

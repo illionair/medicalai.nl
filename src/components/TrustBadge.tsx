@@ -1,12 +1,15 @@
 import { Shield, CreditCard, Stethoscope, Activity } from "lucide-react";
 
+import Link from "next/link";
+
 interface TrustBadgeProps {
     type: "specialism" | "status" | "cost" | "model";
     label: string;
     value: string;
+    href?: string;
 }
 
-export default function TrustBadge({ type, label, value }: TrustBadgeProps) {
+export default function TrustBadge({ type, label, value, href }: TrustBadgeProps) {
     let icon;
     let colorClass = "bg-gray-100 text-gray-700 border-gray-200";
 
@@ -35,11 +38,21 @@ export default function TrustBadge({ type, label, value }: TrustBadgeProps) {
             break;
     }
 
-    return (
-        <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium ${colorClass}`}>
+    const badge = (
+        <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium ${colorClass} ${href ? 'hover:opacity-80 transition-opacity cursor-pointer' : ''}`}>
             {icon}
             <span className="opacity-75">{label}:</span>
             <span className="font-bold">{value}</span>
         </div>
     );
+
+    if (href) {
+        return (
+            <Link href={href}>
+                {badge}
+            </Link>
+        );
+    }
+
+    return badge;
 }
