@@ -188,7 +188,26 @@ export async function getBlogPost(id: string) {
     return await prisma.blogPost.findUnique({ where: { id } });
 }
 
-export async function updateBlogPost(id: string, data: { title: string; content: string; category: string; isGuideline?: boolean; scheduledFor?: string | null }) {
+export async function updateBlogPost(id: string, data: {
+    title: string;
+    content: string;
+    category: string;
+    isGuideline?: boolean;
+    scheduledFor?: string | null;
+    specialism?: string;
+    ceStatus?: string;
+    cost?: string;
+    modelType?: string;
+    doi?: string;
+    citation?: string;
+    developer?: string;
+    privacyType?: string;
+    integration?: string;
+    demoUrl?: string;
+    vendorUrl?: string;
+    fdaStatus?: string;
+    fdaNumber?: string;
+}) {
     await prisma.blogPost.update({
         where: { id },
         data: {
@@ -197,6 +216,19 @@ export async function updateBlogPost(id: string, data: { title: string; content:
             category: data.category,
             isGuideline: data.isGuideline,
             scheduledFor: data.scheduledFor ? new Date(data.scheduledFor) : null,
+            specialism: data.specialism,
+            ceStatus: data.ceStatus,
+            cost: data.cost,
+            modelType: data.modelType,
+            doi: data.doi,
+            citation: data.citation,
+            developer: data.developer,
+            privacyType: data.privacyType,
+            integration: data.integration,
+            demoUrl: data.demoUrl,
+            vendorUrl: data.vendorUrl,
+            fdaStatus: data.fdaStatus,
+            fdaNumber: data.fdaNumber,
         },
     });
     revalidatePath(`/admin/editor/${id}`);

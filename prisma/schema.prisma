@@ -43,14 +43,18 @@ model BlogPost {
   article     Article  @relation(fields: [articleId], references: [id])
 
   // Blog 2.0 Fields
-  specialism  String?
+  specialism  String?  // Comma-separated for multiple values
   ceStatus    String?
   cost        String?
   modelType   String?
   doi         String?
   citation    String?
   developer   String?
-  privacy     String?
+  privacy     String?  // Deprecated in favor of privacyType? Or keep as custom text?
+  privacyType String?  // Cloud, On-Premise, Hybrid
   integration String?
   demoUrl     String?
+  vendorUrl   String?
+  fdaStatus   String?
+  fdaNumber   String?
 }

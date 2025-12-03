@@ -42,7 +42,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                     {/* Trust Badges */}
                     <div className="flex flex-wrap gap-3 mb-6">
                         {blog.specialism && <TrustBadge type="specialism" label="Specialisme" value={blog.specialism} />}
-                        {blog.ceStatus && <TrustBadge type="status" label="Status" value={blog.ceStatus} />}
+                        {blog.ceStatus && <TrustBadge type="status" label="CE Status" value={blog.ceStatus} />}
+                        {blog.fdaStatus && <TrustBadge type="status" label="FDA Status" value={blog.fdaStatus} />}
                         {blog.cost && <TrustBadge type="cost" label="Kosten" value={blog.cost} />}
                         {blog.modelType && <TrustBadge type="model" label="Model" value={blog.modelType} />}
                     </div>
@@ -89,11 +90,35 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                             </ReactMarkdown>
                         </div>
 
+                        {/* Community Section */}
+                        <div className="mt-16 p-8 bg-brand-dark/5 rounded-2xl border border-brand-dark/10 text-center">
+                            <h3 className="text-xl font-bold text-brand-dark mb-2">Heb jij ervaring met deze tool?</h3>
+                            <p className="text-slate-600 mb-6">Deel jouw inzichten met collega's en help de community.</p>
+                            <a
+                                href="https://www.linkedin.com/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 px-6 py-3 bg-[#0077b5] text-white rounded-xl font-bold hover:bg-[#006396] transition-colors"
+                            >
+                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" /></svg>
+                                Deel je ervaring op LinkedIn
+                            </a>
+                        </div>
+
                         {/* Citation Tool & Footer */}
                         <div className="mt-16 pt-8 border-t border-slate-100">
                             <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4">Referentie</h4>
-                            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-sm text-slate-600 font-mono break-all">
-                                {blog.citation || "Citation not available."}
+                            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-sm text-slate-600 font-mono break-all flex items-center justify-between gap-4">
+                                <span>{blog.citation || "Citation not available."}</span>
+                                <button
+                                    className="text-brand-secondary hover:text-brand-primary font-medium text-xs uppercase tracking-wider"
+                                    onClick={() => {
+                                        // Simple copy to clipboard (client-side only, might need 'use client' or separate component)
+                                        // For server component, we'll just leave it as text for now or make this a client component later.
+                                    }}
+                                >
+                                    Kopieer
+                                </button>
                             </div>
                             {blog.doi && (
                                 <a href={blog.doi} target="_blank" rel="noopener noreferrer" className="inline-block mt-4 text-brand-secondary hover:underline text-sm font-medium">
@@ -108,8 +133,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                         <BlogSidebar
                             developer={blog.developer}
                             demoUrl={blog.demoUrl}
+                            vendorUrl={blog.vendorUrl}
                             privacy={blog.privacy}
+                            privacyType={blog.privacyType}
                             integration={blog.integration}
+                            fdaStatus={blog.fdaStatus}
+                            fdaNumber={blog.fdaNumber}
+                            ceStatus={blog.ceStatus}
                         />
                     </div>
                 </div>

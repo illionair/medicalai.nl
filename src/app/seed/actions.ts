@@ -81,11 +81,14 @@ Hier ligt het grootste risico voor ziekenhuizen. Het is een Amerikaanse dienst d
             cost: "Gratis (Freemium)",
             modelType: "Generative AI (RAG)",
             developer: "OpenEvidence (USA)",
-            privacy: "⚠️ US Cloud",
+            privacyType: "Cloud",
             integration: "Web-based",
             demoUrl: "https://www.openevidence.com",
+            vendorUrl: "https://www.openevidence.com",
             citation: "Medical AI. (2025). OpenEvidence: Generatieve AI met bronvermelding.",
-            doi: "https://www.openevidence.com"
+            doi: "https://www.openevidence.com",
+            fdaStatus: "None",
+            fdaNumber: ""
         }
     });
 }
