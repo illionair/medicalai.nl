@@ -8,7 +8,7 @@ export default function Footer() {
     const { t } = useLanguage();
 
     return (
-        <footer className="bg-slate-900 text-slate-300 py-12 border-t border-slate-800">
+        <footer className="bg-brand-dark text-brand-white/80 py-12 border-t border-brand-primary/30">
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                     {/* Brand & Summary */}
@@ -50,7 +50,7 @@ export default function Footer() {
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 text-sm hover:text-white transition-colors group"
                         >
-                            <span className="p-2 rounded-full bg-slate-800 group-hover:bg-blue-600 transition-colors">
+                            <span className="p-2 rounded-full bg-brand-primary group-hover:bg-brand-secondary transition-colors">
                                 <Linkedin size={18} />
                             </span>
                             LinkedIn
@@ -58,11 +58,11 @@ export default function Footer() {
                     </div>
                 </div>
 
-                <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500">
+                <div className="border-t border-brand-primary/30 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-brand-white/60">
                     <p>{t.footer.legal}</p>
                     <div className="flex gap-4 mt-4 md:mt-0">
-                        <Link href="/privacy" className="hover:text-slate-300 cursor-pointer">{t.footer.privacy}</Link>
-                        <Link href="/terms" className="hover:text-slate-300 cursor-pointer">{t.footer.terms}</Link>
+                        <Link href="/privacy" className="hover:text-white cursor-pointer">{t.footer.privacy}</Link>
+                        <Link href="/terms" className="hover:text-white cursor-pointer">{t.footer.terms}</Link>
                     </div>
                 </div>
             </div>
