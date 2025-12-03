@@ -15,6 +15,7 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
     const [blog, setBlog] = useState<any>(null);
     const [content, setContent] = useState("");
     const [title, setTitle] = useState("");
+    const [summary, setSummary] = useState("");
     const [category, setCategory] = useState("Predictie");
     const [isGuideline, setIsGuideline] = useState(false);
     const [scheduledFor, setScheduledFor] = useState("");
@@ -54,6 +55,7 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
                 setBlog(data);
                 setContent(data.content);
                 setTitle(data.title);
+                setSummary(data.summary || "");
                 setCategory(data.category);
                 setIsGuideline(data.isGuideline);
                 if (data.scheduledFor) {
@@ -99,7 +101,7 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
         setSaving(true);
         const scheduledDate = scheduledFor ? new Date(scheduledFor).toISOString() : null;
         await updateBlogPost(id, {
-            title, content, category, isGuideline, scheduledFor: scheduledDate,
+            title, content, summary, category, isGuideline, scheduledFor: scheduledDate,
             specialism, ceStatus, cost, modelType, doi, citation, developer, privacyType, integration, demoUrl, vendorUrl, fdaStatus, fdaNumber,
             tags, authors
         });
@@ -110,7 +112,7 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
         setSaving(true);
         const scheduledDate = scheduledFor ? new Date(scheduledFor).toISOString() : null;
         await updateBlogPost(id, {
-            title, content, category, isGuideline, scheduledFor: scheduledDate,
+            title, content, summary, category, isGuideline, scheduledFor: scheduledDate,
             specialism, ceStatus, cost, modelType, doi, citation, developer, privacyType, integration, demoUrl, vendorUrl, fdaStatus, fdaNumber,
             tags, authors
         });
@@ -168,6 +170,15 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
                             onChange={(e) => setTitle(e.target.value)}
                             className="w-full text-xl font-bold border-none focus:ring-0 p-0 placeholder-gray-300 text-black"
                             placeholder="Enter title..."
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Summary (In het kort)</label>
+                        <textarea
+                            value={summary}
+                            onChange={(e) => setSummary(e.target.value)}
+                            className="w-full p-3 border rounded-lg text-sm text-black h-24 resize-y"
+                            placeholder="Korte samenvatting van het artikel..."
                         />
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

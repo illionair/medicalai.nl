@@ -66,10 +66,24 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
             </div >
 
             {/* Main Content Layout */}
-            < div className="container mx-auto px-4 max-w-6xl py-12" >
+            <div className="container mx-auto px-4 max-w-6xl py-12">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
                     {/* Content Column */}
+                    {/* Content Column */}
                     <div className="lg:col-span-8">
+                        {/* Summary Module */}
+                        {blog.summary && (
+                            <div className="mb-8 p-6 bg-brand-primary/5 rounded-2xl border border-brand-primary/10">
+                                <h3 className="text-lg font-bold text-brand-dark mb-2 flex items-center gap-2">
+                                    <span className="w-1 h-6 bg-brand-primary rounded-full"></span>
+                                    In het kort
+                                </h3>
+                                <p className="text-slate-700 leading-relaxed">
+                                    {blog.summary}
+                                </p>
+                            </div>
+                        )}
+
                         <div className="prose prose-lg prose-gray max-w-none 
                             prose-headings:font-bold prose-headings:text-brand-dark 
                             prose-p:text-gray-900 prose-li:text-gray-900
@@ -172,7 +186,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
 
             {/* Spacer to ensure footer separation */}
             <div className="h-40"></div>
-        </div >
-        </article >
+        </article>
     );
 }

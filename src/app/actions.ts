@@ -220,12 +220,14 @@ export async function updateBlogPost(id: string, data: {
     fdaNumber?: string;
     tags?: string[]; // Array of Tag IDs
     authors?: string;
+    summary?: string;
 }) {
     const blog = await prisma.blogPost.update({
         where: { id },
         data: {
             title: data.title,
             content: data.content,
+            summary: data.summary,
             category: data.category,
             isGuideline: data.isGuideline,
             scheduledFor: data.scheduledFor ? new Date(data.scheduledFor) : null,
