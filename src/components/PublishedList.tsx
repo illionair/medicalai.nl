@@ -26,7 +26,7 @@ export default function PublishedList() {
                 <Link
                     key={blog.id}
                     href={`/admin/editor/${blog.id}`}
-                    className="block p-4 bg-white rounded-xl border border-gray-200 hover:border-black transition-colors group"
+                    className="block p-4 bg-white rounded-xl border border-gray-200 hover:border-black transition-colors group relative z-10 cursor-pointer"
                 >
                     <div className="flex justify-between items-start">
                         <div>
