@@ -37,7 +37,10 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
             TextStyle,
             Color,
             Underline,
-            Image,
+            Underline,
+            Image.configure({
+                allowBase64: true,
+            }),
             Link.configure({
                 openOnClick: false,
             }),
