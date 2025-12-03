@@ -61,8 +61,8 @@ export default function Footer() {
                 <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500">
                     <p>{t.footer.legal}</p>
                     <div className="flex gap-4 mt-4 md:mt-0">
-                        <span className="hover:text-slate-300 cursor-pointer">{t.footer.privacy}</span>
-                        <span className="hover:text-slate-300 cursor-pointer">{t.footer.terms}</span>
+                        <Link href="/privacy" className="hover:text-slate-300 cursor-pointer">{t.footer.privacy}</Link>
+                        <Link href="/terms" className="hover:text-slate-300 cursor-pointer">{t.footer.terms}</Link>
                     </div>
                 </div>
             </div>

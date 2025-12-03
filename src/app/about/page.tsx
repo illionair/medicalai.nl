@@ -10,27 +10,27 @@ export default function AboutPage() {
     const icons = [Shield, Scale, BookOpen];
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-brand-white">
             {/* Hero Section */}
-            <section className="relative py-20 bg-slate-50 overflow-hidden">
+            <section className="relative py-20 bg-brand-white overflow-hidden">
                 <div className="container mx-auto px-4 relative z-10">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         className="max-w-3xl mx-auto text-center"
                     >
-                        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6 text-slate-900">
+                        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6 text-brand-dark">
                             {t.about.title}
                         </h1>
-                        <p className="text-lg md:text-xl text-slate-600 leading-relaxed">
+                        <p className="text-lg md:text-xl text-brand-primary leading-relaxed">
                             {t.about.intro}
                         </p>
                     </motion.div>
                 </div>
                 {/* Decorative background elements */}
-                <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-30 pointer-events-none">
-                    <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-100 rounded-full blur-3xl"></div>
-                    <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-indigo-100 rounded-full blur-3xl"></div>
+                <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10 pointer-events-none">
+                    <div className="absolute -top-24 -right-24 w-96 h-96 bg-brand-secondary rounded-full blur-3xl"></div>
+                    <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-brand-accent rounded-full blur-3xl"></div>
                 </div>
             </section>
 
@@ -44,7 +44,7 @@ export default function AboutPage() {
                             viewport={{ once: true }}
                             className="mb-12"
                         >
-                            <p className="text-lg text-slate-700 leading-relaxed mb-8">
+                            <p className="text-lg text-brand-primary leading-relaxed mb-8">
                                 {t.about.mission}
                             </p>
                             <ul className="space-y-4">
@@ -55,9 +55,9 @@ export default function AboutPage() {
                                         whileInView={{ opacity: 1, x: 0 }}
                                         viewport={{ once: true }}
                                         transition={{ delay: index * 0.1 }}
-                                        className="flex items-start gap-3 text-slate-700"
+                                        className="flex items-start gap-3 text-brand-primary"
                                     >
-                                        <span className="mt-1.5 w-2 h-2 rounded-full bg-blue-500 flex-shrink-0" />
+                                        <span className="mt-1.5 w-2 h-2 rounded-full bg-brand-secondary flex-shrink-0" />
                                         <span className="font-medium">{question}</span>
                                     </motion.li>
                                 ))}
@@ -68,13 +68,13 @@ export default function AboutPage() {
             </section>
 
             {/* Principles */}
-            <section className="py-20 bg-slate-900 text-white">
+            <section className="py-20 bg-brand-dark text-white">
                 <div className="container mx-auto px-4">
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-3xl font-bold text-center mb-16"
+                        className="text-3xl font-bold text-center mb-16 text-white"
                     >
                         {t.about.principles_title}
                     </motion.h2>
@@ -89,13 +89,13 @@ export default function AboutPage() {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: index * 0.2 }}
-                                    className="bg-slate-800/50 p-8 rounded-2xl border border-slate-700 hover:border-blue-500/50 transition-colors"
+                                    className="bg-brand-primary/50 p-8 rounded-2xl border border-brand-secondary/30 hover:border-brand-accent transition-colors"
                                 >
-                                    <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-400 mb-6">
+                                    <div className="w-12 h-12 bg-brand-secondary/20 rounded-xl flex items-center justify-center text-brand-accent mb-6">
                                         <Icon size={24} />
                                     </div>
-                                    <h3 className="text-xl font-bold mb-4">{principle.title}</h3>
-                                    <p className="text-slate-400 leading-relaxed">
+                                    <h3 className="text-xl font-bold mb-4 text-white">{principle.title}</h3>
+                                    <p className="text-brand-white/80 leading-relaxed">
                                         {principle.desc}
                                     </p>
                                 </motion.div>
@@ -112,9 +112,9 @@ export default function AboutPage() {
                         initial={{ opacity: 0, scale: 0.95 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
-                        className="max-w-3xl mx-auto bg-blue-50 p-10 rounded-3xl border border-blue-100"
+                        className="max-w-3xl mx-auto bg-brand-primary p-10 rounded-3xl border border-brand-secondary shadow-xl"
                     >
-                        <p className="text-lg md:text-xl text-blue-900 font-medium leading-relaxed">
+                        <p className="text-lg md:text-xl text-white font-medium leading-relaxed">
                             {t.about.goal}
                         </p>
                     </motion.div>
