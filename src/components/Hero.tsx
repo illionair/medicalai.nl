@@ -32,8 +32,8 @@ export default function Hero() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                    className="mb-6 max-w-4xl mx-auto text-slate-900 font-bold tracking-tight"
-                    style={{ fontSize: "clamp(48px, 6vw, 80px)", letterSpacing: "-0.03em" }}
+                    className="mb-6 max-w-4xl mx-auto text-slate-900 font-bold tracking-tight px-4"
+                    style={{ fontSize: "clamp(36px, 6vw, 80px)", letterSpacing: "-0.03em" }}
                 >
                     The Future of <br />
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Medical AI</span>

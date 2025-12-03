@@ -25,7 +25,7 @@ export default function TopicHeader({ title, description, color }: TopicHeaderPr
     const gradient = gradients[title] || gradients["default"];
 
     return (
-        <div className="relative w-full h-[300px] overflow-hidden rounded-3xl mb-12">
+        <div className="relative w-full min-h-[300px] overflow-hidden rounded-3xl mb-12 flex flex-col justify-center">
             {/* Background with Gradient */}
             <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-90`} />
 
@@ -34,11 +34,11 @@ export default function TopicHeader({ title, description, color }: TopicHeaderPr
             <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-black/10 rounded-full blur-3xl" />
 
             {/* Content */}
-            <div className="relative h-full flex flex-col justify-center items-center text-center p-8 text-white">
+            <div className="relative h-full flex flex-col justify-center items-center text-center p-8 text-white z-10">
                 <motion.span
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-sm font-bold tracking-widest uppercase mb-4 bg-white/20 px-3 py-1 rounded-full backdrop-blur-md border border-white/10"
+                    className="text-xs md:text-sm font-bold tracking-widest uppercase mb-4 bg-white/20 px-3 py-1 rounded-full backdrop-blur-md border border-white/10"
                 >
                     Topic
                 </motion.span>
@@ -47,7 +47,7 @@ export default function TopicHeader({ title, description, color }: TopicHeaderPr
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.1 }}
-                    className="text-5xl md:text-6xl font-bold mb-4 tracking-tight"
+                    className="text-4xl md:text-6xl font-bold mb-4 tracking-tight"
                 >
                     {title}
                 </motion.h1>
@@ -56,7 +56,7 @@ export default function TopicHeader({ title, description, color }: TopicHeaderPr
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2 }}
-                    className="text-lg md:text-xl text-white/90 max-w-2xl font-light leading-relaxed"
+                    className="text-base md:text-xl text-white/90 max-w-2xl font-light leading-relaxed"
                 >
                     {description}
                 </motion.p>
