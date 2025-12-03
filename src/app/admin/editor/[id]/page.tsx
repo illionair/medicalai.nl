@@ -153,7 +153,7 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
                                 <h3 className="font-bold text-sm border-b pb-2">Taxonomy</h3>
                                 <div>
                                     <label className="block text-xs font-medium text-gray-500 mb-1">Category</label>
-                                    <select value={category} onChange={(e) => setCategory(e.target.value)} className="w-full p-2 border rounded-lg text-sm">
+                                    <select value={category} onChange={(e) => setCategory(e.target.value)} className="w-full p-2 border rounded-lg text-sm text-black">
                                         <option value="Predictie">Predictie</option>
                                         <option value="Diagnostiek">Diagnostiek</option>
                                         <option value="Methodisch">Methodisch</option>
@@ -165,11 +165,11 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
                                 </div>
                                 <div>
                                     <label className="block text-xs font-medium text-gray-500 mb-1">Specialism (Comma separated)</label>
-                                    <input type="text" value={specialism} onChange={(e) => setSpecialism(e.target.value)} className="w-full p-2 border rounded-lg text-sm" placeholder="Radiologie, Cardiologie..." />
+                                    <input type="text" value={specialism} onChange={(e) => setSpecialism(e.target.value)} className="w-full p-2 border rounded-lg text-sm text-black" placeholder="Radiologie, Cardiologie..." />
                                 </div>
                                 <div>
                                     <label className="block text-xs font-medium text-gray-500 mb-1">Cost Category</label>
-                                    <select value={cost} onChange={(e) => setCost(e.target.value)} className="w-full p-2 border rounded-lg text-sm">
+                                    <select value={cost} onChange={(e) => setCost(e.target.value)} className="w-full p-2 border rounded-lg text-sm text-black">
                                         <option value="">Select...</option>
                                         <option value="Gratis (Freemium)">€ (Laag/Gratis)</option>
                                         <option value="Licentie">€€ (Licentie)</option>
@@ -184,7 +184,7 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
                                         <label className="block text-xs font-medium text-gray-500 mb-1">CE Status</label>
-                                        <select value={ceStatus} onChange={(e) => setCeStatus(e.target.value)} className="w-full p-2 border rounded-lg text-sm">
+                                        <select value={ceStatus} onChange={(e) => setCeStatus(e.target.value)} className="w-full p-2 border rounded-lg text-sm text-black">
                                             <option value="">None</option>
                                             <option value="CE Class I">CE Class I</option>
                                             <option value="CE Class IIa">CE Class IIa</option>
@@ -194,7 +194,7 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
                                     </div>
                                     <div>
                                         <label className="block text-xs font-medium text-gray-500 mb-1">FDA Status</label>
-                                        <select value={fdaStatus} onChange={(e) => setFdaStatus(e.target.value)} className="w-full p-2 border rounded-lg text-sm">
+                                        <select value={fdaStatus} onChange={(e) => setFdaStatus(e.target.value)} className="w-full p-2 border rounded-lg text-sm text-black">
                                             <option value="">None</option>
                                             <option value="Cleared">Cleared</option>
                                             <option value="Pending">Pending</option>
@@ -203,11 +203,11 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
                                 </div>
                                 <div>
                                     <label className="block text-xs font-medium text-gray-500 mb-1">FDA/510(k) Number</label>
-                                    <input type="text" value={fdaNumber} onChange={(e) => setFdaNumber(e.target.value)} className="w-full p-2 border rounded-lg text-sm" placeholder="K200873" />
+                                    <input type="text" value={fdaNumber} onChange={(e) => setFdaNumber(e.target.value)} className="w-full p-2 border rounded-lg text-sm text-black" placeholder="K200873" />
                                 </div>
                                 <div>
                                     <label className="block text-xs font-medium text-gray-500 mb-1">DOI Reference (URL)</label>
-                                    <input type="text" value={doi} onChange={(e) => setDoi(e.target.value)} className="w-full p-2 border rounded-lg text-sm" placeholder="https://doi.org/..." />
+                                    <input type="text" value={doi} onChange={(e) => setDoi(e.target.value)} className="w-full p-2 border rounded-lg text-sm text-black" placeholder="https://doi.org/..." />
                                 </div>
                             </div>
 
@@ -216,11 +216,11 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
                                 <h3 className="font-bold text-sm border-b pb-2">Quick Facts (Sidebar)</h3>
                                 <div>
                                     <label className="block text-xs font-medium text-gray-500 mb-1">Developer (Name + Country)</label>
-                                    <input type="text" value={developer} onChange={(e) => setDeveloper(e.target.value)} className="w-full p-2 border rounded-lg text-sm" />
+                                    <input type="text" value={developer} onChange={(e) => setDeveloper(e.target.value)} className="w-full p-2 border rounded-lg text-sm text-black" />
                                 </div>
                                 <div>
                                     <label className="block text-xs font-medium text-gray-500 mb-1">Privacy Type</label>
-                                    <select value={privacyType} onChange={(e) => setPrivacyType(e.target.value)} className="w-full p-2 border rounded-lg text-sm">
+                                    <select value={privacyType} onChange={(e) => setPrivacyType(e.target.value)} className="w-full p-2 border rounded-lg text-sm text-black">
                                         <option value="">Select...</option>
                                         <option value="Cloud">Cloud</option>
                                         <option value="On-Premise">On-Premise</option>
@@ -229,7 +229,7 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
                                 </div>
                                 <div>
                                     <label className="block text-xs font-medium text-gray-500 mb-1">Integration</label>
-                                    <input type="text" value={integration} onChange={(e) => setIntegration(e.target.value)} className="w-full p-2 border rounded-lg text-sm" placeholder="PACS, EPD..." />
+                                    <input type="text" value={integration} onChange={(e) => setIntegration(e.target.value)} className="w-full p-2 border rounded-lg text-sm text-black" placeholder="PACS, EPD..." />
                                 </div>
                             </div>
 
@@ -238,15 +238,15 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
                                 <h3 className="font-bold text-sm border-b pb-2">Links</h3>
                                 <div>
                                     <label className="block text-xs font-medium text-gray-500 mb-1">Demo URL</label>
-                                    <input type="text" value={demoUrl} onChange={(e) => setDemoUrl(e.target.value)} className="w-full p-2 border rounded-lg text-sm" />
+                                    <input type="text" value={demoUrl} onChange={(e) => setDemoUrl(e.target.value)} className="w-full p-2 border rounded-lg text-sm text-black" />
                                 </div>
                                 <div>
                                     <label className="block text-xs font-medium text-gray-500 mb-1">Vendor URL</label>
-                                    <input type="text" value={vendorUrl} onChange={(e) => setVendorUrl(e.target.value)} className="w-full p-2 border rounded-lg text-sm" />
+                                    <input type="text" value={vendorUrl} onChange={(e) => setVendorUrl(e.target.value)} className="w-full p-2 border rounded-lg text-sm text-black" />
                                 </div>
                                 <div>
                                     <label className="block text-xs font-medium text-gray-500 mb-1">Citation Text</label>
-                                    <input type="text" value={citation} onChange={(e) => setCitation(e.target.value)} className="w-full p-2 border rounded-lg text-sm" placeholder="Author et al. (Year)..." />
+                                    <input type="text" value={citation} onChange={(e) => setCitation(e.target.value)} className="w-full p-2 border rounded-lg text-sm text-black" placeholder="Author et al. (Year)..." />
                                 </div>
                             </div>
                         </div>
