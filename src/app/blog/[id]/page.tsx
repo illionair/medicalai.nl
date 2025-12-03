@@ -3,7 +3,10 @@ import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Calendar, Tag } from "lucide-react";
+import { ArrowLeft, Calendar } from "lucide-react";
+import TrustBadge from "@/components/TrustBadge";
+import BlogSidebar from "@/components/BlogSidebar";
+import EvidenceBox from "@/components/EvidenceBox";
 
 export const dynamic = "force-dynamic";
 
@@ -23,42 +26,34 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
         notFound();
     }
 
-    const gradient = categoryGradients[blog.category] || categoryGradients["default"];
-
     return (
         <article className="min-h-screen bg-white pb-20">
-            {/* Hero Header */}
-            <div className={`relative h-[50vh] min-h-[400px] flex items-end`}>
-                {/* Dynamic Gradient Background */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${gradient}`} />
+            {/* Header Section */}
+            <div className="bg-slate-50 border-b border-slate-200 pt-32 pb-16">
+                <div className="container mx-auto px-4 max-w-6xl">
+                    <Link
+                        href="/"
+                        className="inline-flex items-center gap-2 text-slate-500 hover:text-brand-primary transition-colors mb-8 text-sm font-medium"
+                    >
+                        <ArrowLeft size={16} />
+                        Terug naar overzicht
+                    </Link>
 
-                {/* Abstract Shapes for Texture */}
-                <div className="absolute top-0 right-0 w-full h-full overflow-hidden opacity-20 pointer-events-none">
-                    <div className="absolute -top-1/2 -right-1/2 w-[100%] h-[100%] bg-white rounded-full blur-3xl" />
-                    <div className="absolute -bottom-1/2 -left-1/2 w-[100%] h-[100%] bg-black rounded-full blur-3xl" />
-                </div>
-
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
-
-                {/* Back Button - Positioned at top */}
-                <div className="absolute top-24 left-0 w-full z-30">
-                    <div className="container section-padding">
-                        <Link
-                            href="/"
-                            className="inline-flex items-center gap-2 text-white/90 hover:text-white transition-colors backdrop-blur-md bg-white/10 border border-white/20 px-4 py-2 rounded-full font-medium text-sm hover:bg-white/20"
-                        >
-                            <ArrowLeft size={16} />
-                            Back to Home
-                        </Link>
+                    {/* Trust Badges */}
+                    <div className="flex flex-wrap gap-3 mb-6">
+                        {blog.specialism && <TrustBadge type="specialism" label="Specialisme" value={blog.specialism} />}
+                        {blog.ceStatus && <TrustBadge type="status" label="Status" value={blog.ceStatus} />}
+                        {blog.cost && <TrustBadge type="cost" label="Kosten" value={blog.cost} />}
+                        {blog.modelType && <TrustBadge type="model" label="Model" value={blog.modelType} />}
                     </div>
-                </div>
 
-                <div className="container relative z-20 pb-16 section-padding text-white">
-                    <div className="flex flex-wrap items-center gap-4 mb-6">
-                        <span className="px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-sm font-bold tracking-wide border border-white/20 shadow-sm">
-                            {blog.category}
-                        </span>
-                        <span className="flex items-center gap-2 text-white/90 text-sm font-medium">
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-brand-dark mb-6">
+                        {blog.title}
+                    </h1>
+
+                    {/* Subtitle/Summary if available, or just meta */}
+                    <div className="flex items-center gap-4 text-slate-500 text-sm font-medium">
+                        <span className="flex items-center gap-2">
                             <Calendar size={16} />
                             {new Date(blog.createdAt).toLocaleDateString("nl-NL", {
                                 year: 'numeric',
@@ -66,26 +61,56 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                                 day: 'numeric'
                             })}
                         </span>
+                        <span>•</span>
+                        <span>{blog.category}</span>
                     </div>
-
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight max-w-5xl drop-shadow-sm">
-                        {blog.title}
-                    </h1>
                 </div>
             </div>
 
-            {/* Content */}
-            <div className="container section-padding -mt-12 relative z-30">
-                <div className="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100 max-w-4xl mx-auto">
-                    <div className="prose prose-lg prose-slate max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-a:text-blue-600 hover:prose-a:text-blue-800 prose-img:rounded-2xl prose-img:shadow-md">
-                        <ReactMarkdown rehypePlugins={[rehypeRaw]}>{blog.content}</ReactMarkdown>
+            {/* Main Content Layout */}
+            <div className="container mx-auto px-4 max-w-6xl py-12">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                    {/* Content Column */}
+                    <div className="lg:col-span-8">
+                        <div className="prose prose-lg prose-slate max-w-none 
+                            prose-headings:font-bold prose-headings:text-brand-dark 
+                            prose-a:text-brand-secondary hover:prose-a:text-brand-primary 
+                            prose-img:rounded-2xl prose-img:shadow-md
+                            prose-strong:text-brand-dark">
+                            <ReactMarkdown
+                                rehypePlugins={[rehypeRaw]}
+                                components={{
+                                    // Custom component mapping for EvidenceBox if we used a custom syntax, 
+                                    // but for now we assume standard markdown or HTML injection.
+                                    // We can also inject EvidenceBox manually in the content string if needed.
+                                }}
+                            >
+                                {blog.content}
+                            </ReactMarkdown>
+                        </div>
+
+                        {/* Citation Tool & Footer */}
+                        <div className="mt-16 pt-8 border-t border-slate-100">
+                            <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4">Referentie</h4>
+                            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-sm text-slate-600 font-mono break-all">
+                                {blog.citation || "Citation not available."}
+                            </div>
+                            {blog.doi && (
+                                <a href={blog.doi} target="_blank" rel="noopener noreferrer" className="inline-block mt-4 text-brand-secondary hover:underline text-sm font-medium">
+                                    Bekijk originele publicatie (DOI) &rarr;
+                                </a>
+                            )}
+                        </div>
                     </div>
 
-                    {/* Footer / Share / Related could go here */}
-                    <div className="mt-16 pt-8 border-t border-gray-100">
-                        <p className="text-gray-500 italic text-sm">
-                            Generated by Medical AI based on recent research.
-                        </p>
+                    {/* Sidebar Column */}
+                    <div className="lg:col-span-4">
+                        <BlogSidebar
+                            developer={blog.developer}
+                            demoUrl={blog.demoUrl}
+                            privacy={blog.privacy}
+                            integration={blog.integration}
+                        />
                     </div>
                 </div>
             </div>
