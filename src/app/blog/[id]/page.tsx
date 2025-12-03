@@ -40,6 +40,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                         Terug naar overzicht
                     </Link>
 
+                    <h1 className="text-4xl md:text-5xl font-bold text-brand-dark mb-6 leading-tight">
+                        {blog.title}
+                    </h1>
+
                     {/* Subtitle/Summary if available, or just meta */}
                     <div className="flex items-center gap-4 text-slate-500 text-sm font-medium">
                         <span className="flex items-center gap-2">
