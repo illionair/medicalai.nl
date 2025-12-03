@@ -58,12 +58,6 @@ export default function Hero() {
                     >
                         {t.hero.about_us}
                     </a>
-                    <a
-                        href="/contact"
-                        className="px-8 py-4 rounded-full bg-white/60 text-slate-700 font-medium hover:bg-white/80 transition-colors backdrop-blur-md border border-white/40 shadow-sm"
-                    >
-                        {t.hero.contact}
-                    </a>
                 </motion.div>
             </div>
         </section>
