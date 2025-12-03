@@ -70,8 +70,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
                     {/* Content Column */}
                     <div className="lg:col-span-8">
-                        <div className="prose prose-lg prose-slate max-w-none 
+                        <div className="prose prose-lg prose-gray max-w-none 
                             prose-headings:font-bold prose-headings:text-brand-dark 
+                            prose-p:text-gray-900 prose-li:text-gray-900
                             prose-a:text-brand-secondary hover:prose-a:text-brand-primary 
                             prose-img:rounded-2xl prose-img:shadow-md
                             prose-strong:text-brand-dark">

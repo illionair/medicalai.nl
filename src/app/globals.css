@@ -141,7 +141,8 @@ h3 {
 p {
   line-height: 1.7;
   /* Better readability */
-  color: var(--gray-300);
+  color: #1d1d1f;
+  /* Darker text for readability */
   font-size: 17px;
   /* Apple standard body size */
 }
