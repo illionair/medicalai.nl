@@ -40,14 +40,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                         Terug naar overzicht
                     </Link>
 
-                    {/* Trust Badges */}
-                    <div className="flex flex-wrap gap-3 mb-6">
-                        {blog.specialism && <TrustBadge type="specialism" label="Specialisme" value={blog.specialism} />}
-                        {blog.ceStatus && <TrustBadge type="status" label="CE Status" value={blog.ceStatus} />}
-                        {blog.fdaStatus && <TrustBadge type="status" label="FDA Status" value={blog.fdaStatus} />}
-                        {blog.cost && <TrustBadge type="cost" label="Kosten" value={blog.cost} />}
-                        {blog.modelType && <TrustBadge type="model" label="Model" value={blog.modelType} />}
-                    </div>
+
 
                     {/* Tags */}
                     {blog.tags && blog.tags.length > 0 && (
@@ -134,6 +127,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                                 </a>
                             )}
                         </div>
+
+                        {/* Disclaimer */}
+                        <div className="mt-8 pt-8 border-t border-slate-100 text-xs text-slate-400 italic">
+                            <p>
+                                <strong>Disclaimer:</strong> De inhoud van dit artikel is met zorg samengesteld, deels met behulp van kunstmatige intelligentie, en gecontroleerd door medische professionals. Ondanks deze zorgvuldigheid kunnen er onjuistheden in de tekst sluipen. De informatie op deze website is uitsluitend bedoeld voor informatieve doeleinden en vervangt geen professioneel medisch advies, diagnose of behandeling. Raadpleeg voor medische beslissingen altijd de originele wetenschappelijke bronnen en/of een gekwalificeerde zorgverlener. Medical AI is niet aansprakelijk voor eventuele schade die voortvloeit uit het gebruik van de informatie op deze website.
+                            </p>
+                        </div>
                     </div>
 
                     {/* Sidebar Column */}
@@ -148,6 +148,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                             fdaStatus={blog.fdaStatus}
                             fdaNumber={blog.fdaNumber}
                             ceStatus={blog.ceStatus}
+                            specialism={blog.specialism}
+                            cost={blog.cost}
+                            modelType={blog.modelType}
                         />
                     </div>
                 </div>

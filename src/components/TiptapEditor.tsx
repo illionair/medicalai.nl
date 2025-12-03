@@ -57,6 +57,8 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
                 html: true, // Allow HTML for colors/alignment
                 transformPastedText: true,
                 transformCopiedText: true,
+                breaks: true, // Preserve soft breaks as newlines
+                tightLists: false, // Prevent tight lists
             }),
         ],
         content: value,

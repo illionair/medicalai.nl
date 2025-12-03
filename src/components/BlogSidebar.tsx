@@ -1,4 +1,5 @@
 import { ExternalLink, Share2, Linkedin, Lock, Server, Globe, ShieldCheck, Building2 } from "lucide-react";
+import TrustBadge from "./TrustBadge";
 
 interface BlogSidebarProps {
     developer?: string | null;
@@ -10,11 +11,28 @@ interface BlogSidebarProps {
     fdaStatus?: string | null;
     fdaNumber?: string | null;
     ceStatus?: string | null;
+    specialism?: string | null;
+    cost?: string | null;
+    modelType?: string | null;
 }
 
-export default function BlogSidebar({ developer, demoUrl, vendorUrl, privacy, privacyType, integration, fdaStatus, fdaNumber, ceStatus }: BlogSidebarProps) {
+export default function BlogSidebar({ developer, demoUrl, vendorUrl, privacy, privacyType, integration, fdaStatus, fdaNumber, ceStatus, specialism, cost, modelType }: BlogSidebarProps) {
     return (
         <div className="sticky top-24 space-y-6">
+            {/* Details Card */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                    <ShieldCheck size={16} className="text-brand-secondary" />
+                    Details
+                </h3>
+                <div className="flex flex-col gap-3">
+                    {specialism && <TrustBadge type="specialism" label="Specialisme" value={specialism} />}
+                    {ceStatus && <TrustBadge type="status" label="CE Status" value={ceStatus} />}
+                    {cost && <TrustBadge type="cost" label="Kosten" value={cost} />}
+                    {modelType && <TrustBadge type="model" label="Model" value={modelType} />}
+                </div>
+            </div>
+
             {/* Quick Facts */}
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                 <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 flex items-center gap-2">
@@ -72,20 +90,14 @@ export default function BlogSidebar({ developer, demoUrl, vendorUrl, privacy, pr
                 </div>
             </div>
 
-            {/* Status Card */}
-            {(fdaStatus || ceStatus) && (
+            {/* Status Card (FDA only now, since CE is moved) */}
+            {fdaStatus && (
                 <div className="bg-green-50 rounded-2xl p-6 border border-green-100">
                     <h3 className="text-sm font-bold text-green-800 uppercase tracking-wider mb-4 flex items-center gap-2">
                         <ShieldCheck size={16} />
                         Status
                     </h3>
                     <div className="space-y-3">
-                        {ceStatus && (
-                            <div>
-                                <span className="block text-xs text-green-600 font-medium uppercase">CE Markering</span>
-                                <span className="font-bold text-green-900">{ceStatus}</span>
-                            </div>
-                        )}
                         {fdaStatus && (
                             <div>
                                 <span className="block text-xs text-green-600 font-medium uppercase">FDA Status</span>

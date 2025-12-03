@@ -35,6 +35,7 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
     const [vendorUrl, setVendorUrl] = useState("");
     const [fdaStatus, setFdaStatus] = useState("");
     const [fdaNumber, setFdaNumber] = useState("");
+    const [authors, setAuthors] = useState("");
 
     // Tags
     const [tags, setTags] = useState<string[]>([]);
@@ -80,6 +81,11 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
                 if (data.tags) {
                     setTags(data.tags.map((t: any) => t.id));
                 }
+
+                // Load authors
+                if (data.article && data.article.authors) {
+                    setAuthors(data.article.authors);
+                }
             }
             if (allTags) {
                 setAvailableTags(allTags);
@@ -94,7 +100,7 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
         await updateBlogPost(id, {
             title, content, category, isGuideline, scheduledFor: scheduledFor || null,
             specialism, ceStatus, cost, modelType, doi, citation, developer, privacyType, integration, demoUrl, vendorUrl, fdaStatus, fdaNumber,
-            tags
+            tags, authors
         });
         setSaving(false);
     }
@@ -104,7 +110,7 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
         await updateBlogPost(id, {
             title, content, category, isGuideline, scheduledFor: scheduledFor || null,
             specialism, ceStatus, cost, modelType, doi, citation, developer, privacyType, integration, demoUrl, vendorUrl, fdaStatus, fdaNumber,
-            tags
+            tags, authors
         });
         await publishBlogPost(id);
         router.push("/admin");
@@ -161,6 +167,27 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
                             className="w-full text-xl font-bold border-none focus:ring-0 p-0 placeholder-gray-300 text-black"
                             placeholder="Enter title..."
                         />
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Author(s)</label>
+                            <input
+                                type="text"
+                                value={authors}
+                                onChange={(e) => setAuthors(e.target.value)}
+                                className="w-full p-2 border rounded-lg text-sm text-black"
+                                placeholder="Author names..."
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Date (Scheduled/Published)</label>
+                            <input
+                                type="datetime-local"
+                                value={scheduledFor}
+                                onChange={(e) => setScheduledFor(e.target.value)}
+                                className="w-full p-2 border rounded-lg text-sm text-black"
+                            />
+                        </div>
                     </div>
                 </div>
 

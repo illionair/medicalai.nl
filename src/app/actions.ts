@@ -195,7 +195,7 @@ export async function createTag(name: string) {
 export async function getBlogPost(id: string) {
     return await prisma.blogPost.findUnique({
         where: { id },
-        include: { tags: true }
+        include: { tags: true, article: true }
     });
 }
 
@@ -219,8 +219,9 @@ export async function updateBlogPost(id: string, data: {
     fdaStatus?: string;
     fdaNumber?: string;
     tags?: string[]; // Array of Tag IDs
+    authors?: string;
 }) {
-    await prisma.blogPost.update({
+    const blog = await prisma.blogPost.update({
         where: { id },
         data: {
             title: data.title,
@@ -246,6 +247,13 @@ export async function updateBlogPost(id: string, data: {
             } : undefined
         },
     });
+
+    if (data.authors) {
+        await prisma.article.update({
+            where: { id: blog.articleId },
+            data: { authors: data.authors }
+        });
+    }
     revalidatePath(`/admin/editor/${id}`);
 }
 
