@@ -73,7 +73,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                     <div className="lg:col-span-8">
                         {/* Summary Module */}
                         {blog.summary && (
-                            <div className="mb-8 p-6 bg-brand-primary/5 rounded-2xl border border-brand-primary/10">
+                            <div className="mb-8 mt-8 p-6 bg-brand-primary/5 rounded-2xl border border-brand-primary/10">
                                 <h3 className="text-lg font-bold text-brand-dark mb-2 flex items-center gap-2">
                                     <span className="w-1 h-6 bg-brand-primary rounded-full"></span>
                                     In het kort
