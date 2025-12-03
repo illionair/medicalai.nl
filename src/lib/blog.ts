@@ -32,5 +32,25 @@ export async function getPublishedBlogsByCategory(category: string) {
 export async function getBlogById(id: string) {
     return await prisma.blogPost.findUnique({
         where: { id },
+        include: { tags: true }
+    });
+}
+
+export async function getPublishedBlogsByTag(tagName: string) {
+    return await prisma.blogPost.findMany({
+        where: {
+            published: true,
+            tags: {
+                some: {
+                    name: tagName
+                }
+            },
+            OR: [
+                { scheduledFor: null },
+                { scheduledFor: { lte: new Date() } }
+            ]
+        },
+        orderBy: { createdAt: "desc" },
+        include: { tags: true }
     });
 }
