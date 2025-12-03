@@ -18,9 +18,24 @@ export async function createOpenEvidencePost() {
         }
     });
 
-    // 2. Create the BlogPost
-    await prisma.blogPost.create({
-        data: {
+    // 2. Upsert the BlogPost (Idempotent)
+    await prisma.blogPost.upsert({
+        where: { articleId: article.id },
+        update: {
+            title: "OpenEvidence: Generatieve AI met bronvermelding",
+            published: false,
+            specialism: "Alle specialismen",
+            ceStatus: "n.v.t. (Informatiebron)",
+            cost: "Gratis (Freemium)",
+            modelType: "Generative AI (RAG)",
+            developer: "OpenEvidence (USA)",
+            privacy: "⚠️ US Cloud",
+            integration: "Web-based",
+            demoUrl: "https://www.openevidence.com",
+            citation: "Medical AI. (2025). OpenEvidence: Generatieve AI met bronvermelding.",
+            doi: "https://www.openevidence.com"
+        },
+        create: {
             title: "OpenEvidence: Generatieve AI met bronvermelding",
             content: `
 # De toekomst van medische kennis
