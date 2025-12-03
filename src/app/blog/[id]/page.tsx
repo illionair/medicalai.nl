@@ -92,6 +92,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                             prose-strong:text-brand-dark">
                             <ReactMarkdown
                                 rehypePlugins={[rehypeRaw]}
+                                urlTransform={(value) => value} // Allow data: URIs
                                 components={{
                                     // Custom component mapping for EvidenceBox if we used a custom syntax, 
                                     // but for now we assume standard markdown or HTML injection.
