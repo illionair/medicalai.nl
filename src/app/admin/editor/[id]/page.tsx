@@ -97,8 +97,9 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
 
     async function handleSave() {
         setSaving(true);
+        const scheduledDate = scheduledFor ? new Date(scheduledFor).toISOString() : null;
         await updateBlogPost(id, {
-            title, content, category, isGuideline, scheduledFor: scheduledFor || null,
+            title, content, category, isGuideline, scheduledFor: scheduledDate,
             specialism, ceStatus, cost, modelType, doi, citation, developer, privacyType, integration, demoUrl, vendorUrl, fdaStatus, fdaNumber,
             tags, authors
         });
@@ -107,8 +108,9 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
 
     async function handlePublish() {
         setSaving(true);
+        const scheduledDate = scheduledFor ? new Date(scheduledFor).toISOString() : null;
         await updateBlogPost(id, {
-            title, content, category, isGuideline, scheduledFor: scheduledFor || null,
+            title, content, category, isGuideline, scheduledFor: scheduledDate,
             specialism, ceStatus, cost, modelType, doi, citation, developer, privacyType, integration, demoUrl, vendorUrl, fdaStatus, fdaNumber,
             tags, authors
         });
