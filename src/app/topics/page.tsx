@@ -80,7 +80,7 @@ export default function TopicsPage() {
                 </div>
             </div>
 
-            <div className="container mx-auto px-4 py-16 space-y-20 pb-32">
+            <div className="container mx-auto px-4 py-16 space-y-20 pb-64">
 
                 {/* Clinical AI Section */}
                 <section className="mt-12">
