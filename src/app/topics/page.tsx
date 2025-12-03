@@ -80,10 +80,10 @@ export default function TopicsPage() {
                 </div>
             </div>
 
-            <div className="container mx-auto px-4 py-16 space-y-20">
+            <div className="container mx-auto px-4 py-16 space-y-20 pb-32">
 
                 {/* Clinical AI Section */}
-                <section>
+                <section className="mt-12">
                     <div className="flex items-center gap-3 mb-8">
                         <div className="p-2 bg-brand-primary/10 rounded-lg text-brand-primary">
                             <Activity size={24} />
