@@ -7,6 +7,7 @@ import { ArrowLeft, Calendar } from "lucide-react";
 import TrustBadge from "@/components/TrustBadge";
 import BlogSidebar from "@/components/BlogSidebar";
 import EvidenceBox from "@/components/EvidenceBox";
+import CopyButton from "@/components/CopyButton";
 
 export const dynamic = "force-dynamic";
 
@@ -125,15 +126,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                             <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4">Referentie</h4>
                             <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-sm text-slate-600 font-mono break-all flex items-center justify-between gap-4">
                                 <span>{blog.citation || "Citation not available."}</span>
-                                <button
-                                    className="text-brand-secondary hover:text-brand-primary font-medium text-xs uppercase tracking-wider"
-                                    onClick={() => {
-                                        // Simple copy to clipboard (client-side only, might need 'use client' or separate component)
-                                        // For server component, we'll just leave it as text for now or make this a client component later.
-                                    }}
-                                >
-                                    Kopieer
-                                </button>
+                                <CopyButton text={blog.citation || ""} />
                             </div>
                             {blog.doi && (
                                 <a href={blog.doi} target="_blank" rel="noopener noreferrer" className="inline-block mt-4 text-brand-secondary hover:underline text-sm font-medium">
