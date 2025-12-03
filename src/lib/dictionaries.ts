@@ -16,8 +16,8 @@ export const dictionary = {
             title_prefix: "Medical",
             title_highlight: "AI",
             description: "Trends, insights, and healthcare considerations",
-            read_latest: "Read Latest",
-            about_us: "About Us",
+            read_latest: "Latest Developments",
+            about_us: "Our Mission",
             contact: "Contact",
         },
         blog: {
@@ -44,8 +44,8 @@ export const dictionary = {
             title_prefix: "Medical",
             title_highlight: "AI",
             description: "Trends, inzichten en zorginhoudelijke aandachtspunten",
-            read_latest: "Lees het Laatste Nieuws",
-            about_us: "Over Ons",
+            read_latest: "Laatste ontwikkelingen",
+            about_us: "Onze missie",
             contact: "Contact",
         },
         blog: {
