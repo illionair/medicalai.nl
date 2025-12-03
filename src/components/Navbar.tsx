@@ -4,28 +4,34 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
-
-const links = [
-    { href: "/", label: "Publications" },
-    { href: "/topics", label: "Topics" },
-    { href: "/authors", label: "Authors" },
-    { href: "/guidelines", label: "Guidelines" },
-    { href: "/subscribe", label: "Subscribe" },
-    { href: "/about", label: "About" },
-];
+import { Menu, X, Globe } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Navbar() {
     const pathname = usePathname();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const { t, language, setLanguage } = useLanguage();
     const isAccessPage = pathname === "/access";
+
+    const links = [
+        { href: "/", label: t.nav.publications },
+        { href: "/topics", label: t.nav.topics },
+        { href: "/authors", label: t.nav.authors },
+        { href: "/guidelines", label: t.nav.guidelines },
+        { href: "/subscribe", label: t.nav.subscribe },
+        { href: "/about", label: t.nav.about },
+    ];
 
     const displayLinks = isAccessPage
         ? [
-            { href: "/about", label: "About" },
-            { href: "/contact", label: "Contact" }
+            { href: "/about", label: t.nav.about },
+            { href: "/contact", label: t.nav.contact }
         ]
         : links;
+
+    const toggleLanguage = () => {
+        setLanguage(language === "nl" ? "en" : "nl");
+    };
 
     return (
         <>
@@ -59,9 +65,18 @@ export default function Navbar() {
                     </div>
 
                     <div className="flex items-center gap-4">
+                        {/* Language Toggle */}
+                        <button
+                            onClick={toggleLanguage}
+                            className="text-[12px] font-medium text-gray-600 hover:text-black transition-colors flex items-center gap-1 uppercase"
+                        >
+                            <Globe size={14} />
+                            {language}
+                        </button>
+
                         {!isAccessPage && (
                             <Link href="/admin" className="hidden md:block text-[12px] font-normal text-gray-500 hover:text-black transition-colors">
-                                Login
+                                {t.nav.login}
                             </Link>
                         )}
 
@@ -103,7 +118,7 @@ export default function Navbar() {
                                     onClick={() => setIsMobileMenuOpen(false)}
                                     className="text-2xl font-medium text-slate-500 border-b border-gray-100 pb-4"
                                 >
-                                    Login
+                                    {t.nav.login}
                                 </Link>
                             )}
                         </div>

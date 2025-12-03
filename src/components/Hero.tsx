@@ -1,8 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Hero() {
+    const { t } = useLanguage();
+
     return (
         <section className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden bg-white">
             {/* Background Image */}
@@ -24,7 +27,7 @@ export default function Hero() {
                     transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                 >
                     <span className="inline-block py-1 px-3 rounded-full bg-blue-50/80 text-blue-600 text-xs font-bold tracking-wide uppercase mb-6 border border-blue-100 backdrop-blur-sm shadow-sm">
-                        Medical Intelligence
+                        {t.hero.badge}
                     </span>
                 </motion.div>
 
@@ -35,8 +38,8 @@ export default function Hero() {
                     className="mb-6 max-w-4xl mx-auto text-slate-900 font-bold tracking-tight px-4"
                     style={{ fontSize: "clamp(36px, 6vw, 80px)", letterSpacing: "-0.03em" }}
                 >
-                    The Future of <br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Medical AI</span>
+                    {t.hero.title_prefix} <br />
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">{t.hero.title_highlight}</span>
                 </motion.h1>
 
                 <motion.p
@@ -45,7 +48,7 @@ export default function Hero() {
                     transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
                     className="text-xl max-w-2xl mx-auto mb-10 text-slate-600 font-medium"
                 >
-                    Responsible AI for Better Care.
+                    {t.hero.description}
                 </motion.p>
 
                 <motion.div
@@ -58,19 +61,19 @@ export default function Hero() {
                         href="#latest"
                         className="px-8 py-4 rounded-full bg-blue-600 text-white font-bold hover:bg-blue-700 hover:scale-105 transition-all active:scale-95 shadow-lg shadow-blue-600/20"
                     >
-                        Read Latest
+                        {t.hero.read_latest}
                     </a>
                     <a
                         href="/about"
                         className="px-8 py-4 rounded-full bg-white/60 text-slate-700 font-medium hover:bg-white/80 transition-colors backdrop-blur-md border border-white/40 shadow-sm"
                     >
-                        About Us
+                        {t.hero.about_us}
                     </a>
                     <a
                         href="/contact"
                         className="px-8 py-4 rounded-full bg-white/60 text-slate-700 font-medium hover:bg-white/80 transition-colors backdrop-blur-md border border-white/40 shadow-sm"
                     >
-                        Contact
+                        {t.hero.contact}
                     </a>
                 </motion.div>
             </div>

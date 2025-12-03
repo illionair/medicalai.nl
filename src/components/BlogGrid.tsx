@@ -2,12 +2,15 @@
 
 import BlogCard from "./BlogCard";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface BlogGridProps {
     blogs: any[];
 }
 
 export default function BlogGrid({ blogs }: BlogGridProps) {
+    const { t } = useLanguage();
+
     return (
         <section id="latest" className="container section-padding">
             <motion.div
@@ -17,9 +20,9 @@ export default function BlogGrid({ blogs }: BlogGridProps) {
                 transition={{ duration: 0.8 }}
                 className="mb-12"
             >
-                <h2 className="mb-4">Latest Research</h2>
+                <h2 className="mb-4">{t.blog.latest_research}</h2>
                 <p className="text-lg max-w-2xl" style={{ color: "var(--gray-300)" }}>
-                    Explore the most recent breakthroughs in medical artificial intelligence, summarized for clinical relevance.
+                    {t.blog.latest_desc}
                 </p>
             </motion.div>
 
@@ -45,7 +48,7 @@ export default function BlogGrid({ blogs }: BlogGridProps) {
 
             {blogs.length === 0 && (
                 <div className="text-center py-20 rounded-3xl bg-gray-50 border border-gray-100">
-                    <p className="text-gray-400">Nog geen blogs gepubliceerd.</p>
+                    <p className="text-gray-400">{t.blog.no_blogs}</p>
                 </div>
             )}
         </section>

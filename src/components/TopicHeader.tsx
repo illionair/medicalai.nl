@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface TopicHeaderProps {
     title: string;
@@ -9,6 +10,8 @@ interface TopicHeaderProps {
 }
 
 export default function TopicHeader({ title, description, color }: TopicHeaderProps) {
+    const { t } = useLanguage();
+
     // Map color classes to hex/variables for dynamic styling if needed, 
     // or just use the passed class.
     // Assuming 'color' is a tailwind class like "text-blue-600" or "bg-blue-500"
@@ -40,7 +43,7 @@ export default function TopicHeader({ title, description, color }: TopicHeaderPr
                     animate={{ opacity: 1, y: 0 }}
                     className="text-xs md:text-sm font-bold tracking-widest uppercase mb-4 bg-white/20 px-3 py-1 rounded-full backdrop-blur-md border border-white/10"
                 >
-                    Topic
+                    {t.topics.topic}
                 </motion.span>
 
                 <motion.h1
