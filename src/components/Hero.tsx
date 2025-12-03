@@ -38,8 +38,7 @@ export default function Hero() {
                     className="mb-6 max-w-4xl mx-auto text-slate-900 font-bold tracking-tight px-4"
                     style={{ fontSize: "clamp(36px, 6vw, 80px)", letterSpacing: "-0.03em" }}
                 >
-                    {t.hero.title_prefix} <br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">{t.hero.title_highlight}</span>
+                    {t.hero.title_prefix} <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">{t.hero.title_highlight}</span>
                 </motion.h1>
 
                 <motion.p
