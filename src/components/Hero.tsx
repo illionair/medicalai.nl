@@ -21,16 +21,6 @@ export default function Hero() {
 
             {/* Content Overlay */}
             <div className="relative z-10 container section-padding flex flex-col items-center">
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                >
-                    <span className="inline-block py-1 px-3 rounded-full bg-blue-50/80 text-blue-600 text-xs font-bold tracking-wide uppercase mb-6 border border-blue-100 backdrop-blur-sm shadow-sm">
-                        {t.hero.badge}
-                    </span>
-                </motion.div>
-
                 <motion.h1
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
