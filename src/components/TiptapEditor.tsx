@@ -68,15 +68,15 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
             },
         },
         onUpdate: ({ editor }) => {
-            // Get markdown output
-            const markdown = (editor.storage as any).markdown.getMarkdown();
-            onChange(markdown);
+            // Get HTML output to preserve all formatting (including empty lines)
+            const html = editor.getHTML();
+            onChange(html);
         },
     });
 
     // Sync content if value changes externally (and editor is not focused/active to avoid cursor jumps)
     useEffect(() => {
-        if (editor && value !== (editor.storage as any).markdown.getMarkdown()) {
+        if (editor && value !== editor.getHTML()) {
             // Only update if significantly different to avoid loops, 
             // but for now let's trust the user won't change it externally often.
             // editor.commands.setContent(value);
