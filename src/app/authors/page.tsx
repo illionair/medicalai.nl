@@ -1,19 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 const authors = [
     {
-        name: "Drs. S. Mahes",
-        role: "Editor-in-Chief",
-        bio: "Medical doctor and AI researcher(PhD) with a passion for bridging technology and clinical practice.",
+        name: "Drs. S.S. Mahes",
+        role: "Hoofdauteur & Oprichter",
+        bio: "Arts en AI-onderzoeker (PhD) met een passie voor het slaan van bruggen tussen technologie en de klinische praktijk.",
         initials: "SM"
-    },
-    {
-        name: "Medical AI Team",
-        role: "Editorial Board",
-        bio: "A collective of researchers and clinicians curating the latest advancements in medical AI.",
-        initials: "MA"
     }
 ];
 
@@ -25,17 +21,20 @@ export default function AuthorsPage() {
                 animate={{ opacity: 1, y: 0 }}
                 className="max-w-3xl mx-auto"
             >
-                <h1 className="text-4xl font-bold tracking-tight mb-12">Our Authors</h1>
+                <h1 className="text-4xl font-bold tracking-tight mb-4">Onze Auteurs</h1>
+                <p className="text-gray-500 text-lg mb-12">
+                    Maak kennis met de experts achter Medical AI.
+                </p>
 
-                <div className="grid gap-8">
+                <div className="grid gap-8 mb-16">
                     {authors.map((author) => (
-                        <div key={author.name} className="flex items-start gap-6 p-6 rounded-2xl bg-gray-50 border border-gray-100">
-                            <div className="w-16 h-16 rounded-full bg-black text-white flex items-center justify-center text-xl font-bold shrink-0">
+                        <div key={author.name} className="flex items-start gap-6 p-6 rounded-2xl bg-white border border-gray-100 shadow-sm">
+                            <div className="w-16 h-16 rounded-full bg-brand-secondary text-white flex items-center justify-center text-xl font-bold shrink-0">
                                 {author.initials}
                             </div>
                             <div>
-                                <h3 className="text-xl font-semibold">{author.name}</h3>
-                                <p className="text-blue-600 text-sm font-medium mb-2">{author.role}</p>
+                                <h3 className="text-xl font-bold text-gray-900">{author.name}</h3>
+                                <p className="text-brand-secondary text-sm font-medium mb-3">{author.role}</p>
                                 <p className="text-gray-600 leading-relaxed">
                                     {author.bio}
                                 </p>
@@ -43,6 +42,21 @@ export default function AuthorsPage() {
                         </div>
                     ))}
                 </div>
+
+                {/* Call for Authors */}
+                <div className="bg-brand-primary/5 rounded-3xl p-8 border border-brand-primary/10 text-center">
+                    <h2 className="text-2xl font-bold text-brand-dark mb-4">Word Mede-auteur</h2>
+                    <p className="text-gray-600 mb-8 max-w-xl mx-auto">
+                        Wij zijn actief op zoek naar medische professionals en onderzoekers die hun kennis willen delen met de community. Heb jij expertise op het gebied van Medical AI?
+                    </p>
+                    <Link
+                        href="/contact"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-brand-secondary text-white rounded-xl font-bold hover:bg-brand-primary transition-colors shadow-lg shadow-brand-secondary/20"
+                    >
+                        Neem contact op <ArrowRight size={18} />
+                    </Link>
+                </div>
+
             </motion.div>
         </div>
     );

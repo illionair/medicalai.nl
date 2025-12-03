@@ -163,3 +163,23 @@ p {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--gray-300);
 }
+
+/* Fix for empty paragraphs in editor and content */
+p {
+  min-height: 1.5em;
+}
+
+p:empty::before {
+  content: "\00a0";
+  visibility: hidden;
+}
+
+/* Tiptap specific */
+.ProseMirror p.is-empty::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  visibility: visible;
+}
