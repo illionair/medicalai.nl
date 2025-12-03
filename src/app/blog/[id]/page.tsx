@@ -97,11 +97,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                                         Medical AI is een platform voor en door medische professionals.
                                     </p>
                                     <div className="text-sm font-medium text-brand-secondary">
-                                        <p className="italic">
-                                            "We zijn altijd op zoek naar meer auteurs. Wil jij jouw kennis delen met de community? Neem dan contact met ons op!"
+                                        <p className="italic mb-2">
+                                            "Op dit moment is Drs. S.S. Mahes de hoofdauteur. Wij zijn echter actief op zoek naar mede-auteurs om het platform te versterken. Wil jij jouw kennis delen met de community?"
                                         </p>
-                                        <Link href="/contact" className="inline-block mt-2 hover:underline">
-                                            Word auteur &rarr;
+                                        <Link href="/contact" className="inline-flex items-center gap-1 hover:underline font-bold">
+                                            Neem contact op &rarr;
                                         </Link>
                                     </div>
                                 </div>
