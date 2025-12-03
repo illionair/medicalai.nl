@@ -36,7 +36,7 @@ const governanceTopics = [
         color: "bg-orange-50 text-orange-700 border-orange-100",
     },
     {
-        title: "AI-wetten",
+        title: "AI-regelgeving",
         description: "EU AI Act en regelgeving.",
         icon: <Shield size={24} />,
         color: "bg-red-50 text-red-700 border-red-100",

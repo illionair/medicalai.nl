@@ -11,7 +11,7 @@ const topicDescriptions: Record<string, string> = {
     "Methodisch": "Best practices for validation, bias mitigation, and implementation.",
     "Ethiek": "Regulatory frameworks, patient privacy, and algorithmic fairness.",
     "Prognostiek": "AI models for predicting disease course and treatment outcomes.",
-    "AI-wetten": "Understanding the EU AI Act and medical device regulations.",
+    "AI-regelgeving": "Understanding the EU AI Act and medical device regulations.",
     "Richtlijnen": "Clinical guidelines and implementation standards for AI.",
 };
 

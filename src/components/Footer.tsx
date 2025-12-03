@@ -13,7 +13,7 @@ export default function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                     {/* Brand & Summary */}
                     <div>
-                        <h3 className="text-white text-lg font-bold mb-4">Medical AI</h3>
+                        <h3 className="!text-white text-lg font-bold mb-4">Medical AI</h3>
                         <p className="text-sm leading-relaxed max-w-xs text-gray-400">
                             {t.footer.about_summary}
                         </p>
@@ -21,7 +21,7 @@ export default function Footer() {
 
                     {/* Quick Links */}
                     <div>
-                        <h3 className="text-white text-lg font-bold mb-4">{t.footer.quick_links}</h3>
+                        <h3 className="!text-white text-lg font-bold mb-4">{t.footer.quick_links}</h3>
                         <ul className="space-y-2 text-sm">
                             <li>
                                 <Link href="/#latest" className="text-gray-400 hover:text-white transition-colors">
@@ -43,7 +43,7 @@ export default function Footer() {
 
                     {/* Social & Contact */}
                     <div>
-                        <h3 className="text-white text-lg font-bold mb-4">Connect</h3>
+                        <h3 className="!text-white text-lg font-bold mb-4">Connect</h3>
                         <a
                             href="https://www.linkedin.com/company/110109298/"
                             target="_blank"
