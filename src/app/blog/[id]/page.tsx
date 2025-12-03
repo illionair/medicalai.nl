@@ -168,7 +168,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                         />
                     </div>
                 </div>
-            </div >
+            </div>
+
+            {/* Spacer to ensure footer separation */}
+            <div className="h-40"></div>
+        </div >
         </article >
     );
 }

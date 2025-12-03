@@ -174,6 +174,9 @@ export default function TopicsPage() {
                     </div>
                 </section>
 
+                {/* Spacer to ensure footer separation */}
+                <div className="h-40"></div>
+
             </div>
         </div>
     );
