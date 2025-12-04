@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { fetchAndSaveArticles, getArticlesByStatus, deleteArticle, generateBlogs, createManualArticle, createEmptyBlogPost } from "../actions";
+import { fetchAndSaveArticles, fetchAndSaveDoi, getArticlesByStatus, deleteArticle, generateBlogs, createManualArticle, createEmptyBlogPost } from "../actions";
 import { motion } from "framer-motion";
 import DraftsList from "@/components/DraftsList";
 import PublishedList from "@/components/PublishedList";
@@ -12,10 +12,11 @@ export default function AdminPage() {
     const [articles, setArticles] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     const [selected, setSelected] = useState<string[]>([]);
-    const [activeTab, setActiveTab] = useState<"fetch" | "manual">("fetch");
+    const [activeTab, setActiveTab] = useState<"fetch" | "doi" | "manual">("fetch");
 
     // Fetch State
     const [query, setQuery] = useState("artificial intelligence medicine");
+    const [doi, setDoi] = useState("");
 
     // Manual State
     const [manualForm, setManualForm] = useState({ title: "", abstract: "", authors: "", url: "" });
@@ -39,6 +40,19 @@ export default function AdminPage() {
         setLoading(false);
     }
 
+    async function handleDoiFetch() {
+        setLoading(true);
+        const result = await fetchAndSaveDoi(doi);
+        if (result.success) {
+            setDoi("");
+            await loadArticles();
+            alert(result.message || "Article fetched successfully!");
+        } else {
+            alert(result.error || "Failed to fetch article.");
+        }
+        setLoading(false);
+    }
+
     async function handleManualSubmit(e: React.FormEvent) {
         e.preventDefault();
         setLoading(true);
@@ -46,7 +60,7 @@ export default function AdminPage() {
         setManualForm({ title: "", abstract: "", authors: "", url: "" });
         await loadArticles();
         setLoading(false);
-        alert("Article added!");
+        alert("Article added manually!");
     }
 
     async function handleGenerate() {
@@ -84,6 +98,12 @@ export default function AdminPage() {
                     Fetch from PubMed
                 </button>
                 <button
+                    onClick={() => setActiveTab("doi")}
+                    className={`px-4 py-2 rounded-lg font-medium transition-colors ${activeTab === "doi" ? "bg-gray-100 text-black" : "text-gray-500 hover:text-black"}`}
+                >
+                    Fetch by DOI
+                </button>
+                <button
                     onClick={() => setActiveTab("manual")}
                     className={`px-4 py-2 rounded-lg font-medium transition-colors ${activeTab === "manual" ? "bg-gray-100 text-black" : "text-gray-500 hover:text-black"}`}
                 >
@@ -91,7 +111,7 @@ export default function AdminPage() {
                 </button>
             </div>
 
-            {activeTab === "fetch" ? (
+            {activeTab === "fetch" && (
                 <div className="mb-8 flex gap-4 items-end">
                     <div className="flex-grow">
                         <label className="block text-sm font-medium text-gray-700 mb-1">Search Query</label>
@@ -112,7 +132,32 @@ export default function AdminPage() {
                         {loading ? "Fetching..." : "Fetch"}
                     </button>
                 </div>
-            ) : (
+            )}
+
+            {activeTab === "doi" && (
+                <div className="mb-8 flex gap-4 items-end">
+                    <div className="flex-grow">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">DOI</label>
+                        <input
+                            type="text"
+                            value={doi}
+                            onChange={(e) => setDoi(e.target.value)}
+                            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                            placeholder="e.g. 10.1038/s41591-023-02361-0"
+                        />
+                    </div>
+                    <button
+                        onClick={handleDoiFetch}
+                        disabled={loading}
+                        className="px-6 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 h-[50px]"
+                        style={{ backgroundColor: "var(--accent)" }}
+                    >
+                        {loading ? "Fetching..." : "Fetch DOI"}
+                    </button>
+                </div>
+            )}
+
+            {activeTab === "manual" && (
                 <form onSubmit={handleManualSubmit} className="mb-8 p-6 rounded-2xl border border-gray-200 bg-gray-50">
                     <div className="grid gap-4">
                         <div>
@@ -179,7 +224,7 @@ export default function AdminPage() {
                         <textarea
                             value={customInstructions}
                             onChange={(e) => setCustomInstructions(e.target.value)}
-                            className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm min-h-[80px]"
+                            className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm min-h-[80px] text-black"
                             placeholder="e.g. 'Write in a pirate voice', 'Focus on clinical implications', 'Use simple language'..."
                         />
                     </div>

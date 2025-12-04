@@ -67,7 +67,7 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
         content: value,
         editorProps: {
             attributes: {
-                class: 'prose prose-lg prose-slate max-w-none focus:outline-none min-h-[500px] p-8',
+                class: 'prose prose-lg prose-slate max-w-none focus:outline-none min-h-[500px] p-8 text-black prose-p:text-black prose-headings:text-black prose-strong:text-black prose-li:text-black',
             },
         },
         onUpdate: ({ editor }) => {

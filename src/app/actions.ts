@@ -84,6 +84,37 @@ export async function fetchAndSaveArticles(term: string = "artificial intelligen
     return { success: true, count };
 }
 
+export async function fetchAndSaveDoi(doi: string) {
+    const { fetchArticleByDoi } = await import("@/lib/pubmed");
+    const article = await fetchArticleByDoi(doi);
+
+    if (!article) {
+        return { success: false, error: "Article not found" };
+    }
+
+    const existing = await prisma.article.findUnique({
+        where: { pubmedId: article.pubmedId },
+    });
+
+    if (!existing) {
+        await prisma.article.create({
+            data: {
+                pubmedId: article.pubmedId,
+                title: article.title,
+                abstract: article.abstract,
+                authors: article.authors,
+                journal: article.journal,
+                url: article.url,
+                status: "FETCHED",
+            },
+        });
+        revalidatePath("/admin");
+        return { success: true, article };
+    }
+
+    return { success: true, article, message: "Article already exists" };
+}
+
 export async function getArticlesByStatus(status: string) {
     return await prisma.article.findMany({
         where: { status },
