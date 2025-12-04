@@ -275,8 +275,26 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-xs font-medium text-gray-500 mb-1">Specialism (Legacy)</label>
-                                    <input type="text" value={specialism} onChange={(e) => setSpecialism(e.target.value)} className="w-full p-2 border rounded-lg text-sm text-black" placeholder="Radiologie, Cardiologie..." />
+                                    <label className="block text-xs font-medium text-gray-500 mb-1">Specialism</label>
+                                    <select value={specialism} onChange={(e) => setSpecialism(e.target.value)} className="w-full p-2 border rounded-lg text-sm text-black">
+                                        <option value="">Select Specialism...</option>
+                                        <option value="Cardiologie">Cardiologie</option>
+                                        <option value="Radiologie">Radiologie</option>
+                                        <option value="Neurologie">Neurologie</option>
+                                        <option value="Oncologie">Oncologie</option>
+                                        <option value="Dermatologie">Dermatologie</option>
+                                        <option value="Oogheelkunde">Oogheelkunde</option>
+                                        <option value="Pathologie">Pathologie</option>
+                                        <option value="Huisartsgeneeskunde">Huisartsgeneeskunde</option>
+                                        <option value="Psychiatrie">Psychiatrie</option>
+                                        <option value="Chirurgie">Chirurgie</option>
+                                        <option value="Interne Geneeskunde">Interne Geneeskunde</option>
+                                        <option value="Kindergeneeskunde">Kindergeneeskunde</option>
+                                        <option value="Gynaecologie">Gynaecologie</option>
+                                        <option value="Urologie">Urologie</option>
+                                        <option value="Orthopedie">Orthopedie</option>
+                                        <option value="Intensive Care">Intensive Care</option>
+                                    </select>
                                 </div>
                                 <div>
                                     <label className="block text-xs font-medium text-gray-500 mb-1">Cost Category</label>
