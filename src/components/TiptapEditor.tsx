@@ -68,7 +68,7 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
         content: value,
         editorProps: {
             attributes: {
-                class: 'prose prose-lg prose-gray max-w-none prose-headings:font-bold prose-headings:text-brand-dark prose-p:text-gray-900 prose-li:text-gray-900 prose-a:text-brand-secondary hover:prose-a:text-brand-primary prose-img:rounded-2xl prose-img:shadow-md prose-strong:text-brand-dark focus:outline-none min-h-[500px] p-8',
+                class: 'prose prose-lg prose-gray max-w-3xl mx-auto prose-headings:font-bold prose-headings:text-brand-dark prose-p:text-gray-900 prose-li:text-gray-900 prose-a:text-brand-secondary hover:prose-a:text-brand-primary prose-img:rounded-2xl prose-img:shadow-md prose-strong:text-brand-dark focus:outline-none min-h-[500px] p-8',
             },
         },
         onUpdate: ({ editor }) => {
