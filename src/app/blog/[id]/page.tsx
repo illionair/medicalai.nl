@@ -84,12 +84,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                             </div>
                         )}
 
-                        <div className="prose prose-lg prose-gray max-w-none 
-                            prose-headings:font-bold prose-headings:text-brand-dark 
-                            prose-p:text-gray-900 prose-li:text-gray-900
-                            prose-a:text-brand-secondary hover:prose-a:text-brand-primary 
-                            prose-img:rounded-2xl prose-img:shadow-md
-                            prose-strong:text-brand-dark">
+                        <div className="typography-theme max-w-none">
                             <ReactMarkdown
                                 rehypePlugins={[rehypeRaw]}
                                 urlTransform={(value) => value} // Allow data: URIs

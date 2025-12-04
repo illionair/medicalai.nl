@@ -227,64 +227,86 @@ p:empty::before {
 }
 
 /* Heading styles for editor */
-.ProseMirror h1 {
-  font-size: 2em;
+/* Custom Typography Theme */
+.typography-theme {
+  font-family: var(--font-inter), var(--font-lato), "Arial", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #1A1A1A;
+}
+
+.typography-theme h1,
+.typography-theme h2,
+.typography-theme h3,
+.typography-theme h4 {
   font-weight: 700;
-  margin: 0.67em 0;
+  color: #0F2549;
+  margin-top: 2.4rem;
 }
 
-.ProseMirror h2 {
-  font-size: 1.5em;
-  font-weight: 700;
-  margin: 0.75em 0;
+.typography-theme h1 {
+  font-size: 2rem;
+  line-height: 1.3;
+  margin-bottom: 1.2rem;
 }
 
-.ProseMirror h3 {
-  font-size: 1.17em;
-  font-weight: 700;
-  margin: 0.83em 0;
+.typography-theme h2 {
+  font-size: 1.6rem;
+  line-height: 1.35;
+  margin-bottom: 1.2rem;
 }
 
-.ProseMirror p {
-  margin-top: 1.25em;
-  margin-bottom: 1.25em;
-  line-height: 1.8;
+.typography-theme h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
 }
 
-/* Ensure empty paragraphs have height */
-.ProseMirror p:empty::before {
-  content: "\00a0";
-  display: inline-block;
+.typography-theme h4 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
 }
 
-.ProseMirror ul,
-.ProseMirror ol {
-  padding-left: 1.5em;
-  margin: 1em 0;
+.typography-theme p {
+  margin-top: 0;
+  margin-bottom: 1.2rem;
+  max-width: 760px;
 }
 
-.ProseMirror blockquote {
-  border-left: 3px solid #ddd;
-  padding-left: 1em;
-  margin: 1em 0;
-  color: #666;
+.typography-theme ul,
+.typography-theme ol {
+  margin-top: 1.2rem;
+  margin-bottom: 1.2rem;
+  padding-left: 1.4rem;
+  list-style-type: disc;
 }
 
-/* Code block styling */
-.ProseMirror pre {
-  background: #f4f4f5;
-  padding: 1em;
-  border-radius: 0.5em;
-  overflow-x: auto;
-  margin: 1em 0;
+.typography-theme ol {
+  list-style-type: decimal;
 }
 
-.ProseMirror code {
-  font-family: 'Courier New', Courier, monospace;
-  background: #f4f4f5;
-  padding: 0.2em 0.4em;
-  border-radius: 0.25em;
-  font-size: 0.9em;
+.typography-theme li {
+  margin-bottom: 0.4rem;
+}
+
+.typography-theme a {
+  color: #0F5FA8;
+  text-decoration: none;
+}
+
+.typography-theme a:hover {
+  text-decoration: underline;
+}
+
+/* Apply to Tiptap Editor */
+.ProseMirror {
+  @apply typography-theme;
+}
+
+/* Ensure editor specific overrides still work if needed, but base it on theme */
+.ProseMirror:focus {
+  outline: none;
 }
 
 .ProseMirror pre code {
