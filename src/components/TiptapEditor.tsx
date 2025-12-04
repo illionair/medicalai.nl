@@ -59,7 +59,7 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
             }),
             Markdown.configure({
                 html: true, // Allow HTML for colors/alignment
-                transformPastedText: true,
+                transformPastedText: false, // Disable markdown transformation on paste to preserve HTML structure
                 transformCopiedText: true,
                 breaks: true, // Preserve soft breaks as newlines
                 tightLists: false, // Prevent tight lists
