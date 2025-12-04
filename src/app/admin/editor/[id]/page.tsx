@@ -234,13 +234,34 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
                                 <div>
                                     <label className="block text-xs font-medium text-gray-500 mb-1">Main Category</label>
                                     <select value={category} onChange={(e) => setCategory(e.target.value)} className="w-full p-2 border rounded-lg text-sm text-black">
-                                        <option value="Predictie">Predictie</option>
-                                        <option value="Diagnostiek">Diagnostiek</option>
-                                        <option value="Methodisch">Methodisch</option>
-                                        <option value="Ethiek">Ethiek</option>
-                                        <option value="Prognostisch">Prognostisch</option>
-                                        <option value="Logistiek & Planning">Logistiek & Planning</option>
-                                        <option value="Generatieve AI">Generatieve AI</option>
+                                        <optgroup label="Klinische AI & Methodologie">
+                                            <option value="Diagnostiek">Diagnostiek</option>
+                                            <option value="Predictie">Predictie</option>
+                                            <option value="Prognostiek">Prognostiek</option>
+                                        </optgroup>
+                                        <optgroup label="Governance, Ethiek & Wetgeving">
+                                            <option value="Ethiek">Ethiek</option>
+                                            <option value="AI-regelgeving">AI-regelgeving</option>
+                                            <option value="Richtlijnen">Richtlijnen</option>
+                                        </optgroup>
+                                        <optgroup label="Medische Specialismen">
+                                            <option value="Cardiologie">Cardiologie</option>
+                                            <option value="Radiologie">Radiologie</option>
+                                            <option value="Neurologie">Neurologie</option>
+                                            <option value="Oncologie">Oncologie</option>
+                                            <option value="Dermatologie">Dermatologie</option>
+                                            <option value="Oogheelkunde">Oogheelkunde</option>
+                                            <option value="Pathologie">Pathologie</option>
+                                            <option value="Huisartsgeneeskunde">Huisartsgeneeskunde</option>
+                                            <option value="Psychiatrie">Psychiatrie</option>
+                                            <option value="Chirurgie">Chirurgie</option>
+                                            <option value="Interne Geneeskunde">Interne Geneeskunde</option>
+                                            <option value="Kindergeneeskunde">Kindergeneeskunde</option>
+                                            <option value="Gynaecologie">Gynaecologie</option>
+                                            <option value="Urologie">Urologie</option>
+                                            <option value="Orthopedie">Orthopedie</option>
+                                            <option value="Intensive Care">Intensive Care</option>
+                                        </optgroup>
                                     </select>
                                 </div>
                                 <div>
@@ -369,6 +390,7 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
                                     <div className="flex flex-wrap gap-2">
                                         {["Homepage", "Publicaties", "Guidelines"].map((loc) => (
                                             <button
+                                                type="button"
                                                 key={loc}
                                                 onClick={() => {
                                                     if (displayLocations.includes(loc)) {

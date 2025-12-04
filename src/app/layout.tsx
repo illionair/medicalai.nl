@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Lato } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { LanguageProvider } from "@/context/LanguageContext";
 
-const inter = Inter({ subsets: ["latin"] });
+const lato = Lato({
+  subsets: ["latin"],
+  weight: ["300", "400", "700", "900"]
+});
 
 export const metadata: Metadata = {
   title: "Medical AI",
@@ -22,7 +25,7 @@ export default function RootLayout({
       <head>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6655451473844019" crossOrigin="anonymous"></script>
       </head>
-      <body className={`${inter.className} antialiased`}>
+      <body className={`${lato.className} antialiased`}>
         <LanguageProvider>
           <Navbar />
           <main className="min-h-screen">

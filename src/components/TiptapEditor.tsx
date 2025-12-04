@@ -4,6 +4,7 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Color } from "@tiptap/extension-color";
 import { TextStyle } from "@tiptap/extension-text-style";
+import FontFamily from "@tiptap/extension-font-family";
 import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
 import { Table } from "@tiptap/extension-table";
@@ -20,7 +21,7 @@ import {
     List, ListOrdered, Quote, Code,
     Heading1, Heading2, Heading3,
     Link as LinkIcon, Image as ImageIcon, Table as TableIcon,
-    Undo, Redo, Minus
+    Undo, Redo, Minus, Eraser
 } from "lucide-react";
 import React, { useEffect } from "react";
 
@@ -36,7 +37,7 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
             StarterKit,
             TextStyle,
             Color,
-            Underline,
+            FontFamily,
             Underline,
             Image.configure({
                 allowBase64: true,
@@ -67,7 +68,7 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
         content: value,
         editorProps: {
             attributes: {
-                class: 'prose prose-lg prose-slate max-w-none focus:outline-none min-h-[500px] p-8 text-black prose-p:text-black prose-headings:text-black prose-strong:text-black prose-li:text-black',
+                class: 'max-w-none focus:outline-none min-h-[500px] p-8 text-black',
             },
         },
         onUpdate: ({ editor }) => {
@@ -167,9 +168,14 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
                         icon={<Strikethrough size={16} />}
                         tooltip="Strikethrough"
                     />
+                    <ToolbarBtn
+                        onClick={() => editor.chain().focus().unsetAllMarks().clearNodes().run()}
+                        icon={<Eraser size={16} />}
+                        tooltip="Clear Formatting"
+                    />
                 </div>
 
-                {/* Colors */}
+                {/* Colors, Font Size & Font Family */}
                 <div className="flex items-center border-r border-gray-300 pr-2 mr-1 gap-1">
                     <input
                         type="color"
@@ -178,6 +184,49 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
                         className="w-8 h-8 p-0 border-0 rounded cursor-pointer"
                         title="Text Color"
                     />
+                    <select
+                        onChange={(e) => {
+                            const size = e.target.value;
+                            if (size === 'default') {
+                                editor.chain().focus().unsetMark('textStyle').run();
+                            } else {
+                                editor.chain().focus().setMark('textStyle', { fontSize: size }).run();
+                            }
+                        }}
+                        className="h-8 px-2 text-xs text-gray-800 border border-gray-300 rounded bg-white cursor-pointer"
+                        title="Font Size"
+                        defaultValue="default"
+                    >
+                        <option value="default">Grootte</option>
+                        <option value="12px">12px</option>
+                        <option value="14px">14px</option>
+                        <option value="16px">16px</option>
+                        <option value="18px">18px</option>
+                        <option value="20px">20px</option>
+                        <option value="24px">24px</option>
+                        <option value="28px">28px</option>
+                        <option value="32px">32px</option>
+                    </select>
+                    <select
+                        onChange={(e) => {
+                            const font = e.target.value;
+                            if (font === 'default') {
+                                editor.chain().focus().unsetFontFamily().run();
+                            } else {
+                                editor.chain().focus().setFontFamily(font).run();
+                            }
+                        }}
+                        className="h-8 px-2 text-xs text-gray-800 border border-gray-300 rounded bg-white cursor-pointer"
+                        title="Font Family"
+                        defaultValue="default"
+                    >
+                        <option value="default">Lettertype</option>
+                        <option value="Lato">Lato</option>
+                        <option value="Arial">Arial</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                        <option value="Courier New">Courier New</option>
+                    </select>
                 </div>
 
                 {/* Alignment */}

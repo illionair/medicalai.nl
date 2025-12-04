@@ -41,7 +41,7 @@
   --radius-md: 16px;
   --radius-sm: 8px;
 
-  --font-sans: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-sans: "Lato", -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -175,7 +175,7 @@ p:empty::before {
   visibility: hidden;
 }
 
-/* Tiptap specific */
+/* Tiptap placeholder */
 .ProseMirror p.is-empty::before {
   color: #adb5bd;
   content: attr(data-placeholder);
@@ -183,4 +183,105 @@ p:empty::before {
   height: 0;
   pointer-events: none;
   visibility: visible;
+}
+
+/* Allow inline font-family styles to work in Tiptap */
+.ProseMirror span[style] {
+  font-family: inherit;
+}
+
+/* Specific font-family overrides for Tiptap - Match both with and without space */
+.ProseMirror [style*="font-family: Lato"],
+.ProseMirror [style*="font-family:Lato"],
+.ProseMirror [style*="font-family: 'Lato"],
+.ProseMirror [style*='font-family: "Lato'] {
+  font-family: 'Lato', sans-serif !important;
+}
+
+.ProseMirror [style*="font-family: Arial"],
+.ProseMirror [style*="font-family:Arial"],
+.ProseMirror [style*="font-family: 'Arial"],
+.ProseMirror [style*='font-family: "Arial'] {
+  font-family: Arial, sans-serif !important;
+}
+
+.ProseMirror [style*="font-family: Georgia"],
+.ProseMirror [style*="font-family:Georgia"],
+.ProseMirror [style*="font-family: 'Georgia"],
+.ProseMirror [style*='font-family: "Georgia'] {
+  font-family: Georgia, serif !important;
+}
+
+.ProseMirror [style*="font-family: Times"],
+.ProseMirror [style*="font-family:Times"],
+.ProseMirror [style*="font-family: 'Times"],
+.ProseMirror [style*='font-family: "Times'] {
+  font-family: 'Times New Roman', serif !important;
+}
+
+.ProseMirror [style*="font-family: Courier"],
+.ProseMirror [style*="font-family:Courier"],
+.ProseMirror [style*="font-family: 'Courier"],
+.ProseMirror [style*='font-family: "Courier'] {
+  font-family: 'Courier New', monospace !important;
+}
+
+/* Heading styles for editor */
+.ProseMirror h1 {
+  font-size: 2em;
+  font-weight: 700;
+  margin: 0.67em 0;
+}
+
+.ProseMirror h2 {
+  font-size: 1.5em;
+  font-weight: 700;
+  margin: 0.75em 0;
+}
+
+.ProseMirror h3 {
+  font-size: 1.17em;
+  font-weight: 700;
+  margin: 0.83em 0;
+}
+
+.ProseMirror p {
+  margin: 1em 0;
+}
+
+.ProseMirror ul,
+.ProseMirror ol {
+  padding-left: 1.5em;
+  margin: 1em 0;
+}
+
+.ProseMirror blockquote {
+  border-left: 3px solid #ddd;
+  padding-left: 1em;
+  margin: 1em 0;
+  color: #666;
+}
+
+/* Code block styling */
+.ProseMirror pre {
+  background: #f4f4f5;
+  padding: 1em;
+  border-radius: 0.5em;
+  overflow-x: auto;
+  margin: 1em 0;
+}
+
+.ProseMirror code {
+  font-family: 'Courier New', Courier, monospace;
+  background: #f4f4f5;
+  padding: 0.2em 0.4em;
+  border-radius: 0.25em;
+  font-size: 0.9em;
+}
+
+.ProseMirror pre code {
+  background: none;
+  padding: 0;
+  font-size: 1em;
+  color: inherit;
 }

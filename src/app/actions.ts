@@ -257,6 +257,9 @@ export async function updateBlogPost(id: string, data: {
     guidelineCategory?: string;
     displayLocations?: string[];
 }) {
+    console.log("Updating Blog Post:", id);
+    console.log("Data:", JSON.stringify(data, null, 2));
+
     const blog = await prisma.blogPost.update({
         where: { id },
         data: {
