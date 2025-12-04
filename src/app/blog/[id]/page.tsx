@@ -103,6 +103,24 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                             </ReactMarkdown>
                         </div>
 
+                        {/* Mobile-only Quick Facts & Details */}
+                        <div className="lg:hidden mb-12">
+                            <BlogSidebar
+                                developer={blog.developer}
+                                demoUrl={blog.demoUrl}
+                                vendorUrl={blog.vendorUrl}
+                                privacy={blog.privacy}
+                                privacyType={blog.privacyType}
+                                integration={blog.integration}
+                                fdaStatus={blog.fdaStatus}
+                                fdaNumber={blog.fdaNumber}
+                                ceStatus={blog.ceStatus}
+                                specialism={blog.specialism}
+                                cost={blog.cost}
+                                modelType={blog.modelType}
+                            />
+                        </div>
+
                         {/* Author & CTA Section */}
                         <div className="mt-12 p-6 bg-brand-secondary/5 rounded-2xl border border-brand-secondary/10">
                             <div className="flex items-start gap-4">
@@ -165,8 +183,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                         </div>
                     </div>
 
-                    {/* Sidebar Column */}
-                    <div className="lg:col-span-4">
+                    {/* Sidebar Column (Desktop Only) */}
+                    <div className="hidden lg:block lg:col-span-4">
                         <BlogSidebar
                             developer={blog.developer}
                             demoUrl={blog.demoUrl}
