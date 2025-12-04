@@ -178,7 +178,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                         {/* Disclaimer */}
                         <div className="mt-8 pt-8 border-t border-slate-100 text-xs text-slate-400 italic">
                             <p>
-                                <strong>Disclaimer:</strong> Deze content is met zorg samengesteld (deels via AI) en gecontroleerd door artsen. Het is geen vervanging voor medisch advies. Raadpleeg altijd originele bronnen/richtlijnen. Medical AI is niet aansprakelijk voor onjuistheden.
+                                <strong>Disclaimer:</strong> Dit artikel is gebaseerd op publiek beschikbare informatie tot {new Date(blog.createdAt).toLocaleDateString("nl-NL", { month: 'long', year: 'numeric' })}. Voor medische besluitvorming dient altijd de meest actuele literatuur en lokale richtlijnen geraadpleegd te worden.
                             </p>
                         </div>
                     </div>
@@ -205,6 +205,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
 
             {/* Spacer to ensure footer separation */}
             <div className="h-40"></div>
-        </article>
+        </article >
     );
 }
