@@ -3,6 +3,7 @@
 import { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
 import { updateBlogPost, publishBlogPost, getBlogPost, getTags, createTag } from "@/app/actions";
+import { specialisms } from "@/lib/constants";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import TiptapEditor from "@/components/TiptapEditor";
@@ -57,46 +58,47 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
             ]);
 
             if (data) {
-                setBlog(data);
-                setContent(data.content);
-                setTitle(data.title);
-                setSummary(data.summary || "");
-                setCategory(data.category);
-                setIsGuideline(data.isGuideline);
-                if (data.scheduledFor) {
-                    const date = new Date(data.scheduledFor);
+                const blogData = data as any;
+                setBlog(blogData);
+                setContent(blogData.content);
+                setTitle(blogData.title);
+                setSummary(blogData.summary || "");
+                setCategory(blogData.category);
+                setIsGuideline(blogData.isGuideline);
+                if (blogData.scheduledFor) {
+                    const date = new Date(blogData.scheduledFor);
                     date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
                     setScheduledFor(date.toISOString().slice(0, 16));
                 }
 
                 // Load new fields
-                setSpecialism(data.specialism || "");
-                setCeStatus(data.ceStatus || "");
-                setCost(data.cost || "");
-                setModelType(data.modelType || "");
-                setDoi(data.doi || "");
-                setCitation(data.citation || "");
-                setDeveloper(data.developer || "");
-                setPrivacyType(data.privacyType || "");
-                setIntegration(data.integration || "");
-                setDemoUrl(data.demoUrl || "");
-                setVendorUrl(data.vendorUrl || "");
-                setFdaStatus(data.fdaStatus || "");
-                setFdaNumber(data.fdaNumber || "");
+                setSpecialism(blogData.specialism || "");
+                setCeStatus(blogData.ceStatus || "");
+                setCost(blogData.cost || "");
+                setModelType(blogData.modelType || "");
+                setDoi(blogData.doi || "");
+                setCitation(blogData.citation || "");
+                setDeveloper(blogData.developer || "");
+                setPrivacyType(blogData.privacyType || "");
+                setIntegration(blogData.integration || "");
+                setDemoUrl(blogData.demoUrl || "");
+                setVendorUrl(blogData.vendorUrl || "");
+                setFdaStatus(blogData.fdaStatus || "");
+                setFdaNumber(blogData.fdaNumber || "");
 
                 // Load display settings
-                setCoverImage(data.coverImage || "");
-                setDisplayLocations(data.displayLocations || []);
-                setGuidelineCategory(data.guidelineCategory || "");
+                setCoverImage(blogData.coverImage || "");
+                setDisplayLocations(blogData.displayLocations || []);
+                setGuidelineCategory(blogData.guidelineCategory || "");
 
                 // Load tags
-                if (data.tags) {
-                    setTags(data.tags.map((t: any) => t.id));
+                if (blogData.tags) {
+                    setTags(blogData.tags.map((t: any) => t.id));
                 }
 
                 // Load authors
-                if (data.article && data.article.authors) {
-                    setAuthors(data.article.authors);
+                if (blogData.article && blogData.article.authors) {
+                    setAuthors(blogData.article.authors);
                 }
             }
             if (allTags) {
@@ -278,22 +280,10 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
                                     <label className="block text-xs font-medium text-gray-500 mb-1">Specialism</label>
                                     <select value={specialism} onChange={(e) => setSpecialism(e.target.value)} className="w-full p-2 border rounded-lg text-sm text-black">
                                         <option value="">Select Specialism...</option>
-                                        <option value="Cardiologie">Cardiologie</option>
-                                        <option value="Radiologie">Radiologie</option>
-                                        <option value="Neurologie">Neurologie</option>
-                                        <option value="Oncologie">Oncologie</option>
-                                        <option value="Dermatologie">Dermatologie</option>
-                                        <option value="Oogheelkunde">Oogheelkunde</option>
-                                        <option value="Pathologie">Pathologie</option>
-                                        <option value="Huisartsgeneeskunde">Huisartsgeneeskunde</option>
-                                        <option value="Psychiatrie">Psychiatrie</option>
-                                        <option value="Chirurgie">Chirurgie</option>
-                                        <option value="Interne Geneeskunde">Interne Geneeskunde</option>
-                                        <option value="Kindergeneeskunde">Kindergeneeskunde</option>
-                                        <option value="Gynaecologie">Gynaecologie</option>
-                                        <option value="Urologie">Urologie</option>
-                                        <option value="Orthopedie">Orthopedie</option>
-                                        <option value="Intensive Care">Intensive Care</option>
+                                        <option value="Alle Specialismen">Alle Specialismen</option>
+                                        {specialisms.map(s => (
+                                            <option key={s} value={s}>{s}</option>
+                                        ))}
                                     </select>
                                 </div>
                                 <div>

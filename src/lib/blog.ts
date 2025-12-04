@@ -29,24 +29,34 @@ export async function getPublishedBlogsByCategory(category: string) {
     });
 }
 
+import { specialisms } from "@/lib/constants";
+
 export async function getBlogsForTopic(topic: string) {
+    const isSpecialism = specialisms.includes(topic);
+
+    const whereClause: any = {
+        published: true,
+        OR: [
+            { category: { equals: topic, mode: 'insensitive' } },
+            { specialism: { equals: topic, mode: 'insensitive' } },
+            { tags: { some: { name: { equals: topic, mode: 'insensitive' } } } }
+        ],
+        AND: [
+            {
+                OR: [
+                    { scheduledFor: null },
+                    { scheduledFor: { lte: new Date() } }
+                ]
+            }
+        ]
+    };
+
+    if (isSpecialism) {
+        whereClause.OR.push({ specialism: "Alle Specialismen" });
+    }
+
     return await prisma.blogPost.findMany({
-        where: {
-            published: true,
-            OR: [
-                { category: { equals: topic, mode: 'insensitive' } },
-                { specialism: { equals: topic, mode: 'insensitive' } },
-                { tags: { some: { name: { equals: topic, mode: 'insensitive' } } } }
-            ],
-            AND: [
-                {
-                    OR: [
-                        { scheduledFor: null },
-                        { scheduledFor: { lte: new Date() } }
-                    ]
-                }
-            ]
-        },
+        where: whereClause,
         orderBy: { createdAt: "desc" },
         include: { tags: true }
     });
