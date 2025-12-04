@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getDraftBlogs } from "@/app/actions";
+import { getDraftBlogs, deleteBlogPost } from "@/app/actions";
 import Link from "next/link";
 
 export default function DraftsList() {
@@ -25,12 +25,25 @@ export default function DraftsList() {
                         <h3 className="font-medium">{draft.title}</h3>
                         <p className="text-xs text-gray-500">Category: {draft.category}</p>
                     </div>
-                    <Link
-                        href={`/admin/editor/${draft.id}`}
-                        className="px-4 py-2 text-sm font-medium text-black bg-yellow-100 rounded-lg hover:bg-yellow-200 transition-colors"
-                    >
-                        Edit & Publish
-                    </Link>
+                    <div className="flex gap-2">
+                        <Link
+                            href={`/admin/editor/${draft.id}`}
+                            className="px-4 py-2 text-sm font-medium text-black bg-yellow-100 rounded-lg hover:bg-yellow-200 transition-colors"
+                        >
+                            Edit & Publish
+                        </Link>
+                        <button
+                            onClick={async () => {
+                                if (confirm("Are you sure you want to delete this draft?")) {
+                                    await deleteBlogPost(draft.id);
+                                    window.location.reload();
+                                }
+                            }}
+                            className="px-4 py-2 text-sm font-medium text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-colors"
+                        >
+                            Delete
+                        </button>
+                    </div>
                 </div>
             ))}
         </div>

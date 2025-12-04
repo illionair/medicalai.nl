@@ -400,3 +400,41 @@ export async function sendContactEmail(formData: FormData) {
         return { success: false, error: "Failed to send email" };
     }
 }
+
+export async function deleteBlogPost(id: string) {
+    const blog = await prisma.blogPost.findUnique({
+        where: { id },
+        include: { article: true }
+    });
+
+    if (!blog) return;
+
+    // Delete the blog post
+    await prisma.blogPost.delete({ where: { id } });
+
+    // If it was a manual entry (created via createEmptyBlogPost), we might want to delete the article too
+    // Or just reset the status to FETCHED so it appears in the list again
+    if (blog.article) {
+        if (blog.article.pubmedId.startsWith('manual-')) {
+            await prisma.article.delete({ where: { id: blog.articleId } });
+        } else {
+            await prisma.article.update({
+                where: { id: blog.articleId },
+                data: { status: "FETCHED" },
+            });
+        }
+    }
+
+    revalidatePath("/admin");
+    revalidatePath("/");
+}
+
+export async function unpublishBlogPost(id: string) {
+    await prisma.blogPost.update({
+        where: { id },
+        data: { published: false },
+    });
+
+    revalidatePath("/admin");
+    revalidatePath("/");
+}
