@@ -221,6 +221,10 @@ export async function updateBlogPost(id: string, data: {
     tags?: string[]; // Array of Tag IDs
     authors?: string;
     summary?: string;
+    // Guidelines & Display
+    coverImage?: string;
+    guidelineCategory?: string;
+    displayLocations?: string[];
 }) {
     const blog = await prisma.blogPost.update({
         where: { id },
@@ -244,6 +248,10 @@ export async function updateBlogPost(id: string, data: {
             vendorUrl: data.vendorUrl,
             fdaStatus: data.fdaStatus,
             fdaNumber: data.fdaNumber,
+            // New fields
+            coverImage: data.coverImage,
+            guidelineCategory: data.guidelineCategory,
+            displayLocations: data.displayLocations,
             tags: data.tags ? {
                 set: data.tags.map(tagId => ({ id: tagId }))
             } : undefined

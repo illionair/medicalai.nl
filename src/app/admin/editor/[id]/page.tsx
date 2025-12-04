@@ -38,6 +38,11 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
     const [fdaNumber, setFdaNumber] = useState("");
     const [authors, setAuthors] = useState("");
 
+    // Guidelines & Display
+    const [coverImage, setCoverImage] = useState("");
+    const [displayLocations, setDisplayLocations] = useState<string[]>([]);
+    const [guidelineCategory, setGuidelineCategory] = useState("");
+
     // Tags
     const [tags, setTags] = useState<string[]>([]);
     const [availableTags, setAvailableTags] = useState<{ id: string; name: string }[]>([]);
@@ -79,6 +84,11 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
                 setFdaStatus(data.fdaStatus || "");
                 setFdaNumber(data.fdaNumber || "");
 
+                // Load display settings
+                setCoverImage(data.coverImage || "");
+                setDisplayLocations(data.displayLocations || []);
+                setGuidelineCategory(data.guidelineCategory || "");
+
                 // Load tags
                 if (data.tags) {
                     setTags(data.tags.map((t: any) => t.id));
@@ -103,7 +113,8 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
         await updateBlogPost(id, {
             title, content, summary, category, isGuideline, scheduledFor: scheduledDate,
             specialism, ceStatus, cost, modelType, doi, citation, developer, privacyType, integration, demoUrl, vendorUrl, fdaStatus, fdaNumber,
-            tags, authors
+            tags, authors,
+            coverImage, displayLocations, guidelineCategory
         });
         setSaving(false);
     }
@@ -114,7 +125,8 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
         await updateBlogPost(id, {
             title, content, summary, category, isGuideline, scheduledFor: scheduledDate,
             specialism, ceStatus, cost, modelType, doi, citation, developer, privacyType, integration, demoUrl, vendorUrl, fdaStatus, fdaNumber,
-            tags, authors
+            tags, authors,
+            coverImage, displayLocations, guidelineCategory
         });
         await publishBlogPost(id);
         router.push("/admin");
@@ -326,6 +338,74 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
                                     <label className="block text-xs font-medium text-gray-500 mb-1">Citation Text</label>
                                     <input type="text" value={citation} onChange={(e) => setCitation(e.target.value)} className="w-full p-2 border rounded-lg text-sm text-black" placeholder="Author et al. (Year)..." />
                                 </div>
+                            </div>
+
+                            {/* Display Settings */}
+                            <div className="space-y-4">
+                                <h3 className="font-bold text-sm border-b pb-2">Display Settings</h3>
+                                <div>
+                                    <label className="block text-xs font-medium text-gray-500 mb-1">Cover Image (Card)</label>
+                                    <div className="flex items-center gap-4">
+                                        {coverImage && (
+                                            <img src={coverImage} alt="Cover" className="w-16 h-16 object-cover rounded-lg border" />
+                                        )}
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={(e) => {
+                                                const file = e.target.files?.[0];
+                                                if (file) {
+                                                    const reader = new FileReader();
+                                                    reader.onload = (ev) => setCoverImage(ev.target?.result as string);
+                                                    reader.readAsDataURL(file);
+                                                }
+                                            }}
+                                            className="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-primary/10 file:text-brand-primary hover:file:bg-brand-primary/20"
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-medium text-gray-500 mb-1">Display Locations</label>
+                                    <div className="flex flex-wrap gap-2">
+                                        {["Homepage", "Publicaties", "Guidelines"].map((loc) => (
+                                            <button
+                                                key={loc}
+                                                onClick={() => {
+                                                    if (displayLocations.includes(loc)) {
+                                                        setDisplayLocations(displayLocations.filter(l => l !== loc));
+                                                    } else {
+                                                        setDisplayLocations([...displayLocations, loc]);
+                                                    }
+                                                }}
+                                                className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${displayLocations.includes(loc)
+                                                    ? "bg-brand-primary text-white border-brand-primary"
+                                                    : "bg-white text-gray-600 border-gray-200 hover:border-brand-primary/50"
+                                                    }`}
+                                            >
+                                                {loc}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                                {displayLocations.includes("Guidelines") && (
+                                    <motion.div
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: 1, height: "auto" }}
+                                    >
+                                        <label className="block text-xs font-medium text-gray-500 mb-1">Guideline Category</label>
+                                        <select
+                                            value={guidelineCategory}
+                                            onChange={(e) => setGuidelineCategory(e.target.value)}
+                                            className="w-full p-2 border rounded-lg text-sm text-black"
+                                        >
+                                            <option value="">Select Category...</option>
+                                            <option value="Klinisch onderzoek en evidence-standaarden">Klinisch onderzoek en evidence-standaarden</option>
+                                            <option value="Nederlandse regelgeving">Nederlandse regelgeving</option>
+                                            <option value="EU regelgeving">EU regelgeving</option>
+                                            <option value="Internationale regelgeving">Internationale regelgeving</option>
+                                        </select>
+                                    </motion.div>
+                                )}
                             </div>
                         </div>
                     )}

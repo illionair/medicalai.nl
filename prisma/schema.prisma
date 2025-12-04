@@ -59,6 +59,11 @@ model BlogPost {
   fdaNumber   String?
 
   tags        Tag[]
+
+  // Guidelines & Display Settings
+  coverImage        String?
+  guidelineCategory String? // "Klinisch onderzoek...", "Nederlandse regelgeving", etc.
+  displayLocations  String[] // "Homepage", "Publicaties", "Guidelines"
 }
 
 model Tag {

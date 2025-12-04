@@ -1,34 +1,82 @@
 import { prisma } from "@/lib/prisma";
-import BlogGrid from "@/components/BlogGrid";
+import Carousel from "@/components/Carousel";
+import GuidelineCard from "@/components/GuidelineCard";
+import { motion } from "framer-motion";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60; // Revalidate every 60 seconds
 
-export default async function GuidelinesPage() {
-    const guidelines = await prisma.blogPost.findMany({
+async function getGuidelineBlogs() {
+    const blogs = await prisma.blogPost.findMany({
         where: {
             published: true,
-            isGuideline: true
+            displayLocations: {
+                has: "Guidelines"
+            }
         },
-        orderBy: { createdAt: "desc" },
-        include: { article: true },
+        orderBy: { createdAt: "desc" }
     });
+    return blogs;
+}
+
+export default async function GuidelinesPage() {
+    const blogs = await getGuidelineBlogs();
+
+    const categories = [
+        "Klinisch onderzoek en evidence-standaarden",
+        "Nederlandse regelgeving",
+        "EU regelgeving",
+        "Internationale regelgeving"
+    ];
+
+    const groupedBlogs = categories.reduce((acc, category) => {
+        acc[category] = blogs.filter(blog => blog.guidelineCategory === category);
+        return acc;
+    }, {} as Record<string, typeof blogs>);
 
     return (
-        <div className="container section-padding min-h-screen">
-            <div className="max-w-3xl mx-auto mb-12 text-center">
-                <h1 className="text-4xl font-bold tracking-tight mb-4">Guidelines</h1>
-                <p className="text-gray-500 text-lg">
-                    Official guidelines, frameworks, and consensus statements on medical AI.
-                </p>
+        <div className="min-h-screen bg-white">
+            {/* Header */}
+            <div className="bg-slate-50 border-b border-slate-200 pt-32 pb-16">
+                <div className="container mx-auto px-4 text-center">
+                    <h1 className="text-4xl md:text-5xl font-bold text-brand-dark mb-4">
+                        Richtlijnen & Regelgeving
+                    </h1>
+                    <p className="text-lg text-slate-500 max-w-2xl mx-auto">
+                        Een overzicht van standaarden, wetgeving en ethische kaders voor AI in de zorg.
+                    </p>
+                </div>
             </div>
 
-            {guidelines.length > 0 ? (
-                <BlogGrid blogs={guidelines} />
-            ) : (
-                <div className="text-center py-20 bg-gray-50 rounded-3xl border border-gray-100">
-                    <p className="text-gray-500">No guidelines published yet.</p>
-                </div>
-            )}
+            <div className="container mx-auto px-4 py-16 space-y-12 pb-64">
+                {categories.map((category) => {
+                    const categoryBlogs = groupedBlogs[category];
+                    if (categoryBlogs.length === 0) return null;
+
+                    return (
+                        <section key={category}>
+                            <Carousel title={category}>
+                                {categoryBlogs.map((blog) => (
+                                    <div key={blog.id} className="snap-start shrink-0">
+                                        <GuidelineCard
+                                            title={blog.title}
+                                            summary={blog.summary || ""}
+                                            coverImage={blog.coverImage || undefined}
+                                            slug={blog.id}
+                                            category={blog.category}
+                                        />
+                                    </div>
+                                ))}
+                            </Carousel>
+                        </section>
+                    );
+                })}
+
+                {blogs.length === 0 && (
+                    <div className="text-center py-20 text-gray-500">
+                        Nog geen richtlijnen beschikbaar.
+                    </div>
+                )}
+            </div>
         </div>
     );
 }
