@@ -16,6 +16,7 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
     const [blog, setBlog] = useState<any>(null);
     const [content, setContent] = useState("");
     const [title, setTitle] = useState("");
+    const [subtitle, setSubtitle] = useState("");
     const [summary, setSummary] = useState("");
     const [category, setCategory] = useState("Predictie");
     const [isGuideline, setIsGuideline] = useState(false);
@@ -62,6 +63,7 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
                 setBlog(blogData);
                 setContent(blogData.content);
                 setTitle(blogData.title);
+                setSubtitle(blogData.subtitle || "");
                 setSummary(blogData.summary || "");
                 setCategory(blogData.category);
                 setIsGuideline(blogData.isGuideline);
@@ -113,7 +115,7 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
         setSaving(true);
         const scheduledDate = scheduledFor ? new Date(scheduledFor).toISOString() : null;
         await updateBlogPost(id, {
-            title, content, summary, category, isGuideline, scheduledFor: scheduledDate,
+            title, subtitle, content, summary, category, isGuideline, scheduledFor: scheduledDate,
             specialism, ceStatus, cost, modelType, doi, citation, developer, privacyType, integration, demoUrl, vendorUrl, fdaStatus, fdaNumber,
             tags, authors,
             coverImage, displayLocations, guidelineCategory
@@ -125,7 +127,7 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
         setSaving(true);
         const scheduledDate = scheduledFor ? new Date(scheduledFor).toISOString() : null;
         await updateBlogPost(id, {
-            title, content, summary, category, isGuideline, scheduledFor: scheduledDate,
+            title, subtitle, content, summary, category, isGuideline, scheduledFor: scheduledDate,
             specialism, ceStatus, cost, modelType, doi, citation, developer, privacyType, integration, demoUrl, vendorUrl, fdaStatus, fdaNumber,
             tags, authors,
             coverImage, displayLocations, guidelineCategory
@@ -184,6 +186,16 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
                             onChange={(e) => setTitle(e.target.value)}
                             className="w-full text-xl font-bold border-none focus:ring-0 p-0 placeholder-gray-300 text-black"
                             placeholder="Enter title..."
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Subtitle (Ondertitel)</label>
+                        <input
+                            type="text"
+                            value={subtitle}
+                            onChange={(e) => setSubtitle(e.target.value)}
+                            className="w-full text-lg font-medium border-none focus:ring-0 p-0 placeholder-gray-300 text-gray-700"
+                            placeholder="Enter subtitle..."
                         />
                     </div>
                     <div>

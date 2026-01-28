@@ -51,7 +51,7 @@ export const dictionary = {
         footer: {
             about_summary: "Independent knowledge platform for responsible AI in healthcare.",
             quick_links: "Quick Links",
-            legal: "© 2025 Medical AI. All rights reserved.",
+            legal: "© 2026 Medical AI. All rights reserved.",
             privacy: "Privacy Policy",
             terms: "Terms of Service"
         },
@@ -152,7 +152,7 @@ export const dictionary = {
         footer: {
             about_summary: "Onafhankelijk kennisplatform voor verantwoorde AI in de zorg.",
             quick_links: "Snelle Links",
-            legal: "© 2025 Medical AI. Alle rechten voorbehouden.",
+            legal: "© 2026 Medical AI. Alle rechten voorbehouden.",
             privacy: "Privacybeleid",
             terms: "Algemene Voorwaarden"
         },

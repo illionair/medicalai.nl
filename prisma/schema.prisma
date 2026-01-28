@@ -29,6 +29,7 @@ model Article {
 model BlogPost {
   id          String   @id @default(cuid())
   title       String
+  subtitle    String?
   content     String   // Markdown content
   summary     String?
   category    String   // Predictie, Diagnostiek, Methodisch, Ethiek

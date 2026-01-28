@@ -234,6 +234,7 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
                     <ToolbarBtn onClick={() => editor.chain().focus().setTextAlign('left').run()} isActive={editor.isActive({ textAlign: 'left' })} icon={<AlignLeft size={16} />} tooltip="Align Left" />
                     <ToolbarBtn onClick={() => editor.chain().focus().setTextAlign('center').run()} isActive={editor.isActive({ textAlign: 'center' })} icon={<AlignCenter size={16} />} tooltip="Align Center" />
                     <ToolbarBtn onClick={() => editor.chain().focus().setTextAlign('right').run()} isActive={editor.isActive({ textAlign: 'right' })} icon={<AlignRight size={16} />} tooltip="Align Right" />
+                    <ToolbarBtn onClick={() => editor.chain().focus().setTextAlign('justify').run()} isActive={editor.isActive({ textAlign: 'justify' })} icon={<AlignJustify size={16} />} tooltip="Justify" />
                 </div>
 
                 {/* Headings */}

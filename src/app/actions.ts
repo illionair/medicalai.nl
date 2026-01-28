@@ -252,6 +252,7 @@ export async function updateBlogPost(id: string, data: {
     tags?: string[]; // Array of Tag IDs
     authors?: string;
     summary?: string;
+    subtitle?: string;
     // Guidelines & Display
     coverImage?: string;
     guidelineCategory?: string;
@@ -264,6 +265,7 @@ export async function updateBlogPost(id: string, data: {
         where: { id },
         data: {
             title: data.title,
+            subtitle: data.subtitle,
             content: data.content,
             summary: data.summary,
             category: data.category,

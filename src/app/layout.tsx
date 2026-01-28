@@ -32,7 +32,7 @@ export default function RootLayout({
       <head>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6655451473844019" crossOrigin="anonymous"></script>
       </head>
-      <body className={`${lato.variable} ${inter.variable} font-sans antialiased`}>
+      <body className={`${lato.variable} ${inter.variable} font-sans antialiased`} suppressHydrationWarning>
         <LanguageProvider>
           <Navbar />
           <main className="min-h-screen">

@@ -93,19 +93,43 @@ export default function AdminPage() {
             <div className="flex gap-4 mb-6 border-b pb-4">
                 <button
                     onClick={() => setActiveTab("fetch")}
-                    className={`px-4 py-2 rounded-lg font-medium transition-colors ${activeTab === "fetch" ? "bg-gray-100 text-black" : "text-gray-500 hover:text-black"}`}
+                    className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${activeTab === "fetch"
+                        ? "text-brand-primary border border-white/50 shadow-sm"
+                        : "text-gray-500 hover:text-black hover:bg-white/30"
+                        }`}
+                    style={activeTab === "fetch" ? {
+                        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.4) 100%)',
+                        backdropFilter: 'blur(12px)',
+                        boxShadow: '0 4px 12px 0 rgba(0, 0, 0, 0.05)'
+                    } : {}}
                 >
                     Fetch from PubMed
                 </button>
                 <button
                     onClick={() => setActiveTab("doi")}
-                    className={`px-4 py-2 rounded-lg font-medium transition-colors ${activeTab === "doi" ? "bg-gray-100 text-black" : "text-gray-500 hover:text-black"}`}
+                    className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${activeTab === "doi"
+                        ? "text-brand-primary border border-white/50 shadow-sm"
+                        : "text-gray-500 hover:text-black hover:bg-white/30"
+                        }`}
+                    style={activeTab === "doi" ? {
+                        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.4) 100%)',
+                        backdropFilter: 'blur(12px)',
+                        boxShadow: '0 4px 12px 0 rgba(0, 0, 0, 0.05)'
+                    } : {}}
                 >
                     Fetch by DOI
                 </button>
                 <button
                     onClick={() => setActiveTab("manual")}
-                    className={`px-4 py-2 rounded-lg font-medium transition-colors ${activeTab === "manual" ? "bg-gray-100 text-black" : "text-gray-500 hover:text-black"}`}
+                    className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${activeTab === "manual"
+                        ? "text-brand-primary border border-white/50 shadow-sm"
+                        : "text-gray-500 hover:text-black hover:bg-white/30"
+                        }`}
+                    style={activeTab === "manual" ? {
+                        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.4) 100%)',
+                        backdropFilter: 'blur(12px)',
+                        boxShadow: '0 4px 12px 0 rgba(0, 0, 0, 0.05)'
+                    } : {}}
                 >
                     Manual Entry
                 </button>
