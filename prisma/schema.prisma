@@ -42,6 +42,8 @@ model BlogPost {
   
   articleId   String   @unique
   article     Article  @relation(fields: [articleId], references: [id])
+  likes       Like[]
+  comments    Comment[]
 
   // Blog 2.0 Fields
   specialism  String?  // Comma-separated for multiple values
@@ -71,4 +73,53 @@ model Tag {
   id    String     @id @default(cuid())
   name  String     @unique
   posts BlogPost[]
+}
+
+model User {
+  id        String        @id @default(cuid())
+  name      String
+  email     String        @unique
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  sessions  UserSession[]
+  likes     Like[]
+  comments  Comment[]
+}
+
+model UserSession {
+  id        String   @id @default(cuid())
+  tokenHash String   @unique
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model Like {
+  id         String   @id @default(cuid())
+  userId     String
+  blogPostId String
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  blogPost   BlogPost @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, blogPostId])
+  @@index([blogPostId])
+}
+
+model Comment {
+  id         String   @id @default(cuid())
+  content    String
+  userId     String
+  blogPostId String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  blogPost   BlogPost @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
+
+  @@index([blogPostId, createdAt])
+  @@index([userId])
 }

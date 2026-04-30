@@ -75,7 +75,7 @@ export default function Navbar() {
                         </button>
 
                         {!isAccessPage && (
-                            <Link href="/admin" className="hidden md:block text-[12px] font-normal text-gray-500 hover:text-black transition-colors">
+                            <Link href="/login" className="hidden md:block text-[12px] font-normal text-gray-500 hover:text-black transition-colors">
                                 {t.nav.login}
                             </Link>
                         )}
@@ -114,7 +114,7 @@ export default function Navbar() {
                             ))}
                             {!isAccessPage && (
                                 <Link
-                                    href="/admin"
+                                    href="/login"
                                     onClick={() => setIsMobileMenuOpen(false)}
                                     className="text-2xl font-medium text-slate-500 border-b border-gray-100 pb-4"
                                 >

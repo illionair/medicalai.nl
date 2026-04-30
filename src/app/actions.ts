@@ -12,6 +12,7 @@ import {
     SITE_ACCESS_CODE,
     ADMIN_PASSWORD
 } from "@/lib/auth";
+import { clearUserSession, createUserSession, getCurrentUser } from "@/lib/user-auth";
 
 // --- Auth Actions ---
 
@@ -35,9 +36,6 @@ export async function verifySiteAccess(formData: FormData) {
 export async function verifyAdminLogin(formData: FormData) {
     const password = formData.get("password") as string;
 
-    console.log("Login attempt:", password);
-    console.log("Expected:", ADMIN_PASSWORD);
-
     if (password === ADMIN_PASSWORD) {
         const cookieStore = await cookies();
         cookieStore.set(COOKIE_NAME_ADMIN_ACCESS, "true", {
@@ -50,6 +48,28 @@ export async function verifyAdminLogin(formData: FormData) {
     } else {
         return { error: "Invalid password" };
     }
+}
+
+export async function loginUser(formData: FormData) {
+    const name = String(formData.get("name") || "").trim().slice(0, 80);
+    const email = String(formData.get("email") || "").trim().toLowerCase();
+
+    if (!name) return { error: "Vul je naam in." };
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return { error: "Vul een geldig e-mailadres in." };
+
+    const user = await prisma.user.upsert({
+        where: { email },
+        update: { name },
+        create: { name, email },
+    });
+
+    await createUserSession(user.id);
+    return { success: true };
+}
+
+export async function logoutUser() {
+    await clearUserSession();
+    redirect("/");
 }
 
 // --- Blog Actions ---
@@ -226,7 +246,15 @@ export async function createTag(name: string) {
 export async function getBlogPost(id: string) {
     return await prisma.blogPost.findUnique({
         where: { id },
-        include: { tags: true, article: true }
+        include: {
+            tags: true,
+            article: true,
+            likes: true,
+            comments: {
+                orderBy: { createdAt: "desc" },
+                include: { user: true },
+            },
+        }
     });
 }
 
@@ -439,4 +467,52 @@ export async function unpublishBlogPost(id: string) {
 
     revalidatePath("/admin");
     revalidatePath("/");
+}
+
+export async function toggleLike(blogPostId: string) {
+    const user = await getCurrentUser();
+    if (!user) return { error: "Login om te liken." };
+
+    const existing = await prisma.like.findUnique({
+        where: {
+            userId_blogPostId: {
+                userId: user.id,
+                blogPostId,
+            },
+        },
+    });
+
+    if (existing) {
+        await prisma.like.delete({ where: { id: existing.id } });
+    } else {
+        await prisma.like.create({
+            data: {
+                userId: user.id,
+                blogPostId,
+            },
+        });
+    }
+
+    revalidatePath(`/blog/${blogPostId}`);
+    return { success: true };
+}
+
+export async function createComment(blogPostId: string, formData: FormData) {
+    const user = await getCurrentUser();
+    if (!user) return { error: "Login om te reageren." };
+
+    const content = String(formData.get("content") || "").trim();
+    if (content.length < 2) return { error: "Schrijf eerst een reactie." };
+    if (content.length > 1200) return { error: "Houd je reactie onder 1200 tekens." };
+
+    await prisma.comment.create({
+        data: {
+            content,
+            userId: user.id,
+            blogPostId,
+        },
+    });
+
+    revalidatePath(`/blog/${blogPostId}`);
+    return { success: true };
 }

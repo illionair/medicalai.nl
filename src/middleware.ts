@@ -16,9 +16,13 @@ export function middleware(request: NextRequest) {
 
     // 2. Admin Routes Protection
     if (pathname.startsWith("/admin")) {
+        if (pathname === "/admin/login") {
+            return NextResponse.next();
+        }
+
         const adminCookie = request.cookies.get(COOKIE_NAME_ADMIN_ACCESS);
         if (!adminCookie) {
-            const loginUrl = new URL("/login", request.url);
+            const loginUrl = new URL("/admin/login", request.url);
             return NextResponse.redirect(loginUrl);
         }
         return NextResponse.next();
