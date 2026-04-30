@@ -5,7 +5,13 @@ import { motion } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 
 interface BlogGridProps {
-    blogs: any[];
+    blogs: Array<{
+        id: string;
+        title: string;
+        summary?: string | null;
+        category: string;
+        createdAt: Date | string;
+    }>;
 }
 
 export default function BlogGrid({ blogs }: BlogGridProps) {
@@ -40,7 +46,7 @@ export default function BlogGrid({ blogs }: BlogGridProps) {
                             title={blog.title}
                             summary={blog.summary || ""}
                             category={blog.category}
-                            date={blog.createdAt.toISOString()}
+                            date={typeof blog.createdAt === "string" ? blog.createdAt : blog.createdAt.toISOString()}
                         />
                     </motion.div>
                 ))}
