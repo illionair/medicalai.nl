@@ -29,8 +29,8 @@ export function middleware(request: NextRequest) {
     }
 
     // 3. Public Routes Protection (Gatekeeper)
-    // Allow access to /access, /login, /about, /contact without cookie
-    if (["/access", "/login", "/about", "/contact"].includes(pathname)) {
+    // Allow access to login and verification routes without the site cookie.
+    if (["/access", "/login", "/auth/verify", "/about", "/contact"].includes(pathname)) {
         return NextResponse.next();
     }
 

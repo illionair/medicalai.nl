@@ -12,7 +12,8 @@ import {
     SITE_ACCESS_CODE,
     ADMIN_PASSWORD
 } from "@/lib/auth";
-import { clearUserSession, createUserSession, getCurrentUser } from "@/lib/user-auth";
+import { clearUserSession, createMagicLinkToken, getCurrentUser } from "@/lib/user-auth";
+import { buildMagicLink, sendMagicLinkEmail } from "@/lib/magic-link-mail";
 
 // --- Auth Actions ---
 
@@ -50,20 +51,17 @@ export async function verifyAdminLogin(formData: FormData) {
     }
 }
 
-export async function loginUser(formData: FormData) {
+export async function requestMagicLink(formData: FormData) {
     const name = String(formData.get("name") || "").trim().slice(0, 80);
     const email = String(formData.get("email") || "").trim().toLowerCase();
+    const redirectTo = String(formData.get("next") || "/");
 
     if (!name) return { error: "Vul je naam in." };
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return { error: "Vul een geldig e-mailadres in." };
 
-    const user = await prisma.user.upsert({
-        where: { email },
-        update: { name },
-        create: { name, email },
-    });
+    const { token } = await createMagicLinkToken({ email, name, redirectTo });
+    await sendMagicLinkEmail({ to: email, name, url: buildMagicLink(token) });
 
-    await createUserSession(user.id);
     return { success: true };
 }
 

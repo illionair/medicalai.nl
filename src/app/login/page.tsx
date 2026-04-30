@@ -2,23 +2,23 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
-import { loginUser } from "@/app/actions";
+import { requestMagicLink } from "@/app/actions";
 
 export default function LoginPage() {
     const [error, setError] = useState("");
-    const router = useRouter();
+    const [sentTo, setSentTo] = useState("");
 
     async function handleSubmit(formData: FormData) {
         setError("");
-        const result = await loginUser(formData);
+        formData.set("next", new URLSearchParams(window.location.search).get("next") || "/");
+        const result = await requestMagicLink(formData);
+
         if (result?.error) {
             setError(result.error);
             return;
         }
-        const next = new URLSearchParams(window.location.search).get("next") || "/";
-        router.push(next.startsWith("/") ? next : "/");
-        router.refresh();
+
+        setSentTo(String(formData.get("email") || ""));
     }
 
     return (
@@ -31,38 +31,47 @@ export default function LoginPage() {
                 <div className="text-center mb-8">
                     <h1 className="text-2xl font-bold mb-2 text-brand-dark">Inloggen</h1>
                     <p className="text-sm text-gray-500">
-                        Log in om artikelen te liken en te reageren.
+                        Ontvang een veilige loginlink om artikelen te liken en te reageren.
                     </p>
                 </div>
 
-                <form action={handleSubmit} className="space-y-4">
-                    <input
-                        type="text"
-                        name="name"
-                        placeholder="Naam"
-                        className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:border-brand-secondary transition-all"
-                        required
-                    />
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="E-mailadres"
-                        className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:border-brand-secondary transition-all"
-                        required
-                    />
+                {sentTo ? (
+                    <div className="rounded-2xl bg-emerald-50 border border-emerald-100 p-5 text-center">
+                        <h2 className="font-bold text-emerald-900 mb-2">Check je inbox</h2>
+                        <p className="text-sm text-emerald-800">
+                            We hebben een loginlink gestuurd naar {sentTo}. De link verloopt over 15 minuten.
+                        </p>
+                    </div>
+                ) : (
+                    <form action={handleSubmit} className="space-y-4">
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Naam"
+                            className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:border-brand-secondary transition-all"
+                            required
+                        />
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="E-mailadres"
+                            className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:border-brand-secondary transition-all"
+                            required
+                        />
 
-                    {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+                        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
-                    <button
-                        type="submit"
-                        className="w-full py-3 rounded-xl bg-brand-dark text-white font-bold hover:opacity-90 transition-opacity"
-                    >
-                        Inloggen
-                    </button>
-                </form>
+                        <button
+                            type="submit"
+                            className="w-full py-3 rounded-xl bg-brand-dark text-white font-bold hover:opacity-90 transition-opacity"
+                        >
+                            Stuur loginlink
+                        </button>
+                    </form>
+                )}
 
                 <p className="mt-6 text-center text-xs text-gray-400">
-                    We gebruiken je e-mailadres alleen voor je profiel op Medical AI.
+                    Geen wachtwoord nodig. Je mailbox bevestigt je identiteit.
                 </p>
             </motion.div>
         </div>
