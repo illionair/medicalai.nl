@@ -471,7 +471,7 @@ export async function unpublishBlogPost(id: string) {
 
 export async function toggleLike(blogPostId: string) {
     const user = await getCurrentUser();
-    if (!user) return { error: "Login om te liken." };
+    if (!user) redirect(`/login?next=/blog/${blogPostId}`);
 
     const existing = await prisma.like.findUnique({
         where: {
@@ -494,16 +494,14 @@ export async function toggleLike(blogPostId: string) {
     }
 
     revalidatePath(`/blog/${blogPostId}`);
-    return { success: true };
 }
 
 export async function createComment(blogPostId: string, formData: FormData) {
     const user = await getCurrentUser();
-    if (!user) return { error: "Login om te reageren." };
+    if (!user) redirect(`/login?next=/blog/${blogPostId}`);
 
     const content = String(formData.get("content") || "").trim();
-    if (content.length < 2) return { error: "Schrijf eerst een reactie." };
-    if (content.length > 1200) return { error: "Houd je reactie onder 1200 tekens." };
+    if (content.length < 2 || content.length > 1200) return;
 
     await prisma.comment.create({
         data: {
@@ -514,5 +512,4 @@ export async function createComment(blogPostId: string, formData: FormData) {
     });
 
     revalidatePath(`/blog/${blogPostId}`);
-    return { success: true };
 }
