@@ -1,21 +1,24 @@
 import { prisma } from "@/lib/prisma";
 import Carousel from "@/components/Carousel";
 import GuidelineCard from "@/components/GuidelineCard";
-import { motion } from "framer-motion";
 
 export const revalidate = 60; // Revalidate every 60 seconds
 
 async function getGuidelineBlogs() {
-    const blogs = await prisma.blogPost.findMany({
-        where: {
-            published: true,
-            displayLocations: {
-                has: "Guidelines"
-            }
-        },
-        orderBy: { createdAt: "desc" }
-    });
-    return blogs;
+    try {
+        return await prisma.blogPost.findMany({
+            where: {
+                published: true,
+                displayLocations: {
+                    has: "Guidelines"
+                }
+            },
+            orderBy: { createdAt: "desc" }
+        });
+    } catch (error) {
+        console.error("[guidelines] Failed to load guideline blogs", error);
+        return [];
+    }
 }
 
 export default async function GuidelinesPage() {
