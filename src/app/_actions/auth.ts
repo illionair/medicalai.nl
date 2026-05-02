@@ -3,7 +3,6 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { COOKIE_NAME_SITE_ACCESS } from "@/lib/auth";
-import { getRequiredEnv } from "@/lib/env";
 import { clearUserSession, createMagicLinkToken } from "@/lib/user-auth";
 import { buildMagicLink, sendMagicLinkEmail } from "@/lib/magic-link-mail";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
@@ -12,12 +11,18 @@ const RATE_LIMIT_ERROR = { error: "Te veel pogingen. Probeer het later opnieuw."
 
 export async function verifySiteAccess(formData: FormData) {
     const code = formData.get("code") as string;
+    const expectedCode = process.env.SITE_ACCESS_CODE?.trim();
+
+    if (!expectedCode) {
+        console.error("[auth] SITE_ACCESS_CODE is not configured; site access cannot be verified.");
+        return { error: "Site access is nog niet geconfigureerd. Zet SITE_ACCESS_CODE in Vercel Preview/Production." };
+    }
 
     const ip = await getClientIp();
     const rl = await rateLimit({ key: `site-access:${ip}`, limit: 10, windowSec: 15 * 60 });
     if (!rl.success) return RATE_LIMIT_ERROR;
 
-    if (code === getRequiredEnv("SITE_ACCESS_CODE")) {
+    if (code === expectedCode) {
         const cookieStore = await cookies();
         cookieStore.set(COOKIE_NAME_SITE_ACCESS, "true", {
             httpOnly: true,

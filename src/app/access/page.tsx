@@ -11,7 +11,7 @@ export default function AccessPage() {
     async function handleSubmit(formData: FormData) {
         const result = await verifySiteAccess(formData);
         if (result?.error) {
-            setError("Access Denied");
+            setError(result.error);
         }
     }
 
