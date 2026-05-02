@@ -9,9 +9,16 @@ interface PublishedBlogSummary {
     title: string;
     summary: string | null;
     category: string;
+    source?: string;
     createdAt: Date | string;
     scheduledFor?: Date | string | null;
 }
+
+const SOURCE_LABELS: Record<string, string> = {
+    PUBMED: "PubMed",
+    MANUAL: "Handmatig",
+    AI_PROMPT: "AI-prompt",
+};
 
 export default function PublishedList() {
     const [blogs, setBlogs] = useState<PublishedBlogSummary[]>([]);
@@ -43,6 +50,9 @@ export default function PublishedList() {
                                 <div className="flex gap-2 mt-2">
                                     <span className="text-xs px-2 py-1 bg-gray-100 rounded-full text-gray-600">
                                         {blog.category}
+                                    </span>
+                                    <span className="text-xs px-2 py-1 bg-blue-50 rounded-full text-blue-700">
+                                        {SOURCE_LABELS[blog.source || "PUBMED"] || blog.source}
                                     </span>
                                     {blog.scheduledFor && new Date(blog.scheduledFor) > new Date() ? (
                                         <span className="text-xs px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full">

@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { generateBlogPost } from "@/lib/ai";
+import { generateBlogPost, generateBlogPostFromPrompt } from "@/lib/ai";
 import { requireAdmin } from "@/lib/user-auth";
 
 export async function generateBlogs(articleIds: string[], instructions: string = "") {
@@ -43,6 +43,7 @@ export async function generateBlogs(articleIds: string[], instructions: string =
                     category: "Predictie",
                     published: false,
                     articleId: article.id,
+                    source: article.pubmedId.startsWith("manual-") ? "MANUAL" : "PUBMED",
                 },
             });
             logs.push(`BlogPost created with ID: ${blog.id}`);
@@ -123,6 +124,13 @@ export interface UpdateBlogPostInput {
     coverImage?: string;
     guidelineCategory?: string;
     displayLocations?: string[];
+}
+
+export interface AiPromptDraftInput {
+    topic: string;
+    specialism?: string;
+    template?: string;
+    instructions?: string;
 }
 
 export async function updateBlogPost(id: string, data: UpdateBlogPostInput) {
@@ -207,10 +215,53 @@ export async function createEmptyBlogPost() {
             content: "",
             category: "Predictie",
             published: false,
+            source: "MANUAL",
         },
     });
     revalidatePath("/admin");
     return blog.id;
+}
+
+export async function createAiPromptBlogPost(input: AiPromptDraftInput) {
+    if (!(await requireAdmin())) redirect("/login?next=/admin");
+
+    const topic = input.topic.trim();
+    if (topic.length < 5) {
+        return { success: false, error: "Vul een duidelijk onderwerp of prompt in." };
+    }
+
+    const content = await generateBlogPostFromPrompt({
+        topic,
+        specialism: input.specialism?.trim(),
+        template: input.template?.trim(),
+        instructions: input.instructions?.trim(),
+    });
+
+    if (!content.trim()) {
+        return { success: false, error: "AI gaf geen content terug. Probeer het opnieuw met een concretere prompt." };
+    }
+
+    const title = topic.length > 90 ? `${topic.slice(0, 87)}...` : topic;
+    const blog = await prisma.blogPost.create({
+        data: {
+            title,
+            content,
+            summary: `AI-prompt draft: ${topic}`.slice(0, 240),
+            category: "Predictie",
+            specialism: input.specialism?.trim() || undefined,
+            published: false,
+            source: "AI_PROMPT",
+            aiPrompt: [
+                `Topic: ${topic}`,
+                input.specialism?.trim() ? `Specialism: ${input.specialism.trim()}` : "",
+                input.template?.trim() ? `Template: ${input.template.trim()}` : "",
+                input.instructions?.trim() ? `Instructions: ${input.instructions.trim()}` : "",
+            ].filter(Boolean).join("\n"),
+        },
+    });
+
+    revalidatePath("/admin");
+    return { success: true, id: blog.id };
 }
 
 export async function deleteBlogPost(id: string) {

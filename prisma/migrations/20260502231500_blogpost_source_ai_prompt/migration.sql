@@ -1,0 +1,6 @@
+CREATE TYPE "BlogPostSource" AS ENUM ('PUBMED', 'MANUAL', 'AI_PROMPT');
+
+ALTER TABLE "BlogPost"
+ADD COLUMN "source" "BlogPostSource" NOT NULL DEFAULT 'PUBMED',
+ADD COLUMN "aiPrompt" TEXT;
+

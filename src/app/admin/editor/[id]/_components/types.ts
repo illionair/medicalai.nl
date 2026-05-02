@@ -24,6 +24,8 @@ export interface BlogFormState {
     displayLocations: string[];
     guidelineCategory: string;
     tags: string[];
+    source: string;
+    aiPrompt: string;
 }
 
 export type SetField = <K extends keyof BlogFormState>(key: K, value: BlogFormState[K]) => void;

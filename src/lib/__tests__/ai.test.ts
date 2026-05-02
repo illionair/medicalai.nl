@@ -92,6 +92,30 @@ describe("generateBlogPost", () => {
     });
 });
 
+describe("generateBlogPostFromPrompt", () => {
+    it("generates a Dutch draft prompt without fabricated citations", async () => {
+        create.mockResolvedValue({
+            choices: [{ message: { content: "# AI in de SEH\n\nConcept" } }],
+        });
+
+        const { generateBlogPostFromPrompt } = await import("@/lib/ai");
+        const result = await generateBlogPostFromPrompt({
+            topic: "AI-triage op de spoedeisende hulp",
+            specialism: "SEH",
+            template: "Implementatie in de praktijk",
+            instructions: "Focus op werkdruk",
+        });
+
+        expect(result).toBe("# AI in de SEH\n\nConcept");
+        const userMessage = create.mock.calls[0]![0].messages[1].content;
+        expect(userMessage).toContain("AI-triage op de spoedeisende hulp");
+        expect(userMessage).toContain("SEH");
+        expect(userMessage).toContain("Implementatie in de praktijk");
+        expect(userMessage).toContain("Do not invent citations");
+        expect(userMessage).toContain("Bronnen te verifi");
+    });
+});
+
 describe("listAvailableModels", () => {
     it("returns model ids from openai.models.list", async () => {
         list.mockResolvedValue({

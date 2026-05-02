@@ -44,6 +44,8 @@ model BlogPost {
   article     Article? @relation(fields: [articleId], references: [id])
   likes       Like[]
   comments    Comment[]
+  source      BlogPostSource @default(PUBMED)
+  aiPrompt    String?
 
   // Blog 2.0 Fields
   specialism  String?  // Comma-separated for multiple values
@@ -66,6 +68,12 @@ model BlogPost {
   coverImage        String?
   guidelineCategory String? // "Klinisch onderzoek...", "Nederlandse regelgeving", etc.
   displayLocations  String[] // "Homepage", "Publicaties", "Guidelines"
+}
+
+enum BlogPostSource {
+  PUBMED
+  MANUAL
+  AI_PROMPT
 }
 
 model Tag {

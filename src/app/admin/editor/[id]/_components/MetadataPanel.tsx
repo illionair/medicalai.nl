@@ -8,8 +8,28 @@ interface Props {
 }
 
 export default function MetadataPanel({ state, setField }: Props) {
+    const sourceLabel = {
+        PUBMED: "PubMed",
+        MANUAL: "Handmatig",
+        AI_PROMPT: "AI-prompt",
+    }[state.source] ?? state.source;
+
     return (
         <>
+            <div className="space-y-4 md:col-span-2">
+                <h3 className="font-bold text-sm border-b pb-2">Source</h3>
+                <div className="rounded-xl border border-blue-100 bg-blue-50/60 p-4">
+                    <p className="text-sm font-semibold text-blue-950">{sourceLabel}</p>
+                    {state.aiPrompt ? (
+                        <pre className="mt-3 max-h-36 overflow-auto whitespace-pre-wrap rounded-lg bg-white/70 p-3 text-xs text-blue-900">
+                            {state.aiPrompt}
+                        </pre>
+                    ) : (
+                        <p className="mt-1 text-xs text-blue-800">Geen AI-prompt opgeslagen voor dit artikel.</p>
+                    )}
+                </div>
+            </div>
+
             <div className="space-y-4">
                 <h3 className="font-bold text-sm border-b pb-2">Trust Indicators</h3>
                 <div className="grid grid-cols-2 gap-4">

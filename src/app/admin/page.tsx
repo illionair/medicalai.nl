@@ -1,18 +1,27 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { fetchAndSaveArticles, fetchAndSaveDoi, getArticlesByStatus, deleteArticle, generateBlogs, createManualArticle, createEmptyBlogPost } from "../actions";
+import { fetchAndSaveArticles, fetchAndSaveDoi, getArticlesByStatus, deleteArticle, generateBlogs, createManualArticle, createEmptyBlogPost, createAiPromptBlogPost } from "../actions";
 import { motion } from "framer-motion";
 import DraftsList from "@/components/DraftsList";
 import PublishedList from "@/components/PublishedList";
 import { useRouter } from "next/navigation";
 
+interface ArticleSummary {
+    id: string;
+    title: string;
+    abstract: string;
+    authors: string | null;
+    journal: string | null;
+    url: string | null;
+}
+
 export default function AdminPage() {
     const router = useRouter();
-    const [articles, setArticles] = useState<any[]>([]);
+    const [articles, setArticles] = useState<ArticleSummary[]>([]);
     const [loading, setLoading] = useState(false);
     const [selected, setSelected] = useState<string[]>([]);
-    const [activeTab, setActiveTab] = useState<"fetch" | "doi" | "manual">("fetch");
+    const [activeTab, setActiveTab] = useState<"fetch" | "doi" | "manual" | "ai">("fetch");
 
     // Fetch State
     const [query, setQuery] = useState("artificial intelligence medicine");
@@ -20,18 +29,30 @@ export default function AdminPage() {
 
     // Manual State
     const [manualForm, setManualForm] = useState({ title: "", abstract: "", authors: "", url: "" });
+    const [aiForm, setAiForm] = useState({
+        topic: "",
+        specialism: "",
+        template: "Review klinische validatie",
+        instructions: "",
+    });
 
     // Custom Instructions State
     const [customInstructions, setCustomInstructions] = useState("");
-
-    useEffect(() => {
-        loadArticles();
-    }, []);
 
     async function loadArticles() {
         const data = await getArticlesByStatus("FETCHED");
         setArticles(data);
     }
+
+    useEffect(() => {
+        let cancelled = false;
+        getArticlesByStatus("FETCHED").then((data) => {
+            if (!cancelled) setArticles(data);
+        });
+        return () => {
+            cancelled = true;
+        };
+    }, []);
 
     async function handleFetch() {
         setLoading(true);
@@ -76,6 +97,20 @@ export default function AdminPage() {
         setLoading(true);
         const id = await createEmptyBlogPost();
         router.push(`/admin/editor/${id}`);
+    }
+
+    async function handleAiPromptSubmit(e: React.FormEvent) {
+        e.preventDefault();
+        setLoading(true);
+        const result = await createAiPromptBlogPost(aiForm);
+        setLoading(false);
+
+        if (result.success && result.id) {
+            setAiForm({ topic: "", specialism: "", template: "Review klinische validatie", instructions: "" });
+            router.push(`/admin/editor/${result.id}`);
+        } else {
+            alert(result.error || "AI draft kon niet worden gemaakt.");
+        }
     }
 
     function toggleSelect(id: string) {
@@ -132,6 +167,20 @@ export default function AdminPage() {
                     } : {}}
                 >
                     Manual Entry
+                </button>
+                <button
+                    onClick={() => setActiveTab("ai")}
+                    className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${activeTab === "ai"
+                        ? "text-brand-primary border border-white/50 shadow-sm"
+                        : "text-gray-500 hover:text-black hover:bg-white/30"
+                        }`}
+                    style={activeTab === "ai" ? {
+                        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.4) 100%)',
+                        backdropFilter: 'blur(12px)',
+                        boxShadow: '0 4px 12px 0 rgba(0, 0, 0, 0.05)'
+                    } : {}}
+                >
+                    AI Prompt
                 </button>
             </div>
 
@@ -226,6 +275,69 @@ export default function AdminPage() {
                 </form>
             )}
 
+            {activeTab === "ai" && (
+                <form onSubmit={handleAiPromptSubmit} className="mb-8 p-6 rounded-2xl border border-blue-100 bg-blue-50/50">
+                    <div className="grid gap-4">
+                        <div>
+                            <label className="block text-sm font-medium text-blue-900 mb-1">Topic / prompt</label>
+                            <textarea
+                                required
+                                rows={4}
+                                value={aiForm.topic}
+                                onChange={(e) => setAiForm({ ...aiForm, topic: e.target.value })}
+                                className="w-full px-4 py-3 rounded-xl border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                                placeholder="Bijv. Schrijf een kritisch overzicht over AI-triage op de SEH en de impact op werkdruk, veiligheid en bias."
+                            />
+                        </div>
+                        <div className="grid gap-4 md:grid-cols-2">
+                            <div>
+                                <label className="block text-sm font-medium text-blue-900 mb-1">Template</label>
+                                <select
+                                    value={aiForm.template}
+                                    onChange={(e) => setAiForm({ ...aiForm, template: e.target.value })}
+                                    className="w-full px-4 py-3 rounded-xl border border-blue-200 text-black"
+                                >
+                                    <option value="Review klinische validatie">Review klinische validatie</option>
+                                    <option value="Vergelijk twee modellen">Vergelijk twee modellen</option>
+                                    <option value="Ethische analyse">Ethische analyse</option>
+                                    <option value="Implementatie in de praktijk">Implementatie in de praktijk</option>
+                                    <option value="Korte explainers voor artsen">Korte explainers voor artsen</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-blue-900 mb-1">Specialisme</label>
+                                <input
+                                    value={aiForm.specialism}
+                                    onChange={(e) => setAiForm({ ...aiForm, specialism: e.target.value })}
+                                    className="w-full px-4 py-3 rounded-xl border border-blue-200 text-black"
+                                    placeholder="Radiologie, Cardiologie, SEH..."
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-blue-900 mb-1">Extra instructies</label>
+                            <textarea
+                                rows={3}
+                                value={aiForm.instructions}
+                                onChange={(e) => setAiForm({ ...aiForm, instructions: e.target.value })}
+                                className="w-full px-4 py-3 rounded-xl border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                                placeholder="Bijv. Houd het praktisch, geen lange inleiding, benoem expliciet welke claims geverifieerd moeten worden."
+                            />
+                        </div>
+                        <p className="text-xs text-blue-800">
+                            AI-prompt artikelen worden altijd als draft aangemaakt. Check bronnen, claims en regelgeving voor publicatie.
+                        </p>
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="px-6 py-3 bg-blue-700 text-white rounded-xl font-medium hover:bg-blue-800 transition-colors disabled:opacity-50 self-start"
+                        >
+                            {loading ? "Generating draft..." : "Generate AI Draft"}
+                        </button>
+                    </div>
+                </form>
+            )}
+
             {/* Drafts Section */}
             <section className="mb-12">
                 <h2 className="text-xl font-semibold mb-4">Drafts (Needs Review)</h2>
@@ -297,9 +409,11 @@ export default function AdminPage() {
                                 <p className="text-sm text-gray-400 mb-2">{article.authors} • {article.journal}</p>
                                 <p className="text-gray-600 line-clamp-3">{article.abstract}</p>
                                 <div className="mt-4 flex gap-4">
-                                    <a href={article.url} target="_blank" className="text-sm text-blue-600 hover:underline">
-                                        View on PubMed
-                                    </a>
+                                    {article.url ? (
+                                        <a href={article.url} target="_blank" className="text-sm text-blue-600 hover:underline">
+                                            View on PubMed
+                                        </a>
+                                    ) : null}
                                     <button onClick={() => deleteArticle(article.id)} className="text-sm text-red-500 hover:underline">
                                         Delete
                                     </button>

@@ -22,6 +22,7 @@ export {
     unpublishBlogPost,
     deleteBlogPost,
     createEmptyBlogPost,
+    createAiPromptBlogPost,
 } from "./_actions/blog";
 export { getTags, createTag } from "./_actions/tags";
 export {

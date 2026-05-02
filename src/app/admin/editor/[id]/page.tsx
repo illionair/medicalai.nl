@@ -37,6 +37,8 @@ const INITIAL_STATE: BlogFormState = {
     displayLocations: [],
     guidelineCategory: "",
     tags: [],
+    source: "PUBMED",
+    aiPrompt: "",
 };
 
 export default function EditorPage({ params }: { params: Promise<{ id: string }> }) {
@@ -93,6 +95,8 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
                 displayLocations: data.displayLocations ?? [],
                 guidelineCategory: data.guidelineCategory ?? "",
                 tags: data.tags?.map((t) => t.id) ?? [],
+                source: data.source ?? "PUBMED",
+                aiPrompt: data.aiPrompt ?? "",
             });
             setAvailableTags(allTags ?? []);
             setLoading(false);

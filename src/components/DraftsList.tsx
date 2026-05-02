@@ -8,7 +8,14 @@ interface DraftSummary {
     id: string;
     title: string;
     category: string;
+    source?: string;
 }
+
+const SOURCE_LABELS: Record<string, string> = {
+    PUBMED: "PubMed",
+    MANUAL: "Handmatig",
+    AI_PROMPT: "AI-prompt",
+};
 
 export default function DraftsList() {
     const [drafts, setDrafts] = useState<DraftSummary[]>([]);
@@ -29,7 +36,9 @@ export default function DraftsList() {
                 <div key={draft.id} className="p-4 bg-white border border-yellow-200 rounded-xl flex items-center justify-between shadow-sm">
                     <div>
                         <h3 className="font-medium">{draft.title}</h3>
-                        <p className="text-xs text-gray-500">Category: {draft.category}</p>
+                        <p className="text-xs text-gray-500">
+                            Category: {draft.category} · Source: {SOURCE_LABELS[draft.source || "PUBMED"] || draft.source}
+                        </p>
                     </div>
                     <div className="flex gap-2">
                         <Link
