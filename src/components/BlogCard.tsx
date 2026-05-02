@@ -9,9 +9,12 @@ interface BlogCardProps {
     summary: string;
     category: string;
     date: string;
+    specialism?: string | null;
+    ceStatus?: string | null;
+    cost?: string | null;
 }
 
-export default function BlogCard({ id, title, summary, category, date }: BlogCardProps) {
+export default function BlogCard({ id, title, summary, category, date, specialism, ceStatus, cost }: BlogCardProps) {
     return (
         <Link href={`/blog/${id}`} className="block h-full">
             <motion.div
@@ -63,6 +66,14 @@ export default function BlogCard({ id, title, summary, category, date }: BlogCar
                     <p className="text-base mb-6 line-clamp-3 flex-grow text-gray-600">
                         {summary}
                     </p>
+
+                    {(specialism || ceStatus || cost) && (
+                        <div className="mb-6 flex flex-wrap gap-2 text-[11px] font-bold text-slate-600">
+                            {specialism && <span className="rounded-full bg-white/60 px-3 py-1">{specialism}</span>}
+                            {ceStatus && <span className="rounded-full bg-emerald-50/80 px-3 py-1 text-emerald-700">{ceStatus}</span>}
+                            {cost && <span className="rounded-full bg-white/60 px-3 py-1">{cost}</span>}
+                        </div>
+                    )}
 
                     <div className="flex items-center justify-between mt-auto pt-6 border-t border-gray-200/50">
                         <span className="text-sm font-medium text-gray-500">

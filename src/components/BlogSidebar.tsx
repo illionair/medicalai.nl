@@ -1,4 +1,4 @@
-import { ExternalLink, Share2, Linkedin, Lock, Server, Globe, ShieldCheck, Building2 } from "lucide-react";
+import { Building2, ExternalLink, Globe, Linkedin, MessageCircle, Share2, ShieldCheck } from "lucide-react";
 import TrustBadge from "./TrustBadge";
 
 interface BlogSidebarProps {
@@ -14,18 +14,23 @@ interface BlogSidebarProps {
     specialism?: string | null;
     cost?: string | null;
     modelType?: string | null;
+    title?: string;
+    currentUrl?: string;
 }
 
-export default function BlogSidebar({ developer, demoUrl, vendorUrl, privacy, privacyType, integration, fdaStatus, fdaNumber, ceStatus, specialism, cost, modelType }: BlogSidebarProps) {
+export default function BlogSidebar({ developer, demoUrl, vendorUrl, privacy, privacyType, integration, fdaStatus, fdaNumber, ceStatus, specialism, cost, modelType, title, currentUrl }: BlogSidebarProps) {
     // Check if any details exist
     const hasDetails = specialism || ceStatus || cost || modelType;
     // Check if any quick facts exist
     const hasQuickFacts = developer || privacyType || privacy || integration;
     // Check if any actions exist
     const hasActions = vendorUrl || demoUrl;
+    const encodedUrl = encodeURIComponent(currentUrl || "");
+    const encodedTitle = encodeURIComponent(title || "Medical AI");
+    const hasShare = Boolean(currentUrl);
 
     // If nothing to show, return null
-    if (!hasDetails && !hasQuickFacts && !hasActions && !fdaStatus) {
+    if (!hasDetails && !hasQuickFacts && !hasActions && !fdaStatus && !hasShare) {
         return null;
     }
 
@@ -104,6 +109,35 @@ export default function BlogSidebar({ developer, demoUrl, vendorUrl, privacy, pr
                                 Bekijk Demo
                             </a>
                         )}
+                    </div>
+                </div>
+            )}
+
+            {hasShare && (
+                <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                    <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <Share2 size={16} className="text-brand-secondary" />
+                        Deel analyse
+                    </h3>
+                    <div className="grid grid-cols-2 gap-3">
+                        <a
+                            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-bold text-slate-700 transition hover:border-brand-secondary hover:text-brand-secondary"
+                        >
+                            <Linkedin size={16} />
+                            LinkedIn
+                        </a>
+                        <a
+                            href={`https://wa.me/?text=${encodedTitle}%20${encodedUrl}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-bold text-slate-700 transition hover:border-brand-secondary hover:text-brand-secondary"
+                        >
+                            <MessageCircle size={16} />
+                            WhatsApp
+                        </a>
                     </div>
                 </div>
             )}

@@ -1,6 +1,12 @@
 "use server";
 
+import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
+
+function logBlogLoadFailure(scope: string, error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.warn(`[blog] ${scope}: ${message}`);
+}
 
 export async function getPublishedBlogs() {
     try {
@@ -15,7 +21,7 @@ export async function getPublishedBlogs() {
             orderBy: { createdAt: "desc" },
         });
     } catch (error) {
-        console.error("[blog] Failed to load published blogs", error);
+        logBlogLoadFailure("Failed to load published blogs", error);
         return [];
     }
 }
@@ -34,7 +40,7 @@ export async function getPublishedBlogsByCategory(category: string) {
             orderBy: { createdAt: "desc" },
         });
     } catch (error) {
-        console.error("[blog] Failed to load blogs by category", error);
+        logBlogLoadFailure("Failed to load blogs by category", error);
         return [];
     }
 }
@@ -44,7 +50,7 @@ import { specialisms } from "@/lib/constants";
 export async function getBlogsForTopic(topic: string) {
     const isSpecialism = specialisms.includes(topic);
 
-    const whereClause: any = {
+    const whereClause: Prisma.BlogPostWhereInput = {
         published: true,
         OR: [
             { category: { equals: topic, mode: 'insensitive' } },
@@ -62,7 +68,7 @@ export async function getBlogsForTopic(topic: string) {
     };
 
     if (isSpecialism) {
-        whereClause.OR.push({ specialism: "Alle Specialismen" });
+        whereClause.OR?.push({ specialism: "Alle Specialismen" });
     }
 
     try {
@@ -72,7 +78,7 @@ export async function getBlogsForTopic(topic: string) {
             include: { tags: true }
         });
     } catch (error) {
-        console.error("[blog] Failed to load blogs for topic", error);
+        logBlogLoadFailure("Failed to load blogs for topic", error);
         return [];
     }
 }
@@ -84,7 +90,7 @@ export async function getBlogById(id: string) {
             include: { tags: true }
         });
     } catch (error) {
-        console.error("[blog] Failed to load blog by id", error);
+        logBlogLoadFailure("Failed to load blog by id", error);
         return null;
     }
 }
@@ -108,7 +114,7 @@ export async function getPublishedBlogsByTag(tagName: string) {
             include: { tags: true }
         });
     } catch (error) {
-        console.error("[blog] Failed to load blogs by tag", error);
+        logBlogLoadFailure("Failed to load blogs by tag", error);
         return [];
     }
 }

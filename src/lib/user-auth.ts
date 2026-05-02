@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { createHash, randomBytes } from "crypto";
 import { prisma } from "@/lib/prisma";
 import { COOKIE_NAME_USER_SESSION } from "@/lib/auth";
+import { isAdminEmail } from "@/lib/env";
 
 const USER_SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 30;
 const MAGIC_LINK_MAX_AGE_MINUTES = 15;
@@ -103,7 +104,16 @@ export async function getCurrentUser() {
         return null;
     }
 
-    return session.user;
+    return {
+        ...session.user,
+        isAdmin: isAdminEmail(session.user.email),
+    };
+}
+
+export async function requireAdmin() {
+    const user = await getCurrentUser();
+    if (!user?.isAdmin) return null;
+    return user;
 }
 
 export async function clearUserSession() {

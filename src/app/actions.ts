@@ -7,12 +7,10 @@ import { generateBlogPost } from "@/lib/ai";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import {
-    COOKIE_NAME_ADMIN_ACCESS,
     COOKIE_NAME_SITE_ACCESS,
-    SITE_ACCESS_CODE,
-    ADMIN_PASSWORD
+    SITE_ACCESS_CODE
 } from "@/lib/auth";
-import { clearUserSession, createMagicLinkToken, getCurrentUser } from "@/lib/user-auth";
+import { clearUserSession, createMagicLinkToken, getCurrentUser, requireAdmin } from "@/lib/user-auth";
 import { buildMagicLink, sendMagicLinkEmail } from "@/lib/magic-link-mail";
 
 // --- Auth Actions ---
@@ -31,23 +29,6 @@ export async function verifySiteAccess(formData: FormData) {
         redirect("/");
     } else {
         return { error: "Invalid access code" };
-    }
-}
-
-export async function verifyAdminLogin(formData: FormData) {
-    const password = formData.get("password") as string;
-
-    if (password === ADMIN_PASSWORD) {
-        const cookieStore = await cookies();
-        cookieStore.set(COOKIE_NAME_ADMIN_ACCESS, "true", {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            maxAge: 60 * 60 * 24, // 1 day
-            path: "/",
-        });
-        return { success: true };
-    } else {
-        return { error: "Invalid password" };
     }
 }
 
@@ -73,6 +54,8 @@ export async function logoutUser() {
 // --- Blog Actions ---
 
 export async function fetchAndSaveArticles(term: string = "artificial intelligence medicine") {
+    if (!(await requireAdmin())) redirect("/login?next=/admin");
+
     const articles = await fetchRecentArticles(term);
 
     let count = 0;
@@ -103,6 +86,8 @@ export async function fetchAndSaveArticles(term: string = "artificial intelligen
 }
 
 export async function fetchAndSaveDoi(doi: string) {
+    if (!(await requireAdmin())) redirect("/login?next=/admin");
+
     const { fetchArticleByDoi } = await import("@/lib/pubmed");
     const article = await fetchArticleByDoi(doi);
 
@@ -134,6 +119,8 @@ export async function fetchAndSaveDoi(doi: string) {
 }
 
 export async function getArticlesByStatus(status: string) {
+    if (!(await requireAdmin())) redirect("/login?next=/admin");
+
     return await prisma.article.findMany({
         where: { status },
         orderBy: { createdAt: "desc" },
@@ -141,11 +128,15 @@ export async function getArticlesByStatus(status: string) {
 }
 
 export async function deleteArticle(id: string) {
+    if (!(await requireAdmin())) redirect("/login?next=/admin");
+
     await prisma.article.delete({ where: { id } });
     revalidatePath("/admin");
 }
 
 export async function generateBlogs(articleIds: string[], instructions: string = "") {
+    if (!(await requireAdmin())) redirect("/login?next=/admin");
+
     let count = 0;
     const logs: string[] = [];
     logs.push(`Starting generateBlogs with IDs: ${JSON.stringify(articleIds)}`);
@@ -220,6 +211,8 @@ export async function generateBlogs(articleIds: string[], instructions: string =
 }
 
 export async function getDraftBlogs() {
+    if (!(await requireAdmin())) redirect("/login?next=/admin");
+
     return await prisma.blogPost.findMany({
         where: { published: false },
         orderBy: { createdAt: "desc" },
@@ -227,6 +220,8 @@ export async function getDraftBlogs() {
 }
 
 export async function getPublishedBlogsAdmin() {
+    if (!(await requireAdmin())) redirect("/login?next=/admin");
+
     return await prisma.blogPost.findMany({
         where: { published: true },
         orderBy: { createdAt: "desc" },
@@ -238,6 +233,8 @@ export async function getTags() {
 }
 
 export async function createTag(name: string) {
+    if (!(await requireAdmin())) redirect("/login?next=/admin");
+
     return await prisma.tag.create({ data: { name } });
 }
 
@@ -284,6 +281,8 @@ export async function updateBlogPost(id: string, data: {
     guidelineCategory?: string;
     displayLocations?: string[];
 }) {
+    if (!(await requireAdmin())) redirect("/login?next=/admin");
+
     console.log("Updating Blog Post:", id);
     console.log("Data:", JSON.stringify(data, null, 2));
 
@@ -330,6 +329,8 @@ export async function updateBlogPost(id: string, data: {
 }
 
 export async function publishBlogPost(id: string) {
+    if (!(await requireAdmin())) redirect("/login?next=/admin");
+
     const blog = await prisma.blogPost.update({
         where: { id },
         data: { published: true },
@@ -345,6 +346,8 @@ export async function publishBlogPost(id: string) {
 }
 
 export async function createManualArticle(data: { title: string; abstract: string; authors: string; url?: string }) {
+    if (!(await requireAdmin())) redirect("/login?next=/admin");
+
     const id = Math.random().toString(36).substring(7); // Temporary ID generation
 
     await prisma.article.create({
@@ -364,6 +367,8 @@ export async function createManualArticle(data: { title: string; abstract: strin
 }
 
 export async function createEmptyBlogPost() {
+    if (!(await requireAdmin())) redirect("/login?next=/admin");
+
     const blog = await prisma.blogPost.create({
         data: {
             title: "Untitled Post",
@@ -430,6 +435,8 @@ export async function sendContactEmail(formData: FormData) {
 }
 
 export async function deleteBlogPost(id: string) {
+    if (!(await requireAdmin())) redirect("/login?next=/admin");
+
     const blog = await prisma.blogPost.findUnique({
         where: { id },
         include: { article: true }
@@ -458,6 +465,8 @@ export async function deleteBlogPost(id: string) {
 }
 
 export async function unpublishBlogPost(id: string) {
+    if (!(await requireAdmin())) redirect("/login?next=/admin");
+
     await prisma.blogPost.update({
         where: { id },
         data: { published: false },

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { COOKIE_NAME_ADMIN_ACCESS, COOKIE_NAME_SITE_ACCESS } from "@/lib/auth";
+import { COOKIE_NAME_SITE_ACCESS, COOKIE_NAME_USER_SESSION } from "@/lib/auth";
 
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
@@ -17,12 +17,12 @@ export function middleware(request: NextRequest) {
     // 2. Admin Routes Protection
     if (pathname.startsWith("/admin")) {
         if (pathname === "/admin/login") {
-            return NextResponse.next();
+            return NextResponse.redirect(new URL("/login?next=/admin", request.url));
         }
 
-        const adminCookie = request.cookies.get(COOKIE_NAME_ADMIN_ACCESS);
-        if (!adminCookie) {
-            const loginUrl = new URL("/admin/login", request.url);
+        const sessionCookie = request.cookies.get(COOKIE_NAME_USER_SESSION);
+        if (!sessionCookie) {
+            const loginUrl = new URL("/login?next=/admin", request.url);
             return NextResponse.redirect(loginUrl);
         }
         return NextResponse.next();

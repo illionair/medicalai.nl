@@ -3,7 +3,7 @@ import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Calendar, User } from "lucide-react";
+import { ArrowLeft, BriefcaseBusiness, Calendar, ExternalLink, Stethoscope, User, Users } from "lucide-react";
 import TrustBadge from "@/components/TrustBadge";
 import BlogSidebar from "@/components/BlogSidebar";
 import EvidenceBox from "@/components/EvidenceBox";
@@ -13,13 +13,11 @@ import { getCurrentUser } from "@/lib/user-auth";
 
 export const dynamic = "force-dynamic";
 
-const categoryGradients: Record<string, string> = {
-    "Predictie": "from-blue-600 to-cyan-500",
-    "Diagnostiek": "from-purple-600 to-pink-500",
-    "Methodisch": "from-green-600 to-emerald-500",
-    "Ethiek": "from-orange-600 to-amber-500",
-    "default": "from-gray-900 to-gray-700"
-};
+function doiHref(doi?: string | null) {
+    if (!doi) return null;
+    if (doi.startsWith("http://") || doi.startsWith("https://")) return doi;
+    return `https://doi.org/${doi.replace(/^doi:/i, "").trim()}`;
+}
 
 export default async function BlogPostPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -31,6 +29,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
     }
 
     const likedByCurrentUser = currentUser ? blog.likes.some((like) => like.userId === currentUser.id) : false;
+    const canonicalUrl = `${(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/$/, "")}/blog/${blog.id}`;
+    const originalPublicationUrl = doiHref(blog.doi);
+    const trustBadges = [
+        blog.specialism ? <TrustBadge key="specialism" type="specialism" label="Specialisme" value={blog.specialism} href={`/topics/${blog.specialism}`} /> : null,
+        blog.ceStatus ? <TrustBadge key="ce" type="status" label="CE-status" value={blog.ceStatus} /> : null,
+        blog.fdaStatus ? <TrustBadge key="fda" type="status" label="FDA" value={blog.fdaStatus} /> : null,
+        blog.cost ? <TrustBadge key="cost" type="cost" label="Kosten" value={blog.cost} /> : null,
+    ].filter(Boolean);
 
     return (
         <article className="min-h-screen bg-white pb-64">
@@ -52,6 +58,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                         <p className="text-xl md:text-2xl text-slate-500 mb-6 font-light leading-relaxed">
                             {blog.subtitle}
                         </p>
+                    )}
+
+                    {trustBadges.length > 0 && (
+                        <div className="mb-6 flex flex-wrap gap-2">
+                            {trustBadges}
+                        </div>
                     )}
 
                     {/* Subtitle/Summary if available, or just meta */}
@@ -94,6 +106,41 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                             </div>
                         )}
 
+                        <div className="mb-8 grid gap-4 md:grid-cols-2">
+                            <section className="rounded-2xl border border-blue-100 bg-blue-50/60 p-5">
+                                <div className="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-blue-800">
+                                    <Stethoscope size={18} />
+                                    Clinical Utility
+                                </div>
+                                <p className="text-sm leading-relaxed text-slate-700">
+                                    Focus voor de kliniek: {blog.specialism || blog.category}. Gebruik dit artikel als snelle scan van bruikbaarheid, validatie en workflow-impact.
+                                </p>
+                            </section>
+                            <section className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                                <div className="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-slate-800">
+                                    <BriefcaseBusiness size={18} />
+                                    Manager Check
+                                </div>
+                                <p className="text-sm leading-relaxed text-slate-700">
+                                    Implementatie: {blog.integration || "nog niet gespecificeerd"}. Kostenindicatie: {blog.cost || "nog niet gespecificeerd"}.
+                                </p>
+                            </section>
+                        </div>
+
+                        {(blog.ceStatus || blog.fdaStatus || blog.modelType || blog.privacyType) && (
+                            <EvidenceBox title="Evidence Check" type="neutral">
+                                <div className="mb-4 flex flex-wrap gap-2">
+                                    {blog.ceStatus && <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-emerald-700">CE: {blog.ceStatus}</span>}
+                                    {blog.fdaStatus && <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-emerald-700">FDA: {blog.fdaStatus}</span>}
+                                    {blog.modelType && <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-slate-700">Model: {blog.modelType}</span>}
+                                    {blog.privacyType && <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-slate-700">Privacy: {blog.privacyType}</span>}
+                                </div>
+                                <p>
+                                    Deze signalen vatten de beschikbare trust-indicatoren samen. Controleer altijd de primaire studie, CE/FDA-registratie en lokale implementatie-eisen voordat dit in besluitvorming wordt gebruikt.
+                                </p>
+                            </EvidenceBox>
+                        )}
+
                         <div className="typography-theme max-w-none">
                             <ReactMarkdown
                                 rehypePlugins={[rehypeRaw]}
@@ -123,6 +170,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                                 specialism={blog.specialism}
                                 cost={blog.cost}
                                 modelType={blog.modelType}
+                                title={blog.title}
+                                currentUrl={canonicalUrl}
                             />
                         </div>
 
@@ -141,7 +190,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                                     </p>
                                     <div className="text-sm font-medium text-brand-secondary">
                                         <p className="italic mb-2">
-                                            "We zijn altijd op zoek naar meer auteurs. Wil jij jouw kennis delen met de community? Neem dan contact met ons op!"
+                                            We zijn altijd op zoek naar meer auteurs. Wil jij jouw kennis delen met de community? Neem dan contact met ons op.
                                         </p>
                                         <Link href="/contact" className="inline-flex items-center gap-1 hover:underline font-bold">
                                             Word auteur &rarr;
@@ -159,6 +208,25 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                             comments={blog.comments}
                         />
 
+                        <section className="mt-12 rounded-2xl border border-slate-200 bg-slate-50 p-6">
+                            <div className="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-slate-800">
+                                <Users size={18} />
+                                Wat vinden collega&apos;s?
+                            </div>
+                            <p className="mb-4 text-sm leading-relaxed text-slate-600">
+                                Deel deze analyse met je netwerk of gebruik de reacties hieronder om klinische ervaringen en implementatievragen te verzamelen.
+                            </p>
+                            <a
+                                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(canonicalUrl)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 rounded-xl bg-brand-secondary px-4 py-2 text-sm font-bold text-white transition hover:bg-brand-primary"
+                            >
+                                <ExternalLink size={16} />
+                                Deel op LinkedIn
+                            </a>
+                        </section>
+
                         {/* Citation Tool & Footer */}
                         <div className="mt-16 pt-8 border-t border-slate-100">
                             <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4">Referentie</h4>
@@ -166,8 +234,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                                 <span>{blog.citation || "Citation not available."}</span>
                                 <CopyButton text={blog.citation || ""} />
                             </div>
-                            {blog.doi && (
-                                <a href={blog.doi} target="_blank" rel="noopener noreferrer" className="inline-block mt-4 text-brand-secondary hover:underline text-sm font-medium">
+                            {originalPublicationUrl && (
+                                <a href={originalPublicationUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-4 text-brand-secondary hover:underline text-sm font-medium">
                                     Bekijk originele publicatie (DOI) &rarr;
                                 </a>
                             )}
@@ -196,6 +264,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                             specialism={blog.specialism}
                             cost={blog.cost}
                             modelType={blog.modelType}
+                            title={blog.title}
+                            currentUrl={canonicalUrl}
                         />
                     </div>
                 </div>
