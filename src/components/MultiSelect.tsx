@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { X, Plus, Check } from "lucide-react";
+import { X, Plus } from "lucide-react";
 
 interface Option {
     id: string;
@@ -114,7 +114,7 @@ export default function MultiSelect({ options, selected, onChange, onCreate, pla
                             onClick={handleCreate}
                         >
                             <Plus size={14} />
-                            Create "{search}"
+                            Create &ldquo;{search}&rdquo;
                         </button>
                     )}
                 </div>

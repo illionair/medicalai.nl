@@ -34,13 +34,17 @@ export default function ArticleEngagement({
 }: ArticleEngagementProps) {
     const commentAction = createComment.bind(null, blogPostId);
     const likeAction = toggleLike.bind(null, blogPostId);
+    const submitComment = async (formData: FormData) => {
+        "use server";
+        await commentAction(formData);
+    };
 
     return (
         <section className="mt-12 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <div className="flex flex-col gap-4 border-b border-slate-100 pb-6 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                     <h2 className="text-xl font-bold text-brand-dark">Community</h2>
-                    <p className="text-sm text-slate-500">Like dit artikel of deel je ervaring met collega's.</p>
+                    <p className="text-sm text-slate-500">Like dit artikel of deel je ervaring met collega&apos;s.</p>
                 </div>
 
                 {currentUser ? (
@@ -68,7 +72,7 @@ export default function ArticleEngagement({
             </div>
 
             {currentUser ? (
-                <form action={commentAction} className="mt-6 space-y-3">
+                <form action={submitComment} className="mt-6 space-y-3">
                     <label className="text-sm font-bold text-slate-700" htmlFor="comment">
                         Reageer als {currentUser.name}
                     </label>

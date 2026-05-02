@@ -16,7 +16,7 @@ export default function TermsPage() {
                 </p>
 
                 <div className="space-y-12">
-                    {t.terms.sections.map((section: any, index: number) => (
+                    {t.terms.sections.map((section: { heading: string; content: string }, index: number) => (
                         <div key={index}>
                             <h2 className="text-2xl font-bold text-brand-dark mb-4">{section.heading}</h2>
                             <p className="text-gray-600 leading-relaxed">

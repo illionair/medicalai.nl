@@ -4,13 +4,11 @@ const REQUIRED_ENV_VARS = [
     "ADMIN_EMAILS",
     "DATABASE_URL",
     "OPENAI_API_KEY",
-    "EMAIL_FROM",
     "NEXT_PUBLIC_SITE_URL",
-    "KV_REST_API_URL",
-    "KV_REST_API_TOKEN",
 ] as const;
 
 const SMTP_ENV_VARS = ["SMTP_HOST", "SMTP_USER", "SMTP_PASS"] as const;
+const RESEND_ENV_VARS = ["RESEND_API_KEY", "EMAIL_FROM"] as const;
 
 export type RequiredEnvVar = (typeof REQUIRED_ENV_VARS)[number];
 
@@ -35,7 +33,7 @@ export function isAdminEmail(email: string) {
 
 export function assertEnv() {
     const missing = REQUIRED_ENV_VARS.filter((name) => !process.env[name]?.trim());
-    const hasResend = Boolean(process.env.RESEND_API_KEY?.trim());
+    const hasResend = RESEND_ENV_VARS.every((name) => process.env[name]?.trim());
     const hasSmtp = SMTP_ENV_VARS.every((name) => process.env[name]?.trim());
 
     if (missing.length > 0) {

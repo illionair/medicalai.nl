@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, useAnimation, useMotionValue, useTransform, useSpring } from "framer-motion";
+import { motion, useMotionValue, useTransform, useSpring, type MotionValue } from "framer-motion";
 
 export default function InteractiveGrid() {
     const [columns, setColumns] = useState(0);
@@ -70,26 +70,18 @@ export default function InteractiveGrid() {
     );
 }
 
-function Block({ mouseX, mouseY, index, columns }: { mouseX: any, mouseY: any, index: number, columns: number }) {
+function Block({ mouseX, mouseY, columns }: { mouseX: MotionValue<number>; mouseY: MotionValue<number>; index: number; columns: number }) {
     const blockRef = useRef<HTMLDivElement>(null);
     const [position, setPosition] = useState({ x: 0, y: 0 });
 
     useEffect(() => {
         if (blockRef.current) {
-            const rect = blockRef.current.getBoundingClientRect();
-            // We need relative position within the container, but rect is viewport. 
-            // Simplified: we can calculate center based on index.
-            // Actually, let's just use the rect on mount/resize if possible, 
-            // but for performance in this specific setup, let's rely on the fact that 
-            // we know the grid structure.
-            // However, getting the exact center of the block is best done via rect.
-            // To avoid heavy layout thrashing, we'll just do it once or use a simpler distance check.
             setPosition({
                 x: blockRef.current.offsetLeft + blockRef.current.offsetWidth / 2,
-                y: blockRef.current.offsetTop + blockRef.current.offsetHeight / 2
+                y: blockRef.current.offsetTop + blockRef.current.offsetHeight / 2,
             });
         }
-    }, [columns]); // Recalculate if grid changes
+    }, [columns]);
 
     // Transform based on distance
     const distance = useTransform<number, number>([mouseX, mouseY], ([x, y]) => {

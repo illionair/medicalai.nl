@@ -11,8 +11,8 @@ export default function SeedPage() {
         try {
             await createOpenEvidencePost();
             setStatus("Success! Blog post created.");
-        } catch (e: any) {
-            setStatus("Error: " + e.message);
+        } catch (e: unknown) {
+            setStatus("Error: " + (e instanceof Error ? e.message : String(e)));
         }
     };
 

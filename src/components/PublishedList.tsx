@@ -4,8 +4,17 @@ import { useEffect, useState } from "react";
 import { getPublishedBlogsAdmin, deleteBlogPost, unpublishBlogPost } from "@/app/actions";
 import Link from "next/link";
 
+interface PublishedBlogSummary {
+    id: string;
+    title: string;
+    summary: string | null;
+    category: string;
+    createdAt: Date | string;
+    scheduledFor?: Date | string | null;
+}
+
 export default function PublishedList() {
-    const [blogs, setBlogs] = useState<any[]>([]);
+    const [blogs, setBlogs] = useState<PublishedBlogSummary[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {

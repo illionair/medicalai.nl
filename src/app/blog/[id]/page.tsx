@@ -161,7 +161,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                                 developer={blog.developer}
                                 demoUrl={blog.demoUrl}
                                 vendorUrl={blog.vendorUrl}
-                                privacy={blog.privacy}
                                 privacyType={blog.privacyType}
                                 integration={blog.integration}
                                 fdaStatus={blog.fdaStatus}
@@ -255,7 +254,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                             developer={blog.developer}
                             demoUrl={blog.demoUrl}
                             vendorUrl={blog.vendorUrl}
-                            privacy={blog.privacy}
                             privacyType={blog.privacyType}
                             integration={blog.integration}
                             fdaStatus={blog.fdaStatus}

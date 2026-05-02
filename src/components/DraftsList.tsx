@@ -4,8 +4,14 @@ import { useEffect, useState } from "react";
 import { getDraftBlogs, deleteBlogPost } from "@/app/actions";
 import Link from "next/link";
 
+interface DraftSummary {
+    id: string;
+    title: string;
+    category: string;
+}
+
 export default function DraftsList() {
-    const [drafts, setDrafts] = useState<any[]>([]);
+    const [drafts, setDrafts] = useState<DraftSummary[]>([]);
 
     useEffect(() => {
         async function load() {

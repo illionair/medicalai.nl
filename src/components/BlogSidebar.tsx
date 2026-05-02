@@ -5,7 +5,6 @@ interface BlogSidebarProps {
     developer?: string | null;
     demoUrl?: string | null;
     vendorUrl?: string | null;
-    privacy?: string | null;
     privacyType?: string | null;
     integration?: string | null;
     fdaStatus?: string | null;
@@ -18,11 +17,11 @@ interface BlogSidebarProps {
     currentUrl?: string;
 }
 
-export default function BlogSidebar({ developer, demoUrl, vendorUrl, privacy, privacyType, integration, fdaStatus, fdaNumber, ceStatus, specialism, cost, modelType, title, currentUrl }: BlogSidebarProps) {
+export default function BlogSidebar({ developer, demoUrl, vendorUrl, privacyType, integration, fdaStatus, fdaNumber, ceStatus, specialism, cost, modelType, title, currentUrl }: BlogSidebarProps) {
     // Check if any details exist
     const hasDetails = specialism || ceStatus || cost || modelType;
     // Check if any quick facts exist
-    const hasQuickFacts = developer || privacyType || privacy || integration;
+    const hasQuickFacts = developer || privacyType || integration;
     // Check if any actions exist
     const hasActions = vendorUrl || demoUrl;
     const encodedUrl = encodeURIComponent(currentUrl || "");
@@ -66,10 +65,10 @@ export default function BlogSidebar({ developer, demoUrl, vendorUrl, privacy, pr
                                 <span className="font-bold text-gray-900">{developer}</span>
                             </li>
                         )}
-                        {(privacyType || privacy) && (
+                        {privacyType && (
                             <li className="flex flex-col">
                                 <span className="text-xs text-gray-500 font-medium uppercase">Privacy</span>
-                                <span className="font-bold text-gray-900">{privacyType || privacy}</span>
+                                <span className="font-bold text-gray-900">{privacyType}</span>
                             </li>
                         )}
                         {integration && (

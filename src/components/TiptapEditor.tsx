@@ -270,7 +270,15 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
     );
 }
 
-function ToolbarBtn({ onClick, isActive = false, disabled = false, icon, tooltip }: any) {
+interface ToolbarBtnProps {
+    onClick: () => void;
+    isActive?: boolean;
+    disabled?: boolean;
+    icon: React.ReactNode;
+    tooltip: string;
+}
+
+function ToolbarBtn({ onClick, isActive = false, disabled = false, icon, tooltip }: ToolbarBtnProps) {
     return (
         <button
             onClick={onClick}

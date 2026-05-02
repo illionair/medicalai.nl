@@ -29,7 +29,7 @@ export async function createOpenEvidencePost() {
             cost: "Gratis (Freemium)",
             modelType: "Generative AI (RAG)",
             developer: "OpenEvidence (USA)",
-            privacy: "⚠️ US Cloud",
+            privacyType: "⚠️ US Cloud",
             integration: "Web-based",
             demoUrl: "https://www.openevidence.com",
             citation: "Medical AI. (2025). OpenEvidence: Generatieve AI met bronvermelding.",

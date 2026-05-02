@@ -1,63 +1,60 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import OpenAI from "openai";
 
-// Initialize Gemini client
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "dummy-key");
+const SYSTEM_PROMPT = "You are a medical AI expert and professional science communicator who writes Markdown blog posts for Dutch medical professionals and researchers.";
 
-export async function generateBlogPost(article: { title: string; abstract: string; authors: string }, instructions?: string) {
-    if (!process.env.GEMINI_API_KEY) {
-        throw new Error("GEMINI_API_KEY is not set in .env file");
+function getClient(): OpenAI {
+    const apiKey = process.env.OPENAI_API_KEY?.trim();
+    if (!apiKey) {
+        throw new Error("OPENAI_API_KEY is not set");
     }
-
-    // Using gemini-2.0-flash as it is available in the user's model list.
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-
-    const prompt = `
-    You are a medical AI expert and professional science communicator.
-    Write a blog post for a website designated for medical professionals and researchers.
-    
-    Source Article:
-    Title: ${article.title}
-    Authors: ${article.authors}
-    Abstract: ${article.abstract}
-    
-    Requirements:
-    1. Title: Catchy but professional.
-    2. Tone: Professional, critical, yet accessible. Apple-style minimalism in text structure.
-    3. Structure:
-       - Introduction (Context)
-       - Key Findings (Bulleted list)
-       - Critical Analysis (Limitations, Ethics, Clinical Applicability)
-       - Conclusion
-    4. Format: Markdown.
-    5. Language: Dutch (Nederlands).
-
-    ${instructions ? `CUSTOM INSTRUCTIONS FROM USER:\n${instructions}\n(Please prioritize these instructions over the general requirements if they conflict)` : ""}
-  `;
-
-    try {
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const text = response.text();
-
-        return text;
-    } catch (error) {
-        console.error("Error generating blog post with Gemini:", error);
-        throw error;
-    }
+    return new OpenAI({ apiKey });
 }
 
-export async function listAvailableModels() {
-    if (!process.env.GEMINI_API_KEY) return ["No API Key"];
+function getModel(): string {
+    return process.env.OPENAI_MODEL?.trim() || "gpt-4o-mini";
+}
+
+function buildPrompt(article: { title: string; abstract: string; authors: string }, instructions?: string): string {
+    return `Source Article:
+Title: ${article.title}
+Authors: ${article.authors}
+Abstract: ${article.abstract}
+
+Requirements:
+1. Title: Catchy but professional.
+2. Tone: Professional, critical, yet accessible. Apple-style minimalism in text structure.
+3. Structure:
+   - Introduction (Context)
+   - Key Findings (Bulleted list)
+   - Critical Analysis (Limitations, Ethics, Clinical Applicability)
+   - Conclusion
+4. Format: Markdown.
+5. Language: Dutch (Nederlands).
+${instructions ? `\nCUSTOM INSTRUCTIONS FROM USER:\n${instructions}\n(Please prioritize these instructions over the general requirements if they conflict)` : ""}`;
+}
+
+export async function generateBlogPost(
+    article: { title: string; abstract: string; authors: string },
+    instructions?: string,
+): Promise<string> {
+    const client = getClient();
+    const completion = await client.chat.completions.create({
+        model: getModel(),
+        messages: [
+            { role: "system", content: SYSTEM_PROMPT },
+            { role: "user", content: buildPrompt(article, instructions) },
+        ],
+    });
+    return completion.choices[0]?.message?.content ?? "";
+}
+
+export async function listAvailableModels(): Promise<string[]> {
     try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${process.env.GEMINI_API_KEY}`);
-        const data = await response.json();
-        if (data.models) {
-            return data.models
-                .filter((m: any) => m.supportedGenerationMethods && m.supportedGenerationMethods.includes("generateContent"))
-                .map((m: any) => m.name);
-        }
-        return ["No models returned in list", JSON.stringify(data)];
-    } catch (e: any) {
-        return [`Error listing models: ${e.message}`];
+        const client = getClient();
+        const result = await client.models.list();
+        return result.data.map((m) => m.id);
+    } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        return [`Error listing models: ${message}`];
     }
 }

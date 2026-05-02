@@ -34,14 +34,14 @@ export async function fetchRecentArticles(term: string = 'artificial intelligenc
         const pubmedArticles = result.PubmedArticleSet.PubmedArticle;
 
         // Helper to extract text recursively from XML objects
-        const extractText = (obj: any): string => {
+        const extractText = (obj: unknown): string => {
             if (!obj) return '';
             if (typeof obj === 'string') return obj;
             if (Array.isArray(obj)) return obj.map(extractText).join('');
             if (typeof obj === 'object') {
-                if (obj._) return obj._; // Text content often in "_" property
-                // If it has children like "sup", "i", etc., we need to join them
-                return Object.values(obj).map(extractText).join('');
+                const o = obj as Record<string, unknown>;
+                if (o._ !== undefined) return String(o._);
+                return Object.values(o).map(extractText).join('');
             }
             return String(obj);
         };
@@ -61,7 +61,7 @@ export async function fetchRecentArticles(term: string = 'artificial intelligenc
                 // Authors
                 let authorsStr = 'Unknown';
                 if (articleData.AuthorList && articleData.AuthorList[0].Author) {
-                    const authors = articleData.AuthorList[0].Author.map((a: any) => {
+                    const authors = (articleData.AuthorList[0].Author as Array<{ LastName?: string[]; Initials?: string[] }>).map((a) => {
                         return `${a.LastName?.[0] || ''} ${a.Initials?.[0] || ''}`.trim();
                     });
                     authorsStr = authors.slice(0, 3).join(', ') + (authors.length > 3 ? ' et al.' : '');
@@ -115,13 +115,14 @@ export async function fetchArticleByDoi(doi: string): Promise<PubMedArticle | nu
         const pubmedArticle = result.PubmedArticleSet.PubmedArticle[0];
 
         // Helper to extract text (reused logic, simplified for single item)
-        const extractText = (obj: any): string => {
+        const extractText = (obj: unknown): string => {
             if (!obj) return '';
             if (typeof obj === 'string') return obj;
             if (Array.isArray(obj)) return obj.map(extractText).join('');
             if (typeof obj === 'object') {
-                if (obj._) return obj._;
-                return Object.values(obj).map(extractText).join('');
+                const o = obj as Record<string, unknown>;
+                if (o._ !== undefined) return String(o._);
+                return Object.values(o).map(extractText).join('');
             }
             return String(obj);
         };
@@ -135,7 +136,7 @@ export async function fetchArticleByDoi(doi: string): Promise<PubMedArticle | nu
 
         let authorsStr = 'Unknown';
         if (articleData.AuthorList && articleData.AuthorList[0].Author) {
-            const authors = articleData.AuthorList[0].Author.map((a: any) => {
+            const authors = (articleData.AuthorList[0].Author as Array<{ LastName?: string[]; Initials?: string[] }>).map((a) => {
                 return `${a.LastName?.[0] || ''} ${a.Initials?.[0] || ''}`.trim();
             });
             authorsStr = authors.slice(0, 3).join(', ') + (authors.length > 3 ? ' et al.' : '');

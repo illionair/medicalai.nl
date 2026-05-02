@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { dictionary, Locale } from "@/lib/dictionaries";
 
 interface LanguageContextType {
@@ -11,15 +11,14 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-    const [language, setLanguage] = useState<Locale>("nl");
+function readSavedLanguage(): Locale {
+    if (typeof window === "undefined") return "nl";
+    const saved = window.localStorage.getItem("language");
+    return saved === "en" || saved === "nl" ? saved : "nl";
+}
 
-    useEffect(() => {
-        const saved = localStorage.getItem("language") as Locale;
-        if (saved && (saved === "en" || saved === "nl")) {
-            setLanguage(saved);
-        }
-    }, []);
+export function LanguageProvider({ children }: { children: React.ReactNode }) {
+    const [language, setLanguage] = useState<Locale>(readSavedLanguage);
 
     const handleSetLanguage = (lang: Locale) => {
         setLanguage(lang);
