@@ -7,9 +7,9 @@ import { generateBlogPost } from "@/lib/ai";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import {
-    COOKIE_NAME_SITE_ACCESS,
-    SITE_ACCESS_CODE
+    COOKIE_NAME_SITE_ACCESS
 } from "@/lib/auth";
+import { getRequiredEnv } from "@/lib/env";
 import { clearUserSession, createMagicLinkToken, getCurrentUser, requireAdmin } from "@/lib/user-auth";
 import { buildMagicLink, sendMagicLinkEmail } from "@/lib/magic-link-mail";
 
@@ -18,7 +18,7 @@ import { buildMagicLink, sendMagicLinkEmail } from "@/lib/magic-link-mail";
 export async function verifySiteAccess(formData: FormData) {
     const code = formData.get("code") as string;
 
-    if (code === SITE_ACCESS_CODE) {
+    if (code === getRequiredEnv("SITE_ACCESS_CODE")) {
         const cookieStore = await cookies();
         cookieStore.set(COOKIE_NAME_SITE_ACCESS, "true", {
             httpOnly: true,
@@ -176,11 +176,7 @@ export async function generateBlogs(articleIds: string[], instructions: string =
             }
             logs.push(`Generated content length: ${content.length}`);
 
-            // 2. Determine category
-            const categories = ["Predictie", "Diagnostiek", "Methodisch", "Ethiek"];
-            const category = categories[Math.floor(Math.random() * categories.length)];
-
-            // 3. Save BlogPost
+            // 2. Save BlogPost
             logs.push("Creating BlogPost in DB...");
             const blog = await prisma.blogPost.create({
                 data: {
@@ -194,15 +190,16 @@ export async function generateBlogs(articleIds: string[], instructions: string =
             });
             logs.push(`BlogPost created with ID: ${blog.id}`);
 
-            // 4. Update Article status
+            // 3. Update Article status
             await prisma.article.update({
                 where: { id },
                 data: { status: "SELECTED" },
             });
 
             count++;
-        } catch (error: any) {
-            logs.push(`Failed to generate blog for article ${id}: ${error.message}`);
+        } catch (error: unknown) {
+            const message = error instanceof Error ? error.message : String(error);
+            logs.push(`Failed to generate blog for article ${id}: ${message}`);
         }
     }
 
