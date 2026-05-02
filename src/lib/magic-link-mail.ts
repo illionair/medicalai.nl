@@ -11,6 +11,10 @@ function smtpReady() {
     return Boolean(process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS);
 }
 
+function resendReady() {
+    return Boolean(process.env.RESEND_API_KEY && process.env.EMAIL_FROM);
+}
+
 function escapeHtml(value: string) {
     return value
         .replaceAll("&", "&amp;")
@@ -27,9 +31,52 @@ export function buildMagicLink(token: string) {
 }
 
 export async function sendMagicLinkEmail(input: { to: string; name?: string; url: string }) {
+    const displayName = input.name || "daar";
+    const safeDisplayName = escapeHtml(displayName);
+    const safeUrl = escapeHtml(input.url);
+    const text = `Hallo ${displayName},\n\nKlik op deze link om in te loggen bij Medical AI:\n${input.url}\n\nDeze link verloopt over 15 minuten. Als jij dit niet was, kun je deze mail negeren.`;
+    const html = `
+        <div style="font-family:Arial,sans-serif;line-height:1.6;color:#111">
+            <h2>Login bij Medical AI</h2>
+            <p>Hallo ${safeDisplayName},</p>
+            <p>Klik op onderstaande knop om in te loggen. Deze link verloopt over 15 minuten.</p>
+            <p>
+                <a href="${safeUrl}" style="display:inline-block;background:#111;color:#fff;text-decoration:none;padding:12px 18px;border-radius:8px;font-weight:bold">
+                    Inloggen
+                </a>
+            </p>
+            <p style="font-size:13px;color:#666">Als de knop niet werkt, open dan deze link:<br>${safeUrl}</p>
+            <p style="font-size:13px;color:#666">Als jij dit niet was, kun je deze mail negeren.</p>
+        </div>
+    `;
+
+    if (resendReady()) {
+        const response = await fetch("https://api.resend.com/emails", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                from: process.env.EMAIL_FROM,
+                to: input.to,
+                subject: "Je loginlink voor Medical AI",
+                text,
+                html,
+            }),
+        });
+
+        if (!response.ok) {
+            const body = await response.text().catch(() => "");
+            throw new Error(`Resend failed to send login link: ${response.status} ${body.slice(0, 200)}`);
+        }
+
+        return;
+    }
+
     if (!smtpReady()) {
         if (process.env.NODE_ENV === "production") {
-            throw new Error("SMTP_HOST, SMTP_USER and SMTP_PASS are required to send login links.");
+            throw new Error("RESEND_API_KEY with EMAIL_FROM or SMTP_HOST, SMTP_USER and SMTP_PASS are required to send login links.");
         }
 
         console.info(`[auth] Magic login link for ${input.to}: ${input.url}`);
@@ -47,28 +94,12 @@ export async function sendMagicLinkEmail(input: { to: string; name?: string; url
     });
 
     const from = process.env.EMAIL_FROM || `"Medical AI" <${process.env.SMTP_USER}>`;
-    const displayName = input.name || "daar";
-    const safeDisplayName = escapeHtml(displayName);
-    const safeUrl = escapeHtml(input.url);
 
     await transporter.sendMail({
         from,
         to: input.to,
         subject: "Je loginlink voor Medical AI",
-        text: `Hallo ${displayName},\n\nKlik op deze link om in te loggen bij Medical AI:\n${input.url}\n\nDeze link verloopt over 15 minuten. Als jij dit niet was, kun je deze mail negeren.`,
-        html: `
-            <div style="font-family:Arial,sans-serif;line-height:1.6;color:#111">
-                <h2>Login bij Medical AI</h2>
-                <p>Hallo ${safeDisplayName},</p>
-                <p>Klik op onderstaande knop om in te loggen. Deze link verloopt over 15 minuten.</p>
-                <p>
-                    <a href="${safeUrl}" style="display:inline-block;background:#111;color:#fff;text-decoration:none;padding:12px 18px;border-radius:8px;font-weight:bold">
-                        Inloggen
-                    </a>
-                </p>
-                <p style="font-size:13px;color:#666">Als de knop niet werkt, open dan deze link:<br>${safeUrl}</p>
-                <p style="font-size:13px;color:#666">Als jij dit niet was, kun je deze mail negeren.</p>
-            </div>
-        `,
+        text,
+        html,
     });
 }

@@ -40,8 +40,14 @@ export async function requestMagicLink(formData: FormData) {
     if (!name) return { error: "Vul je naam in." };
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return { error: "Vul een geldig e-mailadres in." };
 
-    const { token } = await createMagicLinkToken({ email, name, redirectTo });
-    await sendMagicLinkEmail({ to: email, name, url: buildMagicLink(token) });
+    try {
+        const { token } = await createMagicLinkToken({ email, name, redirectTo });
+        await sendMagicLinkEmail({ to: email, name, url: buildMagicLink(token) });
+    } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        console.error("[auth] Failed to request magic link", message);
+        return { error: "Loginlink kon niet worden verstuurd. Probeer het later opnieuw." };
+    }
 
     return { success: true };
 }
