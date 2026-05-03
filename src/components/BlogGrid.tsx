@@ -53,10 +53,10 @@ export default function BlogGrid({ blogs }: BlogGridProps) {
             </motion.div>
 
             {hasFilters && (
-                <div className="mb-10 rounded-2xl border border-slate-200 bg-white/80 p-4 shadow-sm backdrop-blur">
+                <div className="mb-10 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
                     <div className="mb-4 flex items-center justify-between gap-3">
-                        <div className="flex items-center gap-2 text-sm font-bold text-slate-800">
-                            <Filter size={16} className="text-brand-secondary" />
+                        <div className="flex items-center gap-2 text-sm font-bold text-brand-secondary">
+                            <Filter size={16} />
                             Filter publicaties
                         </div>
                         <p className="text-xs font-medium text-slate-500">
@@ -67,7 +67,7 @@ export default function BlogGrid({ blogs }: BlogGridProps) {
                         <select
                             value={specialism}
                             onChange={(event) => setSpecialism(event.target.value)}
-                            className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 outline-none transition focus:border-brand-secondary"
+                            className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 outline-none transition focus:border-brand-secondary"
                         >
                             <option value="">Alle specialismen</option>
                             {uniqueValues("specialism").map((value) => (
@@ -77,7 +77,7 @@ export default function BlogGrid({ blogs }: BlogGridProps) {
                         <select
                             value={ceStatus}
                             onChange={(event) => setCeStatus(event.target.value)}
-                            className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 outline-none transition focus:border-brand-secondary"
+                            className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 outline-none transition focus:border-brand-secondary"
                         >
                             <option value="">Alle CE-statussen</option>
                             {uniqueValues("ceStatus").map((value) => (
@@ -87,7 +87,7 @@ export default function BlogGrid({ blogs }: BlogGridProps) {
                         <select
                             value={cost}
                             onChange={(event) => setCost(event.target.value)}
-                            className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 outline-none transition focus:border-brand-secondary"
+                            className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 outline-none transition focus:border-brand-secondary"
                         >
                             <option value="">Alle kosten</option>
                             {uniqueValues("cost").map((value) => (
