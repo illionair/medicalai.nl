@@ -37,8 +37,8 @@ export default function BlogSidebar({ developer, demoUrl, vendorUrl, privacyType
         <div className="sticky top-24 space-y-6">
             {/* Details Card - Only show if has data */}
             {hasDetails && (
-                <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                    <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                    <h3 className="text-[11px] font-bold text-brand-secondary uppercase tracking-[0.12em] mb-4 flex items-center gap-2">
                         <ShieldCheck size={16} className="text-brand-secondary" />
                         Details
                     </h3>
@@ -53,27 +53,27 @@ export default function BlogSidebar({ developer, demoUrl, vendorUrl, privacyType
 
             {/* Quick Facts - Only show if has data */}
             {hasQuickFacts && (
-                <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                    <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                    <h3 className="text-[11px] font-bold text-brand-secondary uppercase tracking-[0.12em] mb-4 flex items-center gap-2">
                         <Globe size={16} className="text-brand-secondary" />
                         Quick Facts
                     </h3>
                     <ul className="space-y-4 text-sm">
                         {developer && (
                             <li className="flex flex-col">
-                                <span className="text-xs text-gray-500 font-medium uppercase">Ontwikkelaar</span>
+                                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.08em]">Ontwikkelaar</span>
                                 <span className="font-bold text-gray-900">{developer}</span>
                             </li>
                         )}
                         {privacyType && (
                             <li className="flex flex-col">
-                                <span className="text-xs text-gray-500 font-medium uppercase">Privacy</span>
+                                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.08em]">Privacy</span>
                                 <span className="font-bold text-gray-900">{privacyType}</span>
                             </li>
                         )}
                         {integration && (
                             <li className="flex flex-col">
-                                <span className="text-xs text-gray-500 font-medium uppercase">Integratie</span>
+                                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.08em]">Integratie</span>
                                 <span className="font-bold text-gray-900">{integration}</span>
                             </li>
                         )}
@@ -83,8 +83,8 @@ export default function BlogSidebar({ developer, demoUrl, vendorUrl, privacyType
 
             {/* Actions - Only show if has data */}
             {hasActions && (
-                <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                    <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">Acties</h3>
+                <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                    <h3 className="text-[11px] font-bold text-brand-secondary uppercase tracking-[0.12em] mb-4">Acties</h3>
                     <div className="space-y-3">
                         {vendorUrl && (
                             <a
@@ -113,8 +113,8 @@ export default function BlogSidebar({ developer, demoUrl, vendorUrl, privacyType
             )}
 
             {hasShare && (
-                <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                    <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                    <h3 className="text-[11px] font-bold text-brand-secondary uppercase tracking-[0.12em] mb-4 flex items-center gap-2">
                         <Share2 size={16} className="text-brand-secondary" />
                         Deel analyse
                     </h3>
