@@ -42,7 +42,7 @@ export default function Navbar() {
                 className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200/50"
                 style={{ height: "44px" }}
             >
-                <div className="container h-full flex items-center justify-between max-w-[1024px] mx-auto px-4">
+                <div className="container h-full flex items-center justify-between max-w-[1080px] mx-auto px-4">
                     <Link href="/" className="text-[14px] font-semibold tracking-tight flex items-center gap-2 text-black/90 hover:opacity-70 transition-opacity z-50 relative">
                         Medical AI
                     </Link>
@@ -56,7 +56,6 @@ export default function Navbar() {
                                 className="text-[12px] font-normal tracking-wide text-gray-600 hover:text-black transition-colors h-full flex items-center"
                                 style={{
                                     color: pathname === link.href ? "#000000" : undefined,
-                                    fontFamily: '"SF Pro Text", "Myriad Set Pro", "SF Pro Icons", "Apple Legacy Chevron", "Helvetica Neue", "Helvetica", "Arial", sans-serif'
                                 }}
                             >
                                 {link.label}
