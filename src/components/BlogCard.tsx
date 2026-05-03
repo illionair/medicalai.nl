@@ -20,7 +20,7 @@ export default function BlogCard({ id, title, summary, category, date, specialis
             <motion.div
                 whileHover={{ y: -8 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="relative h-full flex flex-col p-8 rounded-[32px] transition-shadow hover:shadow-2xl overflow-hidden group"
+                className="relative h-full flex flex-col p-7 rounded-[32px] transition-shadow hover:shadow-2xl overflow-hidden group"
                 style={{
                     backgroundColor: "transparent", // Reset base bg
                     boxShadow: '0 20px 40px -10px rgba(0, 0, 0, 0.15)'
@@ -43,9 +43,9 @@ export default function BlogCard({ id, title, summary, category, date, specialis
 
                 {/* Content Container - Relative z-10 to sit above glass */}
                 <div className="relative z-10 flex flex-col h-full">
-                    <div className="mb-6">
+                    <div className="mb-[18px]">
                         <span
-                            className="inline-block py-1 px-3 rounded-full text-xs font-bold tracking-wider uppercase"
+                            className="inline-block py-[5px] px-3 rounded-full text-[11px] font-bold tracking-[0.08em] uppercase"
                             style={{
                                 background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.4) 100%)',
                                 backdropFilter: 'blur(8px)',
@@ -59,27 +59,27 @@ export default function BlogCard({ id, title, summary, category, date, specialis
                         </span>
                     </div>
 
-                    <h3 className="text-2xl font-bold mb-4 leading-snug tracking-tight group-hover:text-brand-primary transition-colors text-gray-800">
+                    <h3 className="text-xl font-bold mb-[10px] leading-[1.25] tracking-[-0.01em] group-hover:text-brand-primary transition-colors text-slate-800">
                         {title}
                     </h3>
 
-                    <p className="text-base mb-6 line-clamp-3 flex-grow text-gray-600">
+                    <p className="text-sm mb-6 line-clamp-3 flex-grow text-slate-600 leading-[1.55]">
                         {summary}
                     </p>
 
                     {(specialism || ceStatus || cost) && (
-                        <div className="mb-6 flex flex-wrap gap-2 text-[11px] font-bold text-slate-600">
+                        <div className="mb-[14px] flex flex-wrap gap-1.5 text-[10px] font-bold text-slate-600">
                             {specialism && <span className="rounded-full bg-white/60 px-3 py-1">{specialism}</span>}
                             {ceStatus && <span className="rounded-full bg-emerald-50/80 px-3 py-1 text-emerald-700">{ceStatus}</span>}
                             {cost && <span className="rounded-full bg-white/60 px-3 py-1">{cost}</span>}
                         </div>
                     )}
 
-                    <div className="flex items-center justify-between mt-auto pt-6 border-t border-gray-200/50">
-                        <span className="text-sm font-medium text-gray-500">
+                    <div className="flex items-center justify-between mt-auto pt-[14px] border-t border-black/[0.06]">
+                        <span className="text-xs font-medium text-slate-500">
                             {new Date(date).toLocaleDateString("nl-NL", { year: 'numeric', month: 'long', day: 'numeric' })}
                         </span>
-                        <span className="text-sm font-semibold flex items-center gap-1 text-brand-primary">
+                        <span className="text-xs font-bold flex items-center gap-1 text-brand-primary">
                             Lees artikel
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M5 12h14M12 5l7 7-7 7" />

@@ -3,7 +3,8 @@
     "allow": [
       "Bash(py *)",
       "Read(//c/Users/sanma/Desktop/OneDrive - s.s.mahes/OneDrive/Thuis/Vaultthuis/Medical AI/graphify-out/**)",
-      "Read(//c/Users/sanma/Desktop/OneDrive - s.s.mahes/OneDrive/Thuis/Vaultthuis/Medical AI/**)"
+      "Read(//c/Users/sanma/Desktop/OneDrive - s.s.mahes/OneDrive/Thuis/Vaultthuis/Medical AI/**)",
+      "Bash(git -C \"c:/Users/sanma/Desktop/OneDrive - s.s.mahes/OneDrive/Thuis/Eigen thuis projecten/medical-ai\" diff --stat src/components/BlogCard.tsx)"
     ]
   }
 }
