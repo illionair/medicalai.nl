@@ -2,6 +2,9 @@
 
 import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
+import { specialisms } from "@/lib/constants";
+
+const HUB_CATEGORIES = ["Predictie", "Diagnostiek", "Methodisch", "Ethiek"] as const;
 
 function logBlogLoadFailure(scope: string, error: unknown) {
     const message = error instanceof Error ? error.message : String(error);
@@ -45,7 +48,40 @@ export async function getPublishedBlogsByCategory(category: string) {
     }
 }
 
-import { specialisms } from "@/lib/constants";
+export async function getCategoryCounts() {
+    const zeroCounts = HUB_CATEGORIES.map((category) => ({ category, count: 0 }));
+
+    try {
+        const now = new Date();
+        const groupedCounts = await prisma.blogPost.groupBy({
+            by: ["category"],
+            where: {
+                published: true,
+                isGuideline: false,
+                category: { in: [...HUB_CATEGORIES] },
+                OR: [
+                    { scheduledFor: null },
+                    { scheduledFor: { lte: now } }
+                ]
+            },
+            _count: {
+                category: true
+            }
+        });
+
+        const countByCategory = new Map(
+            groupedCounts.map((item) => [item.category, item._count.category])
+        );
+
+        return HUB_CATEGORIES.map((category) => ({
+            category,
+            count: countByCategory.get(category) ?? 0
+        }));
+    } catch (error) {
+        logBlogLoadFailure("Failed to load category counts", error);
+        return zeroCounts;
+    }
+}
 
 export async function getBlogsForTopic(topic: string) {
     const isSpecialism = specialisms.includes(topic);

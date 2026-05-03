@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { dictionary, Locale } from "@/lib/dictionaries";
 
 interface LanguageContextType {
@@ -19,6 +19,10 @@ function readSavedLanguage(): Locale {
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
     const [language, setLanguage] = useState<Locale>(readSavedLanguage);
+
+    useEffect(() => {
+        document.documentElement.lang = language;
+    }, [language]);
 
     const handleSetLanguage = (lang: Locale) => {
         setLanguage(lang);
