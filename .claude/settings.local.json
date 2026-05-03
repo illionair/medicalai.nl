@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(py *)",
+      "Read(//c/Users/sanma/Desktop/OneDrive - s.s.mahes/OneDrive/Thuis/Vaultthuis/Medical AI/graphify-out/**)",
+      "Read(//c/Users/sanma/Desktop/OneDrive - s.s.mahes/OneDrive/Thuis/Vaultthuis/Medical AI/**)"
+    ]
+  }
+}

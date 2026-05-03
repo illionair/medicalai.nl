@@ -1,11 +1,5 @@
 import nodemailer from "nodemailer";
-
-function siteUrl() {
-    if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
-    if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-    if (process.env.AUTH_URL) return process.env.AUTH_URL.replace(/\/$/, "");
-    return "http://localhost:3000";
-}
+import { resolveSiteUrl } from "@/lib/env";
 
 function smtpReady() {
     return Boolean(process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS);
@@ -25,7 +19,7 @@ function escapeHtml(value: string) {
 }
 
 export function buildMagicLink(token: string) {
-    const url = new URL("/auth/verify", siteUrl());
+    const url = new URL("/auth/verify", resolveSiteUrl());
     url.searchParams.set("token", token);
     return url.toString();
 }

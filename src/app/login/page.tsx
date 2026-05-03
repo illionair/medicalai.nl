@@ -31,7 +31,7 @@ export default function LoginPage() {
                 <div className="text-center mb-8">
                     <h1 className="text-2xl font-bold mb-2 text-brand-dark">Inloggen</h1>
                     <p className="text-sm text-gray-500">
-                        Ontvang een veilige loginlink om artikelen te liken en te reageren.
+                        Vul uw naam en e-mailadres in. We sturen u binnen enkele ogenblikken een e-mail met uw persoonlijke inloglink.
                     </p>
                 </div>
 

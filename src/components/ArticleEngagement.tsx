@@ -95,7 +95,7 @@ export default function ArticleEngagement({
                 </form>
             ) : (
                 <div className="mt-6 rounded-xl bg-slate-50 p-4 text-sm text-slate-600">
-                    Je kunt reacties lezen zonder account. Inloggen is alleen nodig om zelf te liken of te reageren.
+                    Je kunt reacties lezen zonder account. Inloggen is alleen nodig om zelf te reageren.
                 </div>
             )}
 

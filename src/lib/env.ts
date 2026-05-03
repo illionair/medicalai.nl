@@ -9,6 +9,10 @@ const REQUIRED_ENV_VARS = [
 
 const SMTP_ENV_VARS = ["SMTP_HOST", "SMTP_USER", "SMTP_PASS"] as const;
 const RESEND_ENV_VARS = ["RESEND_API_KEY", "EMAIL_FROM"] as const;
+const LEGACY_SITE_HOSTS: Record<string, string> = {
+    "medicalai.nl": "medical-ai.nl",
+    "www.medicalai.nl": "www.medical-ai.nl",
+};
 
 export type RequiredEnvVar = (typeof REQUIRED_ENV_VARS)[number];
 
@@ -29,6 +33,32 @@ export function getAdminEmails() {
 
 export function isAdminEmail(email: string) {
     return getAdminEmails().includes(email.trim().toLowerCase());
+}
+
+export function normalizeSiteUrl(value: string) {
+    const trimmed = value.trim().replace(/\/$/, "");
+
+    try {
+        const url = new URL(trimmed);
+        const normalizedHost = LEGACY_SITE_HOSTS[url.hostname];
+
+        if (normalizedHost) {
+            url.hostname = normalizedHost;
+        }
+
+        return url.toString().replace(/\/$/, "");
+    } catch {
+        return trimmed
+            .replace("://www.medicalai.nl", "://www.medical-ai.nl")
+            .replace("://medicalai.nl", "://medical-ai.nl");
+    }
+}
+
+export function resolveSiteUrl() {
+    if (process.env.NEXT_PUBLIC_SITE_URL) return normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL);
+    if (process.env.VERCEL_URL) return normalizeSiteUrl(`https://${process.env.VERCEL_URL}`);
+    if (process.env.AUTH_URL) return normalizeSiteUrl(process.env.AUTH_URL);
+    return "http://localhost:3000";
 }
 
 export function assertEnv() {

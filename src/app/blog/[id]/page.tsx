@@ -9,6 +9,7 @@ import BlogSidebar from "@/components/BlogSidebar";
 import EvidenceBox from "@/components/EvidenceBox";
 import CopyButton from "@/components/CopyButton";
 import ArticleEngagement from "@/components/ArticleEngagement";
+import { resolveSiteUrl } from "@/lib/env";
 import { getCurrentUser } from "@/lib/user-auth";
 
 export const dynamic = "force-dynamic";
@@ -29,7 +30,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
     }
 
     const likedByCurrentUser = currentUser ? blog.likes.some((like) => like.userId === currentUser.id) : false;
-    const canonicalUrl = `${(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/$/, "")}/blog/${blog.id}`;
+    const canonicalUrl = `${resolveSiteUrl()}/blog/${blog.id}`;
     const originalPublicationUrl = doiHref(blog.doi);
     const trustBadges = [
         blog.specialism ? <TrustBadge key="specialism" type="specialism" label="Specialisme" value={blog.specialism} href={`/topics/${blog.specialism}`} /> : null,

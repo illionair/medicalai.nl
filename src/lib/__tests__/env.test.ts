@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { assertEnv, getAdminEmails, getRequiredEnv, isAdminEmail } from "@/lib/env";
+import { assertEnv, getAdminEmails, getRequiredEnv, isAdminEmail, normalizeSiteUrl, resolveSiteUrl } from "@/lib/env";
 
 const REQUIRED_VALUES = {
     SITE_ACCESS_CODE: "site-code",
@@ -60,5 +60,16 @@ describe("env helpers", () => {
         });
 
         expect(() => assertEnv()).toThrow("Missing email provider configuration");
+    });
+
+    it("normalizes the legacy medicalai.nl host to medical-ai.nl", () => {
+        expect(normalizeSiteUrl("https://medicalai.nl/")).toBe("https://medical-ai.nl");
+        expect(normalizeSiteUrl("https://www.medicalai.nl/login")).toBe("https://www.medical-ai.nl/login");
+    });
+
+    it("uses the normalized public site URL", () => {
+        vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://medicalai.nl/");
+
+        expect(resolveSiteUrl()).toBe("https://medical-ai.nl");
     });
 });

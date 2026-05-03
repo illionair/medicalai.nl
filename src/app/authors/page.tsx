@@ -8,7 +8,7 @@ const authors = [
     {
         name: "Drs. S.S. Mahes",
         role: "Hoofdauteur & Oprichter",
-        bio: "Arts en AI-onderzoeker (PhD) met een passie voor het slaan van bruggen tussen technologie en de klinische praktijk.",
+        bio: "Arts-onderzoeker (PhD) met een passie voor het bouwen van bruggen tussen technologie en de klinische praktijk.",
         initials: "SM"
     }
 ];
