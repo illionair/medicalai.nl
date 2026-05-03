@@ -11,37 +11,35 @@ interface TrustBadgeProps {
 
 export default function TrustBadge({ type, label, value, href }: TrustBadgeProps) {
     let icon;
-    let colorClass = "bg-gray-100 text-gray-700 border-gray-200";
+    let colorClass = "bg-slate-100 text-slate-700";
 
     switch (type) {
         case "specialism":
             icon = <Stethoscope size={14} />;
-            colorClass = "bg-blue-50 text-blue-700 border-blue-100";
+            colorClass = "bg-blue-100 text-blue-800";
             break;
         case "status":
             icon = <Shield size={14} />;
-            if (value.includes("FDA") || value.includes("CE")) {
-                colorClass = "bg-green-50 text-green-700 border-green-100";
-            } else if (value.includes("n.v.t")) {
-                colorClass = "bg-gray-50 text-gray-600 border-gray-200";
+            if (value.toLowerCase().includes("onbek")) {
+                colorClass = "bg-amber-100 text-amber-800";
             } else {
-                colorClass = "bg-yellow-50 text-yellow-700 border-yellow-100";
+                colorClass = "bg-green-100 text-green-800";
             }
             break;
         case "cost":
             icon = <CreditCard size={14} />;
-            colorClass = "bg-purple-50 text-purple-700 border-purple-100";
+            colorClass = "bg-purple-100 text-purple-800";
             break;
         case "model":
             icon = <Activity size={14} />;
-            colorClass = "bg-indigo-50 text-indigo-700 border-indigo-100";
+            colorClass = "bg-indigo-100 text-indigo-800";
             break;
     }
 
     const badge = (
-        <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium ${colorClass} ${href ? 'hover:opacity-80 transition-opacity cursor-pointer' : ''}`}>
+        <div className={`inline-flex items-center gap-1.5 px-[11px] py-[5px] rounded-full text-xs font-semibold ${colorClass} ${href ? 'hover:opacity-80 transition-opacity cursor-pointer' : ''}`}>
             {icon}
-            <span className="opacity-75">{label}:</span>
+            <span className="opacity-75 font-medium">{label}:</span>
             <span className="font-bold">{value}</span>
         </div>
     );
