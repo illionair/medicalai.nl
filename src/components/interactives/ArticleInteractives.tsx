@@ -394,6 +394,364 @@ export function AucPlayground() {
     );
 }
 
+export function AucScores() {
+    const positives = AUC_POINTS.filter((p) => p.outcome === 1);
+    const negatives = AUC_POINTS.filter((p) => p.outcome === 0);
+    const meanPos = positives.reduce((s, p) => s + p.score, 0) / positives.length;
+    const meanNeg = negatives.reduce((s, p) => s + p.score, 0) / negatives.length;
+
+    return (
+        <Shell
+            title="Vijftien patiënten, vijftien scores"
+            subtitle="Het model kent elke patiënt een score tussen 0 en 1 toe. Plus = uitkomst aanwezig, min = niet. Liggen de plusjes vooral rechts?"
+        >
+            <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6">
+                <div className="mb-3 flex justify-between text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
+                    <span>laag risico</span>
+                    <span>hoog risico</span>
+                </div>
+                <div className="relative h-28 rounded-2xl bg-gradient-to-r from-cyan-50 via-white to-rose-50">
+                    <div className="absolute inset-x-3 inset-y-0">
+                        {AUC_POINTS.map((p, i) => (
+                            <div
+                                key={`${p.score}-${i}`}
+                                className="absolute"
+                                style={{
+                                    left: `${p.score * 100}%`,
+                                    top: p.outcome === 1 ? "22%" : "62%",
+                                    transform: "translate(-50%, -50%)",
+                                }}
+                                title={`Score ${Math.round(p.score * 100)}% · ${p.outcome === 1 ? "uitkomst" : "geen uitkomst"}`}
+                            >
+                                <div
+                                    className={
+                                        "flex h-9 w-9 items-center justify-center rounded-full border-2 border-white text-sm font-black shadow-md " +
+                                        (p.outcome === 1 ? "bg-brand-secondary text-white" : "bg-slate-300 text-slate-700")
+                                    }
+                                >
+                                    {p.outcome === 1 ? "+" : "−"}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-slate-500">
+                    <span className="inline-flex items-center gap-2">
+                        <span className="inline-block h-3 w-3 rounded-full bg-brand-secondary" />
+                        uitkomst aanwezig
+                    </span>
+                    <span className="inline-flex items-center gap-2">
+                        <span className="inline-block h-3 w-3 rounded-full bg-slate-300" />
+                        geen uitkomst
+                    </span>
+                </div>
+            </div>
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                <MetricCard label="Gemiddelde score positieven" value={formatDecimal(meanPos)} hint={`${positives.length} patiënten met de uitkomst`} />
+                <MetricCard label="Gemiddelde score negatieven" value={formatDecimal(meanNeg)} hint={`${negatives.length} patiënten zonder de uitkomst`} />
+            </div>
+            <p className="mt-4 text-sm leading-6 text-slate-600">
+                In dit voorbeeld liggen de plusjes gemiddeld duidelijk hoger dan de minnetjes. Het model pikt dus signaal op. AUC vat dat verschil straks in één getal samen.
+            </p>
+        </Shell>
+    );
+}
+
+export function AucThreshold() {
+    const [threshold, setThreshold] = useState(55);
+    const metrics = useMemo(() => thresholdStats(threshold / 100), [threshold]);
+
+    return (
+        <Shell
+            title="Verschuif de drempel"
+            subtitle="Boven de drempel zegt het model alarm, eronder rust. Kijk wat dat doet met de vier kwadranten en de bekende cijfers."
+        >
+            <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                <label className="text-sm font-bold text-slate-800" htmlFor="auc-thr-threshold">
+                    Beslisdrempel: {threshold}%
+                </label>
+                <input
+                    id="auc-thr-threshold"
+                    type="range"
+                    min="5"
+                    max="95"
+                    value={threshold}
+                    onChange={(event) => setThreshold(Number(event.target.value))}
+                    className="mt-3 w-full accent-brand-secondary"
+                />
+                <div className="mt-5 rounded-2xl border border-white bg-white p-4">
+                    <div className="mb-3 grid grid-cols-[1fr_auto_1fr] items-center gap-2 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-500">
+                        <span>negatief voorspeld</span>
+                        <span className="rounded-full bg-white px-2 py-1 text-brand-primary shadow-sm">drempel {threshold}%</span>
+                        <span className="text-right">positief voorspeld</span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
+                        {AUC_POINTS.map((point, index) => {
+                            const predictedPositive = point.score * 100 >= threshold;
+                            return (
+                                <div
+                                    key={`${point.score}-${index}`}
+                                    className={
+                                        "min-h-[64px] rounded-2xl border p-2 text-center shadow-sm transition " +
+                                        (predictedPositive
+                                            ? "border-brand-primary/40 bg-white"
+                                            : "border-slate-200 bg-white/60")
+                                    }
+                                    title={`Score ${Math.round(point.score * 100)}%, ${point.outcome === 1 ? "uitkomst aanwezig" : "geen uitkomst"}`}
+                                >
+                                    <div
+                                        className={
+                                            "mx-auto mb-1 flex h-7 w-7 items-center justify-center rounded-full border-2 border-white text-[11px] font-black shadow-sm " +
+                                            (point.outcome === 1 ? "bg-brand-secondary text-white" : "bg-slate-300 text-slate-700")
+                                        }
+                                    >
+                                        {point.outcome === 1 ? "+" : "-"}
+                                    </div>
+                                    <div className="text-sm font-black tabular-nums text-brand-dark">{Math.round(point.score * 100)}%</div>
+                                    <div className={"mt-0.5 text-[10px] font-bold " + (predictedPositive ? "text-brand-primary" : "text-slate-400")}>
+                                        {predictedPositive ? "alarm" : "rust"}
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            </div>
+            <div className="mt-5 grid grid-cols-2 gap-3">
+                <MetricCard label="TP" value={`${metrics.tp}`} hint="terecht positief" />
+                <MetricCard label="FP" value={`${metrics.fp}`} hint="vals alarm" />
+                <MetricCard label="FN" value={`${metrics.fn}`} hint="gemist" />
+                <MetricCard label="TN" value={`${metrics.tn}`} hint="terecht negatief" />
+            </div>
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                <MetricCard label="Sensitiviteit" value={pct(metrics.sensitivity)} hint="hoeveel echte gevallen vang je?" />
+                <MetricCard label="Specificiteit" value={pct(metrics.specificity)} hint="hoeveel gezonden blijven met rust?" />
+                <MetricCard label="PPV" value={pct(metrics.ppv)} hint="alarm: hoe vaak terecht?" />
+                <MetricCard label="NPV" value={pct(metrics.npv)} hint="rust: hoe vaak terecht?" />
+            </div>
+        </Shell>
+    );
+}
+
+export function AucRoc() {
+    const [threshold, setThreshold] = useState(55);
+    const metrics = useMemo(() => thresholdStats(threshold / 100), [threshold]);
+    const path = useMemo(() => rocPath(), []);
+    const auc = useMemo(() => areaUnderCurve(path), [path]);
+    const linePoints = path.map((point) => {
+        const pointOnSvg = svgPoint(point);
+        return `${pointOnSvg.x},${pointOnSvg.y}`;
+    });
+    const areaPoints = ["24,236", ...linePoints, "236,236"].join(" ");
+    const currentX = 24 + (1 - metrics.specificity) * 212;
+    const currentY = 236 - metrics.sensitivity * 212;
+    const thresholdMarkers = [75, 55, 35].map((markerThreshold) => ({
+        label: markerThreshold === 75 ? "A" : markerThreshold === 55 ? "B" : "C",
+        threshold: markerThreshold,
+        stats: thresholdStats(markerThreshold / 100),
+    }));
+
+    return (
+        <Shell
+            title="ROC: kaart van alle drempels"
+            subtitle="Elk punt op de curve hoort bij één drempel. Schuif je hieronder, dan zie je waar je belandt op de kaart."
+        >
+            <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
+                <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                    <label className="text-sm font-bold text-slate-800" htmlFor="auc-roc-threshold">
+                        Beslisdrempel: {threshold}%
+                    </label>
+                    <input
+                        id="auc-roc-threshold"
+                        type="range"
+                        min="5"
+                        max="95"
+                        value={threshold}
+                        onChange={(event) => setThreshold(Number(event.target.value))}
+                        className="mt-3 w-full accent-brand-secondary"
+                    />
+                    <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                        <MetricCard label="Sensitiviteit" value={pct(metrics.sensitivity)} hint="y-as" />
+                        <MetricCard label="1 − specificiteit" value={pct(metrics.fpr)} hint="x-as" />
+                    </div>
+                    <p className="mt-4 text-xs leading-5 text-slate-500">
+                        Het groene puntje rechts beweegt mee. A, B en C zijn vaste drempels: A streng, B gemiddeld, C ruim. Linksboven is sterker, maar wat klopt hangt af van wat de fout kost.
+                    </p>
+                </div>
+                <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
+                    <div className="mb-2 flex flex-wrap items-center justify-between gap-3">
+                        <div className="flex items-center gap-2 text-sm font-bold text-slate-800">
+                            <LineChart size={18} />
+                            ROC-ruimte
+                        </div>
+                        <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-brand-primary shadow-sm">
+                            AUC {formatDecimal(auc)}
+                        </span>
+                    </div>
+                    <svg viewBox="0 0 260 260" className="h-72 w-full">
+                        <polygon points={areaPoints} fill="#007EA7" opacity="0.12" />
+                        <line x1="24" y1="236" x2="236" y2="24" stroke="#cbd5e1" strokeDasharray="5 5" />
+                        <polyline
+                            fill="none"
+                            stroke="#0059b5"
+                            strokeWidth="4"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            points={linePoints.join(" ")}
+                        />
+                        {thresholdMarkers.map((marker) => {
+                            const markerX = 24 + marker.stats.fpr * 212;
+                            const markerY = 236 - marker.stats.sensitivity * 212;
+                            return (
+                                <g key={marker.label}>
+                                    <circle cx={markerX} cy={markerY} r="5" fill="#ffffff" stroke="#003459" strokeWidth="2" />
+                                    <text x={markerX + 7} y={markerY - 7} className="fill-slate-700 text-[11px] font-bold">
+                                        {marker.label}
+                                    </text>
+                                </g>
+                            );
+                        })}
+                        <circle cx={currentX} cy={currentY} r="7" fill="#0f766e" stroke="white" strokeWidth="3" />
+                        <line x1="24" y1="236" x2="236" y2="236" stroke="#475569" />
+                        <line x1="24" y1="236" x2="24" y2="24" stroke="#475569" />
+                        <text x="105" y="254" className="fill-slate-500 text-[10px]">1 − specificiteit</text>
+                        <text x="3" y="135" transform="rotate(-90 8 135)" className="fill-slate-500 text-[10px]">sensitiviteit</text>
+                    </svg>
+                    <div className="grid gap-2 text-xs leading-5 text-slate-600 sm:grid-cols-3">
+                        <div><strong>A:</strong> strenger, minder vals alarm.</div>
+                        <div><strong>B:</strong> middenweg in deze data.</div>
+                        <div><strong>C:</strong> ruimer, meer echte gevallen.</div>
+                    </div>
+                </div>
+            </div>
+        </Shell>
+    );
+}
+
+export function AucPairs() {
+    const [pairIndex, setPairIndex] = useState(0);
+    const path = useMemo(() => rocPath(), []);
+    const auc = useMemo(() => areaUnderCurve(path), [path]);
+    const pairs = useMemo(() => {
+        const positives = AUC_POINTS.filter((point) => point.outcome === 1);
+        const negatives = AUC_POINTS.filter((point) => point.outcome === 0);
+        return positives.flatMap((positive, positiveIndex) =>
+            negatives.map((negative, negativeIndex) => ({
+                id: `${positiveIndex}-${negativeIndex}`,
+                positive,
+                negative,
+                correct: positive.score > negative.score,
+                tied: positive.score === negative.score,
+            })),
+        );
+    }, []);
+    const correctPairs = pairs.filter((pair) => pair.correct).length;
+    const tiedPairs = pairs.filter((pair) => pair.tied).length;
+    const pair = pairs[pairIndex % pairs.length];
+    const rankProb = (correctPairs + tiedPairs * 0.5) / pairs.length;
+
+    const comparisonCards = [
+        {
+            label: "Perfect",
+            auc: "1,00",
+            points: [
+                { x: 0, y: 0 },
+                { x: 0, y: 1 },
+                { x: 1, y: 1 },
+            ],
+            note: "elke positieve patiënt scoort hoger dan elke negatieve",
+        },
+        {
+            label: "Toeval",
+            auc: "0,50",
+            points: [
+                { x: 0, y: 0 },
+                { x: 1, y: 1 },
+            ],
+            note: "diagonaal: kop of munt",
+        },
+        {
+            label: "Deze demo",
+            auc: formatDecimal(auc),
+            points: path,
+            note: "een paar paren gaan fout",
+        },
+    ];
+
+    return (
+        <Shell
+            title="AUC als rangordespel"
+            subtitle="Pak willekeurig één patiënt mét en één zonder uitkomst. Hoe vaak geeft het model de juiste de hogere score? Dat percentage is AUC."
+        >
+            <div className="grid gap-4 lg:grid-cols-[1fr_1.1fr]">
+                <div className="rounded-3xl border border-slate-200 bg-gradient-to-br from-brand-primary/5 via-white to-brand-accent/5 p-5">
+                    <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Goed gerangschikt</p>
+                    <p className="mt-2 text-3xl font-black text-brand-dark">{correctPairs} van {pairs.length} paren</p>
+                    <p className="mt-2 text-sm leading-6 text-slate-600">
+                        Komt neer op AUC {formatDecimal(rankProb)}. Gelijke scores tellen voor de helft mee.
+                    </p>
+                </div>
+                <div className="rounded-3xl border border-slate-200 bg-white p-5">
+                    <div className="flex items-start justify-between gap-4">
+                        <div>
+                            <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Volgend paar</p>
+                            <p className="mt-2 text-sm leading-6 text-slate-600">Klik door en zie of de positieve casus hoger scoort dan de negatieve.</p>
+                        </div>
+                        <button
+                            type="button"
+                            onClick={() => setPairIndex((value) => value + 1)}
+                            className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-primary text-white shadow-sm transition-transform hover:scale-105"
+                            aria-label="Toon volgend paar"
+                        >
+                            <RotateCcw size={17} />
+                        </button>
+                    </div>
+                    <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                        <div className="rounded-2xl border border-emerald-100 bg-emerald-50 p-4">
+                            <p className="text-xs font-bold uppercase tracking-[0.14em] text-emerald-700">uitkomst aanwezig</p>
+                            <p className="mt-2 text-3xl font-black tabular-nums text-emerald-900">{Math.round(pair.positive.score * 100)}%</p>
+                        </div>
+                        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                            <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">geen uitkomst</p>
+                            <p className="mt-2 text-3xl font-black tabular-nums text-slate-800">{Math.round(pair.negative.score * 100)}%</p>
+                        </div>
+                    </div>
+                    <div className={"mt-4 rounded-2xl p-4 text-sm font-semibold " + (pair.correct ? "bg-emerald-50 text-emerald-900" : "bg-amber-50 text-amber-900")}>
+                        {pair.correct
+                            ? "Juist gerangschikt — telt mee voor de AUC."
+                            : "Verwisseld paar — AUC daalt iets."}
+                    </div>
+                </div>
+            </div>
+
+            <div className="mt-6 grid gap-4 lg:grid-cols-3">
+                {comparisonCards.map((card) => (
+                    <div key={card.label} className="rounded-3xl border border-slate-200 bg-white p-4">
+                        <div className="mb-2 flex items-center justify-between">
+                            <h4 className="text-sm font-bold text-brand-dark">{card.label}</h4>
+                            <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-600">AUC {card.auc}</span>
+                        </div>
+                        <svg viewBox="0 0 100 72" className="h-24 w-full rounded-2xl bg-slate-50">
+                            <line x1="12" y1="60" x2="88" y2="12" stroke="#cbd5e1" strokeDasharray="4 4" />
+                            <polyline
+                                fill="none"
+                                stroke={card.label === "Toeval" ? "#94a3b8" : "#007EA7"}
+                                strokeWidth="4"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                points={card.points.map((point) => `${12 + point.x * 76},${60 - point.y * 48}`).join(" ")}
+                            />
+                            <line x1="12" y1="60" x2="88" y2="60" stroke="#64748b" />
+                            <line x1="12" y1="60" x2="12" y2="12" stroke="#64748b" />
+                        </svg>
+                        <p className="mt-2 text-xs leading-5 text-slate-500">{card.note}</p>
+                    </div>
+                ))}
+            </div>
+        </Shell>
+    );
+}
+
 export function CalibrationSimulator() {
     const [tilt, setTilt] = useState(20);
     const bins = [0.08, 0.22, 0.38, 0.56, 0.74];

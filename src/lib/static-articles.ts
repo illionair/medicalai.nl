@@ -85,8 +85,8 @@ const ARTICLE_CONFIGS: StaticArticleConfig[] = [
         id: "article-auc-uitgelegd-zorgprofessionals",
         category: "Methodisch",
         tags: ["AUC", "ROC", "Decision curve analysis"],
-        interactive: "auc-playground",
-        visualLabel: "AUC playground",
+        interactive: "auc-scores",
+        visualLabel: "AUC stap voor stap",
     },
     {
         file: "draft-04-calibratie-de-vergeten-maat-bij-ai-in-de-zorg.md",

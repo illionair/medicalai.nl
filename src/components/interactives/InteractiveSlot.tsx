@@ -1,6 +1,10 @@
 import ChecklistScore from "./ChecklistScore";
 import {
+    AucPairs,
     AucPlayground,
+    AucRoc,
+    AucScores,
+    AucThreshold,
     CalibrationSimulator,
     ClinicalUtilityCalculator,
     DataLeakageSimulator,
@@ -18,6 +22,10 @@ import {
 const REGISTRY: Record<string, React.ComponentType> = {
     "checklist-10min": ChecklistScore,
     "auc-playground": AucPlayground,
+    "auc-scores": AucScores,
+    "auc-threshold": AucThreshold,
+    "auc-roc": AucRoc,
+    "auc-pairs": AucPairs,
     "calibration-simulator": CalibrationSimulator,
     "clinical-utility-calculator": ClinicalUtilityCalculator,
     "data-leakage-simulator": DataLeakageSimulator,

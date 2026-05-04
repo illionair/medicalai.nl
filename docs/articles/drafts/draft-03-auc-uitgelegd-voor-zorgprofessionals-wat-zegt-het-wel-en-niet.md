@@ -9,79 +9,85 @@ needs_review: true
 
 # AUC uitgelegd voor zorgprofessionals: wat zegt het wel en niet?
 
-In publicaties over medische AI staat AUC vaak pontificaal in de samenvatting: “het model behaalde een AUC van 0,89”. Dat klinkt alsof het model bijna klaar is voor gebruik. In werkelijkheid zegt AUC iets smaller, maar belangrijks: hoe goed het model patiënten kan rangschikken van laag naar hoog risico. Het zegt niet automatisch of de gekozen drempel klopt, of de kansen betrouwbaar zijn, of het model in jouw ziekenhuis betere zorg oplevert.
+"Het model behaalde een AUC van 0,89." Klinkt alsof er weinig meer aan toe te voegen valt. In de praktijk vertelt zo'n cijfer een smal verhaal: het zegt iets over hoe goed het model patiënten op risico kan rangschikken. Of de gekozen drempel klopt, of de getoonde kansen betrouwbaar zijn, of het in jouw ziekenhuis betere zorg oplevert — daar gaat AUC niet over.
 
-Deze uitleg volgt dezelfde leerlijn als een goede ROC/AUC-crash course: eerst scores, dan drempels, dan de ROC-curve, dan AUC als rangschikkingskans. We gebruiken alleen een eigen fictieve medische dataset en eigen visuals.
+Hieronder bouwen we het in vier stappen op, in dezelfde volgorde als de Google ROC-uitleg: eerst scores, dan drempels, dan de ROC-curve, dan AUC zelf. De data is fictief, de redenering niet.
 
-<interactive name="auc-playground"></interactive>
+## 1. Begin bij scores, niet bij labels
 
-## 1. Begin met scores, niet met labels
+Een sepsis-, bloeding- of heropnamemodel geeft zelden ja/nee terug. Het geeft een score tussen 0 en 1. Een patiënt met 0,91 staat hoger op de lijst dan eentje met 0,18. Zonder drempel heb je dus geen diagnose — je hebt een rangorde.
 
-Een AI-model voor bijvoorbeeld sepsis, intracraniële bloeding of heropname geeft vaak geen direct ja/nee-antwoord, maar een score tussen 0 en 1. Een patiënt met score 0,91 wordt door het model hoger verdacht dan een patiënt met score 0,18. Zolang je geen drempel kiest, heb je alleen een rangorde.
+Daar begint AUC. De vraag is simpel: krijgen patiënten mét de uitkomst gemiddeld hogere scores dan patiënten zonder? Hieronder zie je vijftien fictieve patiënten op de risicobalk. De plusjes zijn echte gevallen, de minnetjes niet.
 
-Dat is precies waar AUC begint. De vraag is: krijgen patiënten mét de uitkomst gemiddeld hogere scores dan patiënten zonder de uitkomst? Als het antwoord vaak ja is, discrimineert het model goed. Als de scores door elkaar lopen, zakt de AUC.
+<interactive name="auc-scores"></interactive>
+
+Vallen de plusjes vooral rechts? Goed teken — er zit signaal in de scores. Liggen ze willekeurig door elkaar? Dan valt er weinig te halen, hoe je de drempel ook legt.
 
 ## 2. Een drempel maakt van scores beslissingen
 
-In de kliniek moet je uiteindelijk handelen. Vanaf welke score alarmeer je het sepsisteam? Vanaf welke score markeer je een CT als urgent? Vanaf welke score stuur je iemand door voor aanvullende diagnostiek?
+In de kliniek moet je iets dóen. Vanaf welke score alarmeer je het sepsisteam? Vanaf welke score markeer je een CT als urgent?
 
-Bij een lage drempel noem je veel patiënten positief. Dat verhoogt meestal de sensitiviteit, omdat je minder echte gevallen mist. Tegelijk stijgt vaak het aantal fout-positieven. Bij een hoge drempel wordt het model strenger: minder fout-positieven, maar ook meer gemiste echte gevallen. Daarom horen sensitiviteit, specificiteit, PPV en NPV altijd bij een gekozen drempel.
+Lage drempel: je noemt veel patiënten positief. Je mist minder echte gevallen (sensitiviteit omhoog), maar je krijgt ook meer vals alarm. Hoge drempel: omgekeerd. Daarom horen sensitiviteit, specificiteit, PPV en NPV altíjd bij een gekozen drempel — niet bij het model in zijn geheel.
 
-In de interactieve module zie je dit direct. Schuif de drempel naar links en de fout-positieven nemen toe; schuif naar rechts en de fout-negatieven nemen toe. De ROC-curve vat alle mogelijke drempels samen.
+<interactive name="auc-threshold"></interactive>
 
-## 3. ROC is de kaart van alle drempels
+Schuif zelf en zie welke patiënten van vakje wisselen, en wat dat doet met fout-positieven en gemiste gevallen.
 
-ROC staat voor *receiver operating characteristic*. De ROC-curve zet de true positive rate, oftewel sensitiviteit, op de y-as en de false positive rate, oftewel 1 - specificiteit, op de x-as. Elk punt op de curve hoort bij een andere drempel.
+## 3. ROC: alle drempels tegelijk
 
-Een perfecte classifier gaat snel naar linksboven: hoge sensitiviteit zonder fout-positieven. Een model dat niet beter is dan toeval ligt rond de diagonaal. Een model onder de diagonaal rangschikt vaker verkeerd dan goed; theoretisch kun je dan de labels omdraaien en beter dan toeval worden.
+ROC staat voor *receiver operating characteristic*. Op de y-as: sensitiviteit. Op de x-as: 1 − specificiteit, ofwel het aandeel gezonden dat ten onrechte een alarm krijgt. Elk punt op de curve is één drempel.
 
-Voor zorgprofessionals is vooral linksboven interessant, maar niet blind. Een punt met iets lagere sensitiviteit kan klinisch beter zijn als fout-positieven duur of schadelijk zijn. Een punt met meer fout-positieven kan juist acceptabel zijn als een fout-negatief gevaarlijk is.
+Een sterk model duikt naar linksboven: veel echte gevallen vangen, weinig vals alarm. De diagonaal is gokken. Onder de diagonaal? Dan rangschikt het model averechts en levert labels omdraaien een beter model op.
 
-## 4. AUC is de oppervlakte onder die curve
+<interactive name="auc-roc"></interactive>
 
-AUC staat voor *area under the curve*. Een AUC van 1,0 betekent perfecte rangschikking: elke patiënt met de uitkomst krijgt een hogere score dan elke patiënt zonder de uitkomst. Een AUC van 0,5 betekent toevalsniveau. Een AUC van 0,80 betekent praktisch: als je willekeurig één patiënt mét en één patiënt zonder de uitkomst kiest, geeft het model in ongeveer 80% van zulke paren de hogere score aan de patiënt mét de uitkomst.
+Linksboven is meestal het beste, maar niet altijd. Bij selectie voor een belastende biopsie weegt een fout-positief zwaar. Bij triage van iets levensbedreigends weegt een gemiste casus zwaar. Welke drempel klopt, hangt af van wat de fout kost.
 
-Dat paar-idee is vaak de meest intuïtieve uitleg. AUC is geen percentage juiste diagnoses bij één drempel. Het is een drempelonafhankelijke rangordemaat.
+## 4. AUC: oppervlakte onder de curve
 
-## 5. Waarom AUC handig is
+AUC = oppervlakte onder de ROC-curve. 1,00 is perfecte rangschikking, 0,50 is een muntje opgooien. Een AUC van 0,80 betekent in de praktijk: pak willekeurig één patiënt mét en één zonder de uitkomst, dan geeft het model in 80% van die paren de hogere score aan de juiste persoon.
 
-AUC is nuttig om te zien of een model überhaupt signaal oppikt. Als een longemboliemodel patiënten met embolie gemiddeld niet hoger scoort dan patiënten zonder embolie, is het weinig waard. AUC is ook handig om modellen grof te vergelijken in dezelfde validatiepopulatie, vooral vroeg in ontwikkeling.
+<interactive name="auc-pairs"></interactive>
 
-Maar let op: AUC is relatief robuust voor monotone scoretransformaties. Als alle scores anders worden geschaald maar de rangorde gelijk blijft, blijft de AUC gelijk. Dat kan prettig zijn voor modelvergelijking, maar riskant als gebruikers denken dat de absolute kansen klinisch betrouwbaar zijn.
+Dat paar-idee is de schoonste uitleg. AUC is dus géén percentage juiste diagnoses bij één drempel. Het is een drempelvrije rangordemaat.
 
-## 6. Waarom AUC in medische AI tekortschiet
+## Waarom AUC handig is
 
-AUC zegt niets over calibratie. Een model kan patiënten goed rangschikken en toch systematisch te hoge of te lage risico's geven. Als honderd patiënten elk “20% risico” krijgen, verwacht je ongeveer twintig uitkomsten. Als het er vijf of vijftig zijn, is de calibratie klinisch onveilig, ook bij een mooie AUC.
+Eerste sanity-check: pikt het model überhaupt iets op? Als een longemboliemodel embolieën gemiddeld niet hoger scoort dan controles, hoef je verder weinig te onderzoeken. Twee modellen vergelijken op dezelfde validatieset gaat ook prima met AUC.
 
-AUC zegt ook weinig over prevalentie. PPV en NPV veranderen sterk tussen een IC, SEH, polikliniek of screeningspopulatie. Een model met dezelfde sensitiviteit en specificiteit kan op een laag-prevalente afdeling vooral fout-positieve alarmen produceren. Dat leidt tot alarmmoeheid, extra diagnostiek en soms onnodige behandeling.
+Let op: AUC verandert niet als je alle scores herschaalt. Verschuif de schaal, behoud de rangorde, en de AUC blijft gelijk. Voor modelvergelijking handig — voor het vertrouwen in absolute kansen riskant.
 
-Verder zegt AUC niet of de workflow klopt. Een model met AUC 0,92 kan onbruikbaar zijn als het signaal te laat komt, onduidelijk is, geen handelingsoptie heeft of precies de patiënten markeert waarvoor de arts toch al actie zou nemen.
+## Waarom AUC alléén tekortschiet
 
-## 7. Kies drempels met klinische kosten in gedachten
+**Het zegt niets over calibratie.** Een model kan keurig rangschikken en toch consequent te hoog of te laag inschatten. Honderd patiënten met "20% risico" en in werkelijkheid vijftig events? Klinisch onveilig, ook bij AUC 0,90.
 
-Drempelkeuze is geen puur statistische keuze. Bij een triagemodel voor een potentieel levensbedreigende aandoening kan een fout-negatief zwaarder wegen dan een extra beoordeling. Bij selectie voor een belastende biopsie kan een fout-positief juist meer schade veroorzaken. De beste drempel is daarom contextafhankelijk.
+**Het zegt niets over prevalentie.** PPV en NPV verschuiven flink tussen IC, SEH, polikliniek en screening. Hetzelfde model met dezelfde sensitiviteit produceert op een laag-prevalente afdeling vooral vals alarm. Gevolg: alarmmoeheid en onnodige diagnostiek.
 
-Decision curve analysis kan hierbij helpen. Die methode vertaalt drempels naar netto voordeel en vergelijkt het model met eenvoudige strategieën zoals “behandel iedereen” of “behandel niemand”. Zo zie je of het model in het klinisch relevante drempelgebied meer goed dan kwaad doet.
+**Het zegt niets over de workflow.** AUC 0,92 is waardeloos als de output te laat komt, niemand verantwoordelijk is, of het model precies de patiënten markeert waar de arts toch al actie zou ondernemen.
 
-## 8. Praktische checklist bij een AUC in een artikel
+## Drempels kiezen met klinische kosten in gedachten
 
-Vraag bij elke AUC:
+Drempelkeuze is geen statistiek-puzzel. Bij triage van iets levensbedreigends weegt een gemiste casus zwaarder dan een extra beoordeling. Bij selectie voor een belastende biopsie ligt dat andersom.
 
-1. Is de AUC gemeten op een onafhankelijke, liefst externe validatieset?
-2. Lijkt de validatiepopulatie op mijn patiënten en workflow?
-3. Worden sensitiviteit, specificiteit, PPV en NPV getoond bij klinisch relevante drempels?
-4. Is calibratie onderzocht met plot, intercept en slope?
-5. Zijn prestaties per subgroep gerapporteerd?
-6. Is er gekeken naar clinical utility of decision curve analysis?
-7. Is duidelijk wat er gebeurt bij fout-positieven en fout-negatieven?
+Decision curve analysis maakt dat expliciet: welke drempels leveren netto winst op, vergeleken met simpele strategieën als "behandel iedereen" of "behandel niemand"? Zo zie je of het model in het klinisch relevante drempelgebied meer goed dan kwaad doet.
 
-## Kernboodschap
+## Snelle check bij elke AUC die je tegenkomt
 
-AUC vertelt hoe goed een model patiënten rangschikt. Dat is nuttig, maar onvoldoende voor medische besluitvorming. Voor veilige AI in de zorg heb je daarnaast drempels, calibratie, prevalentie, subgroepanalyse, workflow-evaluatie en klinische utility nodig. Een hoge AUC is dus geen eindpunt, maar het begin van de beoordeling.
+1. Externe validatieset, of intern getest?
+2. Lijkt die populatie op jouw patiënten en workflow?
+3. Worden sensitiviteit, specificiteit, PPV en NPV bij relevante drempels getoond?
+4. Is calibratie onderzocht (plot, intercept, slope)?
+5. Zijn er subgroepresultaten?
+6. Decision curve of clinical utility-analyse aanwezig?
+7. Wat gebeurt er bij een fout-positief, en bij een fout-negatief?
+
+## Tot slot
+
+AUC vertelt hoe goed een model rangschikt. Dat is nuttig — maar het is een begin, geen eindpunt. Voor veilige inzet in de zorg horen drempels, calibratie, prevalentie, subgroepen, workflow en klinische winst er allemaal bij.
 
 ## Bronnen
 
-- Google Machine Learning Crash Course, “Classification: ROC and AUC”: https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc  
+- Google Machine Learning Crash Course, "Classification: ROC and AUC": https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc  
 - Fawcett T. An introduction to ROC analysis. *Pattern Recognition Letters*. 2006. https://doi.org/10.1016/j.patrec.2005.10.010  
 - Hanley JA, McNeil BJ. The meaning and use of the area under a receiver operating characteristic curve. *Radiology*. 1982. https://pubmed.ncbi.nlm.nih.gov/7063747/  
 - TRIPOD Statement, BMJ/BMC Medicine: https://www.bmj.com/content/350/bmj.g7594 en https://bmcmedicine.biomedcentral.com/articles/10.1186/s12916-014-0241-z  
@@ -89,4 +95,3 @@ AUC vertelt hoe goed een model patiënten rangschikt. Dat is nuttig, maar onvold
 - Calibration: the Achilles heel of predictive analytics, *BMC Medicine*: https://bmcmedicine.biomedcentral.com/articles/10.1186/s12916-019-1466-7  
 - Decision Curve Analysis, Vickers & Elkin, *Medical Decision Making*: https://journals.sagepub.com/doi/10.1177/0272989X06295361  
 - Stap-voor-stap uitleg decision curve analysis, *Diagnostic and Prognostic Research*: https://diagnprognres.biomedcentral.com/articles/10.1186/s41512-019-0064-7  
-
