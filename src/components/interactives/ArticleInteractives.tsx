@@ -221,28 +221,45 @@ export function AucPlayground() {
                                 <span>Modelscore</span>
                                 <span>hoog risico</span>
                             </div>
-                            <div className="relative h-28 rounded-2xl bg-gradient-to-r from-cyan-50 via-white to-rose-50">
-                                <div className="absolute left-4 right-4 top-1/2 h-px bg-slate-300" />
-                                <div
-                                    className="absolute bottom-3 top-3 w-0.5 rounded-full bg-brand-primary shadow-[0_0_0_4px_rgba(0,126,167,0.12)]"
-                                    style={{ left: `${threshold}%` }}
-                                />
-                                {AUC_POINTS.map((point, index) => (
-                                    <div
-                                        key={`${point.score}-${index}`}
-                                        className={
-                                            "absolute flex h-7 w-7 -translate-x-1/2 items-center justify-center rounded-full border-2 border-white text-[11px] font-black shadow-sm " +
-                                            (point.outcome === 1 ? "top-5 bg-brand-secondary text-white" : "bottom-5 bg-slate-300 text-slate-700")
-                                        }
-                                        style={{ left: `${point.score * 100}%` }}
-                                        title={`Score ${Math.round(point.score * 100)}%, ${point.outcome === 1 ? "uitkomst aanwezig" : "geen uitkomst"}`}
-                                    >
-                                        {point.outcome === 1 ? "+" : "-"}
-                                    </div>
-                                ))}
+                            <div className="rounded-2xl bg-gradient-to-r from-cyan-50 via-white to-rose-50 p-3">
+                                <div className="mb-3 grid grid-cols-[1fr_auto_1fr] items-center gap-2 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-500">
+                                    <span>negatief voorspeld</span>
+                                    <span className="rounded-full bg-white px-2 py-1 text-brand-primary shadow-sm">drempel {threshold}%</span>
+                                    <span className="text-right">positief voorspeld</span>
+                                </div>
+                                <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
+                                    {AUC_POINTS.map((point, index) => {
+                                        const predictedPositive = point.score * 100 >= threshold;
+                                        return (
+                                            <div
+                                                key={`${point.score}-${index}`}
+                                                className={
+                                                    "min-h-[64px] rounded-2xl border p-2 text-center shadow-sm transition " +
+                                                    (predictedPositive
+                                                        ? "border-brand-primary/40 bg-white"
+                                                        : "border-slate-200 bg-white/60")
+                                                }
+                                                title={`Score ${Math.round(point.score * 100)}%, ${point.outcome === 1 ? "uitkomst aanwezig" : "geen uitkomst"}`}
+                                            >
+                                                <div
+                                                    className={
+                                                        "mx-auto mb-1 flex h-7 w-7 items-center justify-center rounded-full border-2 border-white text-[11px] font-black shadow-sm " +
+                                                        (point.outcome === 1 ? "bg-brand-secondary text-white" : "bg-slate-300 text-slate-700")
+                                                    }
+                                                >
+                                                    {point.outcome === 1 ? "+" : "-"}
+                                                </div>
+                                                <div className="text-sm font-black tabular-nums text-brand-dark">{Math.round(point.score * 100)}%</div>
+                                                <div className={"mt-0.5 text-[10px] font-bold " + (predictedPositive ? "text-brand-primary" : "text-slate-400")}>
+                                                    {predictedPositive ? "alarm" : "rust"}
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
                             </div>
                             <p className="mt-3 text-xs leading-5 text-slate-500">
-                                Links van de drempel wordt negatief geclassificeerd; rechts positief. Verlaag je de drempel, dan vang je meer positieven en krijg je meestal ook meer fout-positieven.
+                                Elke tegel is een fictieve patiënt. Het plus/min-teken is de echte uitkomst; de rand laat zien of de score boven de drempel valt. Zo blijft de verdeling leesbaar, ook bij dicht bij elkaar liggende scores.
                             </p>
                         </div>
                     </div>

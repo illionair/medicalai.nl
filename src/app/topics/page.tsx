@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Activity, Shield, Stethoscope, Brain, Eye, Heart, Microscope, Baby, Syringe, Scale, FileText, BookOpen } from "lucide-react";
+import { ArrowRight, Activity, Shield, Stethoscope, Brain, Microscope, Scale, FileText, BookOpen } from "lucide-react";
 
 const clinicalTopics = [
     {
@@ -77,6 +77,21 @@ export default function TopicsPage() {
                     >
                         Verken de toekomst van de zorg via onze gecategoriseerde topics.
                     </motion.p>
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.18 }}
+                        className="mt-8 flex justify-center"
+                    >
+                        <Link
+                            href="/blog"
+                            className="inline-flex items-center gap-2 rounded-full bg-brand-primary px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-brand-secondary"
+                        >
+                            <BookOpen size={17} />
+                            Alle artikelen
+                            <ArrowRight size={16} />
+                        </Link>
+                    </motion.div>
                 </div>
             </div>
 
@@ -91,7 +106,7 @@ export default function TopicsPage() {
                         <h2 className="text-2xl font-bold text-brand-dark">Klinische AI & Methodologie</h2>
                     </div>
                     <div className="grid md:grid-cols-3 gap-6">
-                        {clinicalTopics.map((topic, index) => (
+                        {clinicalTopics.map((topic) => (
                             <Link href={`/topics/${topic.title}`} key={topic.title}>
                                 <motion.div
                                     whileHover={{ y: -5 }}
@@ -124,7 +139,7 @@ export default function TopicsPage() {
                         <h2 className="text-2xl font-bold text-brand-dark">Governance, Ethiek & Wetgeving</h2>
                     </div>
                     <div className="grid md:grid-cols-3 gap-6">
-                        {governanceTopics.map((topic, index) => (
+                        {governanceTopics.map((topic) => (
                             <Link href={`/topics/${topic.title}`} key={topic.title}>
                                 <motion.div
                                     whileHover={{ y: -5 }}
@@ -157,7 +172,7 @@ export default function TopicsPage() {
                         <h2 className="text-2xl font-bold text-brand-dark">Medische Specialismen</h2>
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
-                        {specialisms.map((specialism, index) => (
+                        {specialisms.map((specialism) => (
                             <Link href={`/topics/${specialism}`} key={specialism}>
                                 <motion.div
                                     whileHover={{ scale: 1.02 }}

@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 
 const ITEMS = [
     { key: "/", label: "Educational Hub" },
-    { key: "/blog", label: "Alle artikelen" },
     { key: "/topics", label: "AI Directory" },
     { key: "/guidelines", label: "Guidelines" },
     { key: "/authors", label: "Community" },

@@ -61,7 +61,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
     const canonicalUrl = `${resolveSiteUrl()}/blog/${blog.id}`;
     const originalPublicationUrl = doiHref(blog.doi);
     const heroImage = blog.coverImage || blog.imageUrl;
+    const isEducationalArticle = isStaticArticleId(blog.id) || blog.modelType?.toLowerCase() === "educatief artikel";
     const supportsEngagement = !isStaticArticleId(blog.id);
+    const showManagerCheck = !isEducationalArticle && Boolean(blog.integration || blog.cost || blog.demoUrl || blog.vendorUrl);
+    const showEvidenceCheck = !isEducationalArticle && Boolean(blog.ceStatus || blog.fdaStatus || blog.modelType || blog.privacyType);
     const trustBadges = [
         blog.specialism ? <TrustBadge key="specialism" type="specialism" label="Specialisme" value={blog.specialism} href={`/topics/${blog.specialism}`} /> : null,
         blog.ceStatus ? <TrustBadge key="ce" type="status" label="CE-status" value={blog.ceStatus} /> : null,
@@ -153,7 +156,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                             </div>
                         )}
 
-                        <div className="mb-8 grid gap-4 md:grid-cols-2">
+                        <div className={"mb-8 grid gap-4 " + (showManagerCheck ? "md:grid-cols-2" : "")}>
                             <section className="rounded-2xl border border-blue-100 bg-blue-50/60 p-5">
                                 <div className="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-blue-800">
                                     <Stethoscope size={18} />
@@ -163,18 +166,20 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                                     Focus voor de kliniek: {blog.specialism || blog.category}. Gebruik dit artikel als snelle scan van bruikbaarheid, validatie en workflow-impact.
                                 </p>
                             </section>
-                            <section className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-                                <div className="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-slate-800">
-                                    <BriefcaseBusiness size={18} />
-                                    Manager Check
-                                </div>
-                                <p className="text-sm leading-relaxed text-slate-700">
-                                    Implementatie: {blog.integration || "nog niet gespecificeerd"}. Kostenindicatie: {blog.cost || "nog niet gespecificeerd"}.
-                                </p>
-                            </section>
+                            {showManagerCheck && (
+                                <section className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                                    <div className="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-slate-800">
+                                        <BriefcaseBusiness size={18} />
+                                        Manager Check
+                                    </div>
+                                    <p className="text-sm leading-relaxed text-slate-700">
+                                        Implementatie: {blog.integration || "nog niet gespecificeerd"}. Kostenindicatie: {blog.cost || "nog niet gespecificeerd"}.
+                                    </p>
+                                </section>
+                            )}
                         </div>
 
-                        {(blog.ceStatus || blog.fdaStatus || blog.modelType || blog.privacyType) && (
+                        {showEvidenceCheck && (
                             <EvidenceBox title="Evidence Check" type="neutral">
                                 <div className="mb-4 flex flex-wrap gap-2">
                                     {blog.ceStatus && <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-emerald-700">CE: {blog.ceStatus}</span>}
