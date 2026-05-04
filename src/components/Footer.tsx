@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 function MS({ name, className = "" }: { name: string; className?: string }) {
     return <span className={"material-symbols-outlined " + className}>{name}</span>;
@@ -21,6 +24,9 @@ const LEGAL = [
 ];
 
 export default function Footer() {
+    const pathname = usePathname();
+    if (pathname === "/access") return null;
+
     return (
         <footer className="w-full mt-16 border-t border-[#E6E6E0] bg-white/60 backdrop-blur-md">
             <div className="px-8 py-7 border-b border-[#E6E6E0]">

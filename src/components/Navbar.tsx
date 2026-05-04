@@ -18,6 +18,7 @@ function MS({ name, className = "" }: { name: string; className?: string }) {
 
 export default function Navbar() {
     const pathname = usePathname();
+    if (pathname === "/access") return null;
 
     return (
         <header className="fixed top-0 inset-x-0 z-50 glass-panel-strong border-b border-white/40 ambient-shadow">

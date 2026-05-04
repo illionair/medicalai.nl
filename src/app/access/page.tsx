@@ -1,85 +1,93 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import Image from "next/image";
 import { verifySiteAccess } from "../actions";
-import { Lock } from "lucide-react";
 
 export default function AccessPage() {
     const [error, setError] = useState("");
+    const [pending, setPending] = useState(false);
 
     async function handleSubmit(formData: FormData) {
+        setPending(true);
+        setError("");
         const result = await verifySiteAccess(formData);
         if (result?.error) {
             setError(result.error);
+            setPending(false);
         }
     }
 
     return (
-        <section className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden bg-white">
-            {/* Background Image */}
-            <div className="absolute inset-0 z-0">
-                <img
-                    src="/images/hand-robot.png"
-                    alt="Medical AI Future"
-                    className="w-full h-full object-cover object-center"
-                />
-                {/* Overlay for readability */}
-                <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-white/40 to-white/90"></div>
-            </div>
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 stage-bg overflow-auto">
+            <img
+                alt=""
+                className="absolute inset-0 w-full h-full object-cover opacity-60"
+                src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1600&q=80&auto=format"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/55 to-white/95" />
+            <div className="absolute inset-0 bg-gradient-to-br from-[#003459]/15 via-transparent to-[#00A8E8]/10 mix-blend-soft-light" />
 
-            {/* Content Overlay */}
-            <div className="relative z-10 container section-padding flex flex-col items-center">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                    className="w-full max-w-sm"
-                >
-                    <div className="text-center mb-10">
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: 0.2 }}
-                            className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/60 border border-white/40 mb-6 backdrop-blur-md shadow-sm"
-                        >
-                            <Lock size={24} className="text-slate-600" />
-                        </motion.div>
-                        <h1 className="text-3xl font-bold tracking-tight text-slate-900 mb-2">Restricted Access</h1>
-                        <p className="text-slate-500 font-medium">Project Medical AI • 2025</p>
+            <div className="relative w-full max-w-md glass-panel ambient-shadow rounded-[28px] p-8 md:p-10 text-center">
+                <div className="flex justify-center mb-6">
+                    <Image
+                        src="/images/logo-medical-ai.png"
+                        alt=""
+                        width={56}
+                        height={56}
+                        priority
+                        className="h-14 w-14 object-contain"
+                    />
+                </div>
+
+                <span className="inline-block px-3.5 py-1 rounded-full bg-white/65 text-[#003459] label-sm mb-5 backdrop-blur-md border border-white/60">
+                    Coming Soon
+                </span>
+
+                <h1 className="headline-lg text-on-surface mb-3">
+                    Medical<span className="brand-accent">·</span>AI
+                </h1>
+
+                <p className="body-md text-on-surface-variant mb-8">
+                    Het kennisplatform voor verantwoorde AI in de zorg gaat binnenkort live. Heb je een toegangscode? Log dan hieronder in.
+                </p>
+
+                <form action={handleSubmit} className="space-y-4">
+                    <div className="relative">
+                        <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 !text-[20px] text-outline pointer-events-none">
+                            lock
+                        </span>
+                        <input
+                            type="password"
+                            name="code"
+                            placeholder="Toegangscode"
+                            className="w-full pl-12 pr-4 py-3.5 rounded-full bg-white/75 border border-white/70 focus:outline-none focus:ring-2 focus:ring-[#007EA7]/20 focus:border-[#007EA7]/50 text-[15px] tracking-wide text-on-surface placeholder:text-outline backdrop-blur-md transition-all"
+                            required
+                            autoComplete="off"
+                            autoFocus
+                        />
                     </div>
 
-                    <form action={handleSubmit} className="space-y-6">
-                        <div className="relative group">
-                            <input
-                                type="password"
-                                name="code"
-                                placeholder="ENTER PROTOCOL CODE"
-                                className="w-full px-6 py-4 rounded-xl bg-white/60 border border-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-center text-xl tracking-[0.2em] placeholder:text-slate-400 placeholder:tracking-normal text-slate-800 backdrop-blur-sm shadow-sm"
-                                required
-                                autoComplete="off"
-                            />
-                        </div>
+                    {error && (
+                        <p className="text-[13px] font-medium text-rose-600 bg-rose-50/80 border border-rose-100 rounded-2xl py-2.5 px-4">
+                            {error}
+                        </p>
+                    )}
 
-                        {error && (
-                            <motion.p
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                className="text-red-500 text-sm font-medium text-center bg-red-50 py-2 rounded-lg border border-red-100"
-                            >
-                                {error}
-                            </motion.p>
-                        )}
+                    <button
+                        type="submit"
+                        disabled={pending}
+                        className="w-full bg-[#003459] text-white label-sm px-5 py-3.5 rounded-full inline-flex items-center justify-center gap-2 hover:bg-[#00171F] transition-colors disabled:opacity-60"
+                    >
+                        {pending ? "Bezig…" : "Toegang"}
+                        <span className="material-symbols-outlined !text-[16px]">arrow_forward</span>
+                    </button>
+                </form>
 
-                        <button
-                            type="submit"
-                            className="w-full py-4 rounded-xl bg-blue-600 text-white font-bold tracking-wide uppercase hover:bg-blue-700 hover:scale-[1.02] transition-all active:scale-[0.98] shadow-lg shadow-blue-600/20"
-                        >
-                            Initialize
-                        </button>
-                    </form>
-                </motion.div>
+                <p className="text-[11.5px] text-outline mt-6 tracking-wide uppercase">
+                    Project Medical AI · 2026
+                </p>
             </div>
-        </section>
+        </div>
     );
 }
