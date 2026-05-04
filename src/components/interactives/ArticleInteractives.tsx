@@ -461,23 +461,10 @@ export function AucThreshold() {
     const [threshold, setThreshold] = useState(55);
     const metrics = useMemo(() => thresholdStats(threshold / 100), [threshold]);
 
-    const cellStyle = (kind: "tp" | "fn" | "fp" | "tn") => {
-        switch (kind) {
-            case "tp":
-                return "border-emerald-200 bg-emerald-50 text-emerald-900";
-            case "fn":
-                return "border-amber-200 bg-amber-50 text-amber-900";
-            case "fp":
-                return "border-rose-200 bg-rose-50 text-rose-900";
-            case "tn":
-                return "border-slate-200 bg-slate-50 text-slate-800";
-        }
-    };
-
     return (
         <Shell
             title="Verschuif de drempel"
-            subtitle="Sleep de drempel langs de risicobalk. Links van de lijn zegt het model 'geen actie', rechts 'wel actie'. Blokjes verkleuren mee naar terecht of fout."
+            subtitle="Elke patiënt is één blokje. Groen = uitkomst aanwezig, grijs = geen uitkomst. Sleep de drempel: alles rechts ervan voorspelt het model positief, alles links negatief."
         >
             <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-7">
                 <div className="flex flex-wrap items-center justify-between gap-3">
@@ -499,104 +486,108 @@ export function AucThreshold() {
                 />
 
                 <div className="mt-6 rounded-2xl border border-white bg-white p-4 sm:p-6">
-                    <div className="mb-2 flex justify-between text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500">
-                        <span>geen actie</span>
-                        <span>wel actie</span>
-                    </div>
-                    <div className="relative h-40 sm:h-44">
-                        <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-slate-200" />
-                        <div className="absolute inset-x-0 top-2 text-center text-[10px] font-bold uppercase tracking-[0.12em] text-emerald-700">
-                            uitkomst aanwezig
+                    <div className="relative">
+                        <div className="grid grid-cols-2 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500">
+                            <span className="pl-1">voorspelt: geen uitkomst</span>
+                            <span className="pr-1 text-right">voorspelt: uitkomst</span>
                         </div>
-                        <div className="absolute inset-x-0 bottom-2 text-center text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500">
-                            geen uitkomst
-                        </div>
-                        <div
-                            className="pointer-events-none absolute top-0 bottom-0 z-20"
-                            style={{ left: `${threshold}%`, transform: "translateX(-50%)" }}
-                        >
-                            <div className="absolute top-0 bottom-0 left-1/2 w-0.5 -translate-x-1/2 bg-brand-primary" />
-                            <div className="absolute -top-2 left-1/2 -translate-x-1/2 rounded-md bg-brand-primary px-2 py-0.5 text-[10px] font-black text-white shadow-sm">
-                                {threshold}%
+                        <div className="relative mt-2 h-40 overflow-hidden rounded-xl">
+                            <div
+                                className="absolute inset-y-0 left-0 bg-slate-100/70"
+                                style={{ width: `${threshold}%` }}
+                            />
+                            <div
+                                className="absolute inset-y-0 right-0 bg-brand-primary/10"
+                                style={{ width: `${100 - threshold}%` }}
+                            />
+                            <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-slate-200" />
+                            <div
+                                className="pointer-events-none absolute inset-y-0 z-20"
+                                style={{ left: `${threshold}%`, transform: "translateX(-50%)" }}
+                            >
+                                <div className="absolute inset-y-0 left-1/2 w-0.5 -translate-x-1/2 bg-brand-primary" />
                             </div>
-                        </div>
-                        {AUC_POINTS.map((point, index) => {
-                            const predictedPositive = point.score * 100 >= threshold;
-                            const kind: "tp" | "fn" | "fp" | "tn" =
-                                point.outcome === 1
-                                    ? predictedPositive
-                                        ? "tp"
-                                        : "fn"
-                                    : predictedPositive
-                                        ? "fp"
-                                        : "tn";
-                            const isPositive = point.outcome === 1;
-                            return (
-                                <div
-                                    key={`${point.score}-${index}`}
-                                    className="absolute z-10"
-                                    style={{
-                                        left: `${point.score * 100}%`,
-                                        top: isPositive ? "26%" : "62%",
-                                        transform: "translate(-50%, -50%)",
-                                    }}
-                                    title={`Score ${Math.round(point.score * 100)}%`}
-                                >
+                            {AUC_POINTS.map((point, index) => {
+                                const isPositive = point.outcome === 1;
+                                return (
                                     <div
-                                        className={
-                                            "flex h-9 w-9 items-center justify-center rounded-md border-2 text-xs font-black shadow-sm transition-colors " +
-                                            cellStyle(kind)
-                                        }
+                                        key={`${point.score}-${index}`}
+                                        className="absolute z-10"
+                                        style={{
+                                            left: `${point.score * 100}%`,
+                                            top: isPositive ? "26%" : "70%",
+                                            transform: "translate(-50%, -50%)",
+                                        }}
+                                        title={`Score ${Math.round(point.score * 100)}% · ${isPositive ? "uitkomst aanwezig" : "geen uitkomst"}`}
                                     >
-                                        {Math.round(point.score * 100)}
+                                        <div
+                                            className={
+                                                "h-7 w-7 rounded-md border-2 border-white shadow-sm transition-colors sm:h-8 sm:w-8 " +
+                                                (isPositive ? "bg-emerald-500" : "bg-slate-400")
+                                            }
+                                        />
                                     </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                    <div className="mt-2 flex justify-between text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">
-                        <span>0%</span>
-                        <span>50%</span>
-                        <span>100%</span>
+                                );
+                            })}
+                        </div>
+                        <div className="mt-2 flex justify-between text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">
+                            <span>score 0%</span>
+                            <span>score 50%</span>
+                            <span>score 100%</span>
+                        </div>
                     </div>
                 </div>
 
                 <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-600">
                     <span className="inline-flex items-center gap-2">
-                        <span className="inline-block h-3 w-3 rounded-sm border-2 border-emerald-300 bg-emerald-100" />
-                        TP — uitkomst, terecht actie
+                        <span className="inline-block h-3 w-3 rounded-sm bg-emerald-500" />
+                        uitkomst aanwezig
                     </span>
                     <span className="inline-flex items-center gap-2">
-                        <span className="inline-block h-3 w-3 rounded-sm border-2 border-amber-300 bg-amber-100" />
-                        FN — uitkomst, gemist
-                    </span>
-                    <span className="inline-flex items-center gap-2">
-                        <span className="inline-block h-3 w-3 rounded-sm border-2 border-rose-300 bg-rose-100" />
-                        FP — geen uitkomst, vals alarm
-                    </span>
-                    <span className="inline-flex items-center gap-2">
-                        <span className="inline-block h-3 w-3 rounded-sm border-2 border-slate-300 bg-slate-100" />
-                        TN — geen uitkomst, terecht rust
+                        <span className="inline-block h-3 w-3 rounded-sm bg-slate-400" />
+                        geen uitkomst
                     </span>
                 </div>
             </div>
 
-            <div className="mt-5 grid gap-3 sm:grid-cols-4">
-                <div className={"rounded-2xl border p-4 " + cellStyle("tp")}>
-                    <p className="text-[11px] font-bold uppercase tracking-[0.14em]">TP — terecht positief</p>
-                    <p className="mt-1 text-3xl font-black tabular-nums">{metrics.tp}</p>
-                </div>
-                <div className={"rounded-2xl border p-4 " + cellStyle("fn")}>
-                    <p className="text-[11px] font-bold uppercase tracking-[0.14em]">FN — gemist</p>
-                    <p className="mt-1 text-3xl font-black tabular-nums">{metrics.fn}</p>
-                </div>
-                <div className={"rounded-2xl border p-4 " + cellStyle("fp")}>
-                    <p className="text-[11px] font-bold uppercase tracking-[0.14em]">FP — vals alarm</p>
-                    <p className="mt-1 text-3xl font-black tabular-nums">{metrics.fp}</p>
-                </div>
-                <div className={"rounded-2xl border p-4 " + cellStyle("tn")}>
-                    <p className="text-[11px] font-bold uppercase tracking-[0.14em]">TN — terecht negatief</p>
-                    <p className="mt-1 text-3xl font-black tabular-nums">{metrics.tn}</p>
+            <div className="mt-6">
+                <p className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Confusion matrix bij deze drempel</p>
+                <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+                    <div className="grid grid-cols-[auto_1fr_1fr]">
+                        <div className="border-b border-slate-200 bg-slate-50" />
+                        <div className="border-b border-r border-slate-200 bg-slate-50 p-3 text-center text-[11px] font-bold uppercase tracking-[0.14em] text-slate-600">
+                            voorspelt geen uitkomst
+                        </div>
+                        <div className="border-b border-slate-200 bg-slate-50 p-3 text-center text-[11px] font-bold uppercase tracking-[0.14em] text-slate-600">
+                            voorspelt uitkomst
+                        </div>
+
+                        <div className="flex items-center justify-end border-b border-slate-200 bg-slate-50 p-3 text-right text-[11px] font-bold uppercase tracking-[0.14em] text-emerald-700">
+                            <span className="mr-2 inline-block h-3 w-3 rounded-sm bg-emerald-500" />
+                            werkelijk uitkomst
+                        </div>
+                        <div className="border-b border-r border-slate-200 bg-amber-50 p-4 text-center">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-amber-700">FN — gemist</p>
+                            <p className="mt-1 text-3xl font-black tabular-nums text-amber-900">{metrics.fn}</p>
+                        </div>
+                        <div className="border-b border-slate-200 bg-emerald-50 p-4 text-center">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-emerald-700">TP — terecht actie</p>
+                            <p className="mt-1 text-3xl font-black tabular-nums text-emerald-900">{metrics.tp}</p>
+                        </div>
+
+                        <div className="flex items-center justify-end bg-slate-50 p-3 text-right text-[11px] font-bold uppercase tracking-[0.14em] text-slate-600">
+                            <span className="mr-2 inline-block h-3 w-3 rounded-sm bg-slate-400" />
+                            werkelijk geen uitkomst
+                        </div>
+                        <div className="border-r border-slate-200 bg-slate-50 p-4 text-center">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-600">TN — terecht rust</p>
+                            <p className="mt-1 text-3xl font-black tabular-nums text-slate-800">{metrics.tn}</p>
+                        </div>
+                        <div className="bg-rose-50 p-4 text-center">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-rose-700">FP — vals alarm</p>
+                            <p className="mt-1 text-3xl font-black tabular-nums text-rose-900">{metrics.fp}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
