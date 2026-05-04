@@ -461,15 +461,33 @@ export function AucThreshold() {
     const [threshold, setThreshold] = useState(55);
     const metrics = useMemo(() => thresholdStats(threshold / 100), [threshold]);
 
+    const cellStyle = (kind: "tp" | "fn" | "fp" | "tn") => {
+        switch (kind) {
+            case "tp":
+                return "border-emerald-200 bg-emerald-50 text-emerald-900";
+            case "fn":
+                return "border-amber-200 bg-amber-50 text-amber-900";
+            case "fp":
+                return "border-rose-200 bg-rose-50 text-rose-900";
+            case "tn":
+                return "border-slate-200 bg-slate-50 text-slate-800";
+        }
+    };
+
     return (
         <Shell
             title="Verschuif de drempel"
-            subtitle="Boven de drempel zegt het model alarm, eronder rust. Kijk wat dat doet met de vier kwadranten en de bekende cijfers."
+            subtitle="Sleep de drempel langs de risicobalk. Links van de lijn zegt het model 'geen actie', rechts 'wel actie'. Blokjes verkleuren mee naar terecht of fout."
         >
-            <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
-                <label className="text-sm font-bold text-slate-800" htmlFor="auc-thr-threshold">
-                    Beslisdrempel: {threshold}%
-                </label>
+            <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-7">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                    <label className="text-sm font-bold text-slate-800" htmlFor="auc-thr-threshold">
+                        Beslisdrempel
+                    </label>
+                    <span className="rounded-full bg-white px-3 py-1 text-sm font-black tabular-nums text-brand-primary shadow-sm">
+                        {threshold}%
+                    </span>
+                </div>
                 <input
                     id="auc-thr-threshold"
                     type="range"
@@ -479,51 +497,110 @@ export function AucThreshold() {
                     onChange={(event) => setThreshold(Number(event.target.value))}
                     className="mt-3 w-full accent-brand-secondary"
                 />
-                <div className="mt-5 rounded-2xl border border-white bg-white p-4">
-                    <div className="mb-3 grid grid-cols-[1fr_auto_1fr] items-center gap-2 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-500">
-                        <span>negatief voorspeld</span>
-                        <span className="rounded-full bg-white px-2 py-1 text-brand-primary shadow-sm">drempel {threshold}%</span>
-                        <span className="text-right">positief voorspeld</span>
+
+                <div className="mt-6 rounded-2xl border border-white bg-white p-4 sm:p-6">
+                    <div className="mb-2 flex justify-between text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500">
+                        <span>geen actie</span>
+                        <span>wel actie</span>
                     </div>
-                    <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
+                    <div className="relative h-40 sm:h-44">
+                        <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-slate-200" />
+                        <div className="absolute inset-x-0 top-2 text-center text-[10px] font-bold uppercase tracking-[0.12em] text-emerald-700">
+                            uitkomst aanwezig
+                        </div>
+                        <div className="absolute inset-x-0 bottom-2 text-center text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500">
+                            geen uitkomst
+                        </div>
+                        <div
+                            className="pointer-events-none absolute top-0 bottom-0 z-20"
+                            style={{ left: `${threshold}%`, transform: "translateX(-50%)" }}
+                        >
+                            <div className="absolute top-0 bottom-0 left-1/2 w-0.5 -translate-x-1/2 bg-brand-primary" />
+                            <div className="absolute -top-2 left-1/2 -translate-x-1/2 rounded-md bg-brand-primary px-2 py-0.5 text-[10px] font-black text-white shadow-sm">
+                                {threshold}%
+                            </div>
+                        </div>
                         {AUC_POINTS.map((point, index) => {
                             const predictedPositive = point.score * 100 >= threshold;
+                            const kind: "tp" | "fn" | "fp" | "tn" =
+                                point.outcome === 1
+                                    ? predictedPositive
+                                        ? "tp"
+                                        : "fn"
+                                    : predictedPositive
+                                        ? "fp"
+                                        : "tn";
+                            const isPositive = point.outcome === 1;
                             return (
                                 <div
                                     key={`${point.score}-${index}`}
-                                    className={
-                                        "min-h-[64px] rounded-2xl border p-2 text-center shadow-sm transition " +
-                                        (predictedPositive
-                                            ? "border-brand-primary/40 bg-white"
-                                            : "border-slate-200 bg-white/60")
-                                    }
-                                    title={`Score ${Math.round(point.score * 100)}%, ${point.outcome === 1 ? "uitkomst aanwezig" : "geen uitkomst"}`}
+                                    className="absolute z-10"
+                                    style={{
+                                        left: `${point.score * 100}%`,
+                                        top: isPositive ? "26%" : "62%",
+                                        transform: "translate(-50%, -50%)",
+                                    }}
+                                    title={`Score ${Math.round(point.score * 100)}%`}
                                 >
                                     <div
                                         className={
-                                            "mx-auto mb-1 flex h-7 w-7 items-center justify-center rounded-full border-2 border-white text-[11px] font-black shadow-sm " +
-                                            (point.outcome === 1 ? "bg-brand-secondary text-white" : "bg-slate-300 text-slate-700")
+                                            "flex h-9 w-9 items-center justify-center rounded-md border-2 text-xs font-black shadow-sm transition-colors " +
+                                            cellStyle(kind)
                                         }
                                     >
-                                        {point.outcome === 1 ? "+" : "-"}
-                                    </div>
-                                    <div className="text-sm font-black tabular-nums text-brand-dark">{Math.round(point.score * 100)}%</div>
-                                    <div className={"mt-0.5 text-[10px] font-bold " + (predictedPositive ? "text-brand-primary" : "text-slate-400")}>
-                                        {predictedPositive ? "alarm" : "rust"}
+                                        {Math.round(point.score * 100)}
                                     </div>
                                 </div>
                             );
                         })}
                     </div>
+                    <div className="mt-2 flex justify-between text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">
+                        <span>0%</span>
+                        <span>50%</span>
+                        <span>100%</span>
+                    </div>
+                </div>
+
+                <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-600">
+                    <span className="inline-flex items-center gap-2">
+                        <span className="inline-block h-3 w-3 rounded-sm border-2 border-emerald-300 bg-emerald-100" />
+                        TP — uitkomst, terecht actie
+                    </span>
+                    <span className="inline-flex items-center gap-2">
+                        <span className="inline-block h-3 w-3 rounded-sm border-2 border-amber-300 bg-amber-100" />
+                        FN — uitkomst, gemist
+                    </span>
+                    <span className="inline-flex items-center gap-2">
+                        <span className="inline-block h-3 w-3 rounded-sm border-2 border-rose-300 bg-rose-100" />
+                        FP — geen uitkomst, vals alarm
+                    </span>
+                    <span className="inline-flex items-center gap-2">
+                        <span className="inline-block h-3 w-3 rounded-sm border-2 border-slate-300 bg-slate-100" />
+                        TN — geen uitkomst, terecht rust
+                    </span>
                 </div>
             </div>
-            <div className="mt-5 grid grid-cols-2 gap-3">
-                <MetricCard label="TP" value={`${metrics.tp}`} hint="terecht positief" />
-                <MetricCard label="FP" value={`${metrics.fp}`} hint="vals alarm" />
-                <MetricCard label="FN" value={`${metrics.fn}`} hint="gemist" />
-                <MetricCard label="TN" value={`${metrics.tn}`} hint="terecht negatief" />
+
+            <div className="mt-5 grid gap-3 sm:grid-cols-4">
+                <div className={"rounded-2xl border p-4 " + cellStyle("tp")}>
+                    <p className="text-[11px] font-bold uppercase tracking-[0.14em]">TP — terecht positief</p>
+                    <p className="mt-1 text-3xl font-black tabular-nums">{metrics.tp}</p>
+                </div>
+                <div className={"rounded-2xl border p-4 " + cellStyle("fn")}>
+                    <p className="text-[11px] font-bold uppercase tracking-[0.14em]">FN — gemist</p>
+                    <p className="mt-1 text-3xl font-black tabular-nums">{metrics.fn}</p>
+                </div>
+                <div className={"rounded-2xl border p-4 " + cellStyle("fp")}>
+                    <p className="text-[11px] font-bold uppercase tracking-[0.14em]">FP — vals alarm</p>
+                    <p className="mt-1 text-3xl font-black tabular-nums">{metrics.fp}</p>
+                </div>
+                <div className={"rounded-2xl border p-4 " + cellStyle("tn")}>
+                    <p className="text-[11px] font-bold uppercase tracking-[0.14em]">TN — terecht negatief</p>
+                    <p className="mt-1 text-3xl font-black tabular-nums">{metrics.tn}</p>
+                </div>
             </div>
-            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+
+            <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 <MetricCard label="Sensitiviteit" value={pct(metrics.sensitivity)} hint="hoeveel echte gevallen vang je?" />
                 <MetricCard label="Specificiteit" value={pct(metrics.specificity)} hint="hoeveel gezonden blijven met rust?" />
                 <MetricCard label="PPV" value={pct(metrics.ppv)} hint="alarm: hoe vaak terecht?" />
@@ -554,8 +631,22 @@ export function AucRoc() {
     return (
         <Shell
             title="ROC: kaart van alle drempels"
-            subtitle="Elk punt op de curve hoort bij één drempel. Schuif je hieronder, dan zie je waar je belandt op de kaart."
+            subtitle="Elk punt op de curve hoort bij één drempel. Schuif hieronder en zie waar je op de kaart belandt."
         >
+            <div className="mb-6 flex flex-col gap-4 rounded-3xl border border-brand-primary/20 bg-gradient-to-br from-brand-primary/5 via-white to-brand-accent/5 p-5 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                    <p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-secondary">Oppervlakte onder de curve</p>
+                    <p className="mt-1 text-sm leading-6 text-slate-600">
+                        Vat alle drempels samen in één getal. Hoe dichter bij 1, hoe beter het model rangschikt.
+                    </p>
+                </div>
+                <div className="text-left sm:text-right">
+                    <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500">AUC</p>
+                    <p className="text-5xl font-black tabular-nums leading-none text-brand-dark sm:text-6xl">
+                        {formatDecimal(auc)}
+                    </p>
+                </div>
+            </div>
             <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
                 <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
                     <label className="text-sm font-bold text-slate-800" htmlFor="auc-roc-threshold">
@@ -579,14 +670,9 @@ export function AucRoc() {
                     </p>
                 </div>
                 <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
-                    <div className="mb-2 flex flex-wrap items-center justify-between gap-3">
-                        <div className="flex items-center gap-2 text-sm font-bold text-slate-800">
-                            <LineChart size={18} />
-                            ROC-ruimte
-                        </div>
-                        <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-brand-primary shadow-sm">
-                            AUC {formatDecimal(auc)}
-                        </span>
+                    <div className="mb-2 flex items-center gap-2 text-sm font-bold text-slate-800">
+                        <LineChart size={18} />
+                        ROC-ruimte
                     </div>
                     <svg viewBox="0 0 260 260" className="h-72 w-full">
                         <polygon points={areaPoints} fill="#007EA7" opacity="0.12" />
@@ -628,27 +714,75 @@ export function AucRoc() {
     );
 }
 
+type PairTrial = {
+    id: number;
+    positiveScore: number;
+    negativeScore: number;
+    result: "correct" | "wrong" | "tie";
+};
+
 export function AucPairs() {
-    const [pairIndex, setPairIndex] = useState(0);
     const path = useMemo(() => rocPath(), []);
     const auc = useMemo(() => areaUnderCurve(path), [path]);
-    const pairs = useMemo(() => {
-        const positives = AUC_POINTS.filter((point) => point.outcome === 1);
-        const negatives = AUC_POINTS.filter((point) => point.outcome === 0);
-        return positives.flatMap((positive, positiveIndex) =>
-            negatives.map((negative, negativeIndex) => ({
-                id: `${positiveIndex}-${negativeIndex}`,
+    const positives = useMemo(() => AUC_POINTS.filter((point) => point.outcome === 1), []);
+    const negatives = useMemo(() => AUC_POINTS.filter((point) => point.outcome === 0), []);
+    const allPairs = useMemo(() => {
+        return positives.flatMap((positive) =>
+            negatives.map((negative) => ({
                 positive,
                 negative,
                 correct: positive.score > negative.score,
                 tied: positive.score === negative.score,
             })),
         );
-    }, []);
-    const correctPairs = pairs.filter((pair) => pair.correct).length;
-    const tiedPairs = pairs.filter((pair) => pair.tied).length;
-    const pair = pairs[pairIndex % pairs.length];
-    const rankProb = (correctPairs + tiedPairs * 0.5) / pairs.length;
+    }, [positives, negatives]);
+    const correctPairs = allPairs.filter((p) => p.correct).length;
+    const tiedPairs = allPairs.filter((p) => p.tied).length;
+    const trueRankProb = (correctPairs + tiedPairs * 0.5) / allPairs.length;
+
+    const [trials, setTrials] = useState<PairTrial[]>([]);
+
+    function drawPair() {
+        const positive = positives[Math.floor(Math.random() * positives.length)];
+        const negative = negatives[Math.floor(Math.random() * negatives.length)];
+        const result: PairTrial["result"] =
+            positive.score === negative.score
+                ? "tie"
+                : positive.score > negative.score
+                    ? "correct"
+                    : "wrong";
+        setTrials((prev) => [
+            { id: prev.length, positiveScore: positive.score, negativeScore: negative.score, result },
+            ...prev,
+        ]);
+    }
+
+    function drawMany(n: number) {
+        const draws: PairTrial[] = [];
+        const startId = trials.length;
+        for (let i = 0; i < n; i++) {
+            const positive = positives[Math.floor(Math.random() * positives.length)];
+            const negative = negatives[Math.floor(Math.random() * negatives.length)];
+            const result: PairTrial["result"] =
+                positive.score === negative.score
+                    ? "tie"
+                    : positive.score > negative.score
+                        ? "correct"
+                        : "wrong";
+            draws.push({ id: startId + i, positiveScore: positive.score, negativeScore: negative.score, result });
+        }
+        setTrials((prev) => [...draws.reverse(), ...prev]);
+    }
+
+    function reset() {
+        setTrials([]);
+    }
+
+    const totalTries = trials.length;
+    const correctCount = trials.filter((t) => t.result === "correct").length;
+    const tieCount = trials.filter((t) => t.result === "tie").length;
+    const runningAuc = totalTries === 0 ? 0 : (correctCount + tieCount * 0.5) / totalTries;
+    const lastTrial = trials[0];
 
     const comparisonCards = [
         {
@@ -681,47 +815,126 @@ export function AucPairs() {
     return (
         <Shell
             title="AUC als rangordespel"
-            subtitle="Pak willekeurig één patiënt mét en één zonder uitkomst. Hoe vaak geeft het model de juiste de hogere score? Dat percentage is AUC."
+            subtitle="Pak willekeurig één patiënt mét uitkomst en één zonder. Geeft het model de juiste de hogere score? Trek genoeg paren en het percentage 'goed' kruipt naar AUC."
         >
-            <div className="grid gap-4 lg:grid-cols-[1fr_1.1fr]">
-                <div className="rounded-3xl border border-slate-200 bg-gradient-to-br from-brand-primary/5 via-white to-brand-accent/5 p-5">
-                    <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Goed gerangschikt</p>
-                    <p className="mt-2 text-3xl font-black text-brand-dark">{correctPairs} van {pairs.length} paren</p>
-                    <p className="mt-2 text-sm leading-6 text-slate-600">
-                        Komt neer op AUC {formatDecimal(rankProb)}. Gelijke scores tellen voor de helft mee.
-                    </p>
+            <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                    <p className="text-sm font-bold text-slate-800">Trek willekeurige paren</p>
+                    <button
+                        type="button"
+                        onClick={reset}
+                        className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-bold text-slate-600 hover:bg-slate-100"
+                    >
+                        <RotateCcw size={13} /> reset
+                    </button>
                 </div>
-                <div className="rounded-3xl border border-slate-200 bg-white p-5">
-                    <div className="flex items-start justify-between gap-4">
-                        <div>
-                            <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Volgend paar</p>
-                            <p className="mt-2 text-sm leading-6 text-slate-600">Klik door en zie of de positieve casus hoger scoort dan de negatieve.</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                    <button
+                        type="button"
+                        onClick={drawPair}
+                        className="inline-flex items-center gap-2 rounded-xl bg-brand-primary px-4 py-2.5 text-sm font-bold text-white shadow-sm hover:bg-brand-secondary"
+                    >
+                        Trek 1 paar
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => drawMany(10)}
+                        className="inline-flex items-center gap-2 rounded-xl border border-brand-primary/30 bg-white px-4 py-2.5 text-sm font-bold text-brand-primary hover:bg-brand-primary/5"
+                    >
+                        Trek 10 paren
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => drawMany(100)}
+                        className="inline-flex items-center gap-2 rounded-xl border border-brand-primary/30 bg-white px-4 py-2.5 text-sm font-bold text-brand-primary hover:bg-brand-primary/5"
+                    >
+                        Trek 100 paren
+                    </button>
+                </div>
+
+                <div className="mt-5 grid gap-4 md:grid-cols-[1fr_1fr]">
+                    <div className="rounded-2xl border border-slate-200 bg-white p-5">
+                        <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Stand zo ver</p>
+                        <p className="mt-2 text-4xl font-black tabular-nums text-brand-dark">
+                            {totalTries === 0 ? "—" : formatDecimal(runningAuc)}
+                        </p>
+                        <p className="mt-1 text-sm text-slate-600">
+                            {totalTries === 0
+                                ? "Trek paren om te zien hoe de score zich ontwikkelt."
+                                : `${correctCount} goed van ${totalTries} ${totalTries === 1 ? "trekking" : "trekkingen"}${tieCount ? ` (${tieCount} gelijk)` : ""}`}
+                        </p>
+                        <div className="mt-4 h-2 overflow-hidden rounded-full bg-slate-100">
+                            <div
+                                className="h-full rounded-full bg-brand-secondary transition-all"
+                                style={{ width: totalTries === 0 ? "0%" : `${runningAuc * 100}%` }}
+                            />
                         </div>
-                        <button
-                            type="button"
-                            onClick={() => setPairIndex((value) => value + 1)}
-                            className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-primary text-white shadow-sm transition-transform hover:scale-105"
-                            aria-label="Toon volgend paar"
-                        >
-                            <RotateCcw size={17} />
-                        </button>
+                        <p className="mt-3 text-xs text-slate-500">
+                            Echte AUC over alle {allPairs.length} paren: <strong>{formatDecimal(trueRankProb)}</strong>. Hoe meer trekkingen, hoe dichter je daarbij komt.
+                        </p>
                     </div>
-                    <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                        <div className="rounded-2xl border border-emerald-100 bg-emerald-50 p-4">
-                            <p className="text-xs font-bold uppercase tracking-[0.14em] text-emerald-700">uitkomst aanwezig</p>
-                            <p className="mt-2 text-3xl font-black tabular-nums text-emerald-900">{Math.round(pair.positive.score * 100)}%</p>
-                        </div>
-                        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                            <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">geen uitkomst</p>
-                            <p className="mt-2 text-3xl font-black tabular-nums text-slate-800">{Math.round(pair.negative.score * 100)}%</p>
-                        </div>
-                    </div>
-                    <div className={"mt-4 rounded-2xl p-4 text-sm font-semibold " + (pair.correct ? "bg-emerald-50 text-emerald-900" : "bg-amber-50 text-amber-900")}>
-                        {pair.correct
-                            ? "Juist gerangschikt — telt mee voor de AUC."
-                            : "Verwisseld paar — AUC daalt iets."}
+
+                    <div className="rounded-2xl border border-slate-200 bg-white p-5">
+                        <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Laatste trekking</p>
+                        {lastTrial ? (
+                            <>
+                                <div className="mt-3 flex items-center justify-between gap-3">
+                                    <div className="flex-1 rounded-xl bg-emerald-50 p-3 text-center">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-emerald-700">+ uitkomst</p>
+                                        <p className="mt-1 text-2xl font-black tabular-nums text-emerald-900">
+                                            {Math.round(lastTrial.positiveScore * 100)}%
+                                        </p>
+                                    </div>
+                                    <span className="text-2xl font-black text-slate-400">vs</span>
+                                    <div className="flex-1 rounded-xl bg-slate-100 p-3 text-center">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500">− geen uitkomst</p>
+                                        <p className="mt-1 text-2xl font-black tabular-nums text-slate-800">
+                                            {Math.round(lastTrial.negativeScore * 100)}%
+                                        </p>
+                                    </div>
+                                </div>
+                                <div
+                                    className={
+                                        "mt-3 rounded-xl p-3 text-sm font-bold " +
+                                        (lastTrial.result === "correct"
+                                            ? "bg-emerald-100 text-emerald-900"
+                                            : lastTrial.result === "tie"
+                                                ? "bg-slate-100 text-slate-700"
+                                                : "bg-rose-100 text-rose-900")
+                                    }
+                                >
+                                    {lastTrial.result === "correct" && "✓ Goed: + scoort hoger"}
+                                    {lastTrial.result === "wrong" && "✗ Fout: − scoort hoger"}
+                                    {lastTrial.result === "tie" && "= Gelijk: telt voor de helft"}
+                                </div>
+                            </>
+                        ) : (
+                            <p className="mt-3 text-sm text-slate-500">Nog geen paar getrokken.</p>
+                        )}
                     </div>
                 </div>
+
+                {trials.length > 0 && (
+                    <div className="mt-5 rounded-2xl border border-slate-200 bg-white p-4">
+                        <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Laatste 30 trekkingen</p>
+                        <div className="mt-3 flex flex-wrap gap-1">
+                            {trials.slice(0, 30).map((t) => (
+                                <span
+                                    key={t.id}
+                                    title={`+${Math.round(t.positiveScore * 100)}% vs −${Math.round(t.negativeScore * 100)}%`}
+                                    className={
+                                        "inline-block h-4 w-4 rounded-sm " +
+                                        (t.result === "correct"
+                                            ? "bg-emerald-400"
+                                            : t.result === "tie"
+                                                ? "bg-slate-300"
+                                                : "bg-rose-400")
+                                    }
+                                />
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
 
             <div className="mt-6 grid gap-4 lg:grid-cols-3">
