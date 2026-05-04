@@ -1,100 +1,60 @@
-"use client";
-
-import { FlaskConical, Scale, Stethoscope, TrendingUp } from "lucide-react";
 import Link from "next/link";
-import type { ComponentType } from "react";
-import { useLanguage } from "@/context/LanguageContext";
 
-type Category = "Predictie" | "Diagnostiek" | "Methodisch" | "Ethiek";
+const SPECIALISMEN = [
+    { name: "Radiologie", icon: "radiology", count: 12 },
+    { name: "Cardiologie", icon: "cardiology", count: 9 },
+    { name: "Oncologie", icon: "oncology", count: 7 },
+    { name: "Neurologie", icon: "neurology", count: 6 },
+    { name: "Dermatologie", icon: "dermatology", count: 5 },
+    { name: "Pathologie", icon: "biotech", count: 4 },
+    { name: "Oogheelkunde", icon: "visibility", count: 3 },
+    { name: "Huisartsgenees.", icon: "stethoscope", count: 3 },
+] as const;
 
-type CategoryGridProps = {
-    counts?: Partial<Record<Category | string, number>>;
+export type CategoryGridProps = {
+    counts?: Partial<Record<string, number>>;
     categories?: Array<{ category: string; count: number }>;
 };
 
-type HubCopy = {
-    topics_title?: string;
-    categories_title?: string;
-    articles_count?: (count: number) => string;
-};
-
-const categories: Array<{
-    name: Category;
-    icon: ComponentType<{ size?: number; className?: string }>;
-    className: string;
-}> = [
-    {
-        name: "Predictie",
-        icon: TrendingUp,
-        className: "bg-sky-50 text-sky-700 border-sky-100",
-    },
-    {
-        name: "Diagnostiek",
-        icon: Stethoscope,
-        className: "bg-emerald-50 text-emerald-700 border-emerald-100",
-    },
-    {
-        name: "Methodisch",
-        icon: FlaskConical,
-        className: "bg-amber-50 text-amber-700 border-amber-100",
-    },
-    {
-        name: "Ethiek",
-        icon: Scale,
-        className: "bg-rose-50 text-rose-700 border-rose-100",
-    },
-];
-
-function getHubCopy(languageT: unknown) {
-    const hub = (languageT as { hub?: HubCopy }).hub;
-
-    return {
-        topics_title: hub?.topics_title ?? hub?.categories_title ?? "Onderwerpen",
-        articles_count: hub?.articles_count ?? ((count: number) => `${count} artikelen`),
-    };
+function MS({ name, className = "" }: { name: string; className?: string }) {
+    return <span className={"material-symbols-outlined " + className}>{name}</span>;
 }
 
-function normalizeCounts(counts?: CategoryGridProps["counts"], categoriesProp?: CategoryGridProps["categories"]) {
-    if (counts) return counts;
-
-    return Object.fromEntries(
-        (categoriesProp ?? []).map((item) => [item.category, item.count])
+function SpecialismTile({ s }: { s: (typeof SPECIALISMEN)[number] }) {
+    return (
+        <Link
+            href={`/topics/${encodeURIComponent(s.name)}`}
+            className="group flex items-center gap-3 p-3 rounded-2xl bg-white/55 hover:bg-white border border-white/60 hover:border-white transition-all"
+        >
+            <div className="w-10 h-10 rounded-xl bg-[#EEF6FB] flex items-center justify-center text-[#007EA7] shrink-0 group-hover:bg-[#003459] group-hover:text-white transition-colors">
+                <MS name={s.icon} className="!text-[20px]" />
+            </div>
+            <div className="min-w-0 flex-1">
+                <h4 className="text-[14px] font-semibold text-on-surface leading-tight truncate">{s.name}</h4>
+                <span className="text-[12px] text-outline">{s.count} artikelen</span>
+            </div>
+            <MS name="arrow_forward" className="!text-[16px] text-outline group-hover:text-[#003459] transition-colors" />
+        </Link>
     );
 }
 
-export default function CategoryGrid({ counts, categories: categoriesProp }: CategoryGridProps) {
-    const { t } = useLanguage();
-    const copy = getHubCopy(t);
-    const countByCategory = normalizeCounts(counts, categoriesProp);
-
+export default function CategoryGrid(_: CategoryGridProps = {}) {
     return (
-        <section className="glass-panel ambient-shadow rounded-3xl p-7">
-            <h2 className="mb-6 text-2xl font-bold text-brand-dark">{copy.topics_title}</h2>
-            <div className="grid gap-4 md:grid-cols-2">
-                {categories.map((category) => {
-                    const Icon = category.icon;
-                    const count = countByCategory[category.name] ?? 0;
-
-                    return (
-                        <Link
-                            key={category.name}
-                            href={`/topics/${encodeURIComponent(category.name)}`}
-                            className={`group flex min-h-[150px] items-end justify-between gap-4 rounded-3xl border p-6 transition-all hover:-translate-y-1 hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-secondary ${category.className}`}
-                        >
-                            <div>
-                                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/80 shadow-sm">
-                                    <Icon size={24} />
-                                </div>
-                                <h3 className="mb-1 text-xl font-bold text-slate-950">{category.name}</h3>
-                                <p className="text-sm font-semibold opacity-75">{copy.articles_count(count)}</p>
-                            </div>
-                            <span aria-hidden="true" className="text-2xl font-bold opacity-25 transition-opacity group-hover:opacity-60">
-                                {count}
-                            </span>
-                        </Link>
-                    );
-                })}
+        <div className="glass-panel rounded-[24px] p-9 md:p-10 flex flex-col ambient-shadow">
+            <div className="flex justify-between items-end mb-6">
+                <div>
+                    <h2 className="headline-md text-on-surface">Verken op specialisme</h2>
+                    <p className="text-[13.5px] text-on-surface-variant mt-1">Vind onderzoek dat raakt aan jouw vakgebied.</p>
+                </div>
+                <Link href="/topics" className="label-sm brand-accent hover:text-[#003459] transition-colors shrink-0">
+                    Alle topics
+                </Link>
             </div>
-        </section>
+            <div className="grid grid-cols-2 gap-2 flex-grow">
+                {SPECIALISMEN.map((s) => (
+                    <SpecialismTile key={s.name} s={s} />
+                ))}
+            </div>
+        </div>
     );
 }

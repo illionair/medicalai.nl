@@ -1,59 +1,21 @@
-"use client";
-
-import { motion } from "framer-motion";
-import Image from "next/image";
-import { useLanguage } from "@/context/LanguageContext";
-
-type HubCopy = {
-    eyebrow?: string;
-    title?: string;
-    subtitle?: string;
-};
-
-function getHubCopy(languageT: unknown): Required<HubCopy> {
-    const hub = (languageT as { hub?: HubCopy }).hub;
-
-    return {
-        eyebrow: hub?.eyebrow ?? "Educational Hub",
-        title: hub?.title ?? "Leer medische AI beoordelen met klinische nuance.",
-        subtitle: hub?.subtitle ?? "Verdiep je in toepassingen, methodologie en ethiek via zorgvuldig samengestelde artikelen.",
-    };
-}
-
 export default function HubHero() {
-    const { t } = useLanguage();
-    const copy = getHubCopy(t);
-
     return (
-        <section className="relative min-h-[520px] overflow-hidden rounded-3xl bg-slate-100 glass-panel ambient-shadow sm:h-[500px] lg:h-[560px]">
-            <Image
-                src="/images/hand-robot.png"
+        <section className="relative w-full h-[480px] rounded-[28px] overflow-hidden glass-panel ambient-shadow flex items-end p-10 md:p-12">
+            <img
                 alt=""
-                fill
-                priority
-                sizes="(min-width: 1152px) 1152px, 100vw"
-                className="object-cover object-center"
+                className="absolute inset-0 w-full h-full object-cover z-0 opacity-95"
+                src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1600&q=80&auto=format"
             />
-            <div className="absolute inset-0 bg-gradient-to-br from-white/85 via-white/55 to-brand-primary/35" />
-            <div className="absolute inset-0 bg-gradient-to-t from-white/70 via-transparent to-transparent" />
-
-            <div className="relative z-10 flex h-full items-end p-5 sm:p-8 lg:p-10">
-                <motion.div
-                    initial={{ opacity: 0, y: 28 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                    className="max-w-2xl rounded-[28px] border border-white/70 bg-white/65 p-6 shadow-2xl shadow-slate-900/10 backdrop-blur-xl sm:p-8"
-                >
-                    <p className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-brand-secondary">
-                        {copy.eyebrow}
-                    </p>
-                    <h1 className="mb-4 text-3xl font-bold leading-tight tracking-tight text-brand-dark sm:text-5xl">
-                        {copy.title}
-                    </h1>
-                    <p className="max-w-xl text-base font-medium leading-7 text-slate-700 sm:text-lg">
-                        {copy.subtitle}
-                    </p>
-                </motion.div>
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F2A]/60 via-[#0B1F2A]/15 to-transparent z-10" />
+            <div className="absolute inset-0 bg-gradient-to-br from-[#003459]/30 via-transparent to-[#00A8E8]/20 z-10 mix-blend-soft-light" />
+            <div className="relative z-20 w-full max-w-2xl bg-white/35 backdrop-blur-2xl p-8 md:p-10 rounded-[24px] border border-white/50 shadow-[0_8px_32px_rgba(0,23,31,0.08)]">
+                <span className="inline-block px-3.5 py-1 rounded-full bg-white/65 text-[#003459] label-sm mb-4 backdrop-blur-md border border-white/60">
+                    Knowledge Center
+                </span>
+                <h1 className="display-xl text-on-surface mb-3">Educational Hub</h1>
+                <p className="body-lg text-on-surface-variant max-w-xl">
+                    Verdiep je klinische expertise met onafhankelijke analyses, geselecteerde studies en aankomende seminars.
+                </p>
             </div>
         </section>
     );

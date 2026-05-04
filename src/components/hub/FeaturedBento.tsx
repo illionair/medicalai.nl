@@ -1,9 +1,5 @@
-"use client";
-
-import type { BlogPostSource } from "@prisma/client";
-import { motion } from "framer-motion";
 import Link from "next/link";
-import { useLanguage } from "@/context/LanguageContext";
+import type { BlogPostSource } from "@prisma/client";
 
 export type FeaturedHubArticle = {
     id: string;
@@ -18,158 +14,119 @@ export type FeaturedHubArticle = {
     developer?: string | null;
 };
 
-type HubCopy = {
-    latest_research?: string;
-    view_all?: string;
-    featured_title?: string;
-    no_blogs?: string;
-    no_articles?: string;
-};
-
 type FeaturedBentoProps = {
     blogs: FeaturedHubArticle[];
 };
 
-const categoryGradients: Record<string, string> = {
-    Predictie: "from-indigo-500 via-sky-400 to-cyan-300",
-    Diagnostiek: "from-emerald-500 via-teal-400 to-sky-300",
-    Methodisch: "from-amber-400 via-orange-400 to-rose-400",
-    Ethiek: "from-slate-700 via-slate-500 to-stone-300",
-};
+const FALLBACK_IMG = "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=900&q=80&auto=format";
 
-function fallbackGradient(category: string) {
-    return categoryGradients[category] ?? "from-brand-primary via-brand-secondary to-brand-accent";
+function MS({ name, className = "" }: { name: string; className?: string }) {
+    return <span className={"material-symbols-outlined " + className}>{name}</span>;
 }
 
-function formatDate(date: Date | string) {
-    return new Date(date).toLocaleDateString("nl-NL", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-    });
-}
-
-function sourceLabel(source: FeaturedHubArticle["source"]) {
-    return {
-        PUBMED: "PubMed",
-        MANUAL: "Redactie",
-        AI_PROMPT: "AI prompt",
-    }[source] ?? source;
-}
-
-function getNoBlogsCopy(languageT: unknown) {
-    const typed = languageT as { hub?: HubCopy; blog?: { no_blogs?: string } };
-    return typed.hub?.no_articles ?? typed.hub?.no_blogs ?? typed.blog?.no_blogs ?? "Nog geen blogs gepubliceerd.";
-}
-
-function getHubCopy(languageT: unknown) {
-    const hub = (languageT as { hub?: HubCopy }).hub;
-
-    return {
-        latest_research: hub?.latest_research ?? hub?.featured_title ?? "Laatste Research",
-        view_all: hub?.view_all ?? "Bekijk archief",
-    };
-}
-
-function BlogVisual({ blog, eager = false }: { blog: FeaturedHubArticle; eager?: boolean }) {
-    const image = blog.coverImage ?? blog.imageUrl;
-
-    if (image) {
-        return (
-            <img
-                src={image}
-                alt={blog.title}
-                loading={eager ? "eager" : "lazy"}
-                decoding="async"
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-        );
-    }
-
-    return <div className={`absolute inset-0 bg-gradient-to-br ${fallbackGradient(blog.category)}`} aria-hidden="true" />;
-}
-
-function FeaturedTile({ blog, large = false }: { blog: FeaturedHubArticle; large?: boolean }) {
-    const description = blog.summary ?? blog.subtitle ?? "";
-    const facts = [formatDate(blog.createdAt), sourceLabel(blog.source), blog.developer].filter(Boolean);
-
+function CategoryPill({ children, size = "md" }: { children: React.ReactNode; size?: "sm" | "md" }) {
+    const cls =
+        size === "sm"
+            ? "text-[11px] px-2.5 py-1"
+            : "label-sm px-3.5 py-1.5";
     return (
-        <Link href={`/blog/${blog.id}`} className="block h-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-secondary">
-            <motion.article
-                whileHover={{ scale: 1.015 }}
-                whileTap={{ scale: 0.99 }}
-                transition={{ type: "spring", stiffness: 260, damping: 22 }}
-                className={`group relative h-full min-h-[260px] overflow-hidden rounded-[28px] border border-white/60 bg-slate-100 shadow-xl shadow-slate-900/10 ${large ? "md:min-h-[540px]" : ""}`}
-            >
-                <BlogVisual blog={blog} eager={large} />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/35 to-white/5" aria-hidden="true" />
-                <div className="relative z-10 flex h-full flex-col justify-end p-6 sm:p-7">
-                    <span className="mb-4 w-fit rounded-full border border-white/50 bg-white/70 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.1em] text-brand-primary backdrop-blur-md">
-                        {blog.category}
-                    </span>
-                    <h3 className={`${large ? "line-clamp-3 text-3xl sm:text-4xl" : "line-clamp-2 text-xl"} mb-3 break-words font-bold leading-tight text-white`}>
-                        {blog.title}
-                    </h3>
-                    {description && (
-                        <p className={`${large ? "line-clamp-3" : "line-clamp-2"} text-sm font-medium leading-6 text-white/80`}>
-                            {description}
-                        </p>
-                    )}
-                    {large && facts.length > 0 && (
-                        <div className="mt-5 hidden flex-wrap gap-2 border-t border-white/20 pt-4 sm:flex">
-                            {facts.map((fact) => (
-                                <span key={fact} className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white/90 backdrop-blur-md">
-                                    {fact}
-                                </span>
-                            ))}
-                        </div>
-                    )}
-                </div>
-            </motion.article>
-        </Link>
+        <span className={"inline-flex items-center rounded-full bg-white/85 backdrop-blur-md text-on-surface border border-white/60 shadow-sm " + cls}>
+            {children}
+        </span>
     );
 }
 
-export default function FeaturedBento({ blogs }: FeaturedBentoProps) {
-    const { t } = useLanguage();
-    const featuredBlogs = blogs.slice(0, 3);
-    const copy = getHubCopy(t);
+function readTime(text?: string | null) {
+    const wc = (text ?? "").trim().split(/\s+/).filter(Boolean).length;
+    const minutes = Math.max(2, Math.round(wc / 200));
+    return `${minutes} min`;
+}
 
-    if (featuredBlogs.length === 0) {
+function authorOf(b: FeaturedHubArticle) {
+    return b.developer?.trim() || "Redactie";
+}
+
+function summaryOf(b: FeaturedHubArticle) {
+    return b.summary?.trim() || b.subtitle?.trim() || "";
+}
+
+function imageOf(b: FeaturedHubArticle) {
+    return b.coverImage || b.imageUrl || FALLBACK_IMG;
+}
+
+export default function FeaturedBento({ blogs }: FeaturedBentoProps) {
+    if (blogs.length === 0) {
         return (
             <section className="flex flex-col gap-6">
-                <div className="flex items-end justify-between gap-4">
-                    <h2 className="text-3xl font-bold text-brand-dark sm:text-4xl">{copy.latest_research}</h2>
-                    <Link href="/blog" className="text-sm font-bold text-brand-secondary transition-colors hover:text-brand-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-secondary">
-                        {copy.view_all}
+                <div className="flex justify-between items-end">
+                    <h2 className="headline-lg text-on-surface">Nieuwste onderzoek</h2>
+                    <Link href="/topics" className="label-sm brand-accent hover:text-[#003459] transition-colors flex items-center gap-1.5">
+                        Bekijk Directory <MS name="arrow_forward" className="!text-[16px]" />
                     </Link>
                 </div>
-                <div className="rounded-3xl border border-white/70 bg-white/65 p-10 text-center shadow-xl shadow-slate-900/5 backdrop-blur-xl">
-                    <p className="text-slate-500">{getNoBlogsCopy(t)}</p>
+                <div className="glass-panel ambient-shadow rounded-[24px] p-10 text-center">
+                    <p className="body-md text-on-surface-variant">Nog geen artikelen gepubliceerd.</p>
                 </div>
             </section>
         );
     }
 
-    const [largeBlog, ...smallBlogs] = featuredBlogs;
+    const [main, ...rest] = blogs;
+    const sideBlogs = rest.slice(0, 2);
 
     return (
         <section className="flex flex-col gap-6">
-            <div className="flex items-end justify-between gap-4">
-                <h2 className="text-3xl font-bold text-brand-dark sm:text-4xl">{copy.latest_research}</h2>
-                <Link href="/blog" className="text-sm font-bold text-brand-secondary transition-colors hover:text-brand-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-secondary">
-                    {copy.view_all}
+            <div className="flex justify-between items-end">
+                <h2 className="headline-lg text-on-surface">Nieuwste onderzoek</h2>
+                <Link href="/topics" className="label-sm brand-accent hover:text-[#003459] transition-colors flex items-center gap-1.5">
+                    Bekijk Directory <MS name="arrow_forward" className="!text-[16px]" />
                 </Link>
             </div>
-            <div className="grid gap-5 lg:grid-cols-[1.45fr_1fr]">
-                <FeaturedTile blog={largeBlog} large />
-                {smallBlogs.length > 0 && (
-                    <div className="grid gap-5">
-                        {smallBlogs.map((blog) => (
-                            <FeaturedTile key={blog.id} blog={blog} />
-                        ))}
+
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+                <Link
+                    href={`/blog/${main.id}`}
+                    className="md:col-span-8 group glass-panel rounded-[24px] overflow-hidden ambient-shadow flex flex-col relative transition-transform duration-500 ease-out hover:-translate-y-0.5"
+                >
+                    <div className="h-72 overflow-hidden relative">
+                        <img alt="" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" src={imageOf(main)} />
+                        <div className="absolute top-5 left-5 z-10">
+                            <CategoryPill>{main.category}</CategoryPill>
+                        </div>
                     </div>
-                )}
+                    <div className="p-7 md:p-8 flex-grow flex flex-col justify-between bg-white/70">
+                        <div>
+                            <h3 className="headline-md text-on-surface mb-2 group-hover:text-[#007EA7] transition-colors">{main.title}</h3>
+                            <p className="body-md text-on-surface-variant line-clamp-2">{summaryOf(main)}</p>
+                        </div>
+                        <div className="mt-5 flex items-center gap-3 text-outline label-sm">
+                            <span>{authorOf(main)}</span>
+                            <span>·</span>
+                            <span>{readTime(summaryOf(main))} leestijd</span>
+                        </div>
+                    </div>
+                </Link>
+
+                <div className="md:col-span-4 flex flex-col gap-6">
+                    {sideBlogs.map((p) => (
+                        <Link
+                            key={p.id}
+                            href={`/blog/${p.id}`}
+                            className="group glass-panel rounded-[20px] overflow-hidden ambient-shadow flex-1 flex flex-col relative transition-transform duration-500 ease-out hover:-translate-y-0.5"
+                        >
+                            <div className="h-28 overflow-hidden relative">
+                                <img alt="" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" src={imageOf(p)} />
+                                <div className="absolute top-3 left-3 z-10">
+                                    <CategoryPill size="sm">{p.category}</CategoryPill>
+                                </div>
+                            </div>
+                            <div className="p-5 flex-grow flex flex-col justify-between bg-white/70">
+                                <h3 className="text-[16px] font-semibold text-on-surface leading-snug mb-1 group-hover:text-[#007EA7] transition-colors">{p.title}</h3>
+                                <p className="text-[13.5px] text-on-surface-variant line-clamp-2">{summaryOf(p)}</p>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
             </div>
         </section>
     );

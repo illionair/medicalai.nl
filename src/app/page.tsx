@@ -28,17 +28,13 @@ export default async function Home() {
         }));
 
     return (
-        <div className="min-h-screen bg-white pt-28 pb-40">
-            <div className="hub-container flex flex-col gap-12">
-                <HubHero />
-
-                <FeaturedBento blogs={featuredBlogs} />
-
-                <div className="grid gap-6 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)]">
-                    <ComingSoonCard />
-                    <CategoryGrid categories={categories} />
-                </div>
-            </div>
+        <div className="flex flex-col gap-12 md:gap-16">
+            <HubHero />
+            <FeaturedBento blogs={featuredBlogs} />
+            <section className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+                <ComingSoonCard />
+                <CategoryGrid categories={categories} />
+            </section>
         </div>
     );
 }
