@@ -60,8 +60,8 @@ export default function FeaturedBento({ blogs }: FeaturedBentoProps) {
             <section className="flex flex-col gap-6">
                 <div className="flex justify-between items-end">
                     <h2 className="headline-lg text-on-surface">Nieuwste onderzoek</h2>
-                    <Link href="/topics" className="label-sm brand-accent hover:text-[#003459] transition-colors flex items-center gap-1.5">
-                        Bekijk Directory <MS name="arrow_forward" className="!text-[16px]" />
+                    <Link href="/blog" className="label-sm brand-accent hover:text-[#003459] transition-colors flex items-center gap-1.5">
+                        Alle artikelen <MS name="arrow_forward" className="!text-[16px]" />
                     </Link>
                 </div>
                 <div className="glass-panel ambient-shadow rounded-[24px] p-10 text-center">
@@ -78,8 +78,8 @@ export default function FeaturedBento({ blogs }: FeaturedBentoProps) {
         <section className="flex flex-col gap-6">
             <div className="flex justify-between items-end">
                 <h2 className="headline-lg text-on-surface">Nieuwste onderzoek</h2>
-                <Link href="/topics" className="label-sm brand-accent hover:text-[#003459] transition-colors flex items-center gap-1.5">
-                    Bekijk Directory <MS name="arrow_forward" className="!text-[16px]" />
+                <Link href="/blog" className="label-sm brand-accent hover:text-[#003459] transition-colors flex items-center gap-1.5">
+                    Alle artikelen <MS name="arrow_forward" className="!text-[16px]" />
                 </Link>
             </div>
 

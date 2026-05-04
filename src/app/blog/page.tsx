@@ -25,7 +25,7 @@ export default async function BlogArchivePage({ searchParams }: { searchParams: 
                     </Link>
 
                     <h1 className="text-4xl md:text-5xl font-bold text-brand-dark mb-4">
-                        {tag ? `Blogs getagd met #${tag}` : "Alle Blogs"}
+                        {tag ? `Artikelen getagd met #${tag}` : "Alle artikelen"}
                     </h1>
                     {tag && (
                         <Link href="/blog" className="text-brand-primary hover:underline text-sm">
@@ -40,7 +40,7 @@ export default async function BlogArchivePage({ searchParams }: { searchParams: 
                     <BlogGrid blogs={blogs} />
                 ) : (
                     <div className="text-center py-20 text-gray-500">
-                        Geen blogs gevonden{tag ? ` met de tag "${tag}"` : ""}.
+                        Geen artikelen gevonden{tag ? ` met de tag "${tag}"` : ""}.
                     </div>
                 )}
             </div>

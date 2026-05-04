@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 
 const ITEMS = [
     { key: "/", label: "Educational Hub" },
+    { key: "/blog", label: "Alle artikelen" },
     { key: "/topics", label: "AI Directory" },
     { key: "/guidelines", label: "Guidelines" },
     { key: "/authors", label: "Community" },
@@ -39,7 +40,7 @@ export default function Navbar() {
 
                 <nav className="hidden md:flex gap-1 items-center">
                     {ITEMS.map((i) => {
-                        const active = pathname === i.key;
+                        const active = pathname === i.key || (i.key !== "/" && pathname.startsWith(`${i.key}/`));
                         return (
                             <Link
                                 key={i.key}

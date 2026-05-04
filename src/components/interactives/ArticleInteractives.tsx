@@ -78,67 +78,175 @@ function formatNumber(value: number, digits = 2) {
     return value.toFixed(digits).replace(/\.?0+$/, "");
 }
 
-function rocPath() {
+function formatDecimal(value: number, digits = 2) {
+    return formatNumber(value, digits).replace(".", ",");
+}
+
+function thresholdStats(cut: number) {
     const positives = AUC_POINTS.filter((point) => point.outcome === 1).length;
     const negatives = AUC_POINTS.length - positives;
-    const thresholds = [1.01, ...AUC_POINTS.map((point) => point.score).sort((a, b) => b - a), -0.01];
+    const predicted = AUC_POINTS.map((point) => ({ ...point, positive: point.score >= cut }));
+    const tp = predicted.filter((point) => point.positive && point.outcome === 1).length;
+    const fp = predicted.filter((point) => point.positive && point.outcome === 0).length;
+    const tn = predicted.filter((point) => !point.positive && point.outcome === 0).length;
+    const fn = predicted.filter((point) => !point.positive && point.outcome === 1).length;
 
+    return {
+        tp,
+        fp,
+        tn,
+        fn,
+        sensitivity: ratio(tp, positives),
+        specificity: ratio(tn, negatives),
+        ppv: ratio(tp, tp + fp),
+        npv: ratio(tn, tn + fn),
+        fpr: ratio(fp, negatives),
+    };
+}
+
+function rocPath() {
+    const thresholds = [1.01, ...Array.from(new Set(AUC_POINTS.map((point) => point.score))).sort((a, b) => b - a), -0.01];
     return thresholds.map((threshold) => {
-        const predicted = AUC_POINTS.map((point) => ({ ...point, positive: point.score >= threshold }));
-        const tp = predicted.filter((point) => point.positive && point.outcome === 1).length;
-        const fp = predicted.filter((point) => point.positive && point.outcome === 0).length;
+        const stats = thresholdStats(threshold);
         return {
-            x: ratio(fp, negatives),
-            y: ratio(tp, positives),
+            threshold,
+            x: stats.fpr,
+            y: stats.sensitivity,
         };
     });
 }
 
+function areaUnderCurve(points: Array<{ x: number; y: number }>) {
+    return points.slice(1).reduce((area, point, index) => {
+        const previous = points[index];
+        return area + (point.x - previous.x) * ((point.y + previous.y) / 2);
+    }, 0);
+}
+
+function svgPoint(point: { x: number; y: number }) {
+    return {
+        x: 24 + point.x * 212,
+        y: 236 - point.y * 212,
+    };
+}
+
 export function AucPlayground() {
     const [threshold, setThreshold] = useState(55);
+    const [pairIndex, setPairIndex] = useState(0);
 
     const metrics = useMemo(() => {
-        const cut = threshold / 100;
-        const predicted = AUC_POINTS.map((point) => ({ ...point, positive: point.score >= cut }));
-        const tp = predicted.filter((point) => point.positive && point.outcome === 1).length;
-        const fp = predicted.filter((point) => point.positive && point.outcome === 0).length;
-        const tn = predicted.filter((point) => !point.positive && point.outcome === 0).length;
-        const fn = predicted.filter((point) => !point.positive && point.outcome === 1).length;
-        return {
-            tp,
-            fp,
-            tn,
-            fn,
-            sensitivity: ratio(tp, tp + fn),
-            specificity: ratio(tn, tn + fp),
-            ppv: ratio(tp, tp + fp),
-            npv: ratio(tn, tn + fn),
-        };
+        return thresholdStats(threshold / 100);
     }, [threshold]);
 
-    const path = rocPath();
+    const path = useMemo(() => rocPath(), []);
+    const auc = useMemo(() => areaUnderCurve(path), [path]);
+    const pairs = useMemo(() => {
+        const positives = AUC_POINTS.filter((point) => point.outcome === 1);
+        const negatives = AUC_POINTS.filter((point) => point.outcome === 0);
+        return positives.flatMap((positive, positiveIndex) =>
+            negatives.map((negative, negativeIndex) => ({
+                id: `${positiveIndex}-${negativeIndex}`,
+                positive,
+                negative,
+                correct: positive.score > negative.score,
+                tied: positive.score === negative.score,
+            })),
+        );
+    }, []);
+    const correctPairs = pairs.filter((pair) => pair.correct).length;
+    const tiedPairs = pairs.filter((pair) => pair.tied).length;
+    const pair = pairs[pairIndex % pairs.length];
+    const thresholdMarkers = [75, 55, 35].map((markerThreshold) => ({
+        label: markerThreshold === 75 ? "A" : markerThreshold === 55 ? "B" : "C",
+        threshold: markerThreshold,
+        stats: thresholdStats(markerThreshold / 100),
+    }));
     const currentX = 24 + (1 - metrics.specificity) * 212;
     const currentY = 236 - metrics.sensitivity * 212;
+    const linePoints = path.map((point) => {
+        const pointOnSvg = svgPoint(point);
+        return `${pointOnSvg.x},${pointOnSvg.y}`;
+    });
+    const areaPoints = ["24,236", ...linePoints, "236,236"].join(" ");
+    const comparisonCards = [
+        {
+            label: "Perfect",
+            auc: "1,00",
+            points: [
+                { x: 0, y: 0 },
+                { x: 0, y: 1 },
+                { x: 1, y: 1 },
+            ],
+            note: "alle positieven staan hoger dan alle negatieven",
+        },
+        {
+            label: "Toeval",
+            auc: "0,50",
+            points: [
+                { x: 0, y: 0 },
+                { x: 1, y: 1 },
+            ],
+            note: "de diagonale lijn: rangorde is coin-flip niveau",
+        },
+        {
+            label: "Demo",
+            auc: formatDecimal(auc),
+            points: path,
+            note: "realistische curve met enkele verwisselde paren",
+        },
+    ];
 
     return (
         <Shell
             title="AUC en drempelwaarde playground"
-            subtitle="Verplaats de drempel en zie hoe sensitiviteit, specificiteit en foutclassificaties veranderen. De AUC blijft dezelfde rangordemaat, maar de klinische gevolgen hangen af van de gekozen drempel."
+            subtitle="Verplaats de drempel, bekijk de ROC-curve en test het kernidee van AUC: hoe vaak krijgt een patient met de uitkomst een hogere score dan een patient zonder de uitkomst?"
         >
-            <div className="grid gap-6 lg:grid-cols-[1fr_1.1fr]">
+            <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
                 <div>
-                    <label className="text-sm font-bold text-slate-800" htmlFor="auc-threshold">
-                        Beslisdrempel: {threshold}%
-                    </label>
-                    <input
-                        id="auc-threshold"
-                        type="range"
-                        min="5"
-                        max="95"
-                        value={threshold}
-                        onChange={(event) => setThreshold(Number(event.target.value))}
-                        className="mt-3 w-full accent-brand-secondary"
-                    />
+                    <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                        <label className="text-sm font-bold text-slate-800" htmlFor="auc-threshold">
+                            Beslisdrempel: {threshold}%
+                        </label>
+                        <input
+                            id="auc-threshold"
+                            type="range"
+                            min="5"
+                            max="95"
+                            value={threshold}
+                            onChange={(event) => setThreshold(Number(event.target.value))}
+                            className="mt-3 w-full accent-brand-secondary"
+                        />
+                        <div className="mt-5 rounded-2xl border border-white bg-white p-4">
+                            <div className="mb-3 flex items-center justify-between text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
+                                <span>Modelscore</span>
+                                <span>hoog risico</span>
+                            </div>
+                            <div className="relative h-28 rounded-2xl bg-gradient-to-r from-cyan-50 via-white to-rose-50">
+                                <div className="absolute left-4 right-4 top-1/2 h-px bg-slate-300" />
+                                <div
+                                    className="absolute bottom-3 top-3 w-0.5 rounded-full bg-brand-primary shadow-[0_0_0_4px_rgba(0,126,167,0.12)]"
+                                    style={{ left: `${threshold}%` }}
+                                />
+                                {AUC_POINTS.map((point, index) => (
+                                    <div
+                                        key={`${point.score}-${index}`}
+                                        className={
+                                            "absolute flex h-7 w-7 -translate-x-1/2 items-center justify-center rounded-full border-2 border-white text-[11px] font-black shadow-sm " +
+                                            (point.outcome === 1 ? "top-5 bg-brand-secondary text-white" : "bottom-5 bg-slate-300 text-slate-700")
+                                        }
+                                        style={{ left: `${point.score * 100}%` }}
+                                        title={`Score ${Math.round(point.score * 100)}%, ${point.outcome === 1 ? "uitkomst aanwezig" : "geen uitkomst"}`}
+                                    >
+                                        {point.outcome === 1 ? "+" : "-"}
+                                    </div>
+                                ))}
+                            </div>
+                            <p className="mt-3 text-xs leading-5 text-slate-500">
+                                Links van de drempel wordt negatief geclassificeerd; rechts positief. Verlaag je de drempel, dan vang je meer positieven en krijg je meestal ook meer fout-positieven.
+                            </p>
+                        </div>
+                    </div>
+
                     <div className="mt-5 grid grid-cols-2 gap-3">
                         <MetricCard label="TP" value={`${metrics.tp}`} hint="terecht positief" />
                         <MetricCard label="FP" value={`${metrics.fp}`} hint="fout positief" />
@@ -154,11 +262,17 @@ export function AucPlayground() {
                 </div>
 
                 <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
-                    <div className="mb-2 flex items-center gap-2 text-sm font-bold text-slate-800">
-                        <LineChart size={18} />
-                        ROC-ruimte
+                    <div className="mb-2 flex flex-wrap items-center justify-between gap-3">
+                        <div className="flex items-center gap-2 text-sm font-bold text-slate-800">
+                            <LineChart size={18} />
+                            ROC-ruimte
+                        </div>
+                        <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-brand-primary shadow-sm">
+                            AUC {formatDecimal(auc)}
+                        </span>
                     </div>
                     <svg viewBox="0 0 260 260" className="h-72 w-full">
+                        <polygon points={areaPoints} fill="#007EA7" opacity="0.12" />
                         <line x1="24" y1="236" x2="236" y2="24" stroke="#cbd5e1" strokeDasharray="5 5" />
                         <polyline
                             fill="none"
@@ -166,14 +280,97 @@ export function AucPlayground() {
                             strokeWidth="4"
                             strokeLinecap="round"
                             strokeLinejoin="round"
-                            points={path.map((point) => `${24 + point.x * 212},${236 - point.y * 212}`).join(" ")}
+                            points={linePoints.join(" ")}
                         />
+                        {thresholdMarkers.map((marker) => {
+                            const markerX = 24 + marker.stats.fpr * 212;
+                            const markerY = 236 - marker.stats.sensitivity * 212;
+                            return (
+                                <g key={marker.label}>
+                                    <circle cx={markerX} cy={markerY} r="5" fill="#ffffff" stroke="#003459" strokeWidth="2" />
+                                    <text x={markerX + 7} y={markerY - 7} className="fill-slate-700 text-[11px] font-bold">
+                                        {marker.label}
+                                    </text>
+                                </g>
+                            );
+                        })}
                         <circle cx={currentX} cy={currentY} r="7" fill="#0f766e" stroke="white" strokeWidth="3" />
                         <line x1="24" y1="236" x2="236" y2="236" stroke="#475569" />
                         <line x1="24" y1="236" x2="24" y2="24" stroke="#475569" />
                         <text x="105" y="254" className="fill-slate-500 text-[10px]">1 - specificiteit</text>
                         <text x="3" y="135" transform="rotate(-90 8 135)" className="fill-slate-500 text-[10px]">sensitiviteit</text>
                     </svg>
+                    <div className="grid gap-2 text-xs leading-5 text-slate-600 sm:grid-cols-3">
+                        <div><strong>A:</strong> strengere drempel, minder fout-positieven.</div>
+                        <div><strong>B:</strong> balanspunt in deze fictieve dataset.</div>
+                        <div><strong>C:</strong> lagere drempel, meer sensitiviteit.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="mt-6 grid gap-4 lg:grid-cols-3">
+                {comparisonCards.map((card) => (
+                    <div key={card.label} className="rounded-3xl border border-slate-200 bg-white p-4">
+                        <div className="mb-2 flex items-center justify-between">
+                            <h4 className="text-sm font-bold text-brand-dark">{card.label}</h4>
+                            <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-600">AUC {card.auc}</span>
+                        </div>
+                        <svg viewBox="0 0 100 72" className="h-24 w-full rounded-2xl bg-slate-50">
+                            <line x1="12" y1="60" x2="88" y2="12" stroke="#cbd5e1" strokeDasharray="4 4" />
+                            <polyline
+                                fill="none"
+                                stroke={card.label === "Toeval" ? "#94a3b8" : "#007EA7"}
+                                strokeWidth="4"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                points={card.points.map((point) => `${12 + point.x * 76},${60 - point.y * 48}`).join(" ")}
+                            />
+                            <line x1="12" y1="60" x2="88" y2="60" stroke="#64748b" />
+                            <line x1="12" y1="60" x2="12" y2="12" stroke="#64748b" />
+                        </svg>
+                        <p className="mt-2 text-xs leading-5 text-slate-500">{card.note}</p>
+                    </div>
+                ))}
+            </div>
+
+            <div className="mt-6 grid gap-4 lg:grid-cols-[1fr_1.1fr]">
+                <div className="rounded-3xl border border-slate-200 bg-gradient-to-br from-brand-primary/5 via-white to-brand-accent/5 p-5">
+                    <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">AUC als rangschikkingskans</p>
+                    <p className="mt-2 text-3xl font-black text-brand-dark">{formatDecimal((correctPairs + tiedPairs * 0.5) / pairs.length)}</p>
+                    <p className="mt-2 text-sm leading-6 text-slate-600">
+                        In {correctPairs} van {pairs.length} positieve-negatieve paren staat de patient met de uitkomst hoger. Ties tellen half mee.
+                    </p>
+                </div>
+                <div className="rounded-3xl border border-slate-200 bg-white p-5">
+                    <div className="flex items-start justify-between gap-4">
+                        <div>
+                            <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Paarvergelijking</p>
+                            <p className="mt-2 text-sm leading-6 text-slate-600">Klik door paren en zie of de positieve casus hoger scoort dan de negatieve casus.</p>
+                        </div>
+                        <button
+                            type="button"
+                            onClick={() => setPairIndex((value) => value + 1)}
+                            className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-primary text-white shadow-sm transition-transform hover:scale-105"
+                            aria-label="Toon volgend paar"
+                        >
+                            <RotateCcw size={17} />
+                        </button>
+                    </div>
+                    <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                        <div className="rounded-2xl border border-emerald-100 bg-emerald-50 p-4">
+                            <p className="text-xs font-bold uppercase tracking-[0.14em] text-emerald-700">uitkomst aanwezig</p>
+                            <p className="mt-2 text-3xl font-black tabular-nums text-emerald-900">{Math.round(pair.positive.score * 100)}%</p>
+                        </div>
+                        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                            <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">geen uitkomst</p>
+                            <p className="mt-2 text-3xl font-black tabular-nums text-slate-800">{Math.round(pair.negative.score * 100)}%</p>
+                        </div>
+                    </div>
+                    <div className={"mt-4 rounded-2xl p-4 text-sm font-semibold " + (pair.correct ? "bg-emerald-50 text-emerald-900" : "bg-amber-50 text-amber-900")}>
+                        {pair.correct
+                            ? "Goed gerangschikt: dit paar draagt positief bij aan de AUC."
+                            : "Verwisseld paar: de negatieve casus scoort hoger, waardoor de AUC daalt."}
+                    </div>
                 </div>
             </div>
         </Shell>
