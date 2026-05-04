@@ -16,6 +16,8 @@ interface BlogGridProps {
         specialism?: string | null;
         ceStatus?: string | null;
         cost?: string | null;
+        coverImage?: string | null;
+        imageUrl?: string | null;
     }>;
 }
 
@@ -116,6 +118,8 @@ export default function BlogGrid({ blogs }: BlogGridProps) {
                             specialism={blog.specialism}
                             ceStatus={blog.ceStatus}
                             cost={blog.cost}
+                            coverImage={blog.coverImage}
+                            imageUrl={blog.imageUrl}
                         />
                     </motion.div>
                 ))}

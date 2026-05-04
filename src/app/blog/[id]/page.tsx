@@ -2,6 +2,7 @@ import { getBlogPost } from "@/app/actions";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, BriefcaseBusiness, Calendar, ExternalLink, Stethoscope, User, Users } from "lucide-react";
 import TrustBadge from "@/components/TrustBadge";
@@ -9,8 +10,10 @@ import BlogSidebar from "@/components/BlogSidebar";
 import EvidenceBox from "@/components/EvidenceBox";
 import CopyButton from "@/components/CopyButton";
 import ArticleEngagement from "@/components/ArticleEngagement";
+import InteractiveSlot from "@/components/interactives/InteractiveSlot";
 import { resolveSiteUrl } from "@/lib/env";
 import { getCurrentUser } from "@/lib/user-auth";
+import { isStaticArticleId } from "@/lib/static-articles";
 
 export const dynamic = "force-dynamic";
 
@@ -18,6 +21,31 @@ function doiHref(doi?: string | null) {
     if (!doi) return null;
     if (doi.startsWith("http://") || doi.startsWith("https://")) return doi;
     return `https://doi.org/${doi.replace(/^doi:/i, "").trim()}`;
+}
+
+function MarkdownWithInteractives({ content }: { content: string }) {
+    const parts = content.split(/<interactive\s+name="([^"]+)"\s*><\/interactive>/g);
+
+    return (
+        <>
+            {parts.map((part, index) => {
+                if (index % 2 === 1) {
+                    return <InteractiveSlot key={`interactive-${part}-${index}`} name={part} />;
+                }
+
+                if (!part.trim()) return null;
+                return (
+                    <ReactMarkdown
+                        key={`markdown-${index}`}
+                        rehypePlugins={[rehypeRaw]}
+                        urlTransform={(value) => value}
+                    >
+                        {part}
+                    </ReactMarkdown>
+                );
+            })}
+        </>
+    );
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ id: string }> }) {
@@ -32,6 +60,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
     const likedByCurrentUser = currentUser ? blog.likes.some((like) => like.userId === currentUser.id) : false;
     const canonicalUrl = `${resolveSiteUrl()}/blog/${blog.id}`;
     const originalPublicationUrl = doiHref(blog.doi);
+    const heroImage = blog.coverImage || blog.imageUrl;
+    const supportsEngagement = !isStaticArticleId(blog.id);
     const trustBadges = [
         blog.specialism ? <TrustBadge key="specialism" type="specialism" label="Specialisme" value={blog.specialism} href={`/topics/${blog.specialism}`} /> : null,
         blog.ceStatus ? <TrustBadge key="ce" type="status" label="CE-status" value={blog.ceStatus} /> : null,
@@ -90,6 +120,22 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
 
             {/* Main Content Layout */}
             <div className="container mx-auto px-4 max-w-6xl py-12">
+                {heroImage && (
+                    <figure className="mb-10 overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-xl shadow-slate-900/5">
+                        <Image
+                            src={heroImage}
+                            alt=""
+                            width={1200}
+                            height={675}
+                            unoptimized
+                            className="h-72 w-full object-cover md:h-96"
+                        />
+                        <figcaption className="border-t border-slate-100 bg-slate-50 px-5 py-3 text-xs font-medium text-slate-500">
+                            Voorbeeldvisual bij dit educatieve artikel. Interactieve figuren staan in de tekst.
+                        </figcaption>
+                    </figure>
+                )}
+
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
                     {/* Content Column */}
                     {/* Content Column */}
@@ -143,17 +189,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                         )}
 
                         <div className="typography-theme max-w-none">
-                            <ReactMarkdown
-                                rehypePlugins={[rehypeRaw]}
-                                urlTransform={(value) => value} // Allow data: URIs
-                                components={{
-                                    // Custom component mapping for EvidenceBox if we used a custom syntax, 
-                                    // but for now we assume standard markdown or HTML injection.
-                                    // We can also inject EvidenceBox manually in the content string if needed.
-                                }}
-                            >
-                                {blog.content}
-                            </ReactMarkdown>
+                            <MarkdownWithInteractives content={blog.content} />
                         </div>
 
                         {/* Mobile-only Quick Facts & Details */}
@@ -200,13 +236,22 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                             </div>
                         </div>
 
-                        <ArticleEngagement
-                            blogPostId={blog.id}
-                            currentUser={currentUser}
-                            likedByCurrentUser={likedByCurrentUser}
-                            likeCount={blog.likes.length}
-                            comments={blog.comments}
-                        />
+                        {supportsEngagement ? (
+                            <ArticleEngagement
+                                blogPostId={blog.id}
+                                currentUser={currentUser}
+                                likedByCurrentUser={likedByCurrentUser}
+                                likeCount={blog.likes.length}
+                                comments={blog.comments}
+                            />
+                        ) : (
+                            <section className="mt-12 rounded-2xl border border-slate-200 bg-slate-50 p-6">
+                                <h2 className="text-xl font-bold text-brand-dark">Reviewversie</h2>
+                                <p className="mt-2 text-sm leading-6 text-slate-600">
+                                    Dit artikel komt uit de statische educatieve reeks. Likes en reacties worden aangezet zodra het artikel als databasepublicatie is overgenomen.
+                                </p>
+                            </section>
+                        )}
 
                         <section className="mt-12 rounded-2xl border border-slate-200 bg-slate-50 p-6">
                             <div className="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-slate-800">

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 
 interface BlogCardProps {
@@ -12,9 +13,13 @@ interface BlogCardProps {
     specialism?: string | null;
     ceStatus?: string | null;
     cost?: string | null;
+    coverImage?: string | null;
+    imageUrl?: string | null;
 }
 
-export default function BlogCard({ id, title, summary, category, date, specialism, ceStatus, cost }: BlogCardProps) {
+export default function BlogCard({ id, title, summary, category, date, specialism, ceStatus, cost, coverImage, imageUrl }: BlogCardProps) {
+    const visual = coverImage || imageUrl;
+
     return (
         <Link href={`/blog/${id}`} className="block h-full">
             <motion.div
@@ -43,6 +48,19 @@ export default function BlogCard({ id, title, summary, category, date, specialis
 
                 {/* Content Container - Relative z-10 to sit above glass */}
                 <div className="relative z-10 flex flex-col h-full">
+                    {visual && (
+                        <div className="-mx-7 -mt-7 mb-5 h-40 overflow-hidden border-b border-white/60 bg-white/40">
+                            <Image
+                                src={visual}
+                                alt=""
+                                width={800}
+                                height={450}
+                                unoptimized
+                                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                            />
+                        </div>
+                    )}
+
                     <div className="mb-[18px]">
                         <span
                             className="inline-block py-[5px] px-3 rounded-full text-[11px] font-bold tracking-[0.08em] uppercase"

@@ -22,7 +22,7 @@ export default function Navbar() {
 
     return (
         <header className="fixed top-0 inset-x-0 z-50 glass-panel-strong border-b border-white/40 ambient-shadow">
-            <div className="flex justify-between items-center px-8 h-16 w-full max-w-[1280px] mx-auto">
+            <div className="flex justify-between items-center px-4 sm:px-6 lg:px-10 h-16 w-full max-w-[1480px] mx-auto">
                 <Link href="/" aria-label="Medical AI home" className="flex items-center gap-2.5">
                     <Image
                         src="/images/logo-medical-ai.png"

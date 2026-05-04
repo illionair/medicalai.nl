@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { generateBlogPost, generateBlogPostFromPrompt } from "@/lib/ai";
 import { requireAdmin } from "@/lib/user-auth";
+import { getStaticArticleById } from "@/lib/static-articles";
 
 export async function generateBlogs(articleIds: string[], instructions: string = "") {
     if (!(await requireAdmin())) redirect("/login?next=/admin");
@@ -83,19 +84,27 @@ export async function getPublishedBlogsAdmin() {
 }
 
 export async function getBlogPost(id: string) {
-    return await prisma.blogPost.findUnique({
-        where: { id },
-        include: {
-            tags: true,
-            article: true,
-            likes: true,
-            comments: {
-                where: { status: "APPROVED" },
-                orderBy: { createdAt: "desc" },
-                include: { user: true },
+    try {
+        const blog = await prisma.blogPost.findUnique({
+            where: { id },
+            include: {
+                tags: true,
+                article: true,
+                likes: true,
+                comments: {
+                    where: { status: "APPROVED" },
+                    orderBy: { createdAt: "desc" },
+                    include: { user: true },
+                },
             },
-        },
-    });
+        });
+
+        return blog ?? getStaticArticleById(id);
+    } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        console.warn(`[blog] Failed to load blog post ${id}: ${message}`);
+        return getStaticArticleById(id);
+    }
 }
 
 export interface UpdateBlogPostInput {

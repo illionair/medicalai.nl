@@ -3,6 +3,12 @@
 import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { specialisms } from "@/lib/constants";
+import {
+    getStaticArticles,
+    getStaticArticleById,
+    mergeWithStaticArticles,
+    staticArticleMatchesTopic,
+} from "@/lib/static-articles";
 
 const HUB_CATEGORIES = ["Predictie", "Diagnostiek", "Methodisch", "Ethiek"] as const;
 
@@ -13,7 +19,7 @@ function logBlogLoadFailure(scope: string, error: unknown) {
 
 export async function getPublishedBlogs() {
     try {
-        return await prisma.blogPost.findMany({
+        const databaseBlogs = await prisma.blogPost.findMany({
             where: {
                 published: true,
                 OR: [
@@ -23,15 +29,16 @@ export async function getPublishedBlogs() {
             },
             orderBy: { createdAt: "desc" },
         });
+        return mergeWithStaticArticles(databaseBlogs);
     } catch (error) {
         logBlogLoadFailure("Failed to load published blogs", error);
-        return [];
+        return getStaticArticles();
     }
 }
 
 export async function getPublishedBlogsByCategory(category: string) {
     try {
-        return await prisma.blogPost.findMany({
+        const databaseBlogs = await prisma.blogPost.findMany({
             where: {
                 published: true,
                 category: category,
@@ -42,9 +49,11 @@ export async function getPublishedBlogsByCategory(category: string) {
             },
             orderBy: { createdAt: "desc" },
         });
+        const staticBlogs = getStaticArticles().filter((blog) => blog.category === category);
+        return mergeWithStaticArticles([...staticBlogs, ...databaseBlogs]);
     } catch (error) {
         logBlogLoadFailure("Failed to load blogs by category", error);
-        return [];
+        return getStaticArticles().filter((blog) => blog.category === category);
     }
 }
 
@@ -52,30 +61,10 @@ export async function getCategoryCounts() {
     const zeroCounts = HUB_CATEGORIES.map((category) => ({ category, count: 0 }));
 
     try {
-        const now = new Date();
-        const groupedCounts = await prisma.blogPost.groupBy({
-            by: ["category"],
-            where: {
-                published: true,
-                isGuideline: false,
-                category: { in: [...HUB_CATEGORIES] },
-                OR: [
-                    { scheduledFor: null },
-                    { scheduledFor: { lte: now } }
-                ]
-            },
-            _count: {
-                category: true
-            }
-        });
-
-        const countByCategory = new Map(
-            groupedCounts.map((item) => [item.category, item._count.category])
-        );
-
+        const blogs = await getPublishedBlogs();
         return HUB_CATEGORIES.map((category) => ({
             category,
-            count: countByCategory.get(category) ?? 0
+            count: blogs.filter((blog) => !blog.isGuideline && blog.category === category).length
         }));
     } catch (error) {
         logBlogLoadFailure("Failed to load category counts", error);
@@ -108,32 +97,35 @@ export async function getBlogsForTopic(topic: string) {
     }
 
     try {
-        return await prisma.blogPost.findMany({
+        const databaseBlogs = await prisma.blogPost.findMany({
             where: whereClause,
             orderBy: { createdAt: "desc" },
             include: { tags: true }
         });
+        const staticBlogs = getStaticArticles().filter((blog) => staticArticleMatchesTopic(blog, topic));
+        return mergeWithStaticArticles([...staticBlogs, ...databaseBlogs]);
     } catch (error) {
         logBlogLoadFailure("Failed to load blogs for topic", error);
-        return [];
+        return getStaticArticles().filter((blog) => staticArticleMatchesTopic(blog, topic));
     }
 }
 
 export async function getBlogById(id: string) {
     try {
-        return await prisma.blogPost.findUnique({
+        const databaseBlog = await prisma.blogPost.findUnique({
             where: { id },
             include: { tags: true }
         });
+        return databaseBlog ?? getStaticArticleById(id);
     } catch (error) {
         logBlogLoadFailure("Failed to load blog by id", error);
-        return null;
+        return getStaticArticleById(id);
     }
 }
 
 export async function getPublishedBlogsByTag(tagName: string) {
     try {
-        return await prisma.blogPost.findMany({
+        const databaseBlogs = await prisma.blogPost.findMany({
             where: {
                 published: true,
                 tags: {
@@ -149,8 +141,10 @@ export async function getPublishedBlogsByTag(tagName: string) {
             orderBy: { createdAt: "desc" },
             include: { tags: true }
         });
+        const staticBlogs = getStaticArticles().filter((blog) => staticArticleMatchesTopic(blog, tagName));
+        return mergeWithStaticArticles([...staticBlogs, ...databaseBlogs]);
     } catch (error) {
         logBlogLoadFailure("Failed to load blogs by tag", error);
-        return [];
+        return getStaticArticles().filter((blog) => staticArticleMatchesTopic(blog, tagName));
     }
 }
