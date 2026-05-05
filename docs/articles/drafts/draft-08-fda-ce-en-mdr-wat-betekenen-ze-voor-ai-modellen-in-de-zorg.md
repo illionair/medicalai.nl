@@ -41,7 +41,7 @@ Een nuttig voordeel in de VS is de publieke FDA-database. Voor veel AI-enabled d
 
 Kort gezegd: de FDA is een centrale toezichthouder die marketing authorization verleent voor de Amerikaanse markt. De EU werkt via CE-markering, fabrikantverantwoordelijkheid en notified bodies binnen MDR/IVDR.
 
-Bij de FDA vraagt u: welke submission, welke pathway, welke cleared/authorized/approved indication, en welke modelversie? Bij CE/MDR vraagt u: welke risicoklasse, welke notified body, welk certificaat, welke intended purpose, en vallen alle modules onder de CE-scope?
+Bij de FDA vraag je: welke submission, welke pathway, welke cleared/authorized/approved indication, en welke modelversie? Bij CE/MDR vraag je: welke risicoklasse, welke notified body, welk certificaat, welke intended purpose, en vallen alle modules onder de CE-scope?
 
 Ook taal doet ertoe. Een leverancier kan zeggen dat “het platform CE heeft”, terwijl de voorspellende AI-module nog niet als medisch hulpmiddel is beoordeeld. Of een Amerikaans product kan “FDA-cleared” zijn voor triage van radiologische beelden, maar niet voor autonome diagnose of gebruik bij kinderen.
 
@@ -51,7 +51,7 @@ AI is geen statisch implantaat. Data, populaties, scanners, labmethoden, EPD-vel
 
 Daarom vragen moderne kaders om lifecycle management. In de EU horen post-market surveillance, vigilance, klinische follow-up en periodieke veiligheidsrapportage bij de MDR/IVDR-systematiek. In de VS verwacht de FDA eveneens kwaliteitsmanagement, correctieve acties, incidentrapportage en monitoring passend bij het risico. De IMDRF Good Machine Learning Practice-principes benadrukken dat AI/ML-hulpmiddelen over de totale levenscyclus beheerst moeten worden.
 
-Voor klinische gebruikers is dit cruciaal: een mooie AUC in een retrospectieve publicatie is niet genoeg. U wilt weten hoe het model lokaal blijft presteren, wie afwijkingen detecteert, wanneer alarmdrempels worden aangepast en hoe gebruikers worden geïnformeerd.
+Voor klinische gebruikers is dit cruciaal: een mooie AUC in een retrospectieve publicatie is niet genoeg. Je wilt weten hoe het model lokaal blijft presteren, wie afwijkingen detecteert, wanneer alarmdrempels worden aangepast en hoe gebruikers worden geïnformeerd.
 
 ## Modelwijzigingen: locked, adaptive en vooraf geplande updates
 
@@ -63,15 +63,15 @@ De FDA heeft hiervoor een belangrijk instrument: de Predetermined Change Control
 
 In Europa bestaat ook change control, maar de route loopt via MDR/IVDR, notified body, technische documentatie en beoordeling van significante wijzigingen. Met de EU AI Act komt daar voor bepaalde medische AI extra aandacht bij voor data governance, transparantie, menselijk toezicht, post-market monitoring en substantiële wijzigingen.
 
-## Vragen die u aan leveranciers moet stellen
+## Vragen die je aan leveranciers moet stellen
 
 1. Wat is de exacte intended purpose en voor welke patiëntgroep, setting en workflow geldt die?
 2. Is het product SaMD, onderdeel van een medisch hulpmiddel, of alleen research/decision support zonder medische claim?
-3. Welke FDA-route of welke MDR/IVDR-klasse geldt, en kunt u het certificaat of FDA-besluitnummer tonen?
+3. Welke FDA-route of welke MDR/IVDR-klasse geldt, en kun je het certificaat of FDA-besluitnummer tonen?
 4. Welke modelversie is beoordeeld, en hoe worden updates, retraining en release notes beheerd?
 5. Welke externe validatie is gedaan op relevante populaties, apparatuur, talen, etniciteit, leeftijdsgroepen en comorbiditeit?
-6. Hoe monitort u post-market performance, drift, incidenten, bias en fout-negatieven/fout-positieven?
-7. Heeft u een FDA PCCP of EU change-controlbeleid voor modelwijzigingen?
+6. Hoe monitort de leverancier post-market performance, drift, incidenten, bias en fout-negatieven/fout-positieven?
+7. Is er een FDA PCCP of EU change-controlbeleid voor modelwijzigingen?
 8. Wat moet de zorgprofessional met de output doen: informeren, bevestigen, triëren, diagnosticeren of behandelen?
 
 ## Conclusie

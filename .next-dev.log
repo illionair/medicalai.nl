@@ -18,3 +18,22 @@ Creating turbopack project {
  GET /access 200 in 39ms (compile: 4ms, proxy.ts: 5ms, render: 30ms)
  GET /access 200 in 53ms (compile: 10ms, proxy.ts: 7ms, render: 36ms)
  GET /access 200 in 44ms (compile: 5ms, proxy.ts: 6ms, render: 34ms)
+ GET /blog 200 in 1347ms (compile: 1015ms, proxy.ts: 6ms, render: 326ms)
+ GET /topics/Methodisch 200 in 1899ms (compile: 1770ms, proxy.ts: 9ms, render: 120ms)
+ ✓ Compiled in 195ms
+ ✓ Compiled in 7ms
+ GET /topics 200 in 904ms (compile: 727ms, proxy.ts: 6ms, render: 172ms)
+ GET /blog 200 in 935ms (compile: 172ms, proxy.ts: 5ms, render: 759ms)
+ GET /topics/Methodisch 200 in 627ms (compile: 182ms, proxy.ts: 72ms, render: 373ms)
+ ✓ Compiled in 95ms
+ ✓ Compiled in 124ms
+ ✓ Compiled in 132ms
+ ✓ Compiled in 75ms
+ ✓ Compiled in 80ms
+ ✓ Compiled in 11ms
+ ✓ Compiled in 52ms
+ ✓ Compiled in 5ms
+ ✓ Compiled in 6ms
+ ✓ Compiled in 9ms
+ ✓ Compiled in 42ms
+[?25h

@@ -1,15 +1,22 @@
 ---
 status: draft
-source: codex-recovered-articles.md
-recovered: 2026-05-04
-needs_review: true
+title: "AUC 0,89 — en toch onveilig?"
+seoTitle: "AUC uitgelegd voor zorgprofessionals: wat zegt het wel en niet?"
+subtitle: "Wat AUC wel en niet vertelt over je model"
+difficulty: middel
+readingMinutes: 8
+coverConcept: roc-curve
 ---
 
-<!-- bron: rollout-2026-05-04T00-35-33-019deffb-8a64-7d40-8bdd-45e9c2441702.jsonl  ts: 2026-05-03T22:36:40.635Z -->
+# AUC 0,89 — en toch onveilig?
 
-# AUC uitgelegd voor zorgprofessionals: wat zegt het wel en niet?
+"Het model behaalde een AUC van 0,89." Klinkt afgerond. Toch zegt zo'n cijfer maar één ding: hoe goed het model patiënten op risico kan rángschikken. Of de drempel klopt, of de getoonde kansen betrouwbaar zijn, of het in jouw ziekenhuis betere zorg oplevert — dat zit níet in die <term def="Area Under the ROC Curve — drempelvrije rangordemaat: kans dat een willekeurige patiënt mét uitkomst hoger scoort dan een willekeurige zonder.">AUC</term>.
 
-"Het model behaalde een AUC van 0,89." Klinkt alsof er weinig meer aan toe te voegen valt. In de praktijk vertelt zo'n cijfer een smal verhaal: het zegt iets over hoe goed het model patiënten op risico kan rangschikken. Of de gekozen drempel klopt, of de getoonde kansen betrouwbaar zijn, of het in jouw ziekenhuis betere zorg oplevert — daar gaat AUC niet over.
+<tldr>
+<li>AUC meet rangschikking, niet kalibratie of klinische winst.</li>
+<li>Sensitiviteit, specificiteit, PPV en NPV horen altijd bij een gekozen drempel — niet bij het model als geheel.</li>
+<li>Externe validatie, calibratie en decision curve analysis zijn nodig vóór je AUC vertaalt naar veilige zorg.</li>
+</tldr>
 
 Hieronder bouwen we het in vier stappen op, in dezelfde volgorde als de Google ROC-uitleg: eerst scores, dan drempels, dan de ROC-curve, dan AUC zelf. De data is fictief, de redenering niet.
 
@@ -23,19 +30,23 @@ Daar begint AUC. De vraag is simpel: krijgen patiënten mét de uitkomst gemidde
 
 Vallen de plusjes vooral rechts? Goed teken — er zit signaal in de scores. Liggen ze willekeurig door elkaar? Dan valt er weinig te halen, hoe je de drempel ook legt.
 
+<keytakeaway>Score is een rangorde, geen diagnose. Wat je ermee doet, hangt af van waar je de drempel legt.</keytakeaway>
+
 ## 2. Een drempel maakt van scores beslissingen
 
 In de kliniek moet je iets dóen. Vanaf welke score alarmeer je het sepsisteam? Vanaf welke score markeer je een CT als urgent?
 
-Lage drempel: je noemt veel patiënten positief. Je mist minder echte gevallen (sensitiviteit omhoog), maar je krijgt ook meer vals alarm. Hoge drempel: omgekeerd. Daarom horen sensitiviteit, specificiteit, PPV en NPV altíjd bij een gekozen drempel — niet bij het model in zijn geheel.
+Lage drempel: je noemt veel patiënten positief. Je mist minder echte gevallen (sensitiviteit omhoog), maar je krijgt ook meer vals alarm. Hoge drempel: omgekeerd. Daarom horen sensitiviteit, specificiteit, <term def="Positive Predictive Value — kans dat een patiënt met positief modelresultaat ook echt de uitkomst heeft. Hangt sterk af van prevalentie.">PPV</term> en <term def="Negative Predictive Value — kans dat een patiënt met negatief modelresultaat ook echt geen uitkomst heeft.">NPV</term> altíjd bij een gekozen drempel — niet bij het model in zijn geheel.
 
-<interactive name="auc-threshold"></interactive>
+<interactive name="auc-threshold" data-props='{"initialThreshold":0.45}'></interactive>
 
 Schuif zelf en zie welke patiënten van vakje wisselen, en wat dat doet met fout-positieven en gemiste gevallen.
 
+<keytakeaway>Drempelkeuze is geen statistiek-puzzel. Het is afwegen wat een fout-positief versus een fout-negatief in jouw setting kost.</keytakeaway>
+
 ## 3. ROC: alle drempels tegelijk
 
-ROC staat voor *receiver operating characteristic*. Op de y-as: sensitiviteit. Op de x-as: 1 − specificiteit, ofwel het aandeel gezonden dat ten onrechte een alarm krijgt. Elk punt op de curve is één drempel.
+<term def="Receiver Operating Characteristic — curve die voor elke drempel sensitiviteit (y) tegen 1−specificiteit (x) uitzet.">ROC</term> staat voor *receiver operating characteristic*. Op de y-as: sensitiviteit. Op de x-as: 1 − specificiteit, ofwel het aandeel gezonden dat ten onrechte een alarm krijgt. Elk punt op de curve is één drempel.
 
 Een sterk model duikt naar linksboven: veel echte gevallen vangen, weinig vals alarm. De diagonaal is gokken. Onder de diagonaal? Dan rangschikt het model averechts en levert labels omdraaien een beter model op.
 
@@ -59,17 +70,17 @@ Let op: AUC verandert niet als je alle scores herschaalt. Verschuif de schaal, b
 
 ## Waarom AUC alléén tekortschiet
 
-**Het zegt niets over calibratie.** Een model kan keurig rangschikken en toch consequent te hoog of te laag inschatten. Honderd patiënten met "20% risico" en in werkelijkheid vijftig events? Klinisch onveilig, ook bij AUC 0,90.
-
-**Het zegt niets over prevalentie.** PPV en NPV verschuiven flink tussen IC, SEH, polikliniek en screening. Hetzelfde model met dezelfde sensitiviteit produceert op een laag-prevalente afdeling vooral vals alarm. Gevolg: alarmmoeheid en onnodige diagnostiek.
-
-**Het zegt niets over de workflow.** AUC 0,92 is waardeloos als de output te laat komt, niemand verantwoordelijk is, of het model precies de patiënten markeert waar de arts toch al actie zou ondernemen.
+<callout type="warning" title="Drie dingen die AUC niét vertelt">
+<p><strong>Geen <term def="Mate waarin voorspelde kansen overeenkomen met werkelijke uitkomsten — bv. krijgen patiënten met 20% voorspeld risico ook echt 20% events?">calibratie</term>.</strong> Een model kan keurig rangschikken en toch consequent te hoog of te laag inschatten. Honderd patiënten met "20% risico" en in werkelijkheid vijftig events? Klinisch onveilig, ook bij AUC 0,90.</p>
+<p><strong>Geen prevalentie.</strong> PPV en NPV verschuiven flink tussen IC, SEH, polikliniek en screening. Hetzelfde model met dezelfde sensitiviteit produceert op een laag-prevalente afdeling vooral vals alarm — alarmmoeheid en onnodige diagnostiek.</p>
+<p><strong>Geen workflow.</strong> AUC 0,92 is waardeloos als de output te laat komt, niemand verantwoordelijk is, of het model precies de patiënten markeert waar de arts toch al actie zou ondernemen.</p>
+</callout>
 
 ## Drempels kiezen met klinische kosten in gedachten
 
 Drempelkeuze is geen statistiek-puzzel. Bij triage van iets levensbedreigends weegt een gemiste casus zwaarder dan een extra beoordeling. Bij selectie voor een belastende biopsie ligt dat andersom.
 
-Decision curve analysis maakt dat expliciet: welke drempels leveren netto winst op, vergeleken met simpele strategieën als "behandel iedereen" of "behandel niemand"? Zo zie je of het model in het klinisch relevante drempelgebied meer goed dan kwaad doet.
+<term def="Decision Curve Analysis — methode die voor elke drempel netto klinische winst toont, vergeleken met 'behandel iedereen' en 'behandel niemand'.">Decision curve analysis</term> maakt dat expliciet: welke drempels leveren netto winst op, vergeleken met simpele strategieën als "behandel iedereen" of "behandel niemand"? Zo zie je of het model in het klinisch relevante drempelgebied meer goed dan kwaad doet.
 
 ## Snelle check bij elke AUC die je tegenkomt
 
@@ -87,11 +98,11 @@ AUC vertelt hoe goed een model rangschikt. Dat is nuttig — maar het is een beg
 
 ## Bronnen
 
-- Google Machine Learning Crash Course, "Classification: ROC and AUC": https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc  
-- Fawcett T. An introduction to ROC analysis. *Pattern Recognition Letters*. 2006. https://doi.org/10.1016/j.patrec.2005.10.010  
-- Hanley JA, McNeil BJ. The meaning and use of the area under a receiver operating characteristic curve. *Radiology*. 1982. https://pubmed.ncbi.nlm.nih.gov/7063747/  
-- TRIPOD Statement, BMJ/BMC Medicine: https://www.bmj.com/content/350/bmj.g7594 en https://bmcmedicine.biomedcentral.com/articles/10.1186/s12916-014-0241-z  
-- ROC/AUC praktische uitleg voor radiologen, *Korean Journal of Radiology*: https://pmc.ncbi.nlm.nih.gov/articles/PMC2698108/  
-- Calibration: the Achilles heel of predictive analytics, *BMC Medicine*: https://bmcmedicine.biomedcentral.com/articles/10.1186/s12916-019-1466-7  
-- Decision Curve Analysis, Vickers & Elkin, *Medical Decision Making*: https://journals.sagepub.com/doi/10.1177/0272989X06295361  
-- Stap-voor-stap uitleg decision curve analysis, *Diagnostic and Prognostic Research*: https://diagnprognres.biomedcentral.com/articles/10.1186/s41512-019-0064-7  
+- Google Machine Learning Crash Course, "Classification: ROC and AUC": https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc
+- Fawcett T. An introduction to ROC analysis. *Pattern Recognition Letters*. 2006. https://doi.org/10.1016/j.patrec.2005.10.010
+- Hanley JA, McNeil BJ. The meaning and use of the area under a receiver operating characteristic curve. *Radiology*. 1982. https://pubmed.ncbi.nlm.nih.gov/7063747/
+- TRIPOD Statement, BMJ/BMC Medicine: https://www.bmj.com/content/350/bmj.g7594 en https://bmcmedicine.biomedcentral.com/articles/10.1186/s12916-014-0241-z
+- ROC/AUC praktische uitleg voor radiologen, *Korean Journal of Radiology*: https://pmc.ncbi.nlm.nih.gov/articles/PMC2698108/
+- Calibration: the Achilles heel of predictive analytics, *BMC Medicine*: https://bmcmedicine.biomedcentral.com/articles/10.1186/s12916-019-1466-7
+- Decision Curve Analysis, Vickers & Elkin, *Medical Decision Making*: https://journals.sagepub.com/doi/10.1177/0272989X06295361
+- Stap-voor-stap uitleg decision curve analysis, *Diagnostic and Prognostic Research*: https://diagnprognres.biomedcentral.com/articles/10.1186/s41512-019-0064-7

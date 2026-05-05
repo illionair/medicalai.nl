@@ -91,3 +91,55 @@ De structuur onder het menu "Onderwerpen" (Topics) moet logisch gescheiden zijn:
 **Implementatie:**
 *   Alle bovenstaande items (Specialismen, Model types, etc.) worden technisch als **Tags** aan een blogpost gekoppeld.
 *   Deze tags zijn aanklikbaar en leiden naar een overzichtspagina voor die specifieke tag.
+
+---
+
+## 4. Article Authoring — Frontmatter & Custom Tags
+
+Statische artikelen in `docs/articles/drafts/` ondersteunen een uitgebreid YAML-frontmatter blok en een aantal inline custom tags. Een gemigreerd artikel begint zo:
+
+```yaml
+---
+status: draft
+title: "AUC 0,89 — en toch onveilig?"
+seoTitle: "AUC uitgelegd voor zorgprofessionals: wat zegt het wel en niet?"
+subtitle: "Wat AUC wel en niet vertelt over je model"
+difficulty: middel        # basis | middel | diep
+readingMinutes: 8
+coverConcept: roc-curve   # roc-curve | scale-balance | leaky-pipe (anders → default)
+---
+```
+
+`title` overschrijft de H1 op de pagina. `seoTitle` blijft beschikbaar voor `<head>` en RSS.
+
+### Custom tags in body
+
+| Tag | Doel | Voorbeeld |
+|---|---|---|
+| `<tldr>` | 3-bullet samenvatting bovenaan | `<tldr><li>punt 1</li><li>punt 2</li><li>punt 3</li></tldr>` |
+| `<callout type="case\|warning\|tip\|key" title="…">` | gekleurd kader | zie hieronder |
+| `<term def="korte uitleg">jargon</term>` | inline tooltip | `<term def="Area Under the ROC Curve">AUC</term>` |
+| `<keytakeaway>` | pull-quote per H2 | `<keytakeaway>Score is een rangorde, geen diagnose.</keytakeaway>` |
+| `<interactive name="…">` | widget van de registry | zie widget-sectie |
+
+### Widget syntax
+
+Een widget zonder props:
+```html
+<interactive name="auc-roc"></interactive>
+```
+
+Met getypeerde props (gevalideerd door Zod schema in `src/lib/widgets/schemas.ts`):
+```html
+<interactive name="auc-threshold" data-props='{"initialThreshold":0.45}'></interactive>
+```
+
+**JSON-escaping is strikt**: gebruik altijd single-quote outer + double-quote inner. Het script `scripts/lint-articles.mjs` (gehangen aan `prebuild`) parseert elke `data-props` blob en faalt de build op syntaxfouten.
+
+### Constraint: callout children
+
+React-markdown re-parseert children van een custom tag niet als markdown. Houd `<callout>` body in plain HTML — gebruik `<p>`, `<strong>`, `<em>` direct, geen `**bold**` syntax. Zelfde voor `<keytakeaway>`.
+
+### Aanspreekvorm
+
+Hele site gebruikt **"je"**. Geen mix met "u". Lint manueel of voer een vervang-sweep uit op nieuwe drafts vóór commit.

@@ -41,11 +41,11 @@ Let ook op zwakkere termen. **FDA-registered** of “listed with FDA” zegt wei
 
 De EU-route draait om CE-markering, fabrikantverantwoordelijkheid, risicoklasse, conformiteitsbeoordeling en notified bodies. De FDA-route draait om centrale premarket review via een passende submissionroute.
 
-In de EU vraagt u: welke MDR/IVDR-classificatie, welke notified body, welk certificaat, welke intended purpose, welke modules en welke versie vallen onder CE?
+In de EU vraag je: welke MDR/IVDR-classificatie, welke notified body, welk certificaat, welke intended purpose, welke modules en welke versie vallen onder CE?
 
-In de VS vraagt u: is het 510(k), De Novo of PMA, wat is de cleared/authorized/approved indication, welke predicate is gebruikt, en welke modelversie is beoordeeld?
+In de VS vraag je: is het 510(k), De Novo of PMA, wat is de cleared/authorized/approved indication, welke predicate is gebruikt, en welke modelversie is beoordeeld?
 
-In beide systemen blijft één punt hetzelfde: regulatoire status garandeert niet dat het model lokaal even goed werkt in uw populatie, scannerpark, EPD-inrichting of klinische workflow.
+In beide systemen blijft één punt hetzelfde: regulatoire status garandeert niet dat het model lokaal even goed werkt in je populatie, scannerpark, EPD-inrichting of klinische workflow.
 
 ## Premarket review is niet het einde
 
@@ -68,10 +68,10 @@ In Europa moeten wijzigingen worden beoordeeld binnen MDR/IVDR, technische docum
 1. Wat is de exacte intended purpose, inclusief patiëntgroep, setting, gebruiker en workflow?
 2. Is dit SaMD/MDSW, onderdeel van een hulpmiddel, accessoire, of niet-medische software?
 3. Welke CE/MDR/IVDR-classificatie of FDA-route geldt precies?
-4. Welke certificaten, submissionnummers en publieke beslissamenvattingen kunt u tonen?
+4. Welke certificaten, submissionnummers en publieke beslissamenvattingen kan de leverancier tonen?
 5. Welke modelversie is beoordeeld en hoe herken ik die versie in het product?
 6. Welke externe en lokale validatie is beschikbaar voor onze populatie en infrastructuur?
-7. Hoe monitort u drift, bias, incidenten en performance per subgroep?
+7. Hoe monitort de leverancier drift, bias, incidenten en performance per subgroep?
 8. Welke wijzigingen vallen binnen bestaande goedkeuring/certificering en welke vereisen herbeoordeling?
 9. Wat moet de clinicus met de output doen: informeren, controleren, triëren, diagnosticeren of behandelen?
 10. Wat gebeurt er bij een veiligheidsprobleem: melding, rollback, waarschuwing, CAPA of nieuwe release?
