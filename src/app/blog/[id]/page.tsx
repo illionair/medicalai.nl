@@ -144,8 +144,30 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                     </figure>
                 )}
 
-                <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_18rem] xl:gap-12">
-                    {/* Row 1 left: top trust boxes (next to sidebar) */}
+                <div className="flow-root">
+                    <aside className="hidden lg:block float-right mb-8 ml-10 w-72 xl:ml-12">
+                        <div className="sticky top-24 space-y-6">
+                            <ArticleTOC content={blog.content} />
+                            <BlogSidebar
+                                developer={blog.developer}
+                                demoUrl={blog.demoUrl}
+                                vendorUrl={blog.vendorUrl}
+                                privacyType={blog.privacyType}
+                                integration={blog.integration}
+                                fdaStatus={blog.fdaStatus}
+                                fdaNumber={blog.fdaNumber}
+                                ceStatus={blog.ceStatus}
+                                specialism={blog.specialism}
+                                cost={blog.cost}
+                                modelType={blog.modelType}
+                                title={blog.title}
+                                currentUrl={canonicalUrl}
+                                difficulty={difficulty}
+                            />
+                        </div>
+                    </aside>
+
+                    {/* Top trust boxes */}
                     <div className="min-w-0">
                         {/* Summary Module */}
                         {blog.summary && (
@@ -198,32 +220,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                         )}
                     </div>
 
-                    {/* Row 1 right: sidebar (TOC, QuickFacts, Deel analyse) */}
-                    <div className="hidden lg:block min-w-0">
-                        <div className="sticky top-24 space-y-6">
-                            <ArticleTOC content={blog.content} />
-                            <BlogSidebar
-                                developer={blog.developer}
-                                demoUrl={blog.demoUrl}
-                                vendorUrl={blog.vendorUrl}
-                                privacyType={blog.privacyType}
-                                integration={blog.integration}
-                                fdaStatus={blog.fdaStatus}
-                                fdaNumber={blog.fdaNumber}
-                                ceStatus={blog.ceStatus}
-                                specialism={blog.specialism}
-                                cost={blog.cost}
-                                modelType={blog.modelType}
-                                title={blog.title}
-                                currentUrl={canonicalUrl}
-                                difficulty={difficulty}
-                            />
-                        </div>
-                    </div>
-
-                    {/* Row 2: full-width content (na Deel analyse breder) */}
-                    <div className="lg:col-span-2 min-w-0">
-                        <div className="typography-theme max-w-none">
+                    <div className="min-w-0">
+                        <div className="article-flow typography-theme max-w-none">
                             <ArticleMarkdown content={blog.content} />
                         </div>
 

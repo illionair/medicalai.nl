@@ -1,7 +1,7 @@
 # Graph Report - medical-ai  (2026-05-05)
 
 ## Corpus Check
-- 114 files · ~193,130 words
+- 114 files · ~193,054 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary

@@ -396,6 +396,12 @@ p:empty::before {
   text-decoration: underline;
 }
 
+.article-flow p,
+.article-flow ul,
+.article-flow ol {
+  max-width: none;
+}
+
 /* Apply to Tiptap Editor */
 .ProseMirror {
   @apply typography-theme;

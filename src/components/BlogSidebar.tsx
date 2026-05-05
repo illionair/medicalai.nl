@@ -37,7 +37,7 @@ export default function BlogSidebar({ developer, demoUrl, vendorUrl, privacyType
     }
 
     return (
-        <div className="sticky top-24 space-y-6">
+        <div className="space-y-6">
             {/* Details Card - Only show if has data */}
             {hasDetails && (
                 <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
