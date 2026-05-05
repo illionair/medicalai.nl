@@ -7,104 +7,80 @@ needs_review: true
 
 # Wat is hyperparametertuning?
 
-Hyperparametertuning klinkt als iets dat vooral in notebooks, GPU-clusters en Kaggle-discussies leeft. In werkelijkheid is het een heel menselijk probleem: je hebt een model gekozen, maar je moet nog bepalen hoe gevoelig, groot, streng, snel of voorzichtig dat model mag zijn.
+Hyperparametertuning klinkt alsof je diep in de machinekamer van AI moet staan. Maar het basisidee is veel menselijker: je hebt een model gekozen, en nu moet je instellen hoe gevoelig, streng of voorzichtig het mag leren.
 
-Een model is niet één vaste machine. Het is eerder een apparaat met knoppen. Sommige knoppen bepalen hoe het model leert. Andere knoppen bepalen hoe complex het model mag worden. Nog weer andere knoppen bepalen hoeveel ruis het model mag negeren. Hyperparametertuning is het zorgvuldig instellen van die knoppen, zonder jezelf voor de gek te houden met een testset die je stiekem al hebt gebruikt.
+Vergelijk het met een stethoscoop of echoapparaat. Voordat je luistert of kijkt, stel je gevoeligheid, frequentie en ruisfilter af. Die instellingen bepalen niet wat de patiënt heeft, maar wel hoe goed je het signaal kunt oppikken zonder elk bijgeluid voor pathologie aan te zien. Bij AI doen hyperparameters iets vergelijkbaars: ze bepalen de leerhouding van het model voordat het de patronen uit patiëntdata leert.
 
 <interactive name="hyperparameter-tuning-lab"></interactive>
 
 ## Parameters versus hyperparameters
 
-Een **parameter** leert het model uit de data. Bij een logistisch regressiemodel zijn dat bijvoorbeeld de gewichten bij leeftijd, CRP, bloeddruk of CT-kenmerken. Bij een neuraal netwerk zijn het de gewichten tussen neuronen. Bij een random forest zijn het de splits in de bomen.
+Een **parameter** leert het model uit de data. Bij een eenvoudig sepsismodel kunnen dat bijvoorbeeld de gewichten zijn bij leeftijd, temperatuur, hartfrequentie, bloeddruk, CRP of leukocyten. Na training heeft het model geleerd hoeveel elk kenmerk meetelt in de voorspelling.
 
-Een **hyperparameter** kies je vóór of tijdens het trainingsproces. Denk aan het aantal bomen in een random forest, de maximale diepte van een boom, de learning rate van XGBoost, het aantal lagen in een neuraal netwerk, de dropout, de batch size of het aantal filters in een CNN.
+Een **hyperparameter** kies je vóór of tijdens het trainen. Het model leert die instelling niet zelf uit de patiëntdata. Jij bepaalt bijvoorbeeld hoe complex het model mag worden, hoe streng het wordt afgeremd, of wanneer het moet stoppen met leren.
 
-Kort gezegd: parameters worden geleerd. Hyperparameters bepalen hoe het leren mag gebeuren.
+Kort gezegd: parameters zijn wat het model leert. Hyperparameters bepalen hoe het model mag leren.
 
-## Eerst begrijpen welk model je hebt
+## Eén voorbeeld: een random forest voor sepsisrisico
 
-De grootste fout bij tuning is direct aan knoppen draaien zonder te weten wat het apparaat doet. Bij medische AI is dat gevaarlijk, omdat een hogere interne AUC soms vooral betekent dat je model beter is geworden in het onthouden van lokale patronen, niet in het generaliseren naar nieuwe patiënten.
+Neem een random forest dat op basis van EPD- en labdata een sepsisrisico voorspelt. Een random forest bouwt veel beslisbomen. Elke boom stelt simpele vragen: is de temperatuur hoger dan een bepaalde waarde, is de bloeddruk laag, is CRP verhoogd, is er zuurstofbehoefte? Aan het eind stemmen de bomen samen over het risico.
 
-Begin daarom met drie vragen:
+Bij zo'n model zijn drie hyperparameters goed te begrijpen:
 
-1. Wat voor model is dit: lineair, boom-gebaseerd, boosting, neuraal netwerk, CNN, transformer?
-2. Welke knoppen bepalen vooral complexiteit, regularisatie en leersnelheid?
-3. Welke validatie past bij de klinische vraag: random split, patient-level split, temporal split, externe validatie?
+- **Aantal bomen:** meer bomen maken de stemming stabieler, maar kosten meer rekentijd.
+- **Maximale diepte:** diepe bomen kunnen subtiele patronen leren, maar ook lokale toevalligheden onthouden.
+- **Minimum aantal patiënten per eindblad:** als elk eindblad genoeg patiënten moet bevatten, wordt de boom rustiger en minder gevoelig voor uitzonderingen.
 
-Pas daarna komt tuning.
+Dit is genoeg om het principe te snappen. Een te vrij model kan het trainingsziekenhuis uit het hoofd leren. Een te streng model mist echte signalen. Tuning zoekt de instelling die het beste generaliseert naar nieuwe patiënten.
 
-## Tuning is geen magie, maar meten met discipline
+## Wat betekent “beter” bij tuning?
 
-Een nette tuningprocedure heeft meestal vier onderdelen. Eerst kies je een model en een redelijke zoekruimte. Daarna train je veel kandidaatmodellen binnen cross-validatie of een validatieset. Vervolgens kies je niet automatisch het model met de hoogste score, maar het model met de beste balans tussen prestatie, stabiliteit, uitlegbaarheid en kosten. Tot slot test je één keer op een onafhankelijke testset.
+De verleiding is om te zeggen: de instelling met de hoogste AUC wint. In medische AI is dat te smal. Een getuned model moet niet alleen goed scoren op papier, maar ook stabiel, gecalibreerd, uitlegbaar genoeg en praktisch bruikbaar zijn.
 
-Die laatste stap is belangrijk. Als je de testset gebruikt om hyperparameters te kiezen, is het geen testset meer. Dan is het een onderdeel van de training geworden.
+Stel dat twee instellingen bijna dezelfde AUC hebben. De ene gebruikt zeer diepe bomen en geeft wisselende risicoschattingen per subgroep. De andere is iets eenvoudiger, heeft betere calibratie en blijft stabieler in een latere periode. Voor klinisch gebruik is de tweede vaak verstandiger.
 
-## Voorbeeld 1: neurale netwerken
+## De testset mag niet meepraten
 
-Bij een gewoon neuraal netwerk zijn bekende hyperparameters:
+Een nette tuningprocedure heeft drie gescheiden rollen:
 
-- **Aantal lagen en neuronen:** meer capaciteit kan complexere patronen leren, maar ook sneller overfitten.
-- **Learning rate:** bepaalt hoe groot de update-stappen zijn. Te hoog kan instabiel worden; te laag leert traag of blijft hangen.
-- **Batch size:** bepaalt hoeveel voorbeelden per update worden gebruikt.
-- **Dropout en weight decay:** regularisatie die het model minder afhankelijk maakt van toevallige patronen.
-- **Aantal epochs en early stopping:** wanneer stop je met trainen?
+1. **Trainingsdata:** hier leert het model zijn parameters.
+2. **Validatiedata of cross-validatie:** hier vergelijk je hyperparameterinstellingen.
+3. **Testdata:** hier kijk je pas aan het eind één keer hoe het gekozen model presteert.
 
-Menselijk gezegd: je probeert te voorkomen dat het netwerk elke patiënt uit het trainingsziekenhuis uit het hoofd leert, terwijl het toch genoeg vrijheid heeft om echte medische patronen te herkennen.
+Als je de testset gebruikt om hyperparameters te kiezen, is het geen testset meer. Dan heeft de testset meegepraat in de ontwikkeling en wordt de eindscore te optimistisch. Dat is alsof je een examen oefent met precies dezelfde vragen en daarna doet alsof het een onafhankelijke toets was.
 
-## Voorbeeld 2: random forest
+## Grid search en random search
 
-Een random forest bouwt veel beslisbomen en laat ze samen stemmen. Belangrijke hyperparameters zijn:
+Bij **grid search** probeer je alle combinaties uit een vooraf gekozen rooster. Bijvoorbeeld: 100, 300 of 500 bomen; maximale diepte 3, 5 of 8; minimaal 10, 25 of 50 patiënten per blad. Dat is overzichtelijk, maar het aantal combinaties groeit snel.
 
-- **n_estimators:** het aantal bomen.
-- **max_depth:** hoe diep elke boom mag gaan.
-- **min_samples_leaf:** hoeveel voorbeelden minimaal in een eindblad moeten zitten.
-- **max_features:** hoeveel variabelen elke split mag bekijken.
-- **class_weight:** handig bij scheve uitkomsten, zoals zeldzame events.
+Bij **random search** kies je willekeurige combinaties uit een redelijke zoekruimte. Dat klinkt minder systematisch, maar werkt vaak goed omdat meestal maar een paar instellingen echt veel invloed hebben. De les voor lezers is niet dat één methode altijd beter is, maar dat de zoekruimte vooraf logisch moet zijn en binnen de trainings- en validatiedata moet blijven.
 
-Een dieper forest kan meer nuance leren, maar ook kleine toevalligheden in de trainingsdata vasthouden. Een grotere `min_samples_leaf` maakt bomen rustiger en vaak beter generaliseerbaar.
+## Overfitting: te goed afgestemd op de oefenpopulatie
 
-## Voorbeeld 3: XGBoost
+Hyperparametertuning kan overfitting verminderen, maar ook veroorzaken. Als je heel veel combinaties probeert en telkens de beste validatiescore kiest, vind je op den duur misschien een instelling die toevallig goed past bij die ene dataset. De score stijgt, maar de betrouwbaarheid buiten het ziekenhuis daalt.
 
-XGBoost bouwt bomen na elkaar. Elke nieuwe boom probeert fouten van de vorige bomen te corrigeren. Daardoor is het krachtig, vooral op tabulaire data, maar ook gevoelig voor tuning.
+Daarom zijn patient-level splits, temporele validatie en externe validatie belangrijk. Bij medische data mogen records van dezelfde patiënt niet verspreid raken over train en test. Bij tijdgevoelige modellen is testen op latere patiënten vaak realistischer dan een willekeurige split.
 
-Veelgebruikte hyperparameters zijn:
+## Termen die je vaak tegenkomt
 
-- **learning_rate / eta:** hoe groot elke correctiestap is.
-- **n_estimators:** hoeveel bomen achter elkaar worden gebouwd.
-- **max_depth:** hoe complex elke boom mag zijn.
-- **min_child_weight, gamma:** maken splits conservatiever.
-- **subsample en colsample_bytree:** gebruiken per boom maar een deel van patiënten of variabelen.
-- **reg_alpha en reg_lambda:** L1- en L2-regularisatie.
+Sommige hyperparameters horen vooral bij neurale netwerken. Je hoeft ze niet allemaal te kunnen afstellen, maar je moet wel herkennen wat ze ongeveer betekenen:
 
-Een veelvoorkomende strategie is: lagere learning rate, meer bomen, early stopping, en daarna pas diepte en regularisatie fijner afstellen.
+- **Batch size:** hoeveel voorbeelden het model tegelijk gebruikt voordat het zijn interne gewichten bijwerkt.
+- **Learning rate:** hoe groot de leerstappen zijn. Te groot kan instabiel worden; te klein leert traag.
+- **Regularisatie:** verzamelnaam voor technieken die een model afremmen zodat het minder snel ruis onthoudt.
+- **Dropout:** een regularisatietechniek waarbij tijdens training telkens een deel van het netwerk tijdelijk wordt uitgezet.
+- **Weight decay:** een regularisatietechniek die te grote gewichten ontmoedigt.
 
-## Voorbeeld 4: CNN's
-
-Een convolutioneel neuraal netwerk, of CNN, wordt vaak gebruikt voor beelden zoals röntgenfoto's, CT-slices, dermatoscopie of pathologie. De knoppen zijn deels anders:
-
-- **Aantal filters:** hoeveel beeldpatronen elke laag mag leren.
-- **Kernel size:** hoe groot het lokale venster is waar het model naar kijkt.
-- **Aantal convolutionele blokken:** hoe diep de beeldrepresentatie wordt.
-- **Pooling:** hoe snel ruimtelijke informatie wordt samengevat.
-- **Data augmentation:** rotaties, crops, kleurvariatie of andere beeldtransformaties.
-- **Transfer learning:** start je vanaf een model dat al op veel beelden is voorgetraind?
-
-Bij medische beelden is patient-level splitting cruciaal. Als slices van dezelfde patiënt in train en test belanden, lijkt de tuning geweldig, maar is de validatie lek.
-
-## Grid search, random search en slimmer zoeken
-
-Grid search probeert alle combinaties uit een vooraf gekozen rooster. Dat is overzichtelijk, maar kan snel duur worden. Random search kiest willekeurige combinaties uit verdelingen. Dat klinkt minder systematisch, maar werkt vaak verrassend goed, vooral wanneer maar een paar hyperparameters echt veel invloed hebben.
-
-Daarna komen methoden zoals Bayesian optimization, Hyperband en successive halving. Die proberen sneller te leren welke regio's van de zoekruimte veelbelovend zijn. Toch blijft het principe hetzelfde: je zoekt binnen trainings- en validatiedata, niet op de eindtest.
+Voor een basisartikel is dit genoeg. CNN-filters, kernel size en pooling horen eerder thuis in een apart stuk over beeldmodellen.
 
 ## Wat maakt tuning klinisch lastig?
 
-In medische AI is de beste hyperparameterinstelling niet altijd de hoogste gemiddelde AUC. Soms wil je een stabieler model met iets lagere performance, maar betere calibratie. Soms wil je een eenvoudiger model dat artsen kunnen begrijpen. Soms is inferentietijd belangrijker dan een kleine winst in validatiescore. En soms is een model dat lokaal perfect lijkt juist verdacht, omdat het mogelijk datalek, populatieshift of site-specifieke shortcuts heeft geleerd.
+In medische AI is de beste instelling niet altijd de instelling met de hoogste gemiddelde score. Soms wil je een stabieler model met iets lagere performance, maar betere calibratie. Soms wil je een eenvoudiger model dat makkelijker uit te leggen is aan gebruikers. Soms is rekentijd belangrijk, bijvoorbeeld bij triage of monitoring. En soms is een opvallend hoge score juist verdacht, omdat het model een lokaal shortcut of datalek heeft geleerd.
 
-Daarom hoort tuning altijd samen te gaan met:
+Tuning hoort daarom altijd samen te gaan met:
 
 - patient-level of episode-level splits;
-- nested cross-validatie of een aparte validatieset;
+- een aparte validatieset of nested cross-validatie;
 - calibratiecontrole;
 - subgroepanalyse;
 - externe of temporele validatie;
@@ -124,7 +100,7 @@ Vraag bij een getuned model:
 
 ## Kernboodschap
 
-Hyperparametertuning is niet “aan knoppen draaien tot de score stijgt”. Het is gecontroleerd kiezen hoe een model mag leren. Je moet eerst begrijpen welk model je gebruikt, welke knoppen echt betekenis hebben, en welke validatie voorkomt dat je jezelf voor de gek houdt. In medische AI is een goed getuned model niet alleen beter op papier, maar vooral betrouwbaarder buiten het notebook.
+Hyperparametertuning is niet “aan knoppen draaien tot de score stijgt”. Het is gecontroleerd kiezen hoe een model mag leren. Je moet begrijpen welke knoppen de complexiteit en voorzichtigheid van het model bepalen, en je moet de eindtestset beschermen. In medische AI is een goed getuned model niet alleen beter op papier, maar vooral betrouwbaarder bij nieuwe patiënten.
 
 ## Bronnen
 

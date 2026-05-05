@@ -2293,7 +2293,7 @@
       "label": "slugify()",
       "file_type": "code",
       "source_file": "src\\lib\\static-articles.ts",
-      "source_location": "L292",
+      "source_location": "L265",
       "id": "lib_static_articles_slugify",
       "community": 8,
       "norm_label": "slugify()"
@@ -2302,7 +2302,7 @@
       "label": "normalizeTitle()",
       "file_type": "code",
       "source_file": "src\\lib\\static-articles.ts",
-      "source_location": "L301",
+      "source_location": "L274",
       "id": "lib_static_articles_normalizetitle",
       "community": 8,
       "norm_label": "normalizetitle()"
@@ -2311,7 +2311,7 @@
       "label": "stripMarkdown()",
       "file_type": "code",
       "source_file": "src\\lib\\static-articles.ts",
-      "source_location": "L305",
+      "source_location": "L278",
       "id": "lib_static_articles_stripmarkdown",
       "community": 8,
       "norm_label": "stripmarkdown()"
@@ -2320,7 +2320,7 @@
       "label": "extractSummary()",
       "file_type": "code",
       "source_file": "src\\lib\\static-articles.ts",
-      "source_location": "L314",
+      "source_location": "L287",
       "id": "lib_static_articles_extractsummary",
       "community": 8,
       "norm_label": "extractsummary()"
@@ -2329,7 +2329,7 @@
       "label": "cleanMarkdown()",
       "file_type": "code",
       "source_file": "src\\lib\\static-articles.ts",
-      "source_location": "L321",
+      "source_location": "L294",
       "id": "lib_static_articles_cleanmarkdown",
       "community": 8,
       "norm_label": "cleanmarkdown()"
@@ -2338,7 +2338,7 @@
       "label": "readArticle()",
       "file_type": "code",
       "source_file": "src\\lib\\static-articles.ts",
-      "source_location": "L349",
+      "source_location": "L322",
       "id": "lib_static_articles_readarticle",
       "community": 8,
       "norm_label": "readarticle()"
@@ -2347,7 +2347,7 @@
       "label": "getStaticArticles()",
       "file_type": "code",
       "source_file": "src\\lib\\static-articles.ts",
-      "source_location": "L417",
+      "source_location": "L390",
       "id": "lib_static_articles_getstaticarticles",
       "community": 5,
       "norm_label": "getstaticarticles()"
@@ -2356,7 +2356,7 @@
       "label": "getStaticArticleById()",
       "file_type": "code",
       "source_file": "src\\lib\\static-articles.ts",
-      "source_location": "L424",
+      "source_location": "L397",
       "id": "lib_static_articles_getstaticarticlebyid",
       "community": 5,
       "norm_label": "getstaticarticlebyid()"
@@ -2365,7 +2365,7 @@
       "label": "isStaticArticleId()",
       "file_type": "code",
       "source_file": "src\\lib\\static-articles.ts",
-      "source_location": "L428",
+      "source_location": "L401",
       "id": "lib_static_articles_isstaticarticleid",
       "community": 9,
       "norm_label": "isstaticarticleid()"
@@ -2374,7 +2374,7 @@
       "label": "mergeWithStaticArticles()",
       "file_type": "code",
       "source_file": "src\\lib\\static-articles.ts",
-      "source_location": "L432",
+      "source_location": "L405",
       "id": "lib_static_articles_mergewithstaticarticles",
       "community": 5,
       "norm_label": "mergewithstaticarticles()"
@@ -2383,7 +2383,7 @@
       "label": "staticArticleMatchesTopic()",
       "file_type": "code",
       "source_file": "src\\lib\\static-articles.ts",
-      "source_location": "L441",
+      "source_location": "L414",
       "id": "lib_static_articles_staticarticlematchestopic",
       "community": 8,
       "norm_label": "staticarticlematchestopic()"
@@ -3839,9 +3839,9 @@
       "source_file": "src\\app\\_actions\\blog.ts",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_actions_blog_ts",
-      "target": "actions_blog_escapehtml",
-      "confidence_score": 1.0
+      "target": "actions_blog_escapehtml"
     },
     {
       "relation": "contains",
@@ -3849,9 +3849,9 @@
       "source_file": "src\\app\\_actions\\blog.ts",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_actions_blog_ts",
-      "target": "actions_blog_articletodraftcontent",
-      "confidence_score": 1.0
+      "target": "actions_blog_articletodraftcontent"
     },
     {
       "relation": "contains",
@@ -3949,9 +3949,9 @@
       "source_file": "src\\app\\_actions\\blog.ts",
       "source_location": "L292",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_actions_blog_ts",
-      "target": "actions_blog_getorcreateblogpostforarticle",
-      "confidence_score": 1.0
+      "target": "actions_blog_getorcreateblogpostforarticle"
     },
     {
       "relation": "contains",
@@ -3959,9 +3959,9 @@
       "source_file": "src\\app\\_actions\\blog.ts",
       "source_location": "L329",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_actions_blog_ts",
-      "target": "actions_blog_createeditablecopyfromstaticarticle",
-      "confidence_score": 1.0
+      "target": "actions_blog_createeditablecopyfromstaticarticle"
     },
     {
       "relation": "contains",
@@ -3969,9 +3969,9 @@
       "source_file": "src\\app\\_actions\\blog.ts",
       "source_location": "L413",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_actions_blog_ts",
-      "target": "actions_blog_openblogposteditor",
-      "confidence_score": 1.0
+      "target": "actions_blog_openblogposteditor"
     },
     {
       "relation": "contains",
@@ -3990,9 +3990,9 @@
       "source_file": "src\\app\\_actions\\blog.ts",
       "source_location": "L311",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "actions_blog_getorcreateblogpostforarticle",
-      "target": "actions_blog_articletodraftcontent",
-      "confidence_score": 1.0
+      "target": "actions_blog_articletodraftcontent"
     },
     {
       "relation": "calls",
@@ -4155,9 +4155,9 @@
       "source_file": "src\\app\\_actions\\blog.ts",
       "source_location": "L421",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "actions_blog_openblogposteditor",
-      "target": "actions_blog_createeditablecopyfromstaticarticle",
-      "confidence_score": 1.0
+      "target": "actions_blog_createeditablecopyfromstaticarticle"
     },
     {
       "relation": "calls",

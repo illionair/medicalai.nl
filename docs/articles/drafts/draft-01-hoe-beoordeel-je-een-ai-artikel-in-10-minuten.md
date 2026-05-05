@@ -47,6 +47,8 @@ De hoogste lat is niet modelprestatie, maar betere zorg: minder complicaties, sn
 
 Begin met de vraag of het artikel past bij het type studie. Voor diagnostische accuratesse is STARD-AI relevant; voor predictiemodellen TRIPOD+AI en PROBAST+AI; voor trials CONSORT-AI; voor vroege klinische evaluatie DECIDE-AI. Deze richtlijnen zijn geen keurmerk, maar ze helpen zien wat minimaal transparant gerapporteerd moet zijn.
 
+Kort vertaald: TRIPOD+AI helpt bij transparante rapportage van predictiemodellen, PROBAST+AI bij risico op bias en toepasbaarheid, STARD-AI bij diagnostische accuratesse, CONSORT-AI bij klinische trials met AI, en DECIDE-AI bij vroege klinische evaluatie in de workflow.
+
 Let vooral op de afstand tussen onderzoek en praktijk. Veel AI-studies blijven steken in retrospectieve evaluatie: het model krijgt historische data en voorspelt wat al gebeurd is. Dat kan nuttig zijn voor ontwikkeling, maar zegt weinig over gedrag in de spreekkamer, op de SEH of in het MDO. Zodra een AI-output echte beslissingen beïnvloedt, ontstaan nieuwe risico’s: automation bias, alarmmoeheid, verschuiving van verantwoordelijkheid en veranderde diagnostische drempels.
 
 Regulatoire context hoort ook in je snelle beoordeling. In Europa vallen veel medische AI-systemen onder bestaande medische-hulpmiddelenregels en, afhankelijk van gebruik en risico, onder de EU AI Act. In de VS publiceert de FDA lijsten en guidance rond AI-enabled medical devices, inclusief aandacht voor lifecycle management en vooraf bepaalde wijzigingsplannen. Voor de lezer betekent dit: vraag of het systeem bedoeld is als medisch hulpmiddel, of er markttoelating is voor de beoogde indicatie, en hoe updates na implementatie worden bewaakt.

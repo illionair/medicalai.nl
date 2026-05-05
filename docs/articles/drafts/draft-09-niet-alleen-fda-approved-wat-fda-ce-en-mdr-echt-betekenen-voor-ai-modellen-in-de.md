@@ -13,6 +13,8 @@ AI-leveranciers gebruiken graag stevige woorden: “FDA-cleared”, “CE-marked
 
 Dit artikel geeft een praktisch overzicht. Het is educatief bedoeld en geen juridisch advies.
 
+<interactive name="mdr-claim-checker"></interactive>
+
 ## Eerst: is het AI-model een medisch hulpmiddel?
 
 AI is niet automatisch een medisch hulpmiddel. De kernvraag is de **intended purpose**: het beoogde gebruik zoals de fabrikant dat vastlegt in handleiding, label, technische documentatie, klinische evaluatie en marketingmateriaal.
@@ -25,7 +27,9 @@ Hier komen twee termen vaak terug. **SaMD**, Software as a Medical Device, is de
 
 In Europa is **CE-markering** het toegangsbewijs tot de markt. Voor de meeste klinische AI gaat het om de Medical Devices Regulation, **MDR 2017/745**. Voor software die informatie levert op basis van in-vitro diagnostiek, bijvoorbeeld lab- of genetische data, kan de **IVDR 2017/746** gelden.
 
-CE-markering betekent: de fabrikant verklaart dat het product voldoet aan de toepasselijke EU-eisen. Bij hogere risicoklassen beoordeelt een **notified body** de technische documentatie, het kwaliteitsmanagementsysteem en de conformiteitsroute. Veel klinische AI-software komt door MDR Rule 11 niet in de laagste klasse terecht. Software die informatie levert voor diagnostische of therapeutische beslissingen is vaak minimaal klasse IIa; als een fout kan leiden tot ernstige verslechtering, chirurgische interventie, overlijden of onomkeerbare schade, kan klasse IIb of III aan de orde zijn.
+Een **notified body** is een onafhankelijke keuringsinstantie die door de fabrikant wordt ingeschakeld om kwaliteitssysteem, technische documentatie en conformiteitsroute te beoordelen. CE-markering betekent dus niet dat "Brussel" elk model centraal goedkeurt; de fabrikant blijft primair verantwoordelijk, met extra toetsing waar de risicoklasse dat vereist.
+
+Veel klinische AI-software komt door MDR Rule 11 niet in de laagste klasse terecht. Software die informatie levert voor diagnostische of therapeutische beslissingen is vaak minimaal klasse IIa; als een fout kan leiden tot ernstige verslechtering, chirurgische interventie, overlijden of onomkeerbare schade, kan klasse IIb of III aan de orde zijn.
 
 Een CE-markering geldt altijd voor een specifieke scope: product, versie, intended purpose, risicoklasse en gebruiksomgeving. “Ons platform heeft CE” is dus onvoldoende als de relevante AI-module, nieuwe claim of modelupdate niet onder die scope valt.
 
@@ -78,41 +82,7 @@ In Europa moeten wijzigingen worden beoordeeld binnen MDR/IVDR, technische docum
 
 ## Conclusie
 
-“FDA”, “CE” en “MDR” zijn belangrijke signalen, maar ze zijn alleen betekenisvol als u de scope kent. Een AI-model is beoordeeld voor een specifieke claim, versie, doelgroep en gebruiksomgeving. De slimste vraag aan een leverancier is daarom niet: “Is het goedgekeurd?” maar: “Wat is precies beoordeeld, met welk bewijs, voor welke klinische beslissing, en hoe blijft dat bewijs geldig nadat het model verandert?”
-
-## Visualisatiepakket
-
-**Figuurideeën**
-
-1. **Beslisboom: “Wanneer wordt AI een medisch hulpmiddel?”**  
-   Layout: yes/no-flow van `AI-model` naar `medische claim?`, `individuele patiënt?`, `diagnose/therapie/monitoring/prognose?`, `zelfstandige software of onderdeel van hulpmiddel?`. Eindpunten: “waarschijnlijk buiten scope”, “mogelijk SaMD/MDSW”, “regulatoire documentatie opvragen”. Geschikt als eenvoudige SVG of React-flowchart.
-
-2. **Routekaart EU versus VS**  
-   Twee kolommen. EU: `intended purpose` -> `MDR/IVDR classificatie` -> `notified body waar nodig` -> `CE-markering` -> `post-market surveillance`. VS: `intended use` -> `device class/pathway` -> `510(k), De Novo of PMA` -> `FDA clearance/authorization/approval` -> `post-market controls`.
-
-3. **Lifecycle-loop voor AI-modellen**  
-   Cirkel: `ontwikkeling` -> `validatie` -> `premarket/CE` -> `implementatie` -> `monitoring van drift/bias/incidenten` -> `gecontroleerde update` -> terug naar `validatie`. Markeer apart: “FDA PCCP” en “EU significante wijziging/notified body”.
-
-4. **Risicomatrix voor klinische impact**  
-   X-as: rol van output, van “informeert” tot “stuurt diagnose/therapie”. Y-as: schade bij fout, van laag tot ernstig/onherstelbaar. Plaats voorbeelden zoals administratieve samenvatting, triage-alert, therapiedosering en autonome detectie. Duidelijk label: illustratief, geen formele classificatie.
-
-**Interactieve component**
-
-Een **claim-checker quiz/calculator** past goed. De gebruiker beantwoordt 6-8 vragen over medische claim, individuele patiënt, diagnostische/therapeutische impact, autonomie, modelupdates en beschikbaar bewijs. Output: geen juridisch oordeel, maar een checklist met vervolgvragen aan de leverancier. Geschikt als React-component met radio buttons, risicosignaal en exporteerbare vragenlijst.
-
-**Afbeeldingen of video’s om op te zoeken/gebruiken**
-
-- Zoekterm: `European Commission Is your software a Medical Device infographic`  
-  Gebruik als inspiratie voor de beslisboom, bij voorkeur via de officiële Europese Commissie-pagina.
-
-- Zoekterm: `FDA AI-enabled medical devices list radiology cardiology`  
-  Maak zelf een staafdiagram of tegeloverzicht op basis van de FDA-lijst, bijvoorbeeld per specialisme of type submission.
-
-- Zoekterm: `FDA CDRH Learn Predetermined Change Control Plan AI-enabled device software functions`  
-  Geschikt voor educatieve video/slides over PCCP en wijzigingsbeheer.
-
-- Zoekterm: `IMDRF SaMD risk categorization framework diagram`  
-  Gebruik als basis voor een eigen risicomatrix, met expliciete vermelding dat IMDRF-categorieën niet één-op-één hetzelfde zijn als MDR-klassen of FDA-routes.
+“FDA”, “CE” en “MDR” zijn belangrijke signalen, maar ze zijn alleen betekenisvol als je de scope kent. Een AI-model is beoordeeld voor een specifieke claim, versie, doelgroep en gebruiksomgeving. De slimste vraag aan een leverancier is daarom niet: “Is het goedgekeurd?” maar: “Wat is precies beoordeeld, met welk bewijs, voor welke klinische beslissing, en hoe blijft dat bewijs geldig nadat het model verandert?”
 
 ## Referenties
 
@@ -199,4 +169,3 @@ Een **claim-checker quiz/calculator** past goed. De gebruiker beantwoordt 6-8 vr
    URL: https://www.imdrf.org/documents/software-medical-device-possible-framework-risk-categorization-and-corresponding-considerations
 
 ---
-

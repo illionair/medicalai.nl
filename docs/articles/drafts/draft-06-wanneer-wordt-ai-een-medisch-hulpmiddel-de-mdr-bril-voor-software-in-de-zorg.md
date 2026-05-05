@@ -9,90 +9,99 @@ needs_review: true
 
 # Wanneer wordt AI een medisch hulpmiddel? De MDR-bril voor software in de zorg
 
-AI in de zorg voelt vaak als “software”, maar juridisch kan het al snel een medisch hulpmiddel zijn. Niet omdat er AI in zit, maar omdat de software een medische bedoeling heeft en gebruikt wordt voor diagnose, prognose, monitoring of behandeling. Dit artikel is bedoeld als praktische oriëntatie voor zorgprofessionals, onderzoekers en product owners. Het is educatief en geen juridisch advies; betrek bij concrete marktintroductie altijd regulatory, klinische en juridische expertise.
+Stel: het IT-team van je ziekenhuis bouwt een sepsis-alert. Het systeem leest vitale parameters en labwaarden uit het EPD, geeft een risicoscore en waarschuwt de arts-assistent bij hoog risico. Is dat gewoon slimme software, of is het een medisch hulpmiddel onder de MDR?
 
-## De kern: intended purpose
+De korte versie: AI wordt niet gereguleerd omdat het AI is, maar omdat het een medische bedoeling krijgt. Zodra software patiëntgegevens analyseert en een diagnose, prognose, waarschuwing, monitoringadvies of behandeladvies ondersteunt, kijk je met de MDR-bril. Dit artikel is educatief bedoeld en geen juridisch advies; betrek bij concrete marktintroductie altijd regulatory, klinische en juridische expertise.
 
-De belangrijkste vraag is niet: “Is het AI?” maar: “Waarvoor claimt de fabrikant dat het gebruikt wordt?” De MDR noemt dit de intended purpose: het beoogde gebruik zoals blijkt uit label, gebruiksaanwijzing, marketing, verkoopmateriaal en klinische evaluatie.
+<interactive name="mdr-claim-checker"></interactive>
 
-Dat betekent: dezelfde algoritmische techniek kan buiten of binnen de MDR vallen afhankelijk van de claim. Een model dat CT-beelden comprimeert voor opslag is iets anders dan een model dat longnoduli detecteert. Een chatbot die algemene uitleg geeft over diabetes is iets anders dan een tool die voor een specifieke patiënt een insuline-aanpassing adviseert.
+## Eerst de beslislogica
 
-## SaMD, MDSW en AI: termen zonder mystiek
+Gebruik deze snelle denkroute:
 
-Internationaal wordt vaak gesproken over SaMD: Software as a Medical Device. Daarmee wordt software bedoeld die zelf een medische functie uitvoert zonder onderdeel te hoeven zijn van een specifiek hardware-medisch hulpmiddel. In Europese guidance wordt meestal Medical Device Software (MDSW) gebruikt. Het gaat om software die, alleen of in combinatie, een medisch doel heeft volgens de MDR of IVDR.
+1. Is er een medische claim?
+2. Gaat het over een individuele patiënt?
+3. Analyseert of interpreteert de software patiëntdata?
+4. Wordt de output gebruikt voor diagnose, prognose, monitoring, triage of behandeling?
 
-Belangrijk: cloud, app, EPD-module, server of embedded software maakt op zichzelf niet uit. De locatie of technische verpakking bepaalt niet de kwalificatie. Een AI-model in een webapp kan even goed MDSW zijn als software in een scanner.
+Als het antwoord steeds ja is, is de software vrijwel zeker regulatoir relevant. Of het dan MDR, IVDR, een module, een accessoire of onderdeel van een breder hulpmiddel is, vraagt nadere beoordeling. Maar de belangrijkste afslag heb je dan al genomen: dit is niet meer alleen kantoorsoftware.
 
-## Klinische beslisondersteuning: van laag naar hoog risico
+## Intended purpose: de claim bepaalt de route
 
-Clinical decision support is een breed spectrum. Een naslagwerk, eenvoudige zoekfunctie of algemene richtlijnweergave zal meestal niet als medisch hulpmiddel kwalificeren, zolang het geen patiëntspecifieke analyse uitvoert en geen medische output creëert.
+De belangrijkste vraag is niet: "Is het AI?" maar: "Waarvoor claimt de aanbieder dat de software gebruikt wordt?" De MDR noemt dit de **intended purpose**: het beoogde gebruik zoals blijkt uit label, gebruiksaanwijzing, website, demo, verkoopmateriaal, contract en klinische evaluatie.
 
-Waarschijnlijk binnen de MDR komt software die patiëntgegevens verwerkt om aanbevelingen, waarschuwingen of scores te geven voor diagnose, prognose, monitoring of therapie. Denk aan:
+Daarom kan dezelfde techniek buiten of binnen de MDR vallen. Een algoritme dat CT-beelden comprimeert voor opslag is iets anders dan een algoritme dat longnoduli markeert. Een chatbot met algemene uitleg over diabetes is iets anders dan software die voor deze patiënt een insuline-aanpassing adviseert. De medische claim, niet het technische label, is het kantelpunt.
 
-- AI die mammografieën of CT-scans analyseert en verdachte afwijkingen markeert.
-- Een ECG-algoritme dat ritmestoornissen detecteert.
-- Een sepsis-alert op basis van vitale parameters en labwaarden.
-- Software die antistollingsdosering of chemotherapiedosering adviseert.
-- Een EPD-module die patiëntspecifiek nierfunctierisico koppelt aan medicatieadvies.
-- Software die een medisch apparaat aanstuurt of beïnvloedt, zoals een closed-loop insulinepomp.
+## SaMD en MDSW zonder mystiek
 
-Bij labdiagnostiek of analyse van specimens kan de IVDR in plaats van de MDR relevant zijn.
+Internationaal hoor je vaak **SaMD**: Software as a Medical Device. Dat betekent: software die zelf een medische functie uitvoert, zonder onderdeel te hoeven zijn van specifieke hardware. In Europese guidance wordt meestal **MDSW** gebruikt: Medical Device Software.
 
-## Rule 11: de software-regel onder de MDR
+Voor artsen is de praktische vertaling simpel: software kan zich gedragen als een medisch hulpmiddel, zoals een bloeddrukmeter of ECG-apparaat dat ook doet. Het meet misschien niets fysieks, maar het levert medische informatie die klinische beslissingen kan sturen. Of de software in de cloud, een app, een EPD-module, een lokaal dashboard of een scanner zit, is daarbij niet doorslaggevend. De functie is belangrijker dan de verpakking.
 
-Als software eenmaal als medisch hulpmiddel kwalificeert, komt classificatie. Voor veel medische software is Rule 11 uit Annex VIII van de MDR doorslaggevend.
+## Klinische beslisondersteuning: het grijze gebied
 
-In gewone taal: software die informatie levert die wordt gebruikt voor beslissingen met diagnostisch of therapeutisch doel is meestal klasse IIa. Als een verkeerde beslissing ernstig letsel of een chirurgische interventie kan veroorzaken, kan klasse IIb gelden. Als een verkeerde beslissing kan leiden tot overlijden of onomkeerbare verslechtering van gezondheid, kan klasse III gelden.
+Clinical decision support loopt van onschuldig naar hoog risico. Een zoekfunctie in richtlijnen, een naslagwerk of algemene educatieve uitleg valt meestal buiten MDR zolang de software geen patiëntspecifieke analyse maakt en geen medische output geeft.
 
-Software die fysiologische processen monitort is meestal klasse IIa; monitoring van vitale parameters waarbij variaties direct gevaar kunnen opleveren, kan klasse IIb zijn. “Alle andere software” kan klasse I zijn, maar dat is geen vrijbrief: eerst moet duidelijk zijn dat het überhaupt MDSW is, en andere MDR-regels kunnen ook van toepassing zijn.
+Waarschijnlijk binnen MDR komt software die patiëntgegevens verwerkt om een score, alarm, interpretatie of advies te geven. Denk aan:
+
+- een sepsis-alert op basis van vitale parameters en labwaarden;
+- AI-detectie van afwijkingen op CT, MRI, mammografie of ECG;
+- een score voor beroerterisico, heropnamerisico of therapierespons;
+- patiëntspecifiek medicatie-, dosis- of behandeladvies;
+- software die een medisch apparaat aanstuurt of beïnvloedt, zoals een closed-loop insulinepomp.
+
+Bij analyse van lichaamsmateriaal, zoals bloed, urine, weefsel of genetische data, kan de IVDR in plaats van de MDR relevant zijn.
+
+## Rule 11: eerst het waarom, dan de naam
+
+Als software eenmaal als medisch hulpmiddel kwalificeert, moet de risicoklasse worden bepaald. De meeste medische software valt minimaal in klasse IIa omdat zij informatie levert die wordt gebruikt bij diagnose of behandeling. Die software-regel heet **Rule 11**, maar belangrijker is waarom de regel zo werkt: hoe groter de schade als de output fout is, hoe zwaarder de beoordeling.
+
+Een algemeen risico-overzicht kan lager uitvallen dan een alert die direct triage stuurt. Een doseringsadvies voor chemotherapie of antistolling is zwaarder dan een administratieve samenvatting. Software waarbij een fout kan leiden tot ernstige verslechtering, een chirurgische interventie, overlijden of onomkeerbare schade kan in klasse IIb of III terechtkomen.
+
+"Alle andere software" kan klasse I zijn, maar dat is geen startpunt. Eerst moet duidelijk zijn of het uberhaupt Medical Device Software is. Pas daarna kun je zinnig over de klasse praten.
 
 ## Wanneer valt AI waarschijnlijk buiten MDR?
 
-AI kan buiten de MDR vallen wanneer er geen medische intended purpose is. Voorbeelden:
+Er zijn drie veelvoorkomende grensgevallen waarbij AI meestal buiten MDR blijft, zolang er geen medische intended purpose wordt geclaimd:
 
-- Administratie: planning, facturatie, personeelsroosters, voorraadbeheer.
-- Communicatie: veilige berichten, videobellen, verwijzingen doorsturen.
-- Opslag en overdracht: EPD/PACS-functionaliteit die alleen data bewaart, archiveert, converteert of toont zonder diagnostische verwerking.
-- Onderwijs: simulaties, nascholing, algemene medische uitleg.
-- Algemene wellness: leefstijl-, fitness- of slaapapps zonder medische claim.
-- Onderzoekstools die niet in klinische besluitvorming worden gebruikt en niet op de markt of in gebruik worden genomen voor patiëntenzorg.
+- **Administratie en logistiek:** planning, facturatie, personeelsroosters, voorraadbeheer of beddenplanning.
+- **Communicatie en opslag:** videobellen, berichten, EPD/PACS-functionaliteit die alleen data bewaart, overdraagt of toont zonder medische interpretatie.
+- **Algemene kennis en onderzoek:** onderwijs, nascholing, literatuurhulp, populatieniveau-onderzoek of prototypes die niet in klinische besluitvorming worden gebruikt.
 
-Let op de nuance: zodra een module in zo’n systeem medische informatie analyseert, interpreteert of een patiëntspecifieke aanbeveling geeft, kan juist die module wel onder MDR vallen.
+Let op de module-logica. Een EPD is niet automatisch MDR-software, maar een EPD-module die patiëntspecifiek medicatieadvies of alarmsignalen genereert kan dat wel zijn. Ook "alleen intern gebruik" is geen magische vrijstelling; bij structurele klinische inzet kunnen MDR-verplichtingen of in-house-device-regels relevant worden.
 
-## CE-markering: meer dan een sticker
+## CE-markering en klinische evaluatie
 
-Voor markttoegang in de EU moet een medisch hulpmiddel voldoen aan de MDR en CE-gemarkeerd worden. Voor klasse IIa, IIb en III is doorgaans een notified body betrokken. De fabrikant moet onder meer zorgen voor een kwaliteitsmanagementsysteem, risicomanagement, technische documentatie, cybersecurity, usability, software lifecycle-processen, klinische evaluatie en post-market surveillance.
+Als AI-software onder MDR valt, is CE-markering nodig voordat het hulpmiddel in de EU op de markt wordt gebracht of in gebruik wordt genomen. Voor klasse IIa, IIb en III is meestal een **notified body** betrokken: een onafhankelijke keuringsinstantie die door de fabrikant wordt ingeschakeld om kwaliteitssysteem en technische documentatie te beoordelen.
 
-Bij AI is vooral belangrijk dat claims aantoonbaar zijn. “Detecteert beroerte vroegtijdig” vraagt ander bewijs dan “ordent beelden op acquisitiedatum”. Marketingtaal kan de regulatory scope vergroten.
+CE-markering vraagt meer dan een goede AUC. De fabrikant moet onder meer zorgen voor risicomanagement, cybersecurity, usability, software lifecycle-processen, technische documentatie en klinische evaluatie. Bij AI is vooral belangrijk dat de claim aantoonbaar is. "Detecteert beroerte vroegtijdig" vraagt ander bewijs dan "ordent beelden op acquisitiedatum".
 
-## Clinical evaluation: bewijs dat de software klinisch klopt
+Voor medische software draait klinische evaluatie vaak om drie bewijsblokken:
 
-Klinische evaluatie is geen eenmalig document aan het einde van ontwikkeling. Het is een gepland, systematisch en continu proces. Voor MDSW draait het om drie bewijsblokken:
+1. Is de output klinisch logisch verbonden met de aandoening of fysiologische toestand?
+2. Genereert het model betrouwbaar en reproduceerbaar de bedoelde output uit de inputdata?
+3. Werkt de output in de beoogde populatie, setting, workflow en gebruikersgroep?
 
-1. Valid clinical association of scientific validity: is de output klinisch logisch verbonden met de aandoening of fysiologische staat?
-2. Technical performance: genereert het model betrouwbaar, nauwkeurig en reproduceerbaar de bedoelde output uit de inputdata?
-3. Clinical performance: levert de output in de beoogde populatie, setting en workflow klinisch relevante informatie of voordeel op?
+Voor AI betekent dit extra aandacht voor datasetrepresentativiteit, bias, generaliseerbaarheid, lokale zorgpaden, menselijke interpretatie en prestaties na implementatie.
 
-Voor AI betekent dit ook aandacht voor generaliseerbaarheid, datasetrepresentativiteit, bias, beoogde gebruikers, workflow, usability en prestaties in de Nederlandse of Belgische praktijk.
+## Na livegang: monitoring en updates
 
-## Post-market surveillance en model updates
+AI is na CE-markering niet "af". De fabrikant moet via post-market surveillance gegevens verzamelen over veiligheid en prestaties: klachten, incidenten, gebruikersfeedback, real-world performance, literatuur, klinische follow-up en trends.
 
-AI is zelden “af”. Na CE-markering moet de fabrikant actief gegevens verzamelen over kwaliteit, prestaties en veiligheid: klachten, incidenten, gebruikersfeedback, real-world performance, literatuur, PMCF en trends. Voor hogere klassen hoort daar ook periodieke veiligheidsrapportage bij.
-
-Model updates zijn regulatory gevoelig. Een bugfix of securitypatch is iets anders dan retraining op nieuwe data, een nieuwe populatie, een extra indicatie of een gewijzigde drempelwaarde. Elke wijziging vraagt impactanalyse: verandert intended purpose, prestatie, risico, interpretatie van data of gebruikersinterface? Dan kan herbeoordeling, notified-body betrokkenheid of aanvullende klinische validatie nodig zijn.
+Modelupdates zijn gevoelig. Een beveiligingspatch is iets anders dan retraining op nieuwe data, een gewijzigde drempelwaarde, uitbreiding naar een nieuwe indicatie of toepassing in een andere populatie. Elke wijziging vraagt impactanalyse: verandert de intended purpose, prestatie, veiligheid, datainterpretatie of gebruikersinteractie? Dan kan aanvullende validatie, documentatie of notified-body betrokkenheid nodig zijn.
 
 ## Praktische checklist
 
-- Welke medische claim staat in producttekst, handleiding, contract, pitchdeck of demo?
+- Welke medische claim staat in documentatie, demo, salesmateriaal of contract?
 - Worden patiëntspecifieke gegevens verwerkt?
-- Levert de AI nieuwe medische informatie, interpretatie, score, alarm of advies?
-- Wordt de output gebruikt voor diagnose, prognose, monitoring, triage of behandeling?
-- Wat gebeurt er als de output fout-negatief of fout-positief is?
+- Geeft de software een diagnose, voorspelling, risicoscore, alarm of behandeladvies?
+- Wordt de output gebruikt voor klinische beslissingen?
+- Wat is de mogelijke schade bij fout-positieve of fout-negatieve output?
+- Gaat het om lichaamsmateriaal of labdiagnostiek, waardoor IVDR relevant kan zijn?
 - Is het een zelfstandig product, module, accessoire of onderdeel van hardware?
-- Valt het onder MDR of mogelijk IVDR?
-- Welke Rule 11-klasse is plausibel?
-- Is er klinisch bewijs voor de specifieke populatie, setting en workflow?
-- Hoe worden drift, updates, cybersecurity, incidenten en real-world performance gevolgd?
+- Welke MDR Rule 11-klasse lijkt plausibel?
+- Is er klinisch bewijs voor de beoogde populatie, setting en workflow?
+- Hoe worden performance drift, updates, incidenten en real-world performance gemonitord?
 
 ## Bronnen
 

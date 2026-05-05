@@ -7,121 +7,80 @@ needs_review: true
 
 # Wat voor soorten AI-modellen bestaan er?
 
-“AI-model” is een brede term. Soms bedoelen mensen een simpel regressiemodel. Soms een random forest. Soms een deep-learningmodel voor CT-beelden. Soms een taalmodel dat richtlijntekst samenvat. Die modellen horen allemaal bij hetzelfde grote huis, maar ze wonen niet in dezelfde kamer.
+“AI-model” klinkt alsof het één ding is. In werkelijkheid is het een verzamelnaam. Het ene model lijkt op een vertrouwde risicoscore, het andere op een grote verzameling beslisbomen, en weer een ander op een beeldherkenner die patronen in CT- of pathologiebeelden ziet.
 
-Dit artikel is een menselijk overzicht. Niet om alle wiskunde te behandelen, maar om te voelen welk type model waarvoor bedoeld is, hoe het ongeveer werkt, en welke vragen je moet stellen voordat je het in de zorg serieus neemt.
+Voor artsen is de belangrijkste vraag niet welk model het modernst klinkt, maar welk model past bij de klinische taak en de datavorm. Een model voor EPD-data hoeft niet hetzelfde te zijn als een model voor mammografie. Een uitlegbare score voor triage vraagt iets anders dan beeldsegmentatie in radiologie.
+
+Dit artikel snoeit bewust. We behandelen drie modelgezinnen die je in medische AI vaak tegenkomt: logistische regressie, tree-based modellen en CNN's voor beeldvorming. Transformers, multimodale modellen en reinforcement learning zijn belangrijk, maar horen eerder in een vervolgartikel voor gevorderden.
 
 <interactive name="model-family-map"></interactive>
 
-## Eerst: wat leert het model eigenlijk?
+## Eerst: welke data en welke beslissing?
 
-De meeste AI-modellen leren een relatie tussen input en output. De input kan tabulaire EPD-data zijn, een beeld, tekst, audio, een tijdreeks of een combinatie daarvan. De output kan een diagnose, risico, segmentatie, samenvatting, ranking of advies zijn.
+De meeste medische AI-modellen leren een relatie tussen input en output. De input kan bijvoorbeeld bestaan uit leeftijd, labwaarden, vitale parameters, medicatie, diagnosecodes of medische beelden. De output is meestal een kans, label, score, segmentatie of alarm.
 
-Het type model hangt dus niet alleen af van mode of marketing. Het hangt af van de vraag:
+Begin daarom met drie praktische vragen:
 
-- Wil je een label voorspellen, zoals maligniteit ja/nee?
-- Wil je een getal voorspellen, zoals risico op heropname?
-- Wil je patronen vinden zonder vooraf bekende labels?
-- Wil je tekst genereren of samenvatten?
-- Wil je een keuze optimaliseren over tijd?
+- Welke input gebruikt het model: tabeldata, beeld, tekst of iets anders?
+- Welke klinische output geeft het: risico, diagnose, triage, segmentatie of advies?
+- Op welk moment moet iemand iets met die output doen?
 
-## Supervised learning: leren met voorbeelden en labels
+Een goed modeltype is dus geen modekeuze. Het is een match tussen klinische vraag, beschikbare data, gewenste uitlegbaarheid en risico bij fouten.
 
-Supervised learning is de meest herkenbare vorm. Je geeft het model voorbeelden met het juiste antwoord. Bijvoorbeeld: patiënten met kenmerken én de uitkomst sepsis ja/nee. Of beelden met labels: pneumonie wel/niet.
+## 1. Lineaire en logistische regressie
 
-Binnen supervised learning heb je grofweg twee taken:
+**Klinische usecase:** een risico op heropname, sepsis, complicatie of mortaliteit voorspellen op basis van EPD-data.
 
-**Classificatie** voorspelt een categorie. Denk aan: benigne versus maligne, wel of geen complicatie, urgent versus niet urgent.
+Logistische regressie lijkt het meest op klassieke medische risicomodellen. Het model combineert variabelen zoals leeftijd, bloeddruk, CRP, comorbiditeit of eerdere opnames met gewichten. Die combinatie wordt omgezet naar een kans, bijvoorbeeld 12% risico op complicatie binnen 30 dagen.
 
-**Regressie** voorspelt een continue waarde. Denk aan ligduur, labwaarde, risico of tijd tot event.
+Waarom werkt dit goed voor veel EPD-vragen? Omdat veel klinische predictie begint met gestructureerde tabeldata: rijen zijn patiënten, kolommen zijn kenmerken. Logistische regressie is relatief transparant: je kunt zien welke variabelen bijdragen en in welke richting.
 
-Veel klinische predictiemodellen vallen hieronder. De grote vraag is dan niet alleen “hoe hoog is de AUC?”, maar ook: klopt de calibratie, is de validatie extern, en past de drempel bij de workflow?
+De valkuil is dat het model eenvoudige verbanden veronderstelt. Complexe interacties, zoals een labwaarde die alleen bij een specifieke combinatie van leeftijd en comorbiditeit betekenis krijgt, worden niet vanzelf goed opgepikt. Ook transparantie is geen garantie voor waarheid: een netjes uitlegbaar model kan nog steeds slecht gevalideerd of slecht gecalibreerd zijn.
 
-## Lineaire en logistische modellen
+Ruwe intuïtie: het model maakt een gewogen optelsom van bekende klinische signalen.
 
-Lineaire modellen zijn vaak het beginpunt. Ze combineren variabelen met gewichten. Bij logistische regressie wordt die combinatie omgezet naar een kans.
+## 2. Tree-based modellen: random forest en XGBoost
 
-Het voordeel is dat je redelijk goed kunt zien welke variabelen bijdragen. Het nadeel is dat complexe interacties vaak niet vanzelf worden geleerd. Toch zijn deze modellen in de zorg nog steeds waardevol, juist omdat ze transparant en robuust kunnen zijn.
+**Klinische usecase:** risico voorspellen met gemengde EPD-data, labwaarden, vitale parameters en niet-lineaire patronen.
 
-Ruwe intuïtie: het model trekt een relatief eenvoudige grens door de data.
+Een beslisboom stelt opeenvolgende vragen: is leeftijd hoger dan X, is CRP boven Y, is de systolische bloeddruk lager dan Z, is er zuurstofbehoefte? Aan het eind kom je in een blad met een voorspelling.
 
-## Beslisbomen en random forests
+Een **random forest** bouwt veel van zulke bomen en laat ze samen stemmen. **XGBoost** bouwt bomen na elkaar: elke nieuwe boom probeert fouten van eerdere bomen te corrigeren. Beide behoren tot de tree-based familie en zijn populair bij tabulaire zorgdata.
 
-Een beslisboom stelt opeenvolgende vragen: is leeftijd hoger dan X? Is CRP hoger dan Y? Is er zuurstofbehoefte? Aan het eind kom je in een blad met een voorspelling.
+Waarom werkt dit goed voor gemengde data? Omdat bomen automatisch drempels en interacties kunnen leren. Ze kunnen bijvoorbeeld oppikken dat een labwaarde pas zorgelijk wordt in combinatie met leeftijd, vitale instabiliteit of bepaalde medicatie.
 
-Een random forest bouwt veel van zulke bomen op varianten van de data en laat ze samen stemmen. Daardoor wordt het model stabieler dan één losse boom.
+De valkuil is overfitting en schijnzekerheid. Diepe bomen kunnen lokale gewoonten leren: hoe vaak een afdeling lab aanvraagt, hoe een ziekenhuis codeert, of welke order set bij verdenking wordt gebruikt. Daardoor kan het model intern prachtig scoren en extern tegenvallen. Vraag dus naar patient-level splits, externe validatie, calibratie en subgroepanalyse.
 
-Ruwe intuïtie: veel kleine beslisroutes stemmen samen. Dit werkt vaak goed op tabulaire data, maar kan nog steeds overfitten als bomen te diep worden of validatie niet goed is.
+Ruwe intuïtie: veel kleine beslisroutes stemmen samen, of corrigeren elkaar stap voor stap.
 
-## Gradient boosting en XGBoost
+## 3. CNN's: modellen voor medische beelden
 
-Boosting bouwt modellen na elkaar. Elke nieuwe boom probeert de fouten van de vorige bomen te corrigeren. XGBoost is een bekende implementatie van gradient boosting.
+**Klinische usecase:** afwijkingen detecteren of segmenteren op rontgenfoto's, CT, MRI, mammografie, dermatologiebeelden, oogfundusfoto's of pathologiebeelden.
 
-Dit type model is vaak sterk op gestructureerde tabulaire data: EPD-variabelen, labwaarden, scores, claimsdata, registraties. Het kan nonlineariteit en interacties leren zonder dat je die allemaal vooraf specificeert.
+Een CNN, voluit convolutioneel neuraal netwerk, is gemaakt voor beelddata. Het kijkt niet naar een tabel met kolommen, maar naar pixels en lokale beeldpatronen. In de eerste lagen herkent het simpele patronen zoals randen, contrastverschillen en texturen. In latere lagen worden die patronen abstracter, bijvoorbeeld een nodus, vaatstructuur, laesie of weefselpatroon.
 
-Ruwe intuïtie: een team van kleine correctoren, waarbij elke nieuwe boom zegt: “hier ging het vorige team nog mis.”
+Waarom werkt dit goed voor beelden? Omdat medische beelden ruimtelijke structuur hebben. De betekenis zit niet alleen in losse pixels, maar in patronen naast elkaar: vorm, begrenzing, densiteit, symmetrie en context.
 
-## Neurale netwerken
+De valkuil is dat CNN's gevoelig kunnen zijn voor shortcuts. Een model kan leren van scannermerk, tekstmarkers, acquisitieprotocol, cropping of centrumverschillen in plaats van van pathologie. Ook bij beelden is patient-level splitting cruciaal: slices of beelden van dezelfde patiënt mogen niet verdeeld raken over train en test. Externe validatie op andere scanners, centra en populaties is geen luxe maar een veiligheidscheck.
 
-Neurale netwerken bestaan uit lagen van knooppunten met gewichten. Ze leren representaties: tussenstappen waarin ruwe input wordt omgezet naar bruikbare patronen. Bij kleine tabulaire datasets zijn ze niet automatisch beter dan boommodellen. Bij beelden, tekst, audio en grote complexe data kunnen ze juist veel krachtiger zijn.
+Ruwe intuïtie: eerst kleine beeldstukjes herkennen, daarna grotere klinisch relevante patronen.
 
-Ruwe intuïtie: het model leert zelf tussenkenmerken. Niet alleen “CRP hoog”, maar combinaties of patronen die je niet handmatig hebt geprogrammeerd.
+## Waar zijn taalmodellen en transformers gebleven?
 
-## CNN's: modellen voor beelden
+Taalmodellen, transformers, embeddings en multimodale modellen worden snel belangrijker in de zorg, vooral voor samenvatten, zoeken, verslagondersteuning en RAG-systemen. Maar ze brengen eigen begrippen en risico's mee: context window, brontrouw, hallucinaties, promptgevoeligheid, privacy en workflowcontrole.
 
-Convolutionele neurale netwerken, CNN's, zijn ontworpen voor beelden. Ze kijken met kleine vensters naar lokale patronen: randen, vlekken, texturen, vormen. Die patronen worden laag voor laag abstracter.
-
-In medische AI worden CNN's gebruikt voor radiologie, dermatologie, pathologie, oogheelkunde en andere beeldtaken. Ze kunnen krachtig zijn, maar vragen strenge validatie: patient-level splits, scanner- en centrumvariatie, externe datasets en duidelijke foutanalyse.
-
-Ruwe intuïtie: eerst kleine beeldstukjes herkennen, daarna grotere structuren.
-
-## Transformers en taalmodellen
-
-Transformers verwerken reeksen zoals tekst, tokens, codes of soms beeldpatches. Ze gebruiken attention: het model leert welke delen van de input belangrijk zijn voor elkaar. Grote taalmodellen zijn transformers die op enorme hoeveelheden tekst zijn voorgetraind.
-
-In de zorg kunnen ze helpen bij samenvatten, zoeken, structureren, conceptverslagen of uitleg. Maar ze zijn geen automatische collega. Ze kunnen overtuigend klinken en toch fouten maken, bronnen verzinnen of lokale context missen.
-
-Ruwe intuïtie: het model leest context door te wegen welke woorden of stukken informatie elkaar beïnvloeden.
-
-## Unsupervised learning: patronen zonder labels
-
-Bij unsupervised learning zijn er geen vooraf bekende antwoorden. Het model zoekt structuur. Clustering groepeert bijvoorbeeld patiënten met vergelijkbare kenmerken. Dimensionality reduction maakt complexe data overzichtelijker in minder dimensies.
-
-Dit is handig voor exploratie, subtypen, kwaliteitscontrole of cohortverkenning. Maar een cluster is niet automatisch een klinisch subtype. Je moet altijd terug naar interpretatie, validatie en klinische betekenis.
-
-Ruwe intuïtie: het model sorteert de kast zonder dat iemand vooraf labels op de bakjes heeft geplakt.
-
-## Self-supervised en generatieve modellen
-
-Self-supervised learning gebruikt data om zelf leersignalen te maken. Een taalmodel leert bijvoorbeeld ontbrekende woorden of volgende tokens voorspellen. Een beeldmodel kan leren welke representaties hetzelfde object of dezelfde structuur beschrijven.
-
-Generatieve modellen kunnen nieuwe tekst, beelden, audio of data-achtige voorbeelden maken. In medische context is dat interessant voor documentatie, simulatie, educatie of data-augmentatie, maar risicovol voor diagnostische claims en privacy.
-
-Ruwe intuïtie: het model leert de grammatica van data, en kan daarna nieuwe voorbeelden of samenvattingen maken.
-
-## Reinforcement learning
-
-Reinforcement learning leert door acties en beloningen. Een agent probeert keuzes te maken die op lange termijn veel beloning opleveren. In theorie past dit bij behandelstrategieën over tijd. In de praktijk is klinische toepassing moeilijk, omdat echte experimenten riskant zijn, beloningen vertraagd zijn en confounding groot is.
-
-Ruwe intuïtie: leren door trial-and-error, maar in de zorg mag je die trial-and-error niet zomaar op patiënten doen.
-
-## Multimodale modellen
-
-Steeds vaker combineren modellen meerdere bronnen: beeld plus tekst, EPD plus labwaarden, radiologieverslag plus scan, of monitoringdata plus klinische notities. Dit kan rijker zijn, maar ook complexer. Als één bron de andere verraadt, ontstaat leakage. Als één modaliteit ontbreekt in de praktijk, kan het model falen.
-
-Ruwe intuïtie: meerdere zintuigen tegelijk, maar ook meerdere manieren om in de war te raken.
+Voor een basisoverzicht is het helderder om ze niet tussen regressie, bomen en CNN's te proppen. De praktische boodschap blijft hetzelfde: kijk naar de input, output, klinische taak, validatie en schade bij fouten. Een indrukwekkende architectuur maakt een slechte usecase niet goed.
 
 ## Hoe kies je een modeltype?
 
-Een praktisch startpunt:
+Gebruik dit als startpunt:
 
-- **Tabulaire data, beperkte dataset:** begin met logistische regressie, random forest of gradient boosting.
-- **Beelden:** denk aan CNN's of vision transformers, met strenge beeldvalidatie.
-- **Tekst en richtlijnen:** denk aan embeddings, retrieval, transformers of RAG.
-- **Onbekende patiëntgroepen:** clustering of dimensionality reduction kan exploratief helpen.
-- **Beslissingen over tijd:** wees voorzichtig met reinforcement learning; vaak is eerst goede observationele validatie nodig.
+- **EPD-data met klassieke risicovraag:** begin vaak met logistische regressie als sterke baseline.
+- **Gemengde tabeldata met interacties:** random forest of XGBoost kan passend zijn, mits goed gevalideerd.
+- **Medische beelden:** CNN's zijn vaak logisch, met strenge beeldvalidatie.
+- **Tekst of richtlijnen:** behandel dit als aparte taalmodel- of RAG-usecase, met eigen veiligheidsvragen.
 
-Het beste model is niet altijd het meest indrukwekkende model. In medische AI is het beste model vaak het model dat de klinische vraag beantwoordt, goed gevalideerd is, uitlegbaar genoeg is voor de workflow, en veilig blijft bij nieuwe patiënten.
+Het beste model is niet automatisch het meest complexe model. In medische AI is het beste model vaak het model dat de klinische vraag beantwoordt, goed gevalideerd is, begrijpelijk genoeg is voor de workflow en veilig blijft bij nieuwe patiënten.
 
 ## Praktische checklist
 
@@ -129,15 +88,16 @@ Vraag bij elk AI-model:
 
 1. Welke input gebruikt het model?
 2. Wat is de output en op welk moment wordt die gebruikt?
-3. Is het supervised, unsupervised, generatief, multimodaal of iets anders?
-4. Past het modeltype bij de datavorm?
-5. Is het model extern gevalideerd?
+3. Past het modeltype bij de datavorm?
+4. Is er een eenvoudige baseline vergeleken, zoals logistische regressie?
+5. Is het model extern of temporeel gevalideerd?
 6. Zijn calibratie, subgroepen en fouttypen onderzocht?
 7. Begrijpt de gebruiker wat de output wel en niet betekent?
+8. Wat gebeurt er als de output fout-positief of fout-negatief is?
 
 ## Kernboodschap
 
-AI-modellen zijn geen magische zwarte doos van één soort. Het zijn families met verschillende manieren van leren. Lineaire modellen trekken eenvoudige grenzen. Bomen stellen vragen. Forests laten bomen stemmen. Boosting corrigeert stap voor stap. Neurale netwerken leren representaties. CNN's kijken naar lokale beeldpatronen. Transformers wegen context. Clustering zoekt structuur. Generatieve modellen maken nieuwe output. De kunst is niet om het nieuwste model te kiezen, maar het passende model voor de klinische vraag.
+AI-modellen zijn geen magische zwarte doos van één soort. Logistische regressie maakt een gewogen risicoschatting. Tree-based modellen stellen veel kleine vragen en laten beslisroutes stemmen of elkaar corrigeren. CNN's herkennen lokale patronen in beelden. De kunst is niet om het nieuwste model te kiezen, maar het passende model voor de klinische vraag, de datavorm en de workflow waarin echte mensen ermee moeten werken.
 
 ## Bronnen
 

@@ -41,7 +41,7 @@ Een goede pilot bevat training, feedbackmomenten, monitoring dashboards, inciden
 
 Live deployment betekent dat de AI structureel onderdeel wordt van de klinische workflow. Vanaf dat moment is beheer minstens zo belangrijk als ontwikkeling. Er moeten eigenaren zijn voor modelperformance, klinische veiligheid, technische beschikbaarheid, privacy, security, leverancierscontact, wijzigingsbeheer en periodieke evaluatie.
 
-Workflowintegratie is vaak bepalender dan modelscore. Een goede AI-output verschijnt op het juiste moment, bij de juiste professional, in het juiste systeem, met een begrijpelijke actiecontext. Een slecht geplaatste alert kan genegeerd worden; een te dwingende alert kan juist automation bias veroorzaken. Ontwerp daarom expliciet voor de menselijke-AI-samenwerking: de professional blijft verantwoordelijk voor klinische interpretatie, terwijl de organisatie verantwoordelijk is voor veilige randvoorwaarden.
+Workflowintegratie is vaak bepalender dan modelscore. Een goede AI-output verschijnt op het juiste moment, bij de juiste professional, in het juiste systeem, met een begrijpelijke actiecontext. Een slecht geplaatste alert kan genegeerd worden; een te dwingende alert kan juist automation bias veroorzaken: te veel vertrouwen op de output omdat hij er officieel uitziet, zelfs als je klinische intuïtie iets anders zegt. Ontwerp daarom expliciet voor de menselijke-AI-samenwerking: de professional blijft verantwoordelijk voor klinische interpretatie, terwijl de organisatie verantwoordelijk is voor veilige randvoorwaarden.
 
 ## Monitoring, drift en incidentproces
 

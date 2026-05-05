@@ -45,7 +45,7 @@ Vermijd “losse dashboards” die alleen door enthousiaste projectleden worden 
 
 Elke AI-output moet een operationeel eigenaarschap hebben. Wie ziet de melding? Wie beoordeelt haar? Wie mag handelen? Wie is verantwoordelijk bij afwijken? Wie monitort performance? Wie zet het systeem tijdelijk uit bij storing of drift?
 
-Zonder duidelijke RACI-afspraken ontstaat schijnveiligheid. De verpleegkundige dacht dat de arts het zag; de arts dacht dat het AI-team monitorde; het AI-team dacht dat de afdeling eigenaar was. Klinische AI vraagt daarom om governance: CMIO, medisch specialist, verpleegkundige vertegenwoordiging, data science, EPD-beheer, kwaliteit & veiligheid, privacy/security en juridisch advies moeten vooraf afspraken maken over gebruik, escalatie en wijzigingsbeheer.
+Zonder duidelijke afspraak over wie het alarm ziet, wie het beoordeelt, wie ingrijpt en wie problemen oplost, ontstaat schijnveiligheid. De verpleegkundige dacht dat de arts het zag; de arts dacht dat het AI-team monitorde; het AI-team dacht dat de afdeling eigenaar was. Klinische AI vraagt daarom om governance: CMIO, medisch specialist, verpleegkundige vertegenwoordiging, data science, EPD-beheer, kwaliteit & veiligheid, privacy/security en juridisch advies moeten vooraf afspraken maken over gebruik, escalatie en wijzigingsbeheer.
 
 ## 6. Lokale context en change management
 
@@ -77,7 +77,7 @@ Belangrijk is de feedbackloop: kunnen gebruikers melden dat een alert onzinnig, 
 **Figuurideeën**
 1. Swimlane “van modelscore naar klinische actie”: patiëntdata, model, EPD, verantwoordelijke rol, actie, feedback.
 2. Timingkaart: AI-output afgezet tegen visite, overdracht, labronde, MDO en ontslagmoment.
-3. Alert fatigue-funnel: alle alerts, klinisch relevante alerts, opgevolgde alerts, uitkomstimpact.
+3. Alert fatigue-funnel: alle alerts, klinisch relevante alerts, opgevolgde alerts, uitkomstimpact. Zo'n funnel laat zien waar meldingen onderweg hun waarde verliezen: bij te veel volume, onduidelijke urgentie, geen eigenaar of geen uitvoerbare vervolgstap.
 4. Governance-matrix: klinisch eigenaar, CMIO, data science, EPD-team, kwaliteit & veiligheid.
 
 **Interactieve component**

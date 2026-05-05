@@ -39,7 +39,7 @@ Missing data hoort niet verstopt te zitten in een supplement. Rapporteer per pre
 
 Discrimination beschrijft hoe goed het model onderscheid maakt tussen mensen met en zonder outcome, vaak met AUC/C-statistic, sensitiviteit, specificiteit of positive predictive value bij vooraf gekozen drempels. Dat is nodig, maar niet genoeg.
 
-Calibration is minstens zo belangrijk: kloppen de voorspelde risico’s met de geobserveerde risico’s? Een model met AUC 0,85 kan klinisch gevaarlijk zijn als het systematisch 20% risico voorspelt waar 5% realistisch is. Rapporteer calibration-in-the-large, calibration slope, flexible calibration plots en, bij tijd-tot-eventmodellen, kalibratie op relevante tijdspunten. Vermijd alleen Hosmer-Lemeshow-achtige p-waarden; die zeggen weinig over klinische bruikbaarheid.
+Calibration is minstens zo belangrijk: klopt het zelfvertrouwen van het model met de werkelijkheid? Als het model 50% kans voorspelt, gebeurt de uitkomst dan ook bij ongeveer de helft van vergelijkbare patiënten? Een model met AUC 0,85 kan klinisch gevaarlijk zijn als het systematisch 20% risico voorspelt waar 5% realistisch is. Rapporteer calibration-in-the-large, calibration slope, flexible calibration plots en, bij tijd-tot-eventmodellen, kalibratie op relevante tijdspunten. Vermijd verouderde p-waardetests als enige calibratiebewijs; die zeggen weinig over klinische bruikbaarheid.
 
 ## Clinical utility: wat verandert er aan beslissingen?
 

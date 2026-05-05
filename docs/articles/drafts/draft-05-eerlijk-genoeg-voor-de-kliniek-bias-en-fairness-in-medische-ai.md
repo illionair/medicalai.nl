@@ -35,7 +35,7 @@ In Nederland en België kan dit extra relevant zijn bij regionale verschillen in
 
 **Measurement bias** ontstaat wanneer metingen systematisch verschillen tussen groepen of settings. Apparaten, protocollen, meetfrequentie, ontbrekende waarden en laboratoriumaanvragen zijn zelden neutraal. Een patiënt die vaker wordt gemonitord, produceert meer data; een patiënt bij wie bepaalde testen minder vaak worden aangevraagd, lijkt mogelijk "gezonder" in het dossier.
 
-**<term def="Vertekening doordat het ziekte-ernste-spectrum in de studie niet overeenkomt met de praktijk — bv. alleen duidelijke gevallen versus gezonde controles, terwijl de praktijk vol zit met grensgevallen.">Spectrum bias</term>** betekent dat het ziekte- of ernstespectrum in de studie niet overeenkomt met de praktijk. Een model dat is gevalideerd op duidelijke casussen en gezonde controles kan falen bij vroege ziekte, comorbiditeit, atypische presentatie of patiënten op de grens van een klinische beslissing.
+**<term def="Vertekening doordat de studiepopulatie niet matcht met de echte praktijk.">Spectrum bias</term>** betekent simpel gezegd dat de studiepopulatie niet matcht met de echte praktijk. Een model dat is gevalideerd op duidelijke casussen en gezonde controles kan falen bij vroege ziekte, comorbiditeit, atypische presentatie of patiënten op de grens van een klinische beslissing.
 
 ## Kijk voorbij gemiddelde performance
 
@@ -51,9 +51,9 @@ Let ook op <term def="Mate waarin voorspelde kansen overeenkomen met werkelijke 
 
 ## Fairness metrics: nuttig, maar niet waardenvrij
 
-Fairness metrics maken ongelijkheid zichtbaar, maar kiezen geen ethisch of klinisch doel voor je. Veelgebruikte maten zijn onder meer gelijke sensitiviteit tussen groepen, gelijke specificiteit, gelijke fout-positieve of fout-negatieve percentages, <term def="Predictive parity — bij gelijke modelvoorspelling moeten werkelijke uitkomstpercentages tussen groepen gelijk zijn (gelijke PPV).">predictive parity</term> en calibratie per groep.
+Fairness metrics maken ongelijkheid zichtbaar, maar kiezen geen ethisch of klinisch doel voor je. Voor klinische beoordeling zijn drie maten vaak een goed begin: sensitiviteit per groep, <term def="Mate waarin voorspelde kansen overeenkomen met werkelijke uitkomstpercentages binnen een groep.">calibratie per groep</term> en <term def="Predictive parity — bij gelijke modelvoorspelling moeten werkelijke uitkomstpercentages tussen groepen gelijk zijn (gelijke PPV).">predictive parity</term>.
 
-Bij ongelijke prevalentie kunnen deze criteria met elkaar botsen: een model kan niet altijd tegelijk perfect gekalibreerd zijn en gelijke foutpercentages hebben.
+Andere maten, zoals specificiteit per groep of gelijke fout-positieve en fout-negatieve percentages, kunnen nuttig zijn in een verdiepende analyse. Bij ongelijke prevalentie kunnen deze criteria met elkaar botsen: een model kan niet altijd tegelijk perfect gekalibreerd zijn en gelijke foutpercentages hebben.
 
 Daarom begint fairness niet met een formule, maar met de klinische vraag. Bij een sepsiswaarschuwing kan een gemiste diagnose zwaarder wegen dan een fout alarm; bij screening kan overdiagnostiek juist grote schade geven. Fairness betekent dan niet automatisch identieke drempels voor iedereen, maar wel expliciete keuzes, onderbouwde drempels, transparante foutanalyse en monitoring na implementatie.
 
@@ -65,7 +65,7 @@ Ook kan AI bestaande verschillen versterken: afdelingen met meer capaciteit prof
 
 Beoordeel daarom niet alleen modelperformance, maar ook de beslisketen: wie ziet de output, hoe wordt die geïnterpreteerd, welke actie volgt, is er menselijk toezicht, en worden afwijkingen gelogd? Een AI-tool die "slechts adviseert" kan in de praktijk toch sterk sturen.
 
-## Relevantie voor reporting en risk-of-bias tools
+## Richtlijnen voor onderzoekers
 
 TRIPOD+AI is relevant voor studies die predictiemodellen ontwikkelen of evalueren. Het helpt beoordelen of populatie, databronnen, predictoren, uitkomstdefinities, missing data, modelontwikkeling en performance volledig zijn gerapporteerd. PROBAST+AI sluit daarop aan als instrument voor kwaliteit, risk of bias en toepasbaarheid van predictiemodellen.
 

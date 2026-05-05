@@ -11,7 +11,7 @@ needs_review: true
 
 ## Intro
 
-Een AI-model kan indrukwekkend scoren op AUROC, sensitiviteit of F1-score en toch weinig betekenen voor patiënten, professionals of capaciteit. Clinical utility vraagt daarom niet: “Is het model goed?”, maar: “Worden beslissingen beter wanneer we dit model gebruiken?” Dat verschil is cruciaal voor klinische onderzoekers, zorgprofessionals en beslissers die willen bepalen of AI meerwaarde heeft boven huidige zorg. Dit artikel is educatief bedoeld en is geen medisch, juridisch of inkoopadvies.
+Een AI-model kan indrukwekkend scoren op AUROC, sensitiviteit of F1-score en toch weinig betekenen voor patiënten, professionals of capaciteit. Het lijkt op het kiezen van een drempel bij een screeningstest: een betere test is pas nuttig als de gekozen drempel leidt tot betere beslissingen. Clinical utility vraagt daarom niet: “Is het model goed?”, maar: “Worden beslissingen beter wanneer we dit model gebruiken?” Dat verschil is cruciaal voor klinische onderzoekers, zorgprofessionals en beslissers die willen bepalen of AI meerwaarde heeft boven huidige zorg. Dit artikel is educatief bedoeld en is geen medisch, juridisch of inkoopadvies.
 
 ## Clinical Utility: Meer Dan Modelperformance
 

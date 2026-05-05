@@ -19,9 +19,9 @@ De meest kansrijke toepassingen liggen waar taalwerk zwaar weegt, maar waar een 
 
 ## De technische valkuilen
 
-Hallucinatie is het bekendste risico: het model genereert plausibele maar onjuiste informatie, zoals niet-bestaande richtlijnen, verkeerde doseringen of verzonnen bronverwijzingen. RAG, retrieval augmented generation, kan dit verminderen door het model antwoorden te laten baseren op gecontroleerde bronnen zoals lokale protocollen, NHG-richtlijnen of ziekenhuisdocumentatie. RAG lost het probleem niet op: slechte zoekresultaten, verouderde documenten of verkeerd geciteerde passages blijven mogelijk.
+Hallucinatie is het bekendste risico: het model vult een gat in met een antwoord dat plausibel klinkt, maar niet klopt. Denk aan niet-bestaande richtlijnen, verkeerde doseringen of verzonnen bronverwijzingen. RAG, retrieval augmented generation, kan dit verminderen door het model antwoorden te laten baseren op gecontroleerde bronnen zoals lokale protocollen, NHG-richtlijnen of ziekenhuisdocumentatie. RAG lost het probleem niet op: slechte zoekresultaten, verouderde documenten of verkeerd geciteerde passages blijven mogelijk.
 
-Prompt sensitivity betekent dat kleine wijzigingen in vraagstelling, volgorde of toon een ander antwoord kunnen opleveren. Daarom zijn vaste prompttemplates, versiebeheer en regressietests belangrijk. De context window is eveneens begrensd. Een model kan maar een bepaalde hoeveelheid tekst tegelijk verwerken en gebruikt lange context niet altijd robuust; relevante informatie “in het midden” kan onderbenut raken. Gebruik daarom samenvattingen met bronverwijzingen, chunking, prioritering en expliciete instructies om onzekerheid te melden.
+Prompt sensitivity betekent dat kleine wijzigingen in vraagstelling, volgorde of toon een ander antwoord kunnen opleveren. Daarom zijn vaste prompttemplates, versiebeheer en regressietests belangrijk. De context window is het kortetermijngeheugen van het model: het kan maar een beperkte hoeveelheid tekst tegelijk "zien". Bovendien gebruikt een model lange context niet altijd robuust; relevante informatie “in het midden” kan onderbenut raken. Gebruik daarom samenvattingen met bronverwijzingen, chunking, prioritering en expliciete instructies om onzekerheid te melden.
 
 ## Privacy, PHI en logging
 

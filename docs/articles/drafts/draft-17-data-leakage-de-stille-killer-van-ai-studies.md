@@ -46,7 +46,7 @@ Versterken het probleem. Publieke datasets bevatten soms identieke of bijna-iden
 
 ### Temporal leakage
 
-Ontstaat wanneer een willekeurige split over tijd wordt gebruikt terwijl het model later op toekomstige patiënten moet werken. Toekomstige behandelprotocollen, coderingspraktijken, laboratoriumassays of pandemiegolven kunnen dan onbedoeld in de training zitten. Een tijdgebaseerde validatie is vaak realistischer.
+Ontstaat wanneer een willekeurige split over tijd wordt gebruikt terwijl het model later op toekomstige patiënten moet werken. Toekomstige behandelprotocollen, coderingspraktijken, laboratoriumassays of pandemiegolven kunnen dan onbedoeld in de training zitten. Denk aan een nieuw beademingsprotocol in jaar 2 dat in jaar 1 nog niet bestond, waardoor het model toekomstkennis lijkt te hebben. Een tijdgebaseerde validatie is vaak realistischer.
 
 ### Preprocessing leakage
 
