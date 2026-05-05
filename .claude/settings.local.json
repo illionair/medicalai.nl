@@ -31,7 +31,10 @@
       "Bash(npm run *)",
       "Bash(npx next *)",
       "Bash(git add *)",
-      "Bash(findstr /i middleware)"
+      "Bash(findstr /i middleware)",
+      "Bash(dir -R -Name -Path)",
+      "Bash(xargs ls *)",
+      "Bash(npm install *)"
     ]
   }
 }

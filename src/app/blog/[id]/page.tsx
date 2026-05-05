@@ -1,6 +1,4 @@
 import { getBlogPost } from "@/app/actions";
-import ReactMarkdown from "react-markdown";
-import rehypeRaw from "rehype-raw";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,7 +8,10 @@ import BlogSidebar from "@/components/BlogSidebar";
 import EvidenceBox from "@/components/EvidenceBox";
 import CopyButton from "@/components/CopyButton";
 import ArticleEngagement from "@/components/ArticleEngagement";
-import InteractiveSlot from "@/components/interactives/InteractiveSlot";
+import ArticleMarkdown from "@/components/article/ArticleMarkdown";
+import ArticleTOC from "@/components/article/ArticleTOC";
+import DifficultyBadge from "@/components/article/DifficultyBadge";
+import ReadingTime from "@/components/article/ReadingTime";
 import { resolveSiteUrl } from "@/lib/env";
 import { getCurrentUser } from "@/lib/user-auth";
 import { isStaticArticleId } from "@/lib/static-articles";
@@ -21,31 +22,6 @@ function doiHref(doi?: string | null) {
     if (!doi) return null;
     if (doi.startsWith("http://") || doi.startsWith("https://")) return doi;
     return `https://doi.org/${doi.replace(/^doi:/i, "").trim()}`;
-}
-
-function MarkdownWithInteractives({ content }: { content: string }) {
-    const parts = content.split(/<interactive\s+name="([^"]+)"\s*><\/interactive>/g);
-
-    return (
-        <>
-            {parts.map((part, index) => {
-                if (index % 2 === 1) {
-                    return <InteractiveSlot key={`interactive-${part}-${index}`} name={part} />;
-                }
-
-                if (!part.trim()) return null;
-                return (
-                    <ReactMarkdown
-                        key={`markdown-${index}`}
-                        rehypePlugins={[rehypeRaw]}
-                        urlTransform={(value) => value}
-                    >
-                        {part}
-                    </ReactMarkdown>
-                );
-            })}
-        </>
-    );
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ id: string }> }) {
@@ -60,6 +36,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
     const likedByCurrentUser = currentUser ? blog.likes.some((like) => like.userId === currentUser.id) : false;
     const canonicalUrl = `${resolveSiteUrl()}/blog/${blog.id}`;
     const originalPublicationUrl = doiHref(blog.doi);
+    const blogExtras = blog as { difficulty?: string; readingMinutes?: number };
+    const difficulty = blogExtras.difficulty;
+    const readingMinutes = blogExtras.readingMinutes;
     const heroImage = blog.coverImage || blog.imageUrl;
     const isEducationalArticle = isStaticArticleId(blog.id) || blog.modelType?.toLowerCase() === "educatief artikel";
     const supportsEngagement = !isStaticArticleId(blog.id);
@@ -101,7 +80,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                     )}
 
                     {/* Subtitle/Summary if available, or just meta */}
-                    <div className="flex items-center gap-4 text-slate-500 text-sm font-medium">
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-slate-500 text-sm font-medium">
                         <span className="flex items-center gap-2">
                             <Calendar size={16} />
                             {new Date(blog.createdAt).toLocaleDateString("nl-NL", {
@@ -117,6 +96,18 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                             <User size={16} />
                             {blog.article?.authors || "Drs. S. S. Mahes"}
                         </span>
+                        {readingMinutes && (
+                            <>
+                                <span>•</span>
+                                <ReadingTime minutes={readingMinutes} />
+                            </>
+                        )}
+                        {difficulty && (
+                            <>
+                                <span>•</span>
+                                <DifficultyBadge level={difficulty} />
+                            </>
+                        )}
                     </div>
                 </div >
             </div >
@@ -194,7 +185,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                         )}
 
                         <div className="typography-theme max-w-none">
-                            <MarkdownWithInteractives content={blog.content} />
+                            <ArticleMarkdown content={blog.content} />
                         </div>
 
                         {/* Mobile-only Quick Facts & Details */}
@@ -301,21 +292,24 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
 
                     {/* Sidebar Column (Desktop Only) */}
                     <div className="hidden lg:block lg:col-span-4">
-                        <BlogSidebar
-                            developer={blog.developer}
-                            demoUrl={blog.demoUrl}
-                            vendorUrl={blog.vendorUrl}
-                            privacyType={blog.privacyType}
-                            integration={blog.integration}
-                            fdaStatus={blog.fdaStatus}
-                            fdaNumber={blog.fdaNumber}
-                            ceStatus={blog.ceStatus}
-                            specialism={blog.specialism}
-                            cost={blog.cost}
-                            modelType={blog.modelType}
-                            title={blog.title}
-                            currentUrl={canonicalUrl}
-                        />
+                        <div className="sticky top-24 space-y-6">
+                            <ArticleTOC content={blog.content} />
+                            <BlogSidebar
+                                developer={blog.developer}
+                                demoUrl={blog.demoUrl}
+                                vendorUrl={blog.vendorUrl}
+                                privacyType={blog.privacyType}
+                                integration={blog.integration}
+                                fdaStatus={blog.fdaStatus}
+                                fdaNumber={blog.fdaNumber}
+                                ceStatus={blog.ceStatus}
+                                specialism={blog.specialism}
+                                cost={blog.cost}
+                                modelType={blog.modelType}
+                                title={blog.title}
+                                currentUrl={canonicalUrl}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

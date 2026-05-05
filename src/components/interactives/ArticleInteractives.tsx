@@ -457,8 +457,15 @@ export function AucScores() {
     );
 }
 
-export function AucThreshold() {
-    const [threshold, setThreshold] = useState(55);
+export function AucThreshold({
+    initialThreshold = 0.55,
+    showHint = false,
+}: {
+    initialThreshold?: number;
+    showHint?: boolean;
+} = {}) {
+    const clamped = Math.round(Math.min(0.95, Math.max(0.05, initialThreshold)) * 100);
+    const [threshold, setThreshold] = useState(clamped);
     const metrics = useMemo(() => thresholdStats(threshold / 100), [threshold]);
 
     return (
@@ -1075,7 +1082,7 @@ export function ClinicalUtilityCalculator() {
     );
 }
 
-export function DataLeakageSimulator() {
+export function DataLeakageSimulator(_props: { scenario?: string; startToggles?: string[] } = {}) {
     const [patientSplit, setPatientSplit] = useState(false);
     const [futureFeature, setFutureFeature] = useState(true);
     const [preprocessLeak, setPreprocessLeak] = useState(true);
@@ -1208,7 +1215,7 @@ export function ValidationShiftMap() {
     );
 }
 
-export function FairnessAuditSimulator() {
+export function FairnessAuditSimulator(_props: { scenario?: string; focusGroup?: string } = {}) {
     const [threshold, setThreshold] = useState(55);
     const groups = [
         { name: "Groep A", baseRisk: 0.32, sensitivity: 0.84 - threshold / 500, falseAlarm: 0.18 + (60 - threshold) / 700 },

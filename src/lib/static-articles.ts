@@ -1,5 +1,50 @@
 import fs from "fs";
 import path from "path";
+import { getCover } from "./covers";
+
+type Frontmatter = {
+    title?: string;
+    seoTitle?: string;
+    subtitle?: string;
+    difficulty?: "basis" | "middel" | "diep";
+    readingMinutes?: number;
+    coverConcept?: string;
+};
+
+function parseFrontmatter(raw: string): { frontmatter: Frontmatter; body: string } {
+    const match = raw.match(/^---\n([\s\S]*?)\n---\n?/);
+    if (!match) return { frontmatter: {}, body: raw };
+    const body = raw.slice(match[0].length);
+    const frontmatter: Frontmatter = {};
+    for (const line of match[1].split("\n")) {
+        const m = line.match(/^([A-Za-z][A-Za-z0-9_-]*)\s*:\s*(.+?)\s*$/);
+        if (!m) continue;
+        const key = m[1];
+        let value: string = m[2];
+        if (value.startsWith('"') && value.endsWith('"')) {
+            value = value.slice(1, -1);
+        } else if (value.startsWith("'") && value.endsWith("'")) {
+            value = value.slice(1, -1);
+        }
+        if (key === "readingMinutes") {
+            const n = parseInt(value, 10);
+            if (!Number.isNaN(n)) frontmatter.readingMinutes = n;
+        } else if (key === "difficulty") {
+            if (value === "basis" || value === "middel" || value === "diep") {
+                frontmatter.difficulty = value;
+            }
+        } else if (key === "title") {
+            frontmatter.title = value;
+        } else if (key === "seoTitle") {
+            frontmatter.seoTitle = value;
+        } else if (key === "subtitle") {
+            frontmatter.subtitle = value;
+        } else if (key === "coverConcept") {
+            frontmatter.coverConcept = value;
+        }
+    }
+    return { frontmatter, body };
+}
 
 type StaticArticleConfig = {
     file: string;
@@ -58,6 +103,10 @@ export type StaticArticle = {
     };
     likes: [];
     comments: [];
+    seoTitle?: string;
+    difficulty?: "basis" | "middel" | "diep";
+    readingMinutes?: number;
+    coverConcept?: string;
 };
 
 const ARTICLE_DIR = path.join(process.cwd(), "docs", "articles", "drafts");
@@ -316,13 +365,13 @@ function extractSummary(content: string) {
 }
 
 function cleanMarkdown(raw: string, interactive: string) {
-    const withoutFrontmatter = raw
-        .replace(/\r\n/g, "\n")
-        .replace(/^---\n[\s\S]*?\n---\n+/, "")
-        .replace(/<!--[\s\S]*?-->\n*/g, "");
-    const titleMatch = withoutFrontmatter.match(/^#\s+(.+)\n+/);
-    const title = titleMatch?.[1]?.trim() || "Medical AI artikel";
-    let body = withoutFrontmatter.replace(/^#\s+.+\n+/, "").trim();
+    const normalized = raw.replace(/\r\n/g, "\n");
+    const { frontmatter, body: afterFrontmatter } = parseFrontmatter(normalized);
+    const withoutComments = afterFrontmatter.replace(/<!--[\s\S]*?-->\n*/g, "");
+    const titleMatch = withoutComments.match(/^#\s+(.+)\n+/);
+    const headingTitle = titleMatch?.[1]?.trim();
+    const title = frontmatter.title || headingTitle || "Medical AI artikel";
+    let body = withoutComments.replace(/^#\s+.+\n+/, "").trim();
 
     body = body
         .replace(/\n---\s*\n\s*## Interactieve module[\s\S]*$/i, "")
@@ -330,28 +379,36 @@ function cleanMarkdown(raw: string, interactive: string) {
         .replace(/```html\s*\n<interactive name="[^"]+"><\/interactive>\s*\n```/g, "")
         .trim();
 
+    const isMigrated = /<tldr[\s>]/i.test(body) || /<callout[\s>]/i.test(body);
     const interactiveTag = `<interactive name="${interactive}"></interactive>`;
-    if (!body.includes(interactiveTag)) {
+    const hasAnyInteractive = /<interactive\s+name="/i.test(body);
+    if (!isMigrated && !hasAnyInteractive && !body.includes(interactiveTag)) {
         const blocks = body.split(/\n{2,}/);
         const insertAfter = Math.min(2, Math.max(1, blocks.findIndex((block) => block.startsWith("## ")) || 2));
         blocks.splice(insertAfter, 0, interactiveTag);
         body = blocks.join("\n\n");
     }
 
-    return { title, content: body, summary: extractSummary(body) };
+    return { title, content: body, summary: extractSummary(body), frontmatter };
 }
 
 function readArticle(config: StaticArticleConfig, index: number): StaticArticle {
     const raw = fs.readFileSync(path.join(ARTICLE_DIR, config.file), "utf8");
-    const { title, content, summary } = cleanMarkdown(raw, config.interactive);
+    const { title, content, summary, frontmatter } = cleanMarkdown(raw, config.interactive);
     const createdAt = new Date(BASE_DATE - index * 24 * 60 * 60 * 1000);
     const articleId = `static-source-${config.id}`;
-    const coverImage = makeCoverImage(title, config.category, config.visualLabel);
+    const coverImage = getCover({
+        title,
+        label: config.visualLabel,
+        category: config.category,
+        concept: frontmatter.coverConcept,
+    });
+    const subtitle = frontmatter.subtitle || config.visualLabel;
 
     return {
         id: config.id,
         title,
-        subtitle: config.visualLabel,
+        subtitle,
         content,
         summary,
         category: config.category,
@@ -396,6 +453,10 @@ function readArticle(config: StaticArticleConfig, index: number): StaticArticle 
         },
         likes: [],
         comments: [],
+        seoTitle: frontmatter.seoTitle,
+        difficulty: frontmatter.difficulty,
+        readingMinutes: frontmatter.readingMinutes,
+        coverConcept: frontmatter.coverConcept,
     };
 }
 

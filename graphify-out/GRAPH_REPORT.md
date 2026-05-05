@@ -1,12 +1,12 @@
 # Graph Report - medical-ai  (2026-05-05)
 
 ## Corpus Check
-- 97 files · ~193,407 words
+- 106 files · ~194,710 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 259 nodes · 352 edges · 11 communities detected
-- Extraction: 80% EXTRACTED · 20% INFERRED · 0% AMBIGUOUS · INFERRED: 71 edges (avg confidence: 0.8)
+- 275 nodes · 362 edges · 11 communities detected
+- Extraction: 80% EXTRACTED · 20% INFERRED · 0% AMBIGUOUS · INFERRED: 72 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Community Hubs (Navigation)
@@ -35,54 +35,54 @@
 10. `getStaticArticleById()` - 7 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `getPendingComments()` --calls--> `requireAdmin()`  [INFERRED]
-  src\app\_actions\comments.ts → src\lib\user-auth.ts
+- `unpublishBlogPost()` --calls--> `requireAdmin()`  [INFERRED]
+  src\app\_actions\blog.ts → src\lib\user-auth.ts
+- `createEmptyBlogPost()` --calls--> `requireAdmin()`  [INFERRED]
+  src\app\_actions\blog.ts → src\lib\user-auth.ts
 - `AdminLayout()` --calls--> `requireAdmin()`  [INFERRED]
   src\app\admin\layout.tsx → src\lib\user-auth.ts
 - `GET()` --calls--> `verifyMagicLinkToken()`  [INFERRED]
   src\app\auth\verify\route.ts → src\lib\user-auth.ts
 - `handleSubmit()` --calls--> `sendContactEmail()`  [INFERRED]
   src\app\contact\page.tsx → src\app\_actions\contact.ts
-- `handleSubmit()` --calls--> `requestMagicLink()`  [INFERRED]
-  src\app\login\page.tsx → src\app\_actions\auth.ts
 
 ## Communities
 
 ### Community 0 - "Community 0"
-Cohesion: 0.08
-Nodes (37): createManualArticle(), deleteArticle(), fetchAndSaveArticles(), fetchAndSaveDoi(), getArticlesByStatus(), createAiPromptBlogPost(), createEmptyBlogPost(), deleteBlogPost() (+29 more)
+Cohesion: 0.09
+Nodes (28): createAiPromptBlogPost(), createEmptyBlogPost(), deleteBlogPost(), generateBlogs(), getBlogPost(), getDraftBlogs(), getPublishedBlogsAdmin(), publishBlogPost() (+20 more)
 
 ### Community 1 - "Community 1"
+Cohesion: 0.13
+Nodes (19): createManualArticle(), deleteArticle(), fetchAndSaveArticles(), fetchAndSaveDoi(), getArticlesByStatus(), approveComment(), createComment(), getPendingComments() (+11 more)
+
+### Community 2 - "Community 2"
 Cohesion: 0.15
 Nodes (15): handleSubmit(), verifySiteAccess(), contactRecipient(), escapeHtml(), resendReady(), sendContactEmail(), smtpReady(), handleSubmit() (+7 more)
 
-### Community 2 - "Community 2"
+### Community 3 - "Community 3"
 Cohesion: 0.22
 Nodes (14): logoutUser(), requestMagicLink(), buildMagicLink(), escapeHtml(), resendReady(), sendMagicLinkEmail(), smtpReady(), clearUserSession() (+6 more)
 
-### Community 3 - "Community 3"
-Cohesion: 0.32
-Nodes (12): Home(), TopicPage(), getBlogById(), getBlogsForTopic(), getCategoryCounts(), getPublishedBlogs(), getPublishedBlogsByCategory(), getPublishedBlogsByTag() (+4 more)
-
 ### Community 4 - "Community 4"
+Cohesion: 0.15
+Nodes (7): AucPlayground(), formatDecimal(), formatNumber(), ratio(), thresholdStats(), InteractiveSlot(), resolveWidget()
+
+### Community 5 - "Community 5"
 Cohesion: 0.15
 Nodes (5): Hero(), LanguageProvider(), useLanguage(), PrivacyPage(), TermsPage()
 
-### Community 5 - "Community 5"
-Cohesion: 0.21
-Nodes (10): approveComment(), createComment(), getPendingComments(), rejectComment(), toggleLike(), getTrustThreshold(), resolveCommentStatus(), shouldGrantTrust() (+2 more)
-
 ### Community 6 - "Community 6"
-Cohesion: 0.18
-Nodes (5): AucPlayground(), formatDecimal(), formatNumber(), ratio(), thresholdStats()
+Cohesion: 0.32
+Nodes (12): Home(), TopicPage(), getBlogById(), getBlogsForTopic(), getCategoryCounts(), getPublishedBlogs(), getPublishedBlogsByCategory(), getPublishedBlogsByTag() (+4 more)
 
 ### Community 7 - "Community 7"
-Cohesion: 0.26
-Nodes (8): cleanMarkdown(), escapeXml(), extractSummary(), makeCoverImage(), paletteFor(), readArticle(), staticArticleMatchesTopic(), wrapWords()
-
-### Community 8 - "Community 8"
 Cohesion: 0.29
 Nodes (7): assertEnv(), getAdminEmails(), getRequiredEnv(), isAdminEmail(), normalizeSiteUrl(), resolveSiteUrl(), isStaticArticleId()
+
+### Community 8 - "Community 8"
+Cohesion: 0.26
+Nodes (8): cleanMarkdown(), escapeXml(), extractSummary(), makeCoverImage(), paletteFor(), readArticle(), staticArticleMatchesTopic(), wrapWords()
 
 ### Community 9 - "Community 9"
 Cohesion: 0.5
@@ -101,12 +101,12 @@ Nodes (2): handleCreate(), handleSelect()
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `requireAdmin()` connect `Community 0` to `Community 2`, `Community 5`?**
-  _High betweenness centrality (0.148) - this node is a cross-community bridge._
-- **Why does `rateLimit()` connect `Community 1` to `Community 2`, `Community 5`?**
-  _High betweenness centrality (0.077) - this node is a cross-community bridge._
-- **Why does `getStaticArticleById()` connect `Community 3` to `Community 0`, `Community 8`, `Community 7`?**
-  _High betweenness centrality (0.073) - this node is a cross-community bridge._
+- **Why does `requireAdmin()` connect `Community 1` to `Community 0`, `Community 3`?**
+  _High betweenness centrality (0.131) - this node is a cross-community bridge._
+- **Why does `rateLimit()` connect `Community 2` to `Community 1`, `Community 3`?**
+  _High betweenness centrality (0.068) - this node is a cross-community bridge._
+- **Why does `getStaticArticleById()` connect `Community 6` to `Community 0`, `Community 8`, `Community 7`?**
+  _High betweenness centrality (0.064) - this node is a cross-community bridge._
 - **Are the 19 inferred relationships involving `requireAdmin()` (e.g. with `AdminLayout()` and `fetchAndSaveArticles()`) actually correct?**
   _`requireAdmin()` has 19 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 5 inferred relationships involving `rateLimit()` (e.g. with `GET()` and `verifySiteAccess()`) actually correct?**

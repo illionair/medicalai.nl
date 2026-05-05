@@ -1,58 +1,40 @@
-import ChecklistScore from "./ChecklistScore";
-import {
-    AucPairs,
-    AucPlayground,
-    AucRoc,
-    AucScores,
-    AucThreshold,
-    CalibrationSimulator,
-    ClinicalUtilityCalculator,
-    DataLeakageSimulator,
-    DeploymentLadder,
-    FairnessAuditSimulator,
-    LlmSafetyMatrix,
-    MdrClaimChecker,
-    HyperparameterTuningLab,
-    ModelFamilyMap,
-    PrivacyArchitectureMap,
-    RagChunkingDemo,
-    ValidationShiftMap,
-    VisualPolicyCard,
-    WorkflowFailureMap,
-} from "./ArticleInteractives";
+import { resolveWidget } from "@/lib/widgets/registry";
 
-const REGISTRY: Record<string, React.ComponentType> = {
-    "checklist-10min": ChecklistScore,
-    "auc-playground": AucPlayground,
-    "auc-scores": AucScores,
-    "auc-threshold": AucThreshold,
-    "auc-roc": AucRoc,
-    "auc-pairs": AucPairs,
-    "calibration-simulator": CalibrationSimulator,
-    "clinical-utility-calculator": ClinicalUtilityCalculator,
-    "data-leakage-simulator": DataLeakageSimulator,
-    "deployment-ladder": DeploymentLadder,
-    "fairness-audit-simulator": FairnessAuditSimulator,
-    "llm-safety-matrix": LlmSafetyMatrix,
-    "mdr-claim-checker": MdrClaimChecker,
-    "hyperparameter-tuning-lab": HyperparameterTuningLab,
-    "model-family-map": ModelFamilyMap,
-    "rag-chunking-demo": RagChunkingDemo,
-    "validation-shift-map": ValidationShiftMap,
-    "visual-policy": VisualPolicyCard,
-    "workflow-failure-map": WorkflowFailureMap,
-    "privacy-architecture-map": PrivacyArchitectureMap,
+type InteractiveSlotProps = {
+    name?: string;
+    rawProps?: string;
 };
 
-export default function InteractiveSlot({ name }: { name?: string }) {
+export default function InteractiveSlot({ name, rawProps }: InteractiveSlotProps) {
     if (!name) return null;
-    const Component = REGISTRY[name];
-    if (!Component) {
-        return (
-            <div className="my-6 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
-                Onbekende interactieve module: <code>{name}</code>
-            </div>
-        );
+    const result = resolveWidget(name, rawProps);
+
+    if (!result.ok) {
+        if (result.reason === "unknown") {
+            return (
+                <div className="my-6 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+                    Onbekende interactieve module: <code>{result.detail || name}</code>
+                </div>
+            );
+        }
+
+        if (process.env.NODE_ENV !== "production") {
+            return (
+                <div className="my-6 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-800">
+                    <p className="font-bold">Widget &quot;{name}&quot; faalde validatie ({result.reason}).</p>
+                    {result.detail && <p className="mt-1 font-mono text-xs">{result.detail}</p>}
+                </div>
+            );
+        }
+
+        const fallback = resolveWidget(name);
+        if (fallback.ok) {
+            const FallbackComponent = fallback.Component;
+            return <FallbackComponent {...fallback.props} />;
+        }
+        return null;
     }
-    return <Component />;
+
+    const Component = result.Component;
+    return <Component {...result.props} />;
 }
