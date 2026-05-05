@@ -26,6 +26,13 @@ const clinicalTopics = [
         color: "bg-emerald-50 text-emerald-700 border-emerald-100",
         gradient: "from-emerald-500 to-teal-500"
     },
+    {
+        title: "Methodisch",
+        description: "Uitleg over modellen, validatie en interpretatie.",
+        icon: <BookOpen size={24} />,
+        color: "bg-sky-50 text-sky-700 border-sky-100",
+        gradient: "from-sky-500 to-blue-500"
+    },
 ];
 
 const governanceTopics = [
@@ -105,7 +112,7 @@ export default function TopicsPage() {
                         </div>
                         <h2 className="text-2xl font-bold text-brand-dark">Klinische AI & Methodologie</h2>
                     </div>
-                    <div className="grid md:grid-cols-3 gap-6">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {clinicalTopics.map((topic) => (
                             <Link href={`/topics/${topic.title}`} key={topic.title}>
                                 <motion.div

@@ -65,6 +65,22 @@ const BASE_DATE = Date.UTC(2026, 4, 5, 10, 0, 0);
 
 const ARTICLE_CONFIGS: StaticArticleConfig[] = [
     {
+        file: "draft-18-wat-is-hyperparametertuning.md",
+        id: "article-hyperparameter-tuning-uitgelegd",
+        category: "Methodisch",
+        tags: ["Hyperparameter tuning", "Modelontwikkeling", "Validatie", "Overfitting"],
+        interactive: "hyperparameter-tuning-lab",
+        visualLabel: "Tuning lab",
+    },
+    {
+        file: "draft-19-wat-voor-soorten-ai-modellen-bestaan-er.md",
+        id: "article-soorten-ai-modellen-uitgelegd",
+        category: "Methodisch",
+        tags: ["Modeltypen", "Machine learning", "Deep learning", "Generatieve AI"],
+        interactive: "model-family-map",
+        visualLabel: "Modelkaart",
+    },
+    {
         file: "draft-01-hoe-beoordeel-je-een-ai-artikel-in-10-minuten.md",
         id: "article-ai-artikel-checklist-10-minuten",
         category: "Methodisch",
@@ -199,22 +215,6 @@ const ARTICLE_CONFIGS: StaticArticleConfig[] = [
         tags: ["Data leakage", "Validatie", "AUC", "Modelontwikkeling"],
         interactive: "data-leakage-simulator",
         visualLabel: "Leakage simulator",
-    },
-    {
-        file: "draft-18-wat-is-hyperparametertuning.md",
-        id: "article-hyperparameter-tuning-uitgelegd",
-        category: "Methodisch",
-        tags: ["Hyperparameter tuning", "Modelontwikkeling", "Validatie", "Overfitting"],
-        interactive: "hyperparameter-tuning-lab",
-        visualLabel: "Tuning lab",
-    },
-    {
-        file: "draft-19-wat-voor-soorten-ai-modellen-bestaan-er.md",
-        id: "article-soorten-ai-modellen-uitgelegd",
-        category: "Methodisch",
-        tags: ["Modeltypen", "Machine learning", "Deep learning", "Generatieve AI"],
-        interactive: "model-family-map",
-        visualLabel: "Modelkaart",
     },
 ];
 
