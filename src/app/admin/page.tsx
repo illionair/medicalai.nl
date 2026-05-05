@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { fetchAndSaveArticles, fetchAndSaveDoi, getArticlesByStatus, deleteArticle, generateBlogs, createManualArticle, createEmptyBlogPost, createAiPromptBlogPost } from "../actions";
+import { fetchAndSaveArticles, fetchAndSaveDoi, getArticlesByStatus, deleteArticle, generateBlogs, createManualArticle, createEmptyBlogPost, createAiPromptBlogPost, getOrCreateBlogPostForArticle } from "../actions";
 import { motion } from "framer-motion";
 import DraftsList from "@/components/DraftsList";
 import PublishedList from "@/components/PublishedList";
@@ -97,6 +97,12 @@ export default function AdminPage() {
         setLoading(true);
         const id = await createEmptyBlogPost();
         router.push(`/admin/editor/${id}`);
+    }
+
+    async function handleEditArticle(id: string) {
+        setLoading(true);
+        const blogPostId = await getOrCreateBlogPostForArticle(id);
+        router.push(`/admin/editor/${blogPostId}`);
     }
 
     async function handleAiPromptSubmit(e: React.FormEvent) {
@@ -414,6 +420,9 @@ export default function AdminPage() {
                                             View on PubMed
                                         </a>
                                     ) : null}
+                                    <button onClick={() => handleEditArticle(article.id)} className="text-sm text-blue-600 hover:underline">
+                                        Edit
+                                    </button>
                                     <button onClick={() => deleteArticle(article.id)} className="text-sm text-red-500 hover:underline">
                                         Delete
                                     </button>

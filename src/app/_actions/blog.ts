@@ -7,6 +7,22 @@ import { generateBlogPost, generateBlogPostFromPrompt } from "@/lib/ai";
 import { requireAdmin } from "@/lib/user-auth";
 import { getStaticArticleById } from "@/lib/static-articles";
 
+function escapeHtml(value: string) {
+    return value
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+function articleToDraftContent(article: { abstract: string }) {
+    return article.abstract
+        .split(/\n{2,}/)
+        .map((paragraph) => `<p>${escapeHtml(paragraph.trim())}</p>`)
+        .join("");
+}
+
 export async function generateBlogs(articleIds: string[], instructions: string = "") {
     if (!(await requireAdmin())) redirect("/login?next=/admin");
 
@@ -271,6 +287,139 @@ export async function createAiPromptBlogPost(input: AiPromptDraftInput) {
 
     revalidatePath("/admin");
     return { success: true, id: blog.id };
+}
+
+export async function getOrCreateBlogPostForArticle(articleId: string) {
+    if (!(await requireAdmin())) redirect("/login?next=/admin");
+
+    const article = await prisma.article.findUnique({
+        where: { id: articleId },
+        include: { blogPost: { select: { id: true } } },
+    });
+
+    if (!article) {
+        throw new Error("Article not found");
+    }
+
+    if (article.blogPost) {
+        return article.blogPost.id;
+    }
+
+    const blog = await prisma.blogPost.create({
+        data: {
+            title: article.title,
+            content: articleToDraftContent(article),
+            summary: article.abstract.length > 240 ? `${article.abstract.slice(0, 237)}...` : article.abstract,
+            category: "Predictie",
+            published: false,
+            articleId: article.id,
+            source: article.pubmedId.startsWith("manual-") ? "MANUAL" : "PUBMED",
+        },
+    });
+
+    await prisma.article.update({
+        where: { id: article.id },
+        data: { status: "SELECTED" },
+    });
+
+    revalidatePath("/admin");
+    return blog.id;
+}
+
+async function createEditableCopyFromStaticArticle(staticArticleId: string) {
+    const staticArticle = getStaticArticleById(staticArticleId);
+    if (!staticArticle) return null;
+
+    const existingByStaticSource = await prisma.blogPost.findFirst({
+        where: { article: { pubmedId: staticArticle.article.pubmedId } },
+        select: { id: true },
+    });
+    if (existingByStaticSource) return existingByStaticSource.id;
+
+    const existingByTitle = await prisma.blogPost.findFirst({
+        where: { title: staticArticle.title },
+        select: { id: true },
+    });
+    if (existingByTitle) return existingByTitle.id;
+
+    const article = await prisma.article.upsert({
+        where: { pubmedId: staticArticle.article.pubmedId },
+        update: {
+            title: staticArticle.title,
+            abstract: staticArticle.summary,
+            authors: staticArticle.article.authors,
+            journal: staticArticle.article.journal,
+            pubDate: staticArticle.article.pubDate,
+            url: staticArticle.article.url,
+            status: "PUBLISHED",
+        },
+        create: {
+            pubmedId: staticArticle.article.pubmedId,
+            title: staticArticle.title,
+            abstract: staticArticle.summary,
+            authors: staticArticle.article.authors,
+            journal: staticArticle.article.journal,
+            pubDate: staticArticle.article.pubDate,
+            url: staticArticle.article.url,
+            status: "PUBLISHED",
+        },
+    });
+
+    const blog = await prisma.blogPost.create({
+        data: {
+            title: staticArticle.title,
+            subtitle: staticArticle.subtitle,
+            content: staticArticle.content,
+            summary: staticArticle.summary,
+            category: staticArticle.category,
+            isGuideline: staticArticle.isGuideline,
+            imageUrl: staticArticle.imageUrl,
+            published: true,
+            scheduledFor: staticArticle.scheduledFor,
+            articleId: article.id,
+            source: staticArticle.source,
+            specialism: staticArticle.specialism,
+            ceStatus: staticArticle.ceStatus,
+            cost: staticArticle.cost,
+            modelType: staticArticle.modelType ?? "Educatief artikel",
+            doi: staticArticle.doi,
+            citation: staticArticle.citation,
+            developer: staticArticle.developer,
+            privacyType: staticArticle.privacyType,
+            integration: staticArticle.integration,
+            demoUrl: staticArticle.demoUrl,
+            vendorUrl: staticArticle.vendorUrl,
+            fdaStatus: staticArticle.fdaStatus,
+            fdaNumber: staticArticle.fdaNumber,
+            coverImage: staticArticle.coverImage,
+            guidelineCategory: staticArticle.guidelineCategory,
+            displayLocations: staticArticle.displayLocations,
+            tags: {
+                connectOrCreate: staticArticle.tags.map((tag) => ({
+                    where: { name: tag.name },
+                    create: { name: tag.name },
+                })),
+            },
+        },
+    });
+
+    revalidatePath("/admin");
+    revalidatePath("/");
+    revalidatePath("/blog");
+    revalidatePath(`/blog/${staticArticleId}`);
+    return blog.id;
+}
+
+export async function openBlogPostEditor(formData: FormData) {
+    if (!(await requireAdmin())) redirect("/login?next=/admin");
+
+    const rawId = formData.get("id");
+    if (typeof rawId !== "string" || !rawId.trim()) {
+        redirect("/admin");
+    }
+
+    const staticCopyId = await createEditableCopyFromStaticArticle(rawId);
+    redirect(`/admin/editor/${staticCopyId ?? rawId}`);
 }
 
 export async function deleteBlogPost(id: string) {

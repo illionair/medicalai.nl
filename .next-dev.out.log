@@ -6,7 +6,7 @@
 - Local:         http://localhost:3000
 - Network:       http://10.0.0.1:3000
 - Environments: .env
-✓ Ready in 600ms
+✓ Ready in 622ms
 Creating turbopack project {
   dir: 'C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai',
   testMode: true
@@ -14,3 +14,34 @@ Creating turbopack project {
 - Experiments (use with caution):
   · serverActions
 
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 1979ms (next.js: 1012ms, proxy.ts: 181ms, application-code: 785ms)
+✓ Compiled in 38ms
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 677ms (next.js: 321ms, proxy.ts: 32ms, application-code: 325ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 225ms (next.js: 15ms, proxy.ts: 86ms, application-code: 124ms)
+✓ Compiled in 1331ms
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 516ms (next.js: 239ms, proxy.ts: 20ms, application-code: 258ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 183ms (next.js: 16ms, proxy.ts: 80ms, application-code: 87ms)
+✓ Compiled in 187ms
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 1169ms (next.js: 282ms, proxy.ts: 297ms, application-code: 590ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 499ms (next.js: 22ms, proxy.ts: 114ms, application-code: 363ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 307ms (next.js: 50ms, proxy.ts: 78ms, application-code: 180ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 310ms (next.js: 23ms, proxy.ts: 78ms, application-code: 209ms)
+✓ Compiled in 130ms
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 618ms (next.js: 293ms, proxy.ts: 31ms, application-code: 293ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 215ms (next.js: 16ms, proxy.ts: 94ms, application-code: 105ms)
+✓ Compiled in 378ms
+✓ Compiled in 123ms
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 735ms (next.js: 346ms, proxy.ts: 30ms, application-code: 359ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 239ms (next.js: 17ms, proxy.ts: 107ms, application-code: 114ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 151ms (next.js: 20ms, proxy.ts: 7ms, application-code: 124ms)
+✓ Compiled in 160ms
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 846ms (next.js: 282ms, proxy.ts: 27ms, application-code: 537ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 448ms (next.js: 15ms, proxy.ts: 119ms, application-code: 314ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 287ms (next.js: 18ms, proxy.ts: 71ms, application-code: 198ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 287ms (next.js: 41ms, proxy.ts: 71ms, application-code: 176ms)
+ GET /access 200 in 217ms (next.js: 92ms, proxy.ts: 5ms, application-code: 119ms)
+ GET /access 200 in 44ms (next.js: 4ms, proxy.ts: 5ms, application-code: 34ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 829ms (next.js: 29ms, proxy.ts: 7ms, application-code: 793ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 350ms (next.js: 29ms, proxy.ts: 7ms, application-code: 314ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 247ms (next.js: 18ms, proxy.ts: 5ms, application-code: 224ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 268ms (next.js: 28ms, proxy.ts: 6ms, application-code: 235ms)

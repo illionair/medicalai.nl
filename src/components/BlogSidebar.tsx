@@ -1,5 +1,6 @@
-import { Building2, ExternalLink, Globe, Linkedin, MessageCircle, Share2, ShieldCheck } from "lucide-react";
+import { Building2, ExternalLink, Gauge, Globe, Linkedin, MessageCircle, Share2, ShieldCheck } from "lucide-react";
 import TrustBadge from "./TrustBadge";
+import DifficultyBadge from "./article/DifficultyBadge";
 
 interface BlogSidebarProps {
     developer?: string | null;
@@ -15,11 +16,13 @@ interface BlogSidebarProps {
     modelType?: string | null;
     title?: string;
     currentUrl?: string;
+    difficulty?: string;
 }
 
-export default function BlogSidebar({ developer, demoUrl, vendorUrl, privacyType, integration, fdaStatus, fdaNumber, ceStatus, specialism, cost, modelType, title, currentUrl }: BlogSidebarProps) {
+export default function BlogSidebar({ developer, demoUrl, vendorUrl, privacyType, integration, fdaStatus, fdaNumber, ceStatus, specialism, cost, modelType, title, currentUrl, difficulty }: BlogSidebarProps) {
     // Check if any details exist
     const hasDetails = specialism || ceStatus || cost || modelType;
+    const hasLevel = Boolean(difficulty);
     // Check if any quick facts exist
     const hasQuickFacts = developer || privacyType || integration;
     // Check if any actions exist
@@ -29,7 +32,7 @@ export default function BlogSidebar({ developer, demoUrl, vendorUrl, privacyType
     const hasShare = Boolean(currentUrl);
 
     // If nothing to show, return null
-    if (!hasDetails && !hasQuickFacts && !hasActions && !fdaStatus && !hasShare) {
+    if (!hasDetails && !hasLevel && !hasQuickFacts && !hasActions && !fdaStatus && !hasShare) {
         return null;
     }
 
@@ -48,6 +51,16 @@ export default function BlogSidebar({ developer, demoUrl, vendorUrl, privacyType
                         {cost && <TrustBadge type="cost" label="Kosten" value={cost} />}
                         {modelType && <TrustBadge type="model" label="Model" value={modelType} />}
                     </div>
+                </div>
+            )}
+
+            {hasLevel && (
+                <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                    <h3 className="text-[11px] font-bold text-brand-secondary uppercase tracking-[0.12em] mb-4 flex items-center gap-2">
+                        <Gauge size={16} className="text-brand-secondary" />
+                        Level
+                    </h3>
+                    <DifficultyBadge level={difficulty} />
                 </div>
             )}
 

@@ -53,6 +53,7 @@ type StaticArticleConfig = {
     tags: string[];
     interactive: string;
     visualLabel: string;
+    difficulty: "basis" | "middel" | "diep";
 };
 
 export type StaticArticle = {
@@ -120,6 +121,7 @@ const ARTICLE_CONFIGS: StaticArticleConfig[] = [
         tags: ["Hyperparameter tuning", "Modelontwikkeling", "Validatie", "Overfitting"],
         interactive: "hyperparameter-tuning-lab",
         visualLabel: "Tuning lab",
+        difficulty: "middel",
     },
     {
         file: "draft-19-wat-voor-soorten-ai-modellen-bestaan-er.md",
@@ -128,6 +130,7 @@ const ARTICLE_CONFIGS: StaticArticleConfig[] = [
         tags: ["Modeltypen", "Machine learning", "Deep learning", "Generatieve AI"],
         interactive: "model-family-map",
         visualLabel: "Modelkaart",
+        difficulty: "basis",
     },
     {
         file: "draft-01-hoe-beoordeel-je-een-ai-artikel-in-10-minuten.md",
@@ -136,6 +139,7 @@ const ARTICLE_CONFIGS: StaticArticleConfig[] = [
         tags: ["TRIPOD+AI", "PROBAST+AI", "STARD-AI", "CONSORT-AI", "DECIDE-AI"],
         interactive: "checklist-10min",
         visualLabel: "10-minuten scan",
+        difficulty: "basis",
     },
     {
         file: "draft-02-interne-versus-externe-validatie-waarom-een-hoge-auc-vaak-misleidend-is.md",
@@ -144,6 +148,7 @@ const ARTICLE_CONFIGS: StaticArticleConfig[] = [
         tags: ["Externe validatie", "AUC", "Modelvalidatie"],
         interactive: "validation-shift-map",
         visualLabel: "Validatieshift",
+        difficulty: "middel",
     },
     {
         file: "draft-03-auc-uitgelegd-voor-zorgprofessionals-wat-zegt-het-wel-en-niet.md",
@@ -152,6 +157,7 @@ const ARTICLE_CONFIGS: StaticArticleConfig[] = [
         tags: ["AUC", "ROC", "Decision curve analysis"],
         interactive: "auc-scores",
         visualLabel: "AUC stap voor stap",
+        difficulty: "middel",
     },
     {
         file: "draft-04-calibratie-de-vergeten-maat-bij-ai-in-de-zorg.md",
@@ -160,6 +166,7 @@ const ARTICLE_CONFIGS: StaticArticleConfig[] = [
         tags: ["Calibratie", "Risicomodellen", "Modelvalidatie"],
         interactive: "calibration-simulator",
         visualLabel: "Calibratieplot",
+        difficulty: "middel",
     },
     {
         file: "draft-05-eerlijk-genoeg-voor-de-kliniek-bias-en-fairness-in-medische-ai.md",
@@ -168,6 +175,7 @@ const ARTICLE_CONFIGS: StaticArticleConfig[] = [
         tags: ["Bias", "Fairness", "Ethiek", "Subgroepanalyse"],
         interactive: "fairness-audit-simulator",
         visualLabel: "Fairness audit",
+        difficulty: "middel",
     },
     {
         file: "draft-06-wanneer-wordt-ai-een-medisch-hulpmiddel-de-mdr-bril-voor-software-in-de-zorg.md",
@@ -176,6 +184,7 @@ const ARTICLE_CONFIGS: StaticArticleConfig[] = [
         tags: ["MDR", "AI-regelgeving", "SaMD", "CE"],
         interactive: "mdr-claim-checker",
         visualLabel: "MDR claim check",
+        difficulty: "basis",
     },
     {
         file: "draft-07-ai-als-medisch-hulpmiddel-wanneer-valt-software-onder-mdr.md",
@@ -184,6 +193,7 @@ const ARTICLE_CONFIGS: StaticArticleConfig[] = [
         tags: ["MDR", "Medical device software", "AI-regelgeving", "CE"],
         interactive: "mdr-claim-checker",
         visualLabel: "MDR beslisboom",
+        difficulty: "basis",
     },
     {
         file: "draft-08-fda-ce-en-mdr-wat-betekenen-ze-voor-ai-modellen-in-de-zorg.md",
@@ -192,6 +202,7 @@ const ARTICLE_CONFIGS: StaticArticleConfig[] = [
         tags: ["FDA", "CE", "MDR", "AI-regelgeving"],
         interactive: "mdr-claim-checker",
         visualLabel: "Regulatory map",
+        difficulty: "basis",
     },
     {
         file: "draft-09-niet-alleen-fda-approved-wat-fda-ce-en-mdr-echt-betekenen-voor-ai-modellen-in-de.md",
@@ -200,6 +211,7 @@ const ARTICLE_CONFIGS: StaticArticleConfig[] = [
         tags: ["FDA", "CE", "MDR", "AI-regelgeving"],
         interactive: "mdr-claim-checker",
         visualLabel: "Claim versus bewijs",
+        difficulty: "basis",
     },
     {
         file: "draft-10-fda-ce-en-mdr-wat-betekenen-ze-voor-ai-modellen.md",
@@ -208,6 +220,7 @@ const ARTICLE_CONFIGS: StaticArticleConfig[] = [
         tags: ["FDA", "CE", "MDR", "AI-regelgeving"],
         interactive: "mdr-claim-checker",
         visualLabel: "Regulatory review",
+        difficulty: "basis",
     },
     {
         file: "draft-11-niet-alleen-een-ander-ziekenhuis-wat-maakt-een-externe-validatiestudie-echt-goed.md",
@@ -216,6 +229,7 @@ const ARTICLE_CONFIGS: StaticArticleConfig[] = [
         tags: ["Externe validatie", "Transportability", "Modelvalidatie"],
         interactive: "validation-shift-map",
         visualLabel: "External validation",
+        difficulty: "middel",
     },
     {
         file: "draft-12-silent-trial-shadow-mode-en-live-deployment-klinische-ai-gecontroleerd-naar-de-p.md",
@@ -224,6 +238,7 @@ const ARTICLE_CONFIGS: StaticArticleConfig[] = [
         tags: ["Silent trial", "Shadow mode", "Implementatie", "Monitoring"],
         interactive: "deployment-ladder",
         visualLabel: "Deployment ladder",
+        difficulty: "middel",
     },
     {
         file: "draft-13-de-ai-faalt-zelden-alleen-op-het-model-waarom-slimme-zorg-ai-strandt-in-de-workf.md",
@@ -232,6 +247,7 @@ const ARTICLE_CONFIGS: StaticArticleConfig[] = [
         tags: ["Workflow", "Implementatie", "Human factors"],
         interactive: "workflow-failure-map",
         visualLabel: "Workflow map",
+        difficulty: "middel",
     },
     {
         file: "draft-14-van-auc-naar-echte-winst-wanneer-helpt-ai-in-de-kliniek.md",
@@ -240,6 +256,7 @@ const ARTICLE_CONFIGS: StaticArticleConfig[] = [
         tags: ["Clinical utility", "Decision curve analysis", "AUC"],
         interactive: "clinical-utility-calculator",
         visualLabel: "Clinical utility",
+        difficulty: "middel",
     },
     {
         file: "draft-15-llms-in-de-zorg-slim-hulpmiddel-geen-automatische-collega.md",
@@ -248,6 +265,7 @@ const ARTICLE_CONFIGS: StaticArticleConfig[] = [
         tags: ["LLM", "Generatieve AI", "Veiligheid", "Privacy"],
         interactive: "llm-safety-matrix",
         visualLabel: "LLM risk matrix",
+        difficulty: "basis",
     },
     {
         file: "draft-16-rag-in-de-zorg-een-uitlegbare-brug-tussen-medische-kennis-en-generatieve-ai.md",
@@ -256,6 +274,7 @@ const ARTICLE_CONFIGS: StaticArticleConfig[] = [
         tags: ["RAG", "Generatieve AI", "Bronvermelding", "LLM"],
         interactive: "rag-chunking-demo",
         visualLabel: "RAG chunking",
+        difficulty: "middel",
     },
     {
         file: "draft-17-data-leakage-de-stille-killer-van-ai-studies.md",
@@ -264,6 +283,7 @@ const ARTICLE_CONFIGS: StaticArticleConfig[] = [
         tags: ["Data leakage", "Validatie", "AUC", "Modelontwikkeling"],
         interactive: "data-leakage-simulator",
         visualLabel: "Leakage simulator",
+        difficulty: "diep",
     },
 ];
 
@@ -388,7 +408,7 @@ function readArticle(config: StaticArticleConfig, index: number): StaticArticle 
         likes: [],
         comments: [],
         seoTitle: frontmatter.seoTitle,
-        difficulty: frontmatter.difficulty,
+        difficulty: frontmatter.difficulty ?? config.difficulty,
         readingMinutes: frontmatter.readingMinutes,
         coverConcept: frontmatter.coverConcept,
     };

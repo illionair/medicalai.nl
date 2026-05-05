@@ -1,8 +1,8 @@
-import { getBlogPost } from "@/app/actions";
+import { getBlogPost, openBlogPostEditor } from "@/app/actions";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, BriefcaseBusiness, Calendar, ExternalLink, Stethoscope, User, Users } from "lucide-react";
+import { ArrowLeft, BriefcaseBusiness, Calendar, ExternalLink, Pencil, Stethoscope, User, Users } from "lucide-react";
 import TrustBadge from "@/components/TrustBadge";
 import BlogSidebar from "@/components/BlogSidebar";
 import EvidenceBox from "@/components/EvidenceBox";
@@ -56,13 +56,27 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
             {/* Header Section */}
             <div className="bg-slate-50 border-b border-slate-200 pt-32 pb-16">
                 <div className="container mx-auto px-4 max-w-6xl">
-                    <Link
-                        href="/"
-                        className="inline-flex items-center gap-2 text-slate-500 hover:text-brand-primary transition-colors mb-8 text-sm font-medium"
-                    >
-                        <ArrowLeft size={16} />
-                        Terug naar overzicht
-                    </Link>
+                    <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+                        <Link
+                            href="/"
+                            className="inline-flex items-center gap-2 text-slate-500 hover:text-brand-primary transition-colors text-sm font-medium"
+                        >
+                            <ArrowLeft size={16} />
+                            Terug naar overzicht
+                        </Link>
+                        {currentUser?.isAdmin && (
+                            <form action={openBlogPostEditor}>
+                                <input type="hidden" name="id" value={blog.id} />
+                                <button
+                                    type="submit"
+                                    className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-bold text-white transition hover:bg-brand-primary"
+                                >
+                                    <Pencil size={16} />
+                                    Artikel bewerken
+                                </button>
+                            </form>
+                        )}
+                    </div>
 
                     <h1 className="text-4xl md:text-5xl font-bold text-brand-dark mb-4 leading-tight">
                         {blog.title}
@@ -113,7 +127,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
             </div >
 
             {/* Main Content Layout */}
-            <div className="container mx-auto px-4 max-w-6xl py-12">
+            <div className="container mx-auto px-4 max-w-7xl py-12">
                 {heroImage && (
                     <figure className="mb-10 overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-xl shadow-slate-900/5">
                         <Image
@@ -130,10 +144,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                     </figure>
                 )}
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_18rem] xl:gap-12">
                     {/* Content Column */}
-                    {/* Content Column */}
-                    <div className="lg:col-span-8">
+                    <div className="min-w-0">
                         {/* Summary Module */}
                         {blog.summary && (
                             <div className="mb-8 mt-8 p-6 bg-brand-primary/5 rounded-2xl border border-brand-primary/10">
@@ -204,6 +217,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                                 modelType={blog.modelType}
                                 title={blog.title}
                                 currentUrl={canonicalUrl}
+                                difficulty={difficulty}
                             />
                         </div>
 
@@ -291,7 +305,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                     </div>
 
                     {/* Sidebar Column (Desktop Only) */}
-                    <div className="hidden lg:block lg:col-span-4">
+                    <div className="hidden lg:block min-w-0">
                         <div className="sticky top-24 space-y-6">
                             <ArticleTOC content={blog.content} />
                             <BlogSidebar
@@ -308,6 +322,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                                 modelType={blog.modelType}
                                 title={blog.title}
                                 currentUrl={canonicalUrl}
+                                difficulty={difficulty}
                             />
                         </div>
                     </div>

@@ -367,13 +367,14 @@ p:empty::before {
 .typography-theme p {
   margin-top: 0;
   margin-bottom: 1.2rem;
-  max-width: 760px;
+  max-width: 860px;
 }
 
 .typography-theme ul,
 .typography-theme ol {
   margin-top: 1.2rem;
   margin-bottom: 1.2rem;
+  max-width: 860px;
   padding-left: 1.4rem;
   list-style-type: disc;
 }

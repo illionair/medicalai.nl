@@ -23,6 +23,8 @@ export {
     deleteBlogPost,
     createEmptyBlogPost,
     createAiPromptBlogPost,
+    getOrCreateBlogPostForArticle,
+    openBlogPostEditor,
 } from "./_actions/blog";
 export { getTags, createTag } from "./_actions/tags";
 export {

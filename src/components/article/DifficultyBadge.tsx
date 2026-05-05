@@ -7,9 +7,9 @@ const STYLES: Record<Difficulty, string> = {
 };
 
 const LABELS: Record<Difficulty, string> = {
-    basis: "Basis",
-    middel: "Middel",
-    diep: "Diep",
+    basis: "Beginner",
+    middel: "Intermediate",
+    diep: "Expert",
 };
 
 export default function DifficultyBadge({ level }: { level?: string }) {
