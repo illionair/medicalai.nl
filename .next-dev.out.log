@@ -48,3 +48,24 @@ Creating turbopack project {
 ✓ Compiled in 15ms
  GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 782ms (next.js: 366ms, proxy.ts: 45ms, application-code: 371ms)
  GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 226ms (next.js: 15ms, proxy.ts: 101ms, application-code: 110ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 369ms (next.js: 36ms, proxy.ts: 7ms, application-code: 326ms)
+ GET / 200 in 527ms (next.js: 396ms, proxy.ts: 5ms, application-code: 126ms)
+✓ Compiled in 14ms
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 954ms (next.js: 340ms, proxy.ts: 43ms, application-code: 570ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 462ms (next.js: 14ms, proxy.ts: 139ms, application-code: 310ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 283ms (next.js: 20ms, proxy.ts: 63ms, application-code: 200ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 283ms (next.js: 50ms, proxy.ts: 62ms, application-code: 170ms)
+ GET / 200 in 424ms (next.js: 163ms, proxy.ts: 7ms, application-code: 254ms)
+✓ Compiled in 11ms
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 874ms (next.js: 307ms, proxy.ts: 40ms, application-code: 526ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 428ms (next.js: 14ms, proxy.ts: 125ms, application-code: 290ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 264ms (next.js: 17ms, proxy.ts: 64ms, application-code: 183ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 264ms (next.js: 39ms, proxy.ts: 64ms, application-code: 161ms)
+✓ Compiled in 13ms
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 859ms (next.js: 304ms, proxy.ts: 39ms, application-code: 516ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 432ms (next.js: 26ms, proxy.ts: 85ms, application-code: 321ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 292ms (next.js: 47ms, proxy.ts: 93ms, application-code: 152ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 295ms (next.js: 18ms, proxy.ts: 94ms, application-code: 183ms)
+✓ Compiled in 110ms
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 579ms (next.js: 194ms, proxy.ts: 44ms, application-code: 341ms)
+ GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 230ms (next.js: 12ms, proxy.ts: 128ms, application-code: 90ms)

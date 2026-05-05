@@ -145,7 +145,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                 )}
 
                 <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_18rem] xl:gap-12">
-                    {/* Content Column */}
+                    {/* Row 1 left: top trust boxes (next to sidebar) */}
                     <div className="min-w-0">
                         {/* Summary Module */}
                         {blog.summary && (
@@ -196,7 +196,33 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                                 </p>
                             </EvidenceBox>
                         )}
+                    </div>
 
+                    {/* Row 1 right: sidebar (TOC, QuickFacts, Deel analyse) */}
+                    <div className="hidden lg:block min-w-0">
+                        <div className="sticky top-24 space-y-6">
+                            <ArticleTOC content={blog.content} />
+                            <BlogSidebar
+                                developer={blog.developer}
+                                demoUrl={blog.demoUrl}
+                                vendorUrl={blog.vendorUrl}
+                                privacyType={blog.privacyType}
+                                integration={blog.integration}
+                                fdaStatus={blog.fdaStatus}
+                                fdaNumber={blog.fdaNumber}
+                                ceStatus={blog.ceStatus}
+                                specialism={blog.specialism}
+                                cost={blog.cost}
+                                modelType={blog.modelType}
+                                title={blog.title}
+                                currentUrl={canonicalUrl}
+                                difficulty={difficulty}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Row 2: full-width content (na Deel analyse breder) */}
+                    <div className="lg:col-span-2 min-w-0">
                         <div className="typography-theme max-w-none">
                             <ArticleMarkdown content={blog.content} />
                         </div>
@@ -301,29 +327,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                             <p>
                                 <strong>Disclaimer:</strong> Dit artikel is gebaseerd op publiek beschikbare informatie tot {new Date(blog.createdAt).toLocaleDateString("nl-NL", { month: 'long', year: 'numeric' })}. Voor medische besluitvorming dient altijd de meest actuele literatuur en lokale richtlijnen geraadpleegd te worden.
                             </p>
-                        </div>
-                    </div>
-
-                    {/* Sidebar Column (Desktop Only) */}
-                    <div className="hidden lg:block min-w-0">
-                        <div className="sticky top-24 space-y-6">
-                            <ArticleTOC content={blog.content} />
-                            <BlogSidebar
-                                developer={blog.developer}
-                                demoUrl={blog.demoUrl}
-                                vendorUrl={blog.vendorUrl}
-                                privacyType={blog.privacyType}
-                                integration={blog.integration}
-                                fdaStatus={blog.fdaStatus}
-                                fdaNumber={blog.fdaNumber}
-                                ceStatus={blog.ceStatus}
-                                specialism={blog.specialism}
-                                cost={blog.cost}
-                                modelType={blog.modelType}
-                                title={blog.title}
-                                currentUrl={canonicalUrl}
-                                difficulty={difficulty}
-                            />
                         </div>
                     </div>
                 </div>

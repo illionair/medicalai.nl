@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Activity, Shield, Stethoscope, Brain, Microscope, Scale, FileText, BookOpen } from "lucide-react";
+import { ArrowRight, Activity, Shield, Brain, Microscope, Scale, FileText, BookOpen } from "lucide-react";
 
 const clinicalTopics = [
     {
@@ -54,13 +54,6 @@ const governanceTopics = [
         icon: <FileText size={24} />,
         color: "bg-indigo-50 text-indigo-700 border-indigo-100",
     },
-];
-
-const specialisms = [
-    "Cardiologie", "Radiologie", "Neurologie", "Oncologie",
-    "Dermatologie", "Oogheelkunde", "Pathologie", "Huisartsgeneeskunde",
-    "Psychiatrie", "Chirurgie", "Interne Geneeskunde", "Kindergeneeskunde",
-    "Gynaecologie", "Urologie", "Orthopedie", "Intensive Care"
 ];
 
 export default function TopicsPage() {
@@ -164,32 +157,6 @@ export default function TopicsPage() {
                                     <div className="flex items-center gap-2 text-sm font-bold opacity-80">
                                         Bekijk artikelen <ArrowRight size={16} />
                                     </div>
-                                </motion.div>
-                            </Link>
-                        ))}
-                    </div>
-                </section>
-
-                {/* Specialisms Section */}
-                <section>
-                    <div className="flex items-center gap-3 mb-8">
-                        <div className="p-2 bg-gray-100 rounded-lg text-gray-700">
-                            <Stethoscope size={24} />
-                        </div>
-                        <h2 className="text-2xl font-bold text-brand-dark">Medische Specialismen</h2>
-                    </div>
-                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
-                        {specialisms.map((specialism) => (
-                            <Link href={`/topics/${specialism}`} key={specialism}>
-                                <motion.div
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    className="p-4 rounded-xl border border-gray-200 bg-white hover:border-brand-primary/30 hover:shadow-md transition-all flex items-center justify-between group"
-                                >
-                                    <span className="font-medium text-gray-700 group-hover:text-brand-primary transition-colors">
-                                        {specialism}
-                                    </span>
-                                    <ArrowRight size={14} className="text-gray-300 group-hover:text-brand-primary transition-colors" />
                                 </motion.div>
                             </Link>
                         ))}
