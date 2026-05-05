@@ -6,9 +6,7 @@ A comprehensive platform for AI-driven medical guidelines, blogs, and knowledge 
 
 - **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Database**: 
-  - **Local**: SQLite (`dev.db`)
-  - **Production**: Vercel Postgres
+- **Database**: PostgreSQL locally and in production
 - **ORM**: [Prisma](https://www.prisma.io/)
 - **Editor**: [Tiptap](https://tiptap.dev/) (Headless WYSIWYG)
 - **AI Integration**: Google Generative AI (Gemini) & OpenAI
@@ -45,7 +43,8 @@ A comprehensive platform for AI-driven medical guidelines, blogs, and knowledge 
 3.  **Environment Setup**:
     Create a `.env` file in the root directory (copy `.env.example` if available) and add necessary keys:
     ```env
-    DATABASE_URL="file:./dev.db"
+    DATABASE_URL="postgresql://USER:PASSWORD@HOST:5432/DATABASE?schema=public"
+    DIRECT_URL="postgresql://USER:PASSWORD@HOST:5432/DATABASE?schema=public"
     GOOGLE_API_KEY="..."
     OPENAI_API_KEY="..."
     # Add other keys as needed

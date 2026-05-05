@@ -1,10 +1,16 @@
 import { prisma } from "@/lib/prisma";
+import { hasPostgresDatabaseConfig } from "@/lib/env";
 import Carousel from "@/components/Carousel";
 import GuidelineCard from "@/components/GuidelineCard";
 
 export const revalidate = 60; // Revalidate every 60 seconds
 
 async function getGuidelineBlogs() {
+    if (!hasPostgresDatabaseConfig()) {
+        console.warn("[guidelines] Skipping database guideline query because DATABASE_URL or DIRECT_URL is not a Postgres URL.");
+        return [];
+    }
+
     try {
         return await prisma.blogPost.findMany({
             where: {
@@ -16,15 +22,14 @@ async function getGuidelineBlogs() {
             orderBy: { createdAt: "desc" }
         });
     } catch (error) {
-        console.error("[guidelines] Failed to load guideline blogs", error);
+        const message = error instanceof Error ? error.message : String(error);
+        console.warn(`[guidelines] Failed to load guideline blogs: ${message}`);
         return [];
     }
 }
 
 export default async function GuidelinesPage() {
     const blogs = await getGuidelineBlogs();
-    console.log("Guidelines Page Fetched Blogs:", blogs.length);
-    blogs.forEach(b => console.log(`- ${b.title} (Cat: ${b.guidelineCategory}, Locs: ${b.displayLocations})`));
 
     const categories = [
         "Klinisch onderzoek en evidence-standaarden",

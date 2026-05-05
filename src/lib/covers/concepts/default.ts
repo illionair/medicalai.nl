@@ -168,8 +168,8 @@ function clinicalUtilityMotif({ accent, deep, ink }: Palette) {
 </g>`;
 }
 
-function motifFor(label: string, palette: Palette) {
-    const key = label.toLowerCase();
+function motifFor(label: string, title: string, palette: Palette) {
+    const key = `${label} ${title}`.toLowerCase();
     if (key.includes("tuning")) return tuningMotif(palette);
     if (key.includes("modelkaart")) return modelMotif(palette);
     if (key.includes("10-minuten")) return checklistMotif(palette);
@@ -185,6 +185,7 @@ function motifFor(label: string, palette: Palette) {
 }
 
 export function defaultCover({
+    title,
     label,
     palette,
 }: {
@@ -212,7 +213,7 @@ export function defaultCover({
   <circle cx="392" cy="74" r="42" fill="${accent}" opacity="0.2"/>
   <path d="M374 74 h36 M392 56 v36" stroke="${ink}" stroke-width="8" stroke-linecap="round" opacity="0.36"/>
 </g>
-${motifFor(label, palette)}
+${motifFor(label, title, palette)}
 <text x="74" y="604" font-size="25" font-weight="800" fill="${deep}" opacity="0.74">${escapeXml(label)}</text>
 <text x="74" y="638" font-size="18" font-weight="700" fill="${deep}" opacity="0.42">Medical AI Educational Hub</text>
 </svg>`;

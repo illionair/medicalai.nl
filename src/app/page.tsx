@@ -1,7 +1,7 @@
 import HubHero from "@/components/hub/HubHero";
 import FeaturedBento from "@/components/hub/FeaturedBento";
-import ComingSoonCard from "@/components/hub/ComingSoonCard";
 import CategoryGrid from "@/components/hub/CategoryGrid";
+import ElearningHubCard from "@/components/hub/ElearningHubCard";
 import { getCategoryCounts, getPublishedBlogs } from "@/lib/blog";
 
 export const revalidate = 60;
@@ -31,10 +31,8 @@ export default async function Home() {
         <div className="hub-container flex flex-col gap-10 md:gap-16">
             <HubHero />
             <FeaturedBento blogs={featuredBlogs} />
-            <section className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-                <ComingSoonCard />
-                <CategoryGrid categories={categories} />
-            </section>
+            <CategoryGrid categories={categories} />
+            <ElearningHubCard />
         </div>
     );
 }

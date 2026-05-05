@@ -6,6 +6,7 @@ const REQUIRED_VALUES = {
     AUTH_SECRET: "auth-secret",
     ADMIN_EMAILS: "admin@example.com, backup@example.com",
     DATABASE_URL: "postgresql://user:pass@example.com:5432/db",
+    DIRECT_URL: "postgresql://user:pass@example.com:5432/db",
     OPENAI_API_KEY: "openai-key",
     EMAIL_FROM: "Medical AI <noreply@example.com>",
     NEXT_PUBLIC_SITE_URL: "https://example.com",

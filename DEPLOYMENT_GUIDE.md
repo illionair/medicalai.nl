@@ -4,10 +4,8 @@ Je hebt een prachtige Next.js applicatie gebouwd. Om deze live te zetten op jouw
 
 Hier is het stappenplan om jouw app live te krijgen en te koppelen aan Strato.
 
-## Stap 1: Database Migratie (Belangrijk!)
-Je gebruikt nu **SQLite** (`dev.db`). Dit is een bestand op je computer.
-*   **Probleem**: Op het web (Vercel) verdwijnt dit bestand elke keer als je een nieuwe versie uploadt.
-*   **Oplossing**: We moeten overstappen naar een cloud database. **Vercel Postgres** is hiervoor de makkelijkste optie (en gratis voor hobby projecten).
+## Stap 1: Database Configuratie (Belangrijk!)
+De applicatie gebruikt nu **PostgreSQL** via Prisma. Gebruik lokaal en in productie een Postgres database; een SQLite `file:./dev.db` URL werkt niet meer met het huidige schema.
 
 **Actie**:
 1.  Zet je code op **GitHub** (als je dat nog niet hebt gedaan).
@@ -16,18 +14,20 @@ Je gebruikt nu **SQLite** (`dev.db`). Dit is een bestand op je computer.
 4.  Tijdens de setup bij Vercel, voeg een **Storage** (Postgres) database toe.
 5.  Vercel geeft je nieuwe `.env` variabelen.
 
-## Stap 2: Code Aanpassen voor Postgres
-Als je kiest voor Vercel Postgres, moeten we een kleine aanpassing doen in `prisma/schema.prisma`:
+## Stap 2: Environment Variables
+Het huidige `prisma/schema.prisma` verwacht deze variabelen:
 
 ```prisma
 // prisma/schema.prisma
 
 datasource db {
-  provider = "postgresql" // Was "sqlite"
-  url = env("POSTGRES_PRISMA_URL") // Uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // Uses a direct connection
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 ```
+
+Zet `DATABASE_URL` op de pooled Postgres URL en `DIRECT_URL` op de directe/non-pooled Postgres URL. Lokaal mag `DIRECT_URL` dezelfde waarde hebben als `DATABASE_URL`.
 
 Daarna moet je eenmalig `npx prisma migrate deploy` draaien in de Vercel console (of via je build command).
 

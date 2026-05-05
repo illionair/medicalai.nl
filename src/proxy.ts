@@ -30,7 +30,7 @@ export function proxy(request: NextRequest) {
 
     // 3. Public Routes Protection (Gatekeeper)
     // Allow access to login and verification routes without the site cookie.
-    if (["/access", "/login", "/auth/verify", "/about", "/contact"].includes(pathname)) {
+    if (["/access", "/login", "/auth/verify", "/about", "/contact", "/e-learning"].includes(pathname)) {
         return NextResponse.next();
     }
 

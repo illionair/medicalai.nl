@@ -47,6 +47,14 @@ function Shell({
     );
 }
 
+function AucCaption({ children }: { children: React.ReactNode }) {
+    return (
+        <figcaption className="mt-3 text-xs leading-5 text-slate-500">
+            <span className="font-bold text-slate-700">Figuur.</span> {children}
+        </figcaption>
+    );
+}
+
 type AucPoint = {
     score: number;
     outcome: 0 | 1;
@@ -580,7 +588,7 @@ export function AucScores() {
                         <p className="mt-3 text-xs leading-5 text-slate-500">{dataset.clinicalHint}</p>
                     </div>
                 </div>
-                <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
+                <figure className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
                     <div className="mb-2 flex justify-between text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
                         <span>score 0: laag risico</span>
                         <span>score 1: hoog risico</span>
@@ -596,7 +604,10 @@ export function AucScores() {
                             uitkomst aanwezig
                         </span>
                     </div>
-                </div>
+                    <AucCaption>
+                        De score-as laat rangorde zien, geen diagnose. Hoe vaker paars rechts van oranje staat, hoe sterker de AUC.
+                    </AucCaption>
+                </figure>
             </div>
             <div className="mt-5 grid gap-3 sm:grid-cols-3">
                 <MetricCard label="AUC" value={formatDecimal(auc)} hint="rangschikkingskans" />
@@ -653,7 +664,7 @@ export function AucThreshold({
                         </div>
                     </div>
 
-                    <div className="rounded-2xl border border-white bg-white p-4 sm:p-5">
+                    <figure className="rounded-2xl border border-white bg-white p-4 sm:p-5">
                         <div className="flex flex-wrap items-center justify-between gap-3">
                             <label className="text-sm font-bold text-slate-800" htmlFor="auc-thr-threshold">
                                 Beslisdrempel
@@ -689,7 +700,10 @@ export function AucThreshold({
                                 rechts van de lijn = alarm
                             </span>
                         </div>
-                    </div>
+                        <AucCaption>
+                            De drempel bepaalt wie in de workflow terechtkomt. Dezelfde AUC kan bij een andere drempel veel meer gemiste gevallen of vals alarm geven.
+                        </AucCaption>
+                    </figure>
                 </div>
             </div>
 
@@ -736,7 +750,7 @@ export function AucThreshold({
 
             <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 <MetricCard label="Sensitiviteit" value={pct(metrics.sensitivity)} hint="hoeveel echte gevallen vang je?" />
-                <MetricCard label="Specificiteit" value={pct(metrics.specificity)} hint="hoeveel gezonden blijven met rust?" />
+                <MetricCard label="Specificiteit" value={pct(metrics.specificity)} hint="hoeveel patiënten zonder uitkomst blijven met rust?" />
                 <MetricCard label="PPV" value={pct(metrics.ppv)} hint="alarm: hoe vaak terecht?" />
                 <MetricCard label="NPV" value={pct(metrics.npv)} hint="rust: hoe vaak terecht?" />
             </div>
@@ -759,6 +773,9 @@ export function AucRoc() {
     const currentX = 24 + (1 - metrics.specificity) * 212;
     const currentY = 236 - metrics.sensitivity * 212;
     const thresholdMarkers = getThresholdMarkers(dataset.points);
+    const rocSvgId = useId().replace(/:/g, "");
+    const rocTitleId = `${rocSvgId}-title`;
+    const rocDescId = `${rocSvgId}-desc`;
 
     function handleDatasetChange(id: AucDatasetId) {
         setDatasetId(id);
@@ -812,12 +829,21 @@ export function AucRoc() {
                         Het groene puntje rechts beweegt mee. A, B en C zijn vaste drempels: A streng, B gemiddeld, C ruim. Linksboven is sterker, maar wat klopt hangt af van wat de fout kost.
                     </p>
                 </div>
-                <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
+                <figure className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
                     <div className="mb-2 flex items-center gap-2 text-sm font-bold text-slate-800">
                         <LineChart size={18} />
                         ROC-ruimte
                     </div>
-                    <svg viewBox="0 0 260 260" className="h-72 w-full">
+                    <svg
+                        viewBox="0 0 260 260"
+                        className="h-72 w-full"
+                        role="img"
+                        aria-labelledby={`${rocTitleId} ${rocDescId}`}
+                    >
+                        <title id={rocTitleId}>ROC-curve voor dataset {dataset.shortLabel}</title>
+                        <desc id={rocDescId}>
+                            Curve met AUC {formatDecimal(auc)}. Het actuele punt toont drempel {threshold} procent, sensitiviteit {pct(metrics.sensitivity)} en vals-positiefpercentage {pct(metrics.fpr)}.
+                        </desc>
                         <polygon points={areaPoints} fill="#007EA7" opacity="0.12" />
                         <line x1="24" y1="236" x2="236" y2="24" stroke="#cbd5e1" strokeDasharray="5 5" />
                         <polyline
@@ -851,7 +877,10 @@ export function AucRoc() {
                         <div><strong>B:</strong> middenweg in deze data.</div>
                         <div><strong>C:</strong> ruimer, meer echte gevallen.</div>
                     </div>
-                </div>
+                    <AucCaption>
+                        Elk punt is een andere beslisdrempel. Linksboven vang je meer echte gevallen met minder vals alarm, maar de beste plek hangt af van de klinische consequenties.
+                    </AucCaption>
+                </figure>
             </div>
         </Shell>
     );
@@ -886,6 +915,7 @@ export function AucPairs() {
     const trueRankProb = (correctPairs + tiedPairs * 0.5) / allPairs.length;
 
     const [trials, setTrials] = useState<PairTrial[]>([]);
+    const comparisonSvgId = useId().replace(/:/g, "");
 
     function handleDatasetChange(id: AucDatasetId) {
         setDatasetId(id);
@@ -928,6 +958,18 @@ export function AucPairs() {
         setTrials([]);
     }
 
+    function trialText(trial: PairTrial) {
+        if (trial.result === "correct") return "goed gerangschikt";
+        if (trial.result === "tie") return "gelijke score";
+        return "fout gerangschikt";
+    }
+
+    function trialSymbol(trial: PairTrial) {
+        if (trial.result === "correct") return "G";
+        if (trial.result === "tie") return "=";
+        return "F";
+    }
+
     const totalTries = trials.length;
     const correctCount = trials.filter((t) => t.result === "correct").length;
     const tieCount = trials.filter((t) => t.result === "tie").length;
@@ -967,7 +1009,7 @@ export function AucPairs() {
             title="AUC als rangordespel"
             subtitle="Pak willekeurig één patiënt mét uitkomst en één zonder. Geeft het model de juiste de hogere score? Trek genoeg paren en het percentage 'goed' kruipt naar AUC."
         >
-            <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
+            <figure className="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
                 <div className="mb-5 grid gap-4 lg:grid-cols-[0.78fr_1.22fr]">
                     <DatasetSelector selected={datasetId} onChange={handleDatasetChange} />
                     <div className="rounded-2xl border border-white bg-white p-4 text-sm leading-6 text-slate-600">
@@ -1073,49 +1115,67 @@ export function AucPairs() {
                 {trials.length > 0 && (
                     <div className="mt-5 rounded-2xl border border-slate-200 bg-white p-4">
                         <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Laatste 30 trekkingen</p>
-                        <div className="mt-3 flex flex-wrap gap-1">
-                            {trials.slice(0, 30).map((t) => (
+                        <div className="mt-3 flex flex-wrap gap-1" role="list" aria-label="Resultaten van de laatste 30 trekkingen">
+                            {trials.slice(0, 30).map((t, index) => (
                                 <span
                                     key={t.id}
+                                    role="listitem"
+                                    aria-label={`Trekking ${index + 1}: ${trialText(t)}. Uitkomst aanwezig ${Math.round(t.positiveScore * 100)} procent tegenover geen uitkomst ${Math.round(t.negativeScore * 100)} procent.`}
                                     title={`+${Math.round(t.positiveScore * 100)}% vs −${Math.round(t.negativeScore * 100)}%`}
                                     className={
-                                        "inline-block h-4 w-4 rounded-sm " +
+                                        "inline-flex h-5 w-5 items-center justify-center rounded-sm text-[10px] font-black " +
                                         (t.result === "correct"
-                                            ? "bg-emerald-400"
+                                            ? "bg-emerald-100 text-emerald-900"
                                             : t.result === "tie"
-                                                ? "bg-slate-300"
-                                                : "bg-rose-400")
+                                                ? "bg-slate-200 text-slate-700"
+                                                : "bg-rose-100 text-rose-900")
                                     }
-                                />
+                                >
+                                    {trialSymbol(t)}
+                                </span>
                             ))}
                         </div>
                     </div>
                 )}
-            </div>
+                <AucCaption>
+                    Elke trekking vergelijkt één patiënt met uitkomst met één patiënt zonder uitkomst. De lopende score benadert de AUC wanneer je genoeg paren trekt.
+                </AucCaption>
+            </figure>
 
             <div className="mt-6 grid gap-4 lg:grid-cols-3">
-                {comparisonCards.map((card) => (
-                    <div key={card.label} className="rounded-3xl border border-slate-200 bg-white p-4">
-                        <div className="mb-2 flex items-center justify-between">
-                            <h4 className="text-sm font-bold text-brand-dark">{card.label}</h4>
-                            <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-600">AUC {card.auc}</span>
+                {comparisonCards.map((card, index) => {
+                    const titleId = `${comparisonSvgId}-${index}-title`;
+                    const descId = `${comparisonSvgId}-${index}-desc`;
+                    return (
+                        <div key={card.label} className="rounded-3xl border border-slate-200 bg-white p-4">
+                            <div className="mb-2 flex items-center justify-between">
+                                <h4 className="text-sm font-bold text-brand-dark">{card.label}</h4>
+                                <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-600">AUC {card.auc}</span>
+                            </div>
+                            <svg
+                                viewBox="0 0 100 72"
+                                className="h-24 w-full rounded-2xl bg-slate-50"
+                                role="img"
+                                aria-labelledby={`${titleId} ${descId}`}
+                            >
+                                <title id={titleId}>Voorbeeld-ROC {card.label}</title>
+                                <desc id={descId}>AUC {card.auc}: {card.note}.</desc>
+                                <line x1="12" y1="60" x2="88" y2="12" stroke="#cbd5e1" strokeDasharray="4 4" />
+                                <polyline
+                                    fill="none"
+                                    stroke={card.label === "Toeval" ? "#94a3b8" : "#007EA7"}
+                                    strokeWidth="4"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    points={card.points.map((point) => `${12 + point.x * 76},${60 - point.y * 48}`).join(" ")}
+                                />
+                                <line x1="12" y1="60" x2="88" y2="60" stroke="#64748b" />
+                                <line x1="12" y1="60" x2="12" y2="12" stroke="#64748b" />
+                            </svg>
+                            <p className="mt-2 text-xs leading-5 text-slate-500">{card.note}</p>
                         </div>
-                        <svg viewBox="0 0 100 72" className="h-24 w-full rounded-2xl bg-slate-50">
-                            <line x1="12" y1="60" x2="88" y2="12" stroke="#cbd5e1" strokeDasharray="4 4" />
-                            <polyline
-                                fill="none"
-                                stroke={card.label === "Toeval" ? "#94a3b8" : "#007EA7"}
-                                strokeWidth="4"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                points={card.points.map((point) => `${12 + point.x * 76},${60 - point.y * 48}`).join(" ")}
-                            />
-                            <line x1="12" y1="60" x2="88" y2="60" stroke="#64748b" />
-                            <line x1="12" y1="60" x2="12" y2="12" stroke="#64748b" />
-                        </svg>
-                        <p className="mt-2 text-xs leading-5 text-slate-500">{card.note}</p>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
         </Shell>
     );
@@ -1319,24 +1379,60 @@ export function DataLeakageSimulator(_props: { scenario?: string; startToggles?:
 
 export function ValidationShiftMap() {
     const [shift, setShift] = useState(35);
+    const descriptionId = useId();
+    const conclusionId = useId();
+    const captionId = useId();
     const internalAuc = 0.88;
     const temporalAuc = Math.max(0.62, internalAuc - shift / 500);
     const externalAuc = Math.max(0.55, internalAuc - shift / 330);
     const calibrationError = 4 + Math.round(shift / 3);
+    const conclusion =
+        shift < 20
+            ? "De interne score blijft redelijk overeind, maar vraag nog steeds om tijdvalidatie en kalibratie rond de beslisdrempel."
+            : shift < 50
+              ? "De terugval wordt klinisch relevant: de externe AUC en kalibratie moeten meewegen voordat dit model live gaat."
+              : "De praktijk wijkt sterk af van de ontwikkeldata. Een hoge interne AUC is hier geen groen licht.";
 
     const rows = [
-        { label: "Interne testset", auc: internalAuc, note: "zelfde centrum, zelfde periode" },
-        { label: "Temporale validatie", auc: temporalAuc, note: "zelfde centrum, latere periode" },
-        { label: "Externe validatie", auc: externalAuc, note: "ander centrum of ander systeem" },
+        {
+            label: "Interne testset",
+            auc: internalAuc,
+            note: "zelfde centrum, zelfde periode",
+            badge: "startpunt",
+            border: "border-sky-200",
+            bg: "bg-sky-50",
+            bar: "bg-sky-500",
+        },
+        {
+            label: "Tijdvalidatie",
+            auc: temporalAuc,
+            note: "zelfde centrum, latere periode",
+            badge: "later",
+            border: "border-amber-200",
+            bg: "bg-amber-50",
+            bar: "bg-amber-500",
+        },
+        {
+            label: "Externe validatie",
+            auc: externalAuc,
+            note: "ander centrum of ander systeem",
+            badge: "praktijktoets",
+            border: "border-emerald-200",
+            bg: "bg-emerald-50",
+            bar: "bg-emerald-500",
+        },
     ];
 
     return (
         <Shell
-            title="Validatieshift visual"
-            subtitle="Simuleer wat er gebeurt wanneer populatie, apparatuur, protocol of datadefinitie verschuift. Een model kan intern sterk lijken en extern toch duidelijk terugvallen."
+            title="Van interne AUC naar externe validatie"
+            subtitle="Schuif het verschil tussen ontwikkelsetting en praktijk omhoog. De interne AUC blijft mooi, maar tijdvalidatie, externe validatie en kalibratie vertellen of het model de overstap aankan."
         >
             <label className="text-sm font-bold text-slate-800" htmlFor="validation-shift">
-                Verschil tussen ontwikkelsetting en praktijk: {shift}%
+                Verschil tussen ontwikkelsetting en praktijk
+                <output className="ml-2 tabular-nums text-brand-secondary" htmlFor="validation-shift">
+                    {shift}%
+                </output>
                 <input
                     id="validation-shift"
                     type="range"
@@ -1344,31 +1440,64 @@ export function ValidationShiftMap() {
                     max="80"
                     value={shift}
                     onChange={(event) => setShift(Number(event.target.value))}
+                    aria-describedby={descriptionId}
                     className="mt-3 w-full accent-brand-secondary"
                 />
             </label>
-            <div className="mt-6 grid gap-4 lg:grid-cols-[1fr_0.8fr]">
-                <div className="grid gap-3">
-                    {rows.map((row) => (
-                        <div key={row.label} className="rounded-2xl border border-slate-200 bg-white p-4">
-                            <div className="mb-2 flex items-center justify-between gap-3 text-sm font-bold text-slate-700">
-                                <span>{row.label}</span>
-                                <span className="tabular-nums">{formatNumber(row.auc, 2)}</span>
+            <p id={descriptionId} className="mt-2 text-xs leading-5 text-slate-500">
+                De getallen zijn fictief en laten zien waarom validatie in een latere periode en andere zorgomgeving nodig is.
+            </p>
+            <figure className="mt-6" aria-describedby={captionId}>
+                <div className="grid gap-4 lg:grid-cols-[1fr_0.8fr]">
+                    <div className="grid gap-3">
+                        {rows.map((row) => (
+                            <div key={row.label} className={`rounded-2xl border ${row.border} ${row.bg} p-4`}>
+                                <div className="mb-3 flex items-center justify-between gap-3 text-sm font-bold text-slate-700">
+                                    <div>
+                                        <span className="block text-base text-brand-dark">{row.label}</span>
+                                        <span className="mt-1 inline-flex rounded-full bg-white px-2 py-0.5 text-[0.68rem] uppercase tracking-[0.12em] text-slate-500">
+                                            {row.badge}
+                                        </span>
+                                    </div>
+                                    <span className="tabular-nums" aria-label={`${row.label} AUC ${formatDecimal(row.auc)}`}>
+                                        AUC {formatDecimal(row.auc)}
+                                    </span>
+                                </div>
+                                <div
+                                    className="h-4 overflow-hidden rounded-full bg-white"
+                                    role="img"
+                                    aria-label={`${row.label}: AUC ${formatDecimal(row.auc)}`}
+                                >
+                                    <div className={`h-full rounded-full ${row.bar}`} style={{ width: `${row.auc * 100}%` }} />
+                                </div>
+                                <p className="mt-2 text-xs leading-5 text-slate-600">{row.note}</p>
                             </div>
-                            <div className="h-4 overflow-hidden rounded-full bg-slate-100">
-                                <div className="h-full rounded-full bg-brand-secondary" style={{ width: `${row.auc * 100}%` }} />
-                            </div>
-                            <p className="mt-2 text-xs leading-5 text-slate-500">{row.note}</p>
+                        ))}
+                    </div>
+                    <div className="grid content-start gap-3">
+                        <div className="rounded-2xl border border-slate-200 bg-white p-4" aria-label={`Kalibratiefout ${calibrationError}%`}>
+                            <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Kalibratiefout</p>
+                            <p className="mt-1 text-2xl font-bold tabular-nums text-brand-dark">{calibrationError}%</p>
+                            <p className="mt-1 text-xs leading-5 text-slate-500">groeit vaak mee met verschuiving tussen ontwikkeldata en praktijkdata</p>
                         </div>
-                    ))}
-                </div>
-                <div className="grid content-start gap-3">
-                    <MetricCard label="Calibratiefout" value={`${calibrationError}%`} hint="groeit vaak mee met contextshift" />
-                    <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
-                        <strong>Check:</strong> vraag altijd of externe data echt onafhankelijk zijn: andere patienten, andere tijd en bij voorkeur een andere zorgomgeving.
+                        <div className="rounded-2xl border border-slate-200 bg-white p-4" aria-label={`Externe AUC ${formatDecimal(externalAuc)}`}>
+                            <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Externe AUC</p>
+                            <p className="mt-1 text-2xl font-bold tabular-nums text-brand-dark">{formatDecimal(externalAuc)}</p>
+                            <p className="mt-1 text-xs leading-5 text-slate-500">de score die het meest lijkt op de beoogde praktijk</p>
+                        </div>
+                        <div
+                            id={conclusionId}
+                            className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900"
+                            aria-live="polite"
+                        >
+                            <strong>Conclusie:</strong> {conclusion}
+                        </div>
                     </div>
                 </div>
-            </div>
+                <figcaption id={captionId} className="mt-4 text-xs leading-5 text-slate-500">
+                    Figuur: hoe een sterke interne AUC kan terugvallen wanneer patiënten, meetprocessen of beslismomenten verschillen van de ontwikkeldata.
+                </figcaption>
+            </figure>
         </Shell>
     );
 }

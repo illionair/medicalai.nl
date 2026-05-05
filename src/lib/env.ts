@@ -3,6 +3,7 @@ const REQUIRED_ENV_VARS = [
     "AUTH_SECRET",
     "ADMIN_EMAILS",
     "DATABASE_URL",
+    "DIRECT_URL",
     "OPENAI_API_KEY",
     "NEXT_PUBLIC_SITE_URL",
 ] as const;
@@ -59,6 +60,22 @@ export function resolveSiteUrl() {
     if (process.env.VERCEL_URL) return normalizeSiteUrl(`https://${process.env.VERCEL_URL}`);
     if (process.env.AUTH_URL) return normalizeSiteUrl(process.env.AUTH_URL);
     return "http://localhost:3000";
+}
+
+export function isPostgresDatabaseUrl(value = process.env.DATABASE_URL) {
+    const trimmed = value?.trim();
+    if (!trimmed) return false;
+
+    try {
+        const url = new URL(trimmed);
+        return url.protocol === "postgresql:" || url.protocol === "postgres:";
+    } catch {
+        return false;
+    }
+}
+
+export function hasPostgresDatabaseConfig() {
+    return isPostgresDatabaseUrl(process.env.DATABASE_URL) && isPostgresDatabaseUrl(process.env.DIRECT_URL);
 }
 
 export function assertEnv() {

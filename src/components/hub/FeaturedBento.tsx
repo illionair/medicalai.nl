@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { BlogPostSource } from "@prisma/client";
+import { getCover } from "@/lib/covers";
 
 export type FeaturedHubArticle = {
     id: string;
@@ -17,8 +18,6 @@ export type FeaturedHubArticle = {
 type FeaturedBentoProps = {
     blogs: FeaturedHubArticle[];
 };
-
-const FALLBACK_IMG = "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=900&q=80&auto=format";
 
 function MS({ name, className = "" }: { name: string; className?: string }) {
     return <span className={"material-symbols-outlined " + className}>{name}</span>;
@@ -51,7 +50,11 @@ function summaryOf(b: FeaturedHubArticle) {
 }
 
 function imageOf(b: FeaturedHubArticle) {
-    return b.coverImage || b.imageUrl || FALLBACK_IMG;
+    return b.coverImage || b.imageUrl || getCover({
+        title: b.title,
+        label: b.developer?.trim() || b.category || "Medical AI",
+        category: b.category,
+    });
 }
 
 export default function FeaturedBento({ blogs }: FeaturedBentoProps) {

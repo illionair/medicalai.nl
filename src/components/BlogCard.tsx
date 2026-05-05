@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { getCover } from "@/lib/covers";
 
 interface BlogCardProps {
     id: string;
@@ -18,7 +19,11 @@ interface BlogCardProps {
 }
 
 export default function BlogCard({ id, title, summary, category, date, specialism, ceStatus, cost, coverImage, imageUrl }: BlogCardProps) {
-    const visual = coverImage || imageUrl;
+    const visual = coverImage || imageUrl || getCover({
+        title,
+        label: specialism || category || "Medical AI",
+        category,
+    });
 
     return (
         <Link href={`/blog/${id}`} className="block h-full">
@@ -61,9 +66,9 @@ export default function BlogCard({ id, title, summary, category, date, specialis
                         </div>
                     )}
 
-                    <div className="mb-[18px]">
+                    <div className="mb-[18px] min-h-[30px]">
                         <span
-                            className="inline-block py-[5px] px-3 rounded-full text-[11px] font-bold tracking-[0.08em] uppercase"
+                            className="inline-flex max-w-full items-center py-[5px] px-3 rounded-full text-[11px] font-bold leading-tight tracking-[0.08em] uppercase"
                             style={{
                                 background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.4) 100%)',
                                 backdropFilter: 'blur(8px)',

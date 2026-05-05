@@ -4,7 +4,6 @@ export const passthroughSchema = z.object({}).passthrough();
 
 export const aucThresholdSchema = z.object({
     initialThreshold: z.number().min(0).max(1).default(0.5),
-    prevalence: z.number().min(0).max(1).default(0.5),
     showHint: z.boolean().default(false),
 });
 
