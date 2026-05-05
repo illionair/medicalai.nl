@@ -200,6 +200,22 @@ const ARTICLE_CONFIGS: StaticArticleConfig[] = [
         interactive: "data-leakage-simulator",
         visualLabel: "Leakage simulator",
     },
+    {
+        file: "draft-18-wat-is-hyperparametertuning.md",
+        id: "article-hyperparameter-tuning-uitgelegd",
+        category: "Methodisch",
+        tags: ["Hyperparameter tuning", "Modelontwikkeling", "Validatie", "Overfitting"],
+        interactive: "hyperparameter-tuning-lab",
+        visualLabel: "Tuning lab",
+    },
+    {
+        file: "draft-19-wat-voor-soorten-ai-modellen-bestaan-er.md",
+        id: "article-soorten-ai-modellen-uitgelegd",
+        category: "Methodisch",
+        tags: ["Modeltypen", "Machine learning", "Deep learning", "Generatieve AI"],
+        interactive: "model-family-map",
+        visualLabel: "Modelkaart",
+    },
 ];
 
 let cachedArticles: StaticArticle[] | null = null;

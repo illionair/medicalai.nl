@@ -1,0 +1,570 @@
+{
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\eslint.config.mjs": {
+    "mtime": 1764527508.0,
+    "hash": "dfa1f5f6a7037bf39dc510f30b180002"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\next-env.d.ts": {
+    "mtime": 1777970266.7946243,
+    "hash": "2a74d3909800ca5467fa83b0ab4a4890"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\next.config.ts": {
+    "mtime": 1777570183.4098587,
+    "hash": "969799916e76293d9a0ac3cec6d96f2b"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\playwright.config.ts": {
+    "mtime": 1777758716.658912,
+    "hash": "f1a059dc8b39f123d7d1f561076bb84c"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\postcss.config.js": {
+    "mtime": 1764533593.0,
+    "hash": "9c7a1a47dd94cfd3111f50f1d3b7ede6"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\tailwind.config.ts": {
+    "mtime": 1777569759.1055293,
+    "hash": "e47ddd87919e761be44d53ae41e0d673"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\vitest.config.ts": {
+    "mtime": 1777758716.7556903,
+    "hash": "180e1cabf53af06efeb5eb122bdcde6c"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\vitest.setup.ts": {
+    "mtime": 1777758716.7566922,
+    "hash": "c423067709b0f04af885a0332dacd6b7"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\prisma\\migrations\\20251201220442_init\\migration.sql": {
+    "mtime": 1777569759.007472,
+    "hash": "50d78d6bf498444ff14213293e83a673"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\prisma\\migrations\\20260430143000_user_engagement\\migration.sql": {
+    "mtime": 1777570868.2381575,
+    "hash": "ba5eaa434449354ceb0f501a2e75a077"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\prisma\\migrations\\20260430150000_magic_links\\migration.sql": {
+    "mtime": 1777574892.4320688,
+    "hash": "fdb47f73ad164da5864429ec32f2b029"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\prisma\\migrations\\20260502120000_comment_moderation\\migration.sql": {
+    "mtime": 1777758716.6614375,
+    "hash": "554f184d0894ee4604c1e31ecd298276"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\prisma\\migrations\\20260502130000_drop_blogpost_privacy\\migration.sql": {
+    "mtime": 1777758716.6634464,
+    "hash": "acfc0d507f5e896eaf5ca35f9b8f8d1d"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\prisma\\migrations\\20260502140000_blogpost_article_optional\\migration.sql": {
+    "mtime": 1777758716.6654432,
+    "hash": "6c3e06a12abbd90ac2ea2217196510af"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\prisma\\migrations\\20260502231500_blogpost_source_ai_prompt\\migration.sql": {
+    "mtime": 1777759070.614637,
+    "hash": "0d6fe63c9dbdc88a0a0545e324f062a1"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\proxy.ts": {
+    "mtime": 1777829025.7424185,
+    "hash": "92f7ed4c1a68772eff2ce70e6fc7ef07"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\actions.ts": {
+    "mtime": 1777759103.0545304,
+    "hash": "ab42d9161457451390b3b00074c20035"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\layout.tsx": {
+    "mtime": 1777932518.9170702,
+    "hash": "6e824850a8647316768a9c0856fcc185"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\page.tsx": {
+    "mtime": 1777887296.7982492,
+    "hash": "cb409f9f4fd29b02fd1e00f30dd74894"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\about\\page.tsx": {
+    "mtime": 1777569759.022507,
+    "hash": "b4466435db698a6d838834ebdd0e62b8"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\access\\page.tsx": {
+    "mtime": 1777887793.1993413,
+    "hash": "c176d98a6cd3a8979279532b4e4e35a3"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\admin\\layout.tsx": {
+    "mtime": 1777758716.6960273,
+    "hash": "9dd2270aaad639923d5872da2ae71a4d"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\admin\\page.tsx": {
+    "mtime": 1777759310.9202373,
+    "hash": "1f372c4b4e8cbbc4feb92f7144bab4b8"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\admin\\editor\\[id]\\page.tsx": {
+    "mtime": 1777759147.7404418,
+    "hash": "7e82226af9777d6d5e147eec1141ae01"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\admin\\editor\\[id]\\_components\\ContentPanel.tsx": {
+    "mtime": 1777758716.6870303,
+    "hash": "cf3c2f5683fa654bc8b6a40bd876bc00"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\admin\\editor\\[id]\\_components\\MetadataPanel.tsx": {
+    "mtime": 1777759156.0835483,
+    "hash": "f4549ddc5e2831a048249f6cdfe77d24"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\admin\\editor\\[id]\\_components\\PublishingPanel.tsx": {
+    "mtime": 1777758716.6900275,
+    "hash": "531e08345582c295e2a668005373fb12"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\admin\\editor\\[id]\\_components\\TagsPanel.tsx": {
+    "mtime": 1777758716.6910257,
+    "hash": "0d68f3486517e702e09776cb8870541e"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\admin\\editor\\[id]\\_components\\types.ts": {
+    "mtime": 1777759143.082891,
+    "hash": "6763cd0373915e3a7891b2b08f04e5b3"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\admin\\moderation\\page.tsx": {
+    "mtime": 1777758716.6980276,
+    "hash": "5289628baf9854c4e0086a4d2a3f1770"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\auth\\verify\\route.ts": {
+    "mtime": 1777758716.7000263,
+    "hash": "b01a222abc4b4676e155cd84359989c4"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\authors\\page.tsx": {
+    "mtime": 1777760160.5650282,
+    "hash": "af92738a00f8a2b0bbfb4bb0b0fc52f0"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\blog\\page.tsx": {
+    "mtime": 1777933758.735454,
+    "hash": "9d0f4f50c9dc3b0a298587b992f0b164"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\blog\\[id]\\page.tsx": {
+    "mtime": 1777934576.9338624,
+    "hash": "cb2091bfc6a6f223f93524475c41d831"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\contact\\page.tsx": {
+    "mtime": 1764543850.0,
+    "hash": "6950380de54933aeaef2dc68e5ceb510"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\guidelines\\page.tsx": {
+    "mtime": 1777645051.142793,
+    "hash": "03a633a7fa613e8f04fc28c044ac6401"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\login\\page.tsx": {
+    "mtime": 1777760533.54485,
+    "hash": "1aa8eac6f6810ec3f9fab949d1bc22f4"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\privacy\\page.tsx": {
+    "mtime": 1777570183.4289258,
+    "hash": "3bafb9f0c68c180630f94b20eb37c0bc"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\seed\\actions.ts": {
+    "mtime": 1777850817.974951,
+    "hash": "1253781f6ec3d19a392cd6dbc1310aa3"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\seed\\page.tsx": {
+    "mtime": 1777850826.8840978,
+    "hash": "01b6de5623e741eed04c6bc244099f69"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\subscribe\\page.tsx": {
+    "mtime": 1777570183.430922,
+    "hash": "2ee3d8db1f326d70318c3e339c146664"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\terms\\page.tsx": {
+    "mtime": 1777758716.7080364,
+    "hash": "59cc9dc729ea537bb12357de6f5377f7"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\topics\\page.tsx": {
+    "mtime": 1777934623.7306423,
+    "hash": "1a8c306ee7d7ddc1a2beade433ca2923"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\topics\\[category]\\page.tsx": {
+    "mtime": 1777569759.0600715,
+    "hash": "1c7423cd783175b45d5df2985a81327e"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\_actions\\articles.ts": {
+    "mtime": 1777758716.670041,
+    "hash": "b55c24bb895700f924fc52a34b935c32"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\_actions\\auth.ts": {
+    "mtime": 1777887737.128518,
+    "hash": "40cb8debce660184d7a12fc75f5c1946"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\_actions\\blog.ts": {
+    "mtime": 1777932483.186976,
+    "hash": "d84fcf6dc22966685f1a63f150bc73ae"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\_actions\\comments.ts": {
+    "mtime": 1777758716.6750422,
+    "hash": "87fd25fe31e497581441c90eaa0cd1cf"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\_actions\\contact.ts": {
+    "mtime": 1777758716.677027,
+    "hash": "a1a0828930960335aa88b91f60861443"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\_actions\\likes.ts": {
+    "mtime": 1777758716.678028,
+    "hash": "26cb18071d2b10e6ca5225776832d4a7"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\app\\_actions\\tags.ts": {
+    "mtime": 1777758716.6800299,
+    "hash": "e7fa0751101f7226628e02529ec24b62"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\ArticleEngagement.tsx": {
+    "mtime": 1777760433.0195003,
+    "hash": "fd131da6de82c92a503d83f21eda0d15"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\BlogCard.tsx": {
+    "mtime": 1777932655.518252,
+    "hash": "6436e2864bddf99b07b96e8c8c366165"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\BlogGrid.tsx": {
+    "mtime": 1777932499.0573533,
+    "hash": "c20bc02beaaea9bc8ff36b5e93e3c8b3"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\BlogSidebar.tsx": {
+    "mtime": 1777843195.2372725,
+    "hash": "934bacb3dc6787c59e3a905e6b0a0da2"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\Carousel.tsx": {
+    "mtime": 1777569759.0704772,
+    "hash": "b1f3d5863f9ac0b113c94a42e92d9b04"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\CopyButton.tsx": {
+    "mtime": 1777569759.0714753,
+    "hash": "77bbaf8d5041af1e5bb156cf30617db9"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\DraftsList.tsx": {
+    "mtime": 1777759165.63892,
+    "hash": "2b080d1e883666d9b4a28ed8b2ec3f36"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\EvidenceBox.tsx": {
+    "mtime": 1777843381.355654,
+    "hash": "646f0a0c6a22806be6141c7199cc16f4"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\Footer.tsx": {
+    "mtime": 1777887770.2972233,
+    "hash": "1279b88fbc29e878cfe83ca68fe14813"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\GuidelineCard.tsx": {
+    "mtime": 1777569759.0774927,
+    "hash": "36a8fae17d20ea1cac8d598393e3c7e4"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\Hero.tsx": {
+    "mtime": 1777569759.0794988,
+    "hash": "5a47a19cf76ce2ff0a641a3a96f4bc62"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\InteractiveGrid.tsx": {
+    "mtime": 1777758716.720416,
+    "hash": "be88fcd62c8f874a8fd8f86277bf096e"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\MarkdownEditor.tsx": {
+    "mtime": 1764547854.0,
+    "hash": "58f29791ea505b04efb955488f2d9b7e"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\MultiSelect.tsx": {
+    "mtime": 1777758716.7224166,
+    "hash": "b8974fbe7137e2102c28781418fbd1e8"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\Navbar.tsx": {
+    "mtime": 1777934540.3813844,
+    "hash": "5de567c77d4949ecc13b1055c027dd4b"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\PublishedList.tsx": {
+    "mtime": 1777759179.756472,
+    "hash": "866b2e4ed5347b25e5eb72e4fba70f9f"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\TiptapEditor.tsx": {
+    "mtime": 1777758716.724922,
+    "hash": "503f89bed58c9db7ac8b1b686075c4c6"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\TopicHeader.tsx": {
+    "mtime": 1777569759.0875058,
+    "hash": "e607b5fb41538da8b206dd1aeaf3eca7"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\TrustBadge.tsx": {
+    "mtime": 1777843270.959585,
+    "hash": "4113385a221956aae1c1036115e74d43"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\hub\\CategoryGrid.tsx": {
+    "mtime": 1777887447.3304873,
+    "hash": "3f677cc86bc8bb7a853cb5b59a95ed35"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\hub\\ComingSoonCard.tsx": {
+    "mtime": 1777887253.530615,
+    "hash": "df33d4c7b01f5fce34d43f4833c0ef33"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\hub\\FeaturedBento.tsx": {
+    "mtime": 1777933753.057031,
+    "hash": "75d664485c5b6536ec08c6f5fdca05dd"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\hub\\HubHero.tsx": {
+    "mtime": 1777887215.5881913,
+    "hash": "e7f54f769c05679ffacb4e4ca85a8c48"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\interactives\\ArticleInteractives.tsx": {
+    "mtime": 1777970193.8774748,
+    "hash": "755259447e06586f7a1cac01a6ea8035"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\interactives\\ChecklistScore.tsx": {
+    "mtime": 1777850706.3015704,
+    "hash": "b6911c2c9b753af6d41f487e2e5a791b"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\components\\interactives\\InteractiveSlot.tsx": {
+    "mtime": 1777970165.9117732,
+    "hash": "a867eccd488d90718ae10e89e256f900"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\context\\LanguageContext.tsx": {
+    "mtime": 1777845670.100614,
+    "hash": "10ab9766bc21768c2c519a50c939810e"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\lib\\ai.ts": {
+    "mtime": 1777759086.7345977,
+    "hash": "a974d0b8b3ac475cb08b80e6d11211c7"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\lib\\auth.ts": {
+    "mtime": 1777758716.738545,
+    "hash": "08b4cbe9a0ab2ab6f78f138de90afc36"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\lib\\blog.ts": {
+    "mtime": 1777932468.563896,
+    "hash": "77e67ce9da5bcd254e8a7f9193477e47"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\lib\\constants.ts": {
+    "mtime": 1777569759.0980237,
+    "hash": "caf07e1c322968390a3b16d78ac48caa"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\lib\\dictionaries.ts": {
+    "mtime": 1777845084.437013,
+    "hash": "82428cfa9f7de2c565dc15d6eea2c293"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\lib\\env.ts": {
+    "mtime": 1777828202.3736486,
+    "hash": "bb43b222b773bd19c818123f2ddf94f5"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\lib\\magic-link-mail.ts": {
+    "mtime": 1777828202.4809773,
+    "hash": "68f258e46678df1a9ec01432d2f61edd"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\lib\\moderation.ts": {
+    "mtime": 1777758716.7451742,
+    "hash": "7acaea7e3ebadf4363e83e943065a7c9"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\lib\\prisma.ts": {
+    "mtime": 1764528575.0,
+    "hash": "f95a034d1cd15ff8dbea4b80e3c0935b"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\lib\\pubmed.ts": {
+    "mtime": 1777758716.7471716,
+    "hash": "c10443c407b138544539434e2ebebbcf"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\lib\\rate-limit.ts": {
+    "mtime": 1777758716.7481718,
+    "hash": "00edd37f88163a1a0a9038c792c43b5d"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\lib\\static-articles.ts": {
+    "mtime": 1777969951.7953203,
+    "hash": "dc30f62378cc0470b07d99c953b62299"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\lib\\user-auth.ts": {
+    "mtime": 1777758716.7501721,
+    "hash": "30c636b9db5a77b1dd96ae23235ba948"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\lib\\__tests__\\ai.test.ts": {
+    "mtime": 1777759196.9601488,
+    "hash": "837c069a2907a31738968fbce0a4c06d"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\lib\\__tests__\\auth.test.ts": {
+    "mtime": 1777758716.7305443,
+    "hash": "f29d9dbc1c70b7786d3b85b3aa90786d"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\lib\\__tests__\\env.test.ts": {
+    "mtime": 1777828202.7179365,
+    "hash": "574f2b98eed5d3f261bf64a701073cd0"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\lib\\__tests__\\moderation.test.ts": {
+    "mtime": 1777758716.733544,
+    "hash": "9855730c4d17112232571cb1ace69b60"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\src\\lib\\__tests__\\rate-limit.test.ts": {
+    "mtime": 1777758716.7345462,
+    "hash": "b84ed6a90b2b0c7128c5eac3c8882d05"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\tests\\e2e\\access.spec.ts": {
+    "mtime": 1777758716.7546828,
+    "hash": "da9dcc8a3bd9cbbf6ce9c4c795bca6cc"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\AGENTS.md": {
+    "mtime": 1777740928.154526,
+    "hash": "2ed67c68f28bc1ef95ac24167431d7e8"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\article1.md": {
+    "mtime": 1777850611.6575048,
+    "hash": "5131217a2814a2d57426f9c6d153ec63"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\BLOG_DESIGN_GUIDELINES.md": {
+    "mtime": 1777569758.9951205,
+    "hash": "14296cb5ba20fcf5fae40341b8647d1f"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\codex-recovered-articles.md": {
+    "mtime": 1777850303.057471,
+    "hash": "2cc2c66cdabc20fffbe19ae17c5040f6"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\codex-recovered-interactives.md": {
+    "mtime": 1777850271.1130788,
+    "hash": "514b0ae6e882d12554817b4c39cce2b0"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\DEPLOYMENT_GUIDE.md": {
+    "mtime": 1764541872.0,
+    "hash": "fffc8c8b28ef01e49d691dbf440667c5"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\README.md": {
+    "mtime": 1777569758.9969516,
+    "hash": "cdc112066a6b8f19c6bd420467d843fa"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\SECURITY.md": {
+    "mtime": 1777570258.0322545,
+    "hash": "c2191e499e7de124310d64ca30044882"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\INTERACTIVES.md": {
+    "mtime": 1777932624.8706872,
+    "hash": "923f693baeb0d94ed9bd0ec1cbcd90c7"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\README.md": {
+    "mtime": 1777932007.5430033,
+    "hash": "51326a1d07175d0fc1356e442e14b83f"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\recovered-interactives-source.md": {
+    "mtime": 1777850271.1130788,
+    "hash": "514b0ae6e882d12554817b4c39cce2b0"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\drafts\\draft-01-hoe-beoordeel-je-een-ai-artikel-in-10-minuten.md": {
+    "mtime": 1777931614.0883653,
+    "hash": "801745f778dee89ddd8cc23e40228ca0"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\drafts\\draft-02-interne-versus-externe-validatie-waarom-een-hoge-auc-vaak-misleidend-is.md": {
+    "mtime": 1777931614.0943656,
+    "hash": "ee3ffcea12c1c8bb17734c59fcf07593"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\drafts\\draft-03-auc-uitgelegd-voor-zorgprofessionals-wat-zegt-het-wel-en-niet.md": {
+    "mtime": 1777936364.3066337,
+    "hash": "a3b408e52ca7511aa6f535d47648937f"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\drafts\\draft-04-calibratie-de-vergeten-maat-bij-ai-in-de-zorg.md": {
+    "mtime": 1777931879.913,
+    "hash": "d7b7b74f78a1ca00afa9976aba0cbe9a"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\drafts\\draft-05-eerlijk-genoeg-voor-de-kliniek-bias-en-fairness-in-medische-ai.md": {
+    "mtime": 1777931614.103904,
+    "hash": "61b64089d37fb4c28cf4dd2ec230df0e"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\drafts\\draft-06-wanneer-wordt-ai-een-medisch-hulpmiddel-de-mdr-bril-voor-software-in-de-zorg.md": {
+    "mtime": 1777931614.1069257,
+    "hash": "d228248c0538932ac03da8fe9e308719"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\drafts\\draft-07-ai-als-medisch-hulpmiddel-wanneer-valt-software-onder-mdr.md": {
+    "mtime": 1777931879.9715183,
+    "hash": "25e20ea7e2cfbb299f8eb66f0f8a7669"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\drafts\\draft-08-fda-ce-en-mdr-wat-betekenen-ze-voor-ai-modellen-in-de-zorg.md": {
+    "mtime": 1777931614.111923,
+    "hash": "c4f405350b9a6dff37d28c931d83fbe3"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\drafts\\draft-09-niet-alleen-fda-approved-wat-fda-ce-en-mdr-echt-betekenen-voor-ai-modellen-in-de.md": {
+    "mtime": 1777931614.1169274,
+    "hash": "581a0b876e92f46d90e1de2edac56413"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\drafts\\draft-10-fda-ce-en-mdr-wat-betekenen-ze-voor-ai-modellen.md": {
+    "mtime": 1777931879.987518,
+    "hash": "f6e1e6e97fb2e62c1893f76a48f786cb"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\drafts\\draft-11-niet-alleen-een-ander-ziekenhuis-wat-maakt-een-externe-validatiestudie-echt-goed.md": {
+    "mtime": 1777931614.1229517,
+    "hash": "53e402aa98654abbd07ccda1071ec605"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\drafts\\draft-12-silent-trial-shadow-mode-en-live-deployment-klinische-ai-gecontroleerd-naar-de-p.md": {
+    "mtime": 1777931614.1259491,
+    "hash": "3cc187844e80ff366590a9da90c30756"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\drafts\\draft-13-de-ai-faalt-zelden-alleen-op-het-model-waarom-slimme-zorg-ai-strandt-in-de-workf.md": {
+    "mtime": 1777931614.1289268,
+    "hash": "4bab00775578e9ff50d41c89ee0d36b6"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\drafts\\draft-14-van-auc-naar-echte-winst-wanneer-helpt-ai-in-de-kliniek.md": {
+    "mtime": 1777931880.0225186,
+    "hash": "b221c7ed2e179561a24fe8c24d99a6ec"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\drafts\\draft-15-llms-in-de-zorg-slim-hulpmiddel-geen-automatische-collega.md": {
+    "mtime": 1777931614.1349277,
+    "hash": "a3b7270490910d39a5a54a4f368bf793"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\drafts\\draft-16-rag-in-de-zorg-een-uitlegbare-brug-tussen-medische-kennis-en-generatieve-ai.md": {
+    "mtime": 1777931880.0035183,
+    "hash": "45cb7ea98cc0fd8895d9756c3fff4544"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\drafts\\draft-17-data-leakage-de-stille-killer-van-ai-studies.md": {
+    "mtime": 1777931879.9480033,
+    "hash": "f7bfaf64db9c979ba783b9da54569ce6"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\drafts\\draft-18-wat-is-hyperparametertuning.md": {
+    "mtime": 1777969996.2692914,
+    "hash": "94fcda2e021eac65900277bfed1724dc"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\drafts\\draft-19-wat-voor-soorten-ai-modellen-bestaan-er.md": {
+    "mtime": 1777970062.2179933,
+    "hash": "1272a95356054989208035a1e4f7938e"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\reviews\\review-01-controle-agent-a-review.md": {
+    "mtime": 1777931649.539159,
+    "hash": "24b64ec121a49f5d1982136937b55361"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\reviews\\review-02-controle-agent-c-review.md": {
+    "mtime": 1777931649.5431595,
+    "hash": "2d2374d3f5f1051182f1b6e55a77dbc0"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\visuals\\visual-01-visualisatiepakket.md": {
+    "mtime": 1777931649.5251544,
+    "hash": "3bec95df564f77a0d123b4b010054bd6"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\visuals\\visual-02-visualisatiepakket.md": {
+    "mtime": 1777931649.5311718,
+    "hash": "329cded6896dbcc0ed014f25d2d8cd01"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\articles\\visuals\\visual-03-visualisatiepakket.md": {
+    "mtime": 1777931649.5351596,
+    "hash": "457274760717c38f90f98ba48b93933d"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\docs\\superpowers\\specs\\2026-05-03-hub-page-design.md": {
+    "mtime": 1777844158.089971,
+    "hash": "99e8f6bd6ce6c7829647efad49579a66"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\public\\file.svg": {
+    "mtime": 1764527508.0,
+    "hash": "d09f95206c3fa0bb9bd9fefabfd0ea71"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\public\\globe.svg": {
+    "mtime": 1764527508.0,
+    "hash": "2aaafa6a49b6563925fe440891e32717"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\public\\hero-bg.png": {
+    "mtime": 1764530160.0,
+    "hash": "0f110e26383198a42d2a607cb17e0456"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\public\\next.svg": {
+    "mtime": 1764527508.0,
+    "hash": "8e061864f388b47f33a1c3780831193e"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\public\\vercel.svg": {
+    "mtime": 1764527508.0,
+    "hash": "c0af2f507b369b085b35ef4bbe3bcf1e"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\public\\window.svg": {
+    "mtime": 1764527509.0,
+    "hash": "a2760511c65806022ad20adf74370ff3"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\public\\images\\hand-robot.png": {
+    "mtime": 1777569759.0165017,
+    "hash": "79192a957fa35a1286d6f5dd91f3449f"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\public\\images\\logo-medical-ai.png": {
+    "mtime": 1777836030.1913617,
+    "hash": "88daa5391b5f829c90c4862bfda51bae"
+  },
+  "C:\\Users\\sanma\\Desktop\\OneDrive - s.s.mahes\\OneDrive\\Thuis\\Eigen thuis projecten\\medical-ai\\public\\images\\sleek-bridge.png": {
+    "mtime": 1777569759.0205193,
+    "hash": "c7f4452892e71d9465dc144fdae11bbb"
+  }
+}

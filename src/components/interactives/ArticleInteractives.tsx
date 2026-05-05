@@ -1495,6 +1495,334 @@ export function RagChunkingDemo() {
     );
 }
 
+type TuningModelKey = "Neuraal netwerk" | "Random forest" | "XGBoost" | "CNN";
+
+const TUNING_MODELS: Record<TuningModelKey, {
+    metaphor: string;
+    complexityLabel: string;
+    tempoLabel: string;
+    regularizationLabel: string;
+    examples: string[];
+    idealComplexity: number;
+    idealTempo: number;
+    idealRegularization: number;
+}> = {
+    "Neuraal netwerk": {
+        metaphor: "Een flexibel netwerk dat tussenrepresentaties leert. De kunst is genoeg capaciteit geven zonder trainingsdata uit het hoofd te leren.",
+        complexityLabel: "lagen en neuronen",
+        tempoLabel: "learning rate",
+        regularizationLabel: "dropout / weight decay",
+        examples: ["aantal hidden layers", "units per laag", "learning rate", "batch size", "dropout"],
+        idealComplexity: 58,
+        idealTempo: 42,
+        idealRegularization: 52,
+    },
+    "Random forest": {
+        metaphor: "Veel beslisbomen stemmen samen. Tuning bepaalt hoe diep bomen mogen denken en hoeveel variatie ze krijgen.",
+        complexityLabel: "boomdiepte",
+        tempoLabel: "aantal bomen",
+        regularizationLabel: "min. samples per blad",
+        examples: ["n_estimators", "max_depth", "min_samples_leaf", "max_features", "class_weight"],
+        idealComplexity: 48,
+        idealTempo: 62,
+        idealRegularization: 58,
+    },
+    XGBoost: {
+        metaphor: "Een reeks kleine bomen die elkaar corrigeren. Sterk op tabulaire data, maar gevoelig voor te gretig leren.",
+        complexityLabel: "max_depth",
+        tempoLabel: "learning_rate / eta",
+        regularizationLabel: "gamma, alpha, lambda",
+        examples: ["learning_rate", "n_estimators", "max_depth", "subsample", "reg_lambda"],
+        idealComplexity: 44,
+        idealTempo: 35,
+        idealRegularization: 64,
+    },
+    CNN: {
+        metaphor: "Een beeldmodel dat eerst lokale patronen leert en die laag voor laag combineert tot grotere structuren.",
+        complexityLabel: "filters en blokken",
+        tempoLabel: "learning rate",
+        regularizationLabel: "augmentatie / dropout",
+        examples: ["aantal filters", "kernel size", "convolutionele blokken", "pooling", "data augmentation"],
+        idealComplexity: 64,
+        idealTempo: 38,
+        idealRegularization: 68,
+    },
+};
+
+function tuningOutcome(model: TuningModelKey, complexity: number, tempo: number, regularization: number) {
+    const profile = TUNING_MODELS[model];
+    const distance =
+        Math.abs(complexity - profile.idealComplexity) * 0.28 +
+        Math.abs(tempo - profile.idealTempo) * 0.22 +
+        Math.abs(regularization - profile.idealRegularization) * 0.2;
+    const overfit = Math.max(0, complexity - regularization - 15) + Math.max(0, tempo - 70) * 0.5;
+    const underfit = Math.max(0, regularization - complexity - 28) + Math.max(0, 18 - tempo) * 0.7;
+    const train = Math.min(96, Math.max(55, 61 + complexity * 0.35 + tempo * 0.08 - regularization * 0.04));
+    const validation = Math.min(94, Math.max(48, 90 - distance - overfit * 0.18 - underfit * 0.16));
+    const runtime = Math.min(98, Math.max(18, complexity * 0.55 + tempo * 0.18 + (model === "CNN" ? 22 : model === "XGBoost" ? 12 : 5)));
+    const label = overfit > 24 ? "overfit-risico" : underfit > 18 ? "underfit-risico" : validation > 78 ? "goede balans" : "zoek verder";
+
+    return { train, validation, runtime, label };
+}
+
+export function HyperparameterTuningLab() {
+    const [model, setModel] = useState<TuningModelKey>("XGBoost");
+    const [complexity, setComplexity] = useState(52);
+    const [tempo, setTempo] = useState(38);
+    const [regularization, setRegularization] = useState(58);
+    const profile = TUNING_MODELS[model];
+    const outcome = tuningOutcome(model, complexity, tempo, regularization);
+    const curve = [15, 30, 45, 60, 75, 90].map((value) => ({
+        complexity: value,
+        train: tuningOutcome(model, value, tempo, regularization).train,
+        validation: tuningOutcome(model, value, tempo, regularization).validation,
+    }));
+    const trainPoints = curve.map((point, index) => `${34 + index * 44},${190 - point.train * 1.45}`).join(" ");
+    const validationPoints = curve.map((point, index) => `${34 + index * 44},${190 - point.validation * 1.45}`).join(" ");
+
+    const controls = [
+        { id: "tune-complexity", label: profile.complexityLabel, value: complexity, set: setComplexity },
+        { id: "tune-tempo", label: profile.tempoLabel, value: tempo, set: setTempo },
+        { id: "tune-regularization", label: profile.regularizationLabel, value: regularization, set: setRegularization },
+    ];
+
+    return (
+        <Shell
+            title="Hyperparameter tuning-lab"
+            subtitle="Kies eerst het modeltype. Pas daarna hebben de knoppen betekenis: bij een CNN tune je andere dingen dan bij XGBoost of een random forest."
+        >
+            <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
+                <div>
+                    <div className="grid gap-2 sm:grid-cols-2">
+                        {(Object.keys(TUNING_MODELS) as TuningModelKey[]).map((name) => (
+                            <button
+                                key={name}
+                                type="button"
+                                onClick={() => setModel(name)}
+                                className={`rounded-2xl border p-4 text-left transition ${model === name ? "border-brand-secondary bg-brand-secondary/5" : "border-slate-200 bg-white hover:bg-slate-50"}`}
+                            >
+                                <span className="block text-sm font-bold text-brand-dark">{name}</span>
+                                <span className="mt-1 block text-xs leading-5 text-slate-500">{TUNING_MODELS[name].complexityLabel}</span>
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className="mt-5 rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                        <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Model eerst begrijpen</p>
+                        <p className="mt-2 text-sm leading-6 text-slate-700">{profile.metaphor}</p>
+                    </div>
+
+                    <div className="mt-5 grid gap-4">
+                        {controls.map((control) => (
+                            <label key={control.id} className="rounded-2xl border border-slate-200 bg-white p-4" htmlFor={control.id}>
+                                <span className="flex items-center justify-between gap-3 text-sm font-bold text-slate-800">
+                                    {control.label}
+                                    <span className="tabular-nums text-brand-primary">{control.value}%</span>
+                                </span>
+                                <input
+                                    id={control.id}
+                                    type="range"
+                                    min="0"
+                                    max="100"
+                                    value={control.value}
+                                    onChange={(event) => control.set(Number(event.target.value))}
+                                    className="mt-3 w-full accent-brand-secondary"
+                                />
+                            </label>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="rounded-3xl border border-slate-200 bg-white p-5">
+                    <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                        <div>
+                            <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Validatiecurve</p>
+                            <h4 className="mt-1 text-xl font-bold text-brand-dark">{outcome.label}</h4>
+                        </div>
+                        <span className="rounded-full bg-brand-primary/10 px-3 py-1 text-xs font-bold text-brand-primary">
+                            validatie {Math.round(outcome.validation)}%
+                        </span>
+                    </div>
+                    <svg viewBox="0 0 300 220" className="h-64 w-full rounded-2xl bg-slate-50">
+                        <line x1="34" y1="190" x2="260" y2="190" stroke="#64748b" />
+                        <line x1="34" y1="190" x2="34" y2="34" stroke="#64748b" />
+                        <polyline points={trainPoints} fill="none" stroke="#94a3b8" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                        <polyline points={validationPoints} fill="none" stroke="#007EA7" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                        <text x="84" y="208" className="fill-slate-500 text-[10px]">meer complexiteit</text>
+                        <text x="6" y="120" transform="rotate(-90 10 120)" className="fill-slate-500 text-[10px]">score</text>
+                    </svg>
+                    <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                        <MetricCard label="Train" value={`${Math.round(outcome.train)}%`} hint="kan stijgen door memoriseren" />
+                        <MetricCard label="Validatie" value={`${Math.round(outcome.validation)}%`} hint="belangrijker voor tuning" />
+                        <MetricCard label="Rekentijd" value={`${Math.round(outcome.runtime)}%`} hint="workflow en budget" />
+                    </div>
+                    <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                        <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Voorbeelden bij {model}</p>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                            {profile.examples.map((example) => (
+                                <span key={example} className="rounded-full bg-white px-3 py-1 text-xs font-bold text-slate-700 shadow-sm">
+                                    {example}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Shell>
+    );
+}
+
+type ModelMode = "Tabulaire data" | "Beelden" | "Tekst" | "Patronen" | "Beslissingen";
+
+type ModelFamily = {
+    name: string;
+    modes: ModelMode[];
+    input: string;
+    output: string;
+    how: string;
+    caveat: string;
+};
+
+const MODEL_FAMILIES: ModelFamily[] = [
+    {
+        name: "Lineair / logistisch",
+        modes: ["Tabulaire data"],
+        input: "EPD-velden, labwaarden, scores",
+        output: "kans, label of continue waarde",
+        how: "Combineert variabelen met gewichten en trekt een relatief eenvoudige grens.",
+        caveat: "Sterk als baseline, maar mist complexe interacties tenzij je die zelf toevoegt.",
+    },
+    {
+        name: "Random forest",
+        modes: ["Tabulaire data"],
+        input: "gestructureerde klinische data",
+        output: "stemming van veel bomen",
+        how: "Bouwt veel beslisbomen en laat ze samen stemmen.",
+        caveat: "Kan robuust zijn, maar calibratie en uitlegbaarheid blijven aandachtspunten.",
+    },
+    {
+        name: "Gradient boosting",
+        modes: ["Tabulaire data"],
+        input: "tabulaire data met nonlineariteit",
+        output: "stapsgewijs gecorrigeerde voorspelling",
+        how: "Elke nieuwe boom corrigeert fouten van de vorige bomen.",
+        caveat: "Vaak sterk, maar gevoelig voor tuning, leakage en lokale shortcuts.",
+    },
+    {
+        name: "CNN",
+        modes: ["Beelden"],
+        input: "röntgen, CT, dermatoscopie, pathologie",
+        output: "classificatie, detectie of segmentatie",
+        how: "Leert lokale beeldpatronen en combineert die tot grotere structuren.",
+        caveat: "Patient-level splits, scanner-shift en externe beeldvalidatie zijn cruciaal.",
+    },
+    {
+        name: "Transformer / LLM",
+        modes: ["Tekst"],
+        input: "tekst, tokens, richtlijnen, verslagen",
+        output: "samenvatting, generatie, extractie",
+        how: "Gebruikt attention om context tussen woorden of tokens te wegen.",
+        caveat: "Kan overtuigend klinken en toch fout zijn; broncontrole en guardrails zijn nodig.",
+    },
+    {
+        name: "Clustering",
+        modes: ["Patronen"],
+        input: "data zonder vaste labels",
+        output: "groepen of subtypen",
+        how: "Zoekt observaties die op elkaar lijken.",
+        caveat: "Een cluster is geen klinisch subtype totdat het gevalideerd en geïnterpreteerd is.",
+    },
+    {
+        name: "Reinforcement learning",
+        modes: ["Beslissingen"],
+        input: "state, actie, beloning over tijd",
+        output: "beleid of actievoorstel",
+        how: "Leert acties kiezen die op termijn beloning maximaliseren.",
+        caveat: "Klinisch lastig door confounding, veiligheid en vertraagde uitkomsten.",
+    },
+];
+
+export function ModelFamilyMap() {
+    const [mode, setMode] = useState<ModelMode>("Tabulaire data");
+    const visibleFamilies = MODEL_FAMILIES.filter((family) => family.modes.includes(mode));
+    const [activeName, setActiveName] = useState<string>(visibleFamilies[0].name);
+    const active = visibleFamilies.find((family) => family.name === activeName) ?? visibleFamilies[0];
+
+    function selectMode(nextMode: ModelMode) {
+        setMode(nextMode);
+        const firstFamily = MODEL_FAMILIES.find((family) => family.modes.includes(nextMode));
+        if (firstFamily) setActiveName(firstFamily.name);
+    }
+
+    return (
+        <Shell
+            title="Modelkaart voor medische AI"
+            subtitle="Kies eerst het soort data of vraag. Daarna zie je welke modelfamilies logisch zijn, hoe ze ongeveer werken en waar je op moet letten."
+        >
+            <div className="mb-6 flex flex-wrap gap-2">
+                {(["Tabulaire data", "Beelden", "Tekst", "Patronen", "Beslissingen"] as ModelMode[]).map((item) => (
+                    <button
+                        key={item}
+                        type="button"
+                        onClick={() => selectMode(item)}
+                        className={`rounded-full px-4 py-2 text-sm font-bold transition ${mode === item ? "bg-brand-secondary text-white" : "border border-slate-200 bg-white text-slate-700 hover:bg-slate-50"}`}
+                    >
+                        {item}
+                    </button>
+                ))}
+            </div>
+
+            <div className="grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">
+                <div className="grid gap-3">
+                    {visibleFamilies.map((family) => (
+                        <button
+                            key={family.name}
+                            type="button"
+                            onClick={() => setActiveName(family.name)}
+                            className={`rounded-2xl border p-4 text-left transition ${active.name === family.name ? "border-brand-secondary bg-brand-secondary/5" : "border-slate-200 bg-white hover:bg-slate-50"}`}
+                        >
+                            <span className="block text-lg font-bold text-brand-dark">{family.name}</span>
+                            <span className="mt-1 block text-xs leading-5 text-slate-500">{family.output}</span>
+                        </button>
+                    ))}
+                </div>
+
+                <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                    <div className="grid gap-4 md:grid-cols-3">
+                        <div className="rounded-2xl bg-white p-4 shadow-sm">
+                            <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Input</p>
+                            <p className="mt-2 text-sm font-semibold leading-6 text-brand-dark">{active.input}</p>
+                        </div>
+                        <div className="rounded-2xl bg-white p-4 shadow-sm">
+                            <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Model</p>
+                            <p className="mt-2 text-sm font-semibold leading-6 text-brand-dark">{active.name}</p>
+                        </div>
+                        <div className="rounded-2xl bg-white p-4 shadow-sm">
+                            <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Output</p>
+                            <p className="mt-2 text-sm font-semibold leading-6 text-brand-dark">{active.output}</p>
+                        </div>
+                    </div>
+                    <div className="my-6 flex items-center gap-3 px-2 text-brand-primary">
+                        <div className="h-2 flex-1 rounded-full bg-brand-primary/20" />
+                        <span className="rounded-full bg-white px-3 py-1 text-xs font-bold shadow-sm">leren uit voorbeelden</span>
+                        <div className="h-2 flex-1 rounded-full bg-brand-primary/20" />
+                    </div>
+                    <div className="grid gap-4 md:grid-cols-2">
+                        <div className="rounded-2xl border border-white bg-white p-5">
+                            <p className="text-xs font-bold uppercase tracking-[0.14em] text-brand-secondary">Hoe werkt het ongeveer?</p>
+                            <p className="mt-2 text-sm leading-6 text-slate-700">{active.how}</p>
+                        </div>
+                        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-5">
+                            <p className="text-xs font-bold uppercase tracking-[0.14em] text-amber-700">Let op in de zorg</p>
+                            <p className="mt-2 text-sm leading-6 text-amber-900">{active.caveat}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Shell>
+    );
+}
+
 export function VisualPolicyCard() {
     return (
         <Shell
