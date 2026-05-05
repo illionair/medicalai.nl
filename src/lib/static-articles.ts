@@ -153,7 +153,7 @@ const ARTICLE_CONFIGS: StaticArticleConfig[] = [
     {
         file: "draft-03-auc-uitgelegd-voor-zorgprofessionals-wat-zegt-het-wel-en-niet.md",
         id: "article-auc-uitgelegd-zorgprofessionals",
-        category: "Methodisch",
+        category: "Predictie",
         tags: ["AUC", "ROC", "Decision curve analysis"],
         interactive: "auc-scores",
         visualLabel: "AUC stap voor stap",
@@ -162,7 +162,7 @@ const ARTICLE_CONFIGS: StaticArticleConfig[] = [
     {
         file: "draft-04-calibratie-de-vergeten-maat-bij-ai-in-de-zorg.md",
         id: "article-calibratie-ai-zorg",
-        category: "Methodisch",
+        category: "Predictie",
         tags: ["Calibratie", "Risicomodellen", "Modelvalidatie"],
         interactive: "calibration-simulator",
         visualLabel: "Calibratieplot",
@@ -294,7 +294,7 @@ function extractSummary(content: string) {
 function cleanMarkdown(raw: string, interactive: string) {
     const normalized = raw.replace(/\r\n/g, "\n");
     const { frontmatter, body: afterFrontmatter } = parseFrontmatter(normalized);
-    const withoutComments = afterFrontmatter.replace(/<!--[\s\S]*?-->\n*/g, "");
+    const withoutComments = afterFrontmatter.replace(/<!--[\s\S]*?-->\n*/g, "").trimStart();
     const titleMatch = withoutComments.match(/^#\s+(.+)\n+/);
     const headingTitle = titleMatch?.[1]?.trim();
     const title = frontmatter.title || headingTitle || "Medical AI artikel";
