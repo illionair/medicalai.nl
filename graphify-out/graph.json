@@ -601,7 +601,7 @@
       "label": "TopicPage()",
       "file_type": "code",
       "source_file": "src\\app\\topics\\[category]\\page.tsx",
-      "source_location": "L18",
+      "source_location": "L17",
       "id": "category_page_topicpage",
       "community": 5,
       "norm_label": "topicpage()"
@@ -1276,7 +1276,7 @@
       "label": "MS()",
       "file_type": "code",
       "source_file": "src\\components\\Navbar.tsx",
-      "source_location": "L15",
+      "source_location": "L17",
       "id": "components_navbar_ms",
       "community": 32,
       "norm_label": "ms()"

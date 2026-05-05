@@ -1,7 +1,6 @@
 import { getBlogsForTopic } from "@/lib/blog";
 import BlogGrid from "@/components/BlogGrid";
 import TopicHeader from "@/components/TopicHeader";
-import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -28,11 +27,10 @@ export default async function TopicPage({ params }: { params: Promise<{ category
     const description = topicDescriptions[decodedCategory] || "Explore articles in this category.";
 
     return (
-        <div className="container section-padding min-h-screen">
+        <div className="container py-10 md:py-16 lg:py-24 min-h-screen">
             <TopicHeader
                 title={decodedCategory}
                 description={description}
-                color="bg-blue-500" // The component handles gradients based on title
             />
 
             <BlogGrid blogs={blogs} />

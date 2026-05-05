@@ -721,3 +721,1459 @@ error: Error validating datasource `db`: the URL must start with the protocol `p
    | 
 
 Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-hyperparameter-tuning-uitgelegd: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-hyperparameter-tuning-uitgelegd: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0k.86gs._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0k.86gs._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0k.86gs._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0k.86gs._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-hyperparameter-tuning-uitgelegd: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0k.86gs._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0k.86gs._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-hyperparameter-tuning-uitgelegd: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load published blogs: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__0b0873w._.js:827:173
+
+  824 }
+  825 async function getPublishedBlogs() {
+  826     try {
+→ 827         const databaseBlogs = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findMany(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+[blog] Failed to load blog post article-auc-uitgelegd-zorgprofessionals: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique()` invocation in
+C:\Users\sanma\Desktop\OneDrive - s.s.mahes\OneDrive\Thuis\Eigen thuis projecten\medical-ai\.next\dev\server\chunks\ssr\[root-of-the-server]__014r_k6._.js:1276:164
+
+  1273 }
+  1274 async function getBlogPost(id) {
+  1275     try {
+→ 1276         const blog = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].blogPost.findUnique(
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:10
+   | 
+ 9 |   provider  = "postgresql"
+10 |   url       = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1

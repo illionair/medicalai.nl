@@ -138,35 +138,35 @@ export default function EditorPage({ params }: { params: Promise<{ id: string }>
     if (notFound) return <div className="p-8 text-center">Blog post not found.</div>;
 
     return (
-        <div className="min-h-screen bg-gray-50 pb-20">
-            <nav className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
-                <div className="flex items-center gap-4">
-                    <Link href="/admin" className="text-sm text-gray-500 hover:text-black">← Back</Link>
-                    <h1 className="font-semibold">Edit Blog Post</h1>
+        <div className="min-h-screen bg-gray-50 pb-12 md:pb-20">
+            <nav className="bg-white border-b border-gray-200 px-4 sm:px-6 py-3 sm:py-4 flex flex-col gap-3 sticky top-16 z-40 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex min-w-0 items-center gap-4">
+                    <Link href="/admin" className="inline-flex min-h-11 items-center text-sm text-gray-500 hover:text-black">← Back</Link>
+                    <h1 className="truncate font-semibold">Edit Blog Post</h1>
                 </div>
                 <div className="flex items-center gap-3">
                     <button
                         onClick={handleSave}
                         disabled={saving}
-                        className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                        className="min-h-11 flex-1 px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors sm:flex-none"
                     >
                         {saving ? "Saving..." : "Save Draft"}
                     </button>
                     <button
                         onClick={handlePublish}
                         disabled={saving}
-                        className="px-4 py-2 text-sm font-medium text-white bg-black rounded-lg hover:opacity-80 transition-opacity"
+                        className="min-h-11 flex-1 px-4 py-2 text-sm font-medium text-white bg-black rounded-lg hover:opacity-80 transition-opacity sm:flex-none"
                     >
                         {state.scheduledFor ? "Schedule" : "Publish"}
                     </button>
                 </div>
             </nav>
 
-            <main className="max-w-5xl mx-auto mt-8 px-6 space-y-6">
+            <main className="max-w-5xl mx-auto mt-5 sm:mt-8 px-4 sm:px-6 space-y-6">
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                     <button
                         onClick={() => setShowAdvanced(!showAdvanced)}
-                        className="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 transition-colors text-left"
+                        className="w-full flex min-h-12 items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 transition-colors text-left"
                     >
                         <span className="font-bold text-sm text-gray-700">Blog Metadata & Taxonomy</span>
                         {showAdvanced ? <ChevronUp size={16} /> : <ChevronDown size={16} />}

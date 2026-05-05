@@ -22,11 +22,11 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-slate-50 text-black p-4">
+        <div className="min-h-[calc(100dvh-7rem)] flex items-center justify-center bg-slate-50 text-black p-4">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="w-full max-w-md bg-white p-8 rounded-2xl shadow-sm border border-gray-100"
+                className="w-full max-w-md bg-white p-5 sm:p-8 rounded-2xl shadow-sm border border-gray-100"
             >
                 <div className="text-center mb-8">
                     <h1 className="text-2xl font-bold mb-2 text-brand-dark">Inloggen</h1>
@@ -48,14 +48,14 @@ export default function LoginPage() {
                             type="text"
                             name="name"
                             placeholder="Naam"
-                            className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:border-brand-secondary transition-all"
+                            className="w-full min-h-11 px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:border-brand-secondary transition-all"
                             required
                         />
                         <input
                             type="email"
                             name="email"
                             placeholder="E-mailadres"
-                            className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:border-brand-secondary transition-all"
+                            className="w-full min-h-11 px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:border-brand-secondary transition-all"
                             required
                         />
 
@@ -63,7 +63,7 @@ export default function LoginPage() {
 
                         <button
                             type="submit"
-                            className="w-full py-3 rounded-xl bg-brand-dark text-white font-bold hover:opacity-90 transition-opacity"
+                            className="w-full min-h-12 py-3 rounded-xl bg-brand-dark text-white font-bold hover:opacity-90 transition-opacity"
                         >
                             Stuur loginlink
                         </button>

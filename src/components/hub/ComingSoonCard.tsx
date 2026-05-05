@@ -7,7 +7,7 @@ function MS({ name, className = "" }: { name: string; className?: string }) {
 export default function ComingSoonCard() {
     return (
         <div
-            className="rounded-[24px] p-9 md:p-10 relative overflow-hidden flex flex-col justify-center min-h-[300px] group ambient-shadow"
+            className="rounded-[24px] p-5 sm:p-7 md:p-10 relative overflow-hidden flex flex-col justify-center min-h-[260px] md:min-h-[300px] group ambient-shadow"
             style={{
                 background: "linear-gradient(135deg, #EEF6FB 0%, #DBE9F4 100%)",
                 border: "0.5px solid rgba(255,255,255,0.8)",

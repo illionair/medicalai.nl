@@ -40,14 +40,14 @@ export default function PublishedList() {
         <div className="grid gap-4">
             {blogs.map((blog) => (
                 <div key={blog.id} className="p-4 bg-white rounded-xl border border-gray-200 hover:border-black transition-colors group relative z-10">
-                    <div className="flex justify-between items-start">
-                        <Link href={`/admin/editor/${blog.id}`} className="flex-grow">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-start">
+                        <Link href={`/admin/editor/${blog.id}`} className="min-w-0 flex-grow">
                             <div>
                                 <h3 className="font-semibold text-lg group-hover:text-blue-600 transition-colors text-black">
                                     {blog.title}
                                 </h3>
                                 <p className="text-sm text-gray-500 mt-1 line-clamp-2">{blog.summary}</p>
-                                <div className="flex gap-2 mt-2">
+                                <div className="flex flex-wrap gap-2 mt-2">
                                     <span className="text-xs px-2 py-1 bg-gray-100 rounded-full text-gray-600">
                                         {blog.category}
                                     </span>
@@ -66,11 +66,11 @@ export default function PublishedList() {
                                 </div>
                             </div>
                         </Link>
-                        <div className="flex flex-col items-end gap-2 ml-4">
+                        <div className="flex flex-col gap-2 sm:ml-4 sm:items-end">
                             <span className="text-xs text-gray-400">
                                 {new Date(blog.createdAt).toLocaleDateString()}
                             </span>
-                            <div className="flex gap-2">
+                            <div className="flex flex-wrap gap-2">
                                 <button
                                     onClick={async (e) => {
                                         e.preventDefault();
@@ -79,7 +79,7 @@ export default function PublishedList() {
                                             window.location.reload();
                                         }
                                     }}
-                                    className="text-xs px-2 py-1 bg-orange-100 text-orange-700 rounded hover:bg-orange-200"
+                                    className="min-h-9 text-xs px-3 py-1 bg-orange-100 text-orange-700 rounded hover:bg-orange-200"
                                 >
                                     Unpublish
                                 </button>
@@ -91,7 +91,7 @@ export default function PublishedList() {
                                             window.location.reload();
                                         }
                                     }}
-                                    className="text-xs px-2 py-1 bg-red-100 text-red-700 rounded hover:bg-red-200"
+                                    className="min-h-9 text-xs px-3 py-1 bg-red-100 text-red-700 rounded hover:bg-red-200"
                                 >
                                     Delete
                                 </button>

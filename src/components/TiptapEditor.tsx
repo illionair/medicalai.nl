@@ -68,7 +68,7 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
         content: value,
         editorProps: {
             attributes: {
-                class: 'typography-theme max-w-3xl mx-auto focus:outline-none min-h-[500px] p-8',
+                class: 'typography-theme max-w-3xl mx-auto focus:outline-none min-h-[420px] p-4 sm:min-h-[500px] sm:p-8',
             },
         },
         onUpdate: ({ editor }) => {
@@ -134,16 +134,16 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
                 onChange={handleImageUpload}
             />
             {/* Toolbar */}
-            <div className="bg-gray-50/80 border-b border-gray-200 p-2 flex flex-wrap gap-1 items-center sticky top-0 z-10 backdrop-blur-sm">
+            <div className="bg-gray-50/80 border-b border-gray-200 p-2 flex flex-nowrap gap-1 items-center sticky top-0 z-10 overflow-x-auto backdrop-blur-sm">
 
                 {/* History */}
-                <div className="flex items-center border-r border-gray-300 pr-2 mr-1 gap-1">
+                <div className="flex shrink-0 items-center border-r border-gray-300 pr-2 mr-1 gap-1">
                     <ToolbarBtn onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().undo()} icon={<Undo size={16} />} tooltip="Undo" />
                     <ToolbarBtn onClick={() => editor.chain().focus().redo().run()} disabled={!editor.can().redo()} icon={<Redo size={16} />} tooltip="Redo" />
                 </div>
 
                 {/* Text Style */}
-                <div className="flex items-center border-r border-gray-300 pr-2 mr-1 gap-1">
+                <div className="flex shrink-0 items-center border-r border-gray-300 pr-2 mr-1 gap-1">
                     <ToolbarBtn
                         onClick={() => editor.chain().focus().toggleBold().run()}
                         isActive={editor.isActive('bold')}
@@ -176,12 +176,12 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
                 </div>
 
                 {/* Colors, Font Size & Font Family */}
-                <div className="flex items-center border-r border-gray-300 pr-2 mr-1 gap-1">
+                <div className="flex shrink-0 items-center border-r border-gray-300 pr-2 mr-1 gap-1">
                     <input
                         type="color"
                         onInput={event => editor.chain().focus().setColor((event.target as HTMLInputElement).value).run()}
                         value={editor.getAttributes('textStyle').color || '#000000'}
-                        className="w-8 h-8 p-0 border-0 rounded cursor-pointer"
+                        className="h-10 w-10 p-0 border-0 rounded cursor-pointer"
                         title="Text Color"
                     />
                     <select
@@ -193,7 +193,7 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
                                 editor.chain().focus().setMark('textStyle', { fontSize: size }).run();
                             }
                         }}
-                        className="h-8 px-2 text-xs text-gray-800 border border-gray-300 rounded bg-white cursor-pointer"
+                        className="h-10 px-2 text-xs text-gray-800 border border-gray-300 rounded bg-white cursor-pointer"
                         title="Font Size"
                         defaultValue="default"
                     >
@@ -216,7 +216,7 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
                                 editor.chain().focus().setFontFamily(font).run();
                             }
                         }}
-                        className="h-8 px-2 text-xs text-gray-800 border border-gray-300 rounded bg-white cursor-pointer"
+                        className="h-10 px-2 text-xs text-gray-800 border border-gray-300 rounded bg-white cursor-pointer"
                         title="Font Family"
                         defaultValue="default"
                     >
@@ -230,7 +230,7 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
                 </div>
 
                 {/* Alignment */}
-                <div className="flex items-center border-r border-gray-300 pr-2 mr-1 gap-1">
+                <div className="flex shrink-0 items-center border-r border-gray-300 pr-2 mr-1 gap-1">
                     <ToolbarBtn onClick={() => editor.chain().focus().setTextAlign('left').run()} isActive={editor.isActive({ textAlign: 'left' })} icon={<AlignLeft size={16} />} tooltip="Align Left" />
                     <ToolbarBtn onClick={() => editor.chain().focus().setTextAlign('center').run()} isActive={editor.isActive({ textAlign: 'center' })} icon={<AlignCenter size={16} />} tooltip="Align Center" />
                     <ToolbarBtn onClick={() => editor.chain().focus().setTextAlign('right').run()} isActive={editor.isActive({ textAlign: 'right' })} icon={<AlignRight size={16} />} tooltip="Align Right" />
@@ -238,14 +238,14 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
                 </div>
 
                 {/* Headings */}
-                <div className="flex items-center border-r border-gray-300 pr-2 mr-1 gap-1">
+                <div className="flex shrink-0 items-center border-r border-gray-300 pr-2 mr-1 gap-1">
                     <ToolbarBtn onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} isActive={editor.isActive('heading', { level: 1 })} icon={<Heading1 size={16} />} tooltip="Heading 1" />
                     <ToolbarBtn onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} isActive={editor.isActive('heading', { level: 2 })} icon={<Heading2 size={16} />} tooltip="Heading 2" />
                     <ToolbarBtn onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()} isActive={editor.isActive('heading', { level: 3 })} icon={<Heading3 size={16} />} tooltip="Heading 3" />
                 </div>
 
                 {/* Lists & Quotes */}
-                <div className="flex items-center border-r border-gray-300 pr-2 mr-1 gap-1">
+                <div className="flex shrink-0 items-center border-r border-gray-300 pr-2 mr-1 gap-1">
                     <ToolbarBtn onClick={() => editor.chain().focus().toggleBulletList().run()} isActive={editor.isActive('bulletList')} icon={<List size={16} />} tooltip="Bullet List" />
                     <ToolbarBtn onClick={() => editor.chain().focus().toggleOrderedList().run()} isActive={editor.isActive('orderedList')} icon={<ListOrdered size={16} />} tooltip="Ordered List" />
                     <ToolbarBtn onClick={() => editor.chain().focus().toggleBlockquote().run()} isActive={editor.isActive('blockquote')} icon={<Quote size={16} />} tooltip="Quote" />
@@ -253,7 +253,7 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
                 </div>
 
                 {/* Insert */}
-                <div className="flex items-center gap-1">
+                <div className="flex shrink-0 items-center gap-1">
                     <ToolbarBtn onClick={setLink} isActive={editor.isActive('link')} icon={<LinkIcon size={16} />} tooltip="Link" />
                     <ToolbarBtn onClick={addImage} icon={<ImageIcon size={16} />} tooltip="Image" />
                     <ToolbarBtn onClick={() => editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()} icon={<TableIcon size={16} />} tooltip="Table" />
@@ -284,7 +284,7 @@ function ToolbarBtn({ onClick, isActive = false, disabled = false, icon, tooltip
             onClick={onClick}
             disabled={disabled}
             title={tooltip}
-            className={`p-2 rounded-lg transition-all ${isActive
+            className={`inline-flex h-10 w-10 items-center justify-center rounded-lg transition-all ${isActive
                 ? 'bg-black text-white shadow-sm'
                 : 'text-gray-600 hover:bg-gray-200 hover:text-black'
                 } ${disabled ? 'opacity-30 cursor-not-allowed' : ''}`}

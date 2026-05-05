@@ -8,18 +8,19 @@ export default function AboutPage() {
     const { t } = useLanguage();
 
     const icons = [Shield, Scale, BookOpen];
+    const principles = t.about.principles as Array<{ title: string; desc: string }>;
 
     return (
         <div className="min-h-screen bg-brand-white">
             {/* Hero Section */}
-            <section className="relative py-20 bg-brand-white overflow-hidden">
+            <section className="relative py-12 md:py-20 bg-brand-white overflow-hidden">
                 <div className="container mx-auto px-4 relative z-10">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         className="max-w-3xl mx-auto text-center"
                     >
-                        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6 text-brand-dark">
+                        <h1 className="text-[clamp(38px,11vw,56px)] font-bold tracking-normal mb-6 text-brand-dark leading-tight">
                             {t.about.title}
                         </h1>
                         <p className="text-lg md:text-xl text-brand-primary leading-relaxed">
@@ -35,7 +36,7 @@ export default function AboutPage() {
             </section>
 
             {/* Mission & Questions */}
-            <section className="py-20">
+            <section className="py-12 md:py-20">
                 <div className="container mx-auto px-4">
                     <div className="max-w-4xl mx-auto">
                         <motion.div
@@ -68,19 +69,19 @@ export default function AboutPage() {
             </section>
 
             {/* Principles */}
-            <section className="py-20 bg-brand-dark text-white">
+            <section className="py-12 md:py-20 bg-brand-dark text-white">
                 <div className="container mx-auto px-4">
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-3xl font-bold text-center mb-16 text-white"
+                        className="text-3xl font-bold text-center mb-10 md:mb-16 text-white"
                     >
                         {t.about.principles_title}
                     </motion.h2>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                        {t.about.principles.map((principle: any, index: number) => {
+                        {principles.map((principle, index) => {
                             const Icon = icons[index];
                             return (
                                 <motion.div
@@ -89,7 +90,7 @@ export default function AboutPage() {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: index * 0.2 }}
-                                    className="bg-brand-primary/50 p-8 rounded-2xl border border-brand-secondary/30 hover:border-brand-accent transition-colors"
+                                    className="bg-brand-primary/50 p-6 sm:p-8 rounded-2xl border border-brand-secondary/30 hover:border-brand-accent transition-colors"
                                 >
                                     <div className="w-12 h-12 bg-brand-secondary/20 rounded-xl flex items-center justify-center text-brand-accent mb-6">
                                         <Icon size={24} />
@@ -106,13 +107,13 @@ export default function AboutPage() {
             </section>
 
             {/* Goal */}
-            <section className="py-20">
+            <section className="py-12 md:py-20">
                 <div className="container mx-auto px-4 text-center">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
-                        className="max-w-3xl mx-auto bg-brand-primary p-10 rounded-3xl border border-brand-secondary shadow-xl"
+                        className="max-w-3xl mx-auto bg-brand-primary p-6 sm:p-10 rounded-2xl sm:rounded-3xl border border-brand-secondary shadow-xl"
                     >
                         <p className="text-lg md:text-xl text-white font-medium leading-relaxed">
                             {t.about.goal}

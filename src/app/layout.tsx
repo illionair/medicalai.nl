@@ -42,7 +42,7 @@ export default function RootLayout({
       <body className={`${manrope.variable} ${lato.variable} ${inter.variable} font-sans antialiased min-h-screen flex flex-col stage-bg pt-16`} suppressHydrationWarning>
         <LanguageProvider>
           <Navbar />
-          <main className="flex-grow w-full max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-10 pb-20 mt-10">
+          <main className="flex-grow w-full pb-12 md:pb-20 mt-6 md:mt-10">
             {children}
           </main>
           <Footer />

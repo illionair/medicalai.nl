@@ -12,13 +12,13 @@ interface Props {
 export default function ContentPanel({ state, setField }: Props) {
     return (
         <>
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4">
+            <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4">
                 <Field label="Title">
                     <input
                         type="text"
                         value={state.title}
                         onChange={(e) => setField("title", e.target.value)}
-                        className="w-full text-xl font-bold border-none focus:ring-0 p-0 placeholder-gray-300 text-black"
+                        className="w-full text-lg sm:text-xl font-bold border-none focus:ring-0 p-0 placeholder-gray-300 text-black"
                         placeholder="Enter title..."
                     />
                 </Field>
@@ -27,7 +27,7 @@ export default function ContentPanel({ state, setField }: Props) {
                         type="text"
                         value={state.subtitle}
                         onChange={(e) => setField("subtitle", e.target.value)}
-                        className="w-full text-lg font-medium border-none focus:ring-0 p-0 placeholder-gray-300 text-gray-700"
+                        className="w-full text-base sm:text-lg font-medium border-none focus:ring-0 p-0 placeholder-gray-300 text-gray-700"
                         placeholder="Enter subtitle..."
                     />
                 </Field>
@@ -64,7 +64,7 @@ export default function ContentPanel({ state, setField }: Props) {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="h-[700px]"
+                className="h-[520px] sm:h-[620px] lg:h-[700px]"
             >
                 <TiptapEditor value={state.content} onChange={(value) => setField("content", value)} />
             </motion.div>

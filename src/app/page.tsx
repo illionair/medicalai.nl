@@ -28,7 +28,7 @@ export default async function Home() {
         }));
 
     return (
-        <div className="flex flex-col gap-12 md:gap-16">
+        <div className="hub-container flex flex-col gap-10 md:gap-16">
             <HubHero />
             <FeaturedBento blogs={featuredBlogs} />
             <section className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">

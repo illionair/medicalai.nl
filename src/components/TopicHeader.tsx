@@ -6,10 +6,9 @@ import { useLanguage } from "@/context/LanguageContext";
 interface TopicHeaderProps {
     title: string;
     description: string;
-    color: string; // e.g., "bg-blue-500"
 }
 
-export default function TopicHeader({ title, description, color }: TopicHeaderProps) {
+export default function TopicHeader({ title, description }: TopicHeaderProps) {
     const { t } = useLanguage();
 
     // Map color classes to hex/variables for dynamic styling if needed, 
@@ -28,7 +27,7 @@ export default function TopicHeader({ title, description, color }: TopicHeaderPr
     const gradient = gradients[title] || gradients["default"];
 
     return (
-        <div className="relative w-full min-h-[300px] overflow-hidden rounded-3xl mb-12 flex flex-col justify-center">
+        <div className="relative w-full min-h-[240px] md:min-h-[300px] overflow-hidden rounded-2xl md:rounded-3xl mb-8 md:mb-12 flex flex-col justify-center">
             {/* Background with Gradient */}
             <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-90`} />
 
@@ -37,7 +36,7 @@ export default function TopicHeader({ title, description, color }: TopicHeaderPr
             <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-black/10 rounded-full blur-3xl" />
 
             {/* Content */}
-            <div className="relative h-full flex flex-col justify-center items-center text-center p-8 text-white z-10">
+            <div className="relative h-full flex flex-col justify-center items-center text-center p-5 sm:p-8 text-white z-10">
                 <motion.span
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -50,7 +49,7 @@ export default function TopicHeader({ title, description, color }: TopicHeaderPr
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.1 }}
-                    className="text-4xl md:text-6xl font-bold mb-4 tracking-tight"
+                    className="text-[clamp(38px,12vw,64px)] font-bold mb-4 tracking-normal break-words"
                 >
                     {title}
                 </motion.h1>

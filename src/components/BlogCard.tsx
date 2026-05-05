@@ -25,7 +25,7 @@ export default function BlogCard({ id, title, summary, category, date, specialis
             <motion.div
                 whileHover={{ y: -8 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="relative h-full flex flex-col p-7 rounded-[32px] transition-shadow hover:shadow-2xl overflow-hidden group"
+                className="relative h-full flex flex-col p-5 sm:p-7 rounded-[24px] sm:rounded-[32px] transition-shadow hover:shadow-2xl overflow-hidden group"
                 style={{
                     backgroundColor: "transparent", // Reset base bg
                     boxShadow: '0 20px 40px -10px rgba(0, 0, 0, 0.15)'
@@ -49,7 +49,7 @@ export default function BlogCard({ id, title, summary, category, date, specialis
                 {/* Content Container - Relative z-10 to sit above glass */}
                 <div className="relative z-10 flex flex-col h-full">
                     {visual && (
-                        <div className="-mx-7 -mt-7 mb-5 h-40 overflow-hidden border-b border-white/60 bg-white/40">
+                        <div className="-mx-5 -mt-5 mb-5 h-40 overflow-hidden border-b border-white/60 bg-white/40 sm:-mx-7 sm:-mt-7">
                             <Image
                                 src={visual}
                                 alt=""
@@ -77,11 +77,11 @@ export default function BlogCard({ id, title, summary, category, date, specialis
                         </span>
                     </div>
 
-                    <h3 className="text-xl font-bold mb-[10px] leading-[1.25] tracking-[-0.01em] group-hover:text-brand-primary transition-colors text-slate-800">
+                    <h3 className="text-xl font-bold mb-[10px] leading-[1.25] tracking-normal break-words group-hover:text-brand-primary transition-colors text-slate-800">
                         {title}
                     </h3>
 
-                    <p className="text-sm mb-6 line-clamp-3 flex-grow text-slate-600 leading-[1.55]">
+                    <p className="text-sm mb-6 flex-grow text-slate-600 leading-[1.55] sm:line-clamp-3">
                         {summary}
                     </p>
 
@@ -93,11 +93,11 @@ export default function BlogCard({ id, title, summary, category, date, specialis
                         </div>
                     )}
 
-                    <div className="flex items-center justify-between mt-auto pt-[14px] border-t border-black/[0.06]">
+                    <div className="flex flex-wrap items-center justify-between gap-3 mt-auto pt-[14px] border-t border-black/[0.06]">
                         <span className="text-xs font-medium text-slate-500">
                             {new Date(date).toLocaleDateString("nl-NL", { year: 'numeric', month: 'long', day: 'numeric' })}
                         </span>
-                        <span className="text-xs font-bold flex items-center gap-1 text-brand-primary">
+                        <span className="text-xs font-bold flex min-h-11 items-center gap-1 text-brand-primary">
                             Lees artikel
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M5 12h14M12 5l7 7-7 7" />

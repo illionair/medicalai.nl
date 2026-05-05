@@ -52,14 +52,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
     ].filter(Boolean);
 
     return (
-        <article className="min-h-screen bg-white pb-64">
+        <article className="min-h-screen bg-white pb-16 md:pb-24">
             {/* Header Section */}
-            <div className="bg-slate-50 border-b border-slate-200 pt-32 pb-16">
+            <div className="bg-slate-50 border-b border-slate-200 pt-16 pb-10 md:pt-24 md:pb-16">
                 <div className="container mx-auto px-4 max-w-6xl">
                     <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
                         <Link
                             href="/"
-                            className="inline-flex items-center gap-2 text-slate-500 hover:text-brand-primary transition-colors text-sm font-medium"
+                            className="inline-flex min-h-11 items-center gap-2 text-slate-500 hover:text-brand-primary transition-colors text-sm font-medium"
                         >
                             <ArrowLeft size={16} />
                             Terug naar overzicht
@@ -69,7 +69,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                                 <input type="hidden" name="id" value={blog.id} />
                                 <button
                                     type="submit"
-                                    className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-bold text-white transition hover:bg-brand-primary"
+                                    className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-bold text-white transition hover:bg-brand-primary"
                                 >
                                     <Pencil size={16} />
                                     Artikel bewerken
@@ -78,11 +78,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                         )}
                     </div>
 
-                    <h1 className="text-4xl md:text-5xl font-bold text-brand-dark mb-4 leading-tight">
+                    <h1 className="hyphens-auto break-words text-[clamp(38px,11vw,56px)] font-bold text-brand-dark mb-4 leading-tight">
                         {blog.title}
                     </h1>
                     {blog.subtitle && (
-                        <p className="text-xl md:text-2xl text-slate-500 mb-6 font-light leading-relaxed">
+                        <p className="text-lg md:text-2xl text-slate-500 mb-6 font-light leading-relaxed">
                             {blog.subtitle}
                         </p>
                     )}
@@ -94,8 +94,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                     )}
 
                     {/* Subtitle/Summary if available, or just meta */}
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-slate-500 text-sm font-medium">
-                        <span className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-2 text-slate-600 text-sm font-medium">
+                        <span className="inline-flex min-h-9 items-center gap-2 rounded-full bg-white px-3 py-1.5 ring-1 ring-slate-200">
                             <Calendar size={16} />
                             {new Date(blog.createdAt).toLocaleDateString("nl-NL", {
                                 year: 'numeric',
@@ -103,40 +103,36 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                                 day: 'numeric'
                             })}
                         </span>
-                        <span>•</span>
-                        <span>{blog.category}</span>
-                        <span>•</span>
-                        <span className="flex items-center gap-2">
+                        <span className="inline-flex min-h-9 items-center rounded-full bg-white px-3 py-1.5 ring-1 ring-slate-200">{blog.category}</span>
+                        <span className="inline-flex min-h-9 items-center gap-2 rounded-full bg-white px-3 py-1.5 ring-1 ring-slate-200">
                             <User size={16} />
                             {blog.article?.authors || "Drs. S. S. Mahes"}
                         </span>
                         {readingMinutes && (
-                            <>
-                                <span>•</span>
+                            <span className="inline-flex min-h-9 items-center rounded-full bg-white px-3 py-1.5 ring-1 ring-slate-200">
                                 <ReadingTime minutes={readingMinutes} />
-                            </>
+                            </span>
                         )}
                         {difficulty && (
-                            <>
-                                <span>•</span>
+                            <span className="inline-flex min-h-9 items-center">
                                 <DifficultyBadge level={difficulty} />
-                            </>
+                            </span>
                         )}
                     </div>
                 </div >
             </div >
 
             {/* Main Content Layout */}
-            <div className="container mx-auto px-4 max-w-7xl py-12">
+            <div className="container mx-auto px-4 max-w-7xl py-8 md:py-12">
                 {heroImage && (
-                    <figure className="mb-10 overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-xl shadow-slate-900/5">
+                    <figure className="mb-8 md:mb-10 overflow-hidden rounded-2xl md:rounded-[28px] border border-slate-200 bg-white shadow-xl shadow-slate-900/5">
                         <Image
                             src={heroImage}
                             alt=""
                             width={1200}
                             height={675}
                             unoptimized
-                            className="h-72 w-full object-cover md:h-96"
+                            className="h-auto max-h-[420px] w-full object-contain md:h-96 md:object-cover"
                         />
                         <figcaption className="border-t border-slate-100 bg-slate-50 px-5 py-3 text-xs font-medium text-slate-500">
                             Voorbeeldvisual bij dit educatieve artikel. Interactieve figuren staan in de tekst.
@@ -248,7 +244,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                         {/* Author & CTA Section */}
                         <div className="mt-12 p-6 bg-brand-secondary/5 rounded-2xl border border-brand-secondary/10">
                             <div className="flex items-start gap-4">
-                                <div className="p-3 bg-brand-secondary/10 rounded-full text-brand-secondary">
+                                <div className="p-3 bg-brand-secondary/10 rounded-full text-brand-secondary shrink-0">
                                     <User size={24} />
                                 </div>
                                 <div>
@@ -299,7 +295,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                                 href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(canonicalUrl)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 rounded-xl bg-brand-secondary px-4 py-2 text-sm font-bold text-white transition hover:bg-brand-primary"
+                                className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-brand-secondary px-4 py-2 text-sm font-bold text-white transition hover:bg-brand-primary"
                             >
                                 <ExternalLink size={16} />
                                 Deel op LinkedIn
@@ -330,8 +326,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                 </div>
             </div>
 
-            {/* Spacer to ensure footer separation */}
-            <div className="h-40"></div>
         </article >
     );
 }

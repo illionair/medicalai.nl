@@ -40,7 +40,7 @@ export default function BlogGrid({ blogs }: BlogGridProps) {
     const hasFilters = blogs.some((blog) => blog.specialism || blog.ceStatus || blog.cost);
 
     return (
-        <section id="latest" className="container section-padding">
+        <section id="latest" className="py-10 md:py-16">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -48,7 +48,7 @@ export default function BlogGrid({ blogs }: BlogGridProps) {
                 transition={{ duration: 0.8 }}
                 className="mb-12"
             >
-                <h2 className="mb-4">{t.blog.latest_research}</h2>
+                <h2 className="mb-4 text-[clamp(32px,10vw,40px)] leading-tight">{t.blog.latest_research}</h2>
                 <p className="text-lg max-w-2xl" style={{ color: "var(--gray-300)" }}>
                     {t.blog.latest_desc}
                 </p>
@@ -56,7 +56,7 @@ export default function BlogGrid({ blogs }: BlogGridProps) {
 
             {hasFilters && (
                 <div className="mb-10 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                    <div className="mb-4 flex items-center justify-between gap-3">
+                    <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
                         <div className="flex items-center gap-2 text-sm font-bold text-brand-secondary">
                             <Filter size={16} />
                             Filter publicaties
@@ -69,7 +69,7 @@ export default function BlogGrid({ blogs }: BlogGridProps) {
                         <select
                             value={specialism}
                             onChange={(event) => setSpecialism(event.target.value)}
-                            className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 outline-none transition focus:border-brand-secondary"
+                            className="min-h-11 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 outline-none transition focus:border-brand-secondary"
                         >
                             <option value="">Alle specialismen</option>
                             {uniqueValues("specialism").map((value) => (
@@ -79,7 +79,7 @@ export default function BlogGrid({ blogs }: BlogGridProps) {
                         <select
                             value={ceStatus}
                             onChange={(event) => setCeStatus(event.target.value)}
-                            className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 outline-none transition focus:border-brand-secondary"
+                            className="min-h-11 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 outline-none transition focus:border-brand-secondary"
                         >
                             <option value="">Alle CE-statussen</option>
                             {uniqueValues("ceStatus").map((value) => (
@@ -89,7 +89,7 @@ export default function BlogGrid({ blogs }: BlogGridProps) {
                         <select
                             value={cost}
                             onChange={(event) => setCost(event.target.value)}
-                            className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 outline-none transition focus:border-brand-secondary"
+                            className="min-h-11 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 outline-none transition focus:border-brand-secondary"
                         >
                             <option value="">Alle kosten</option>
                             {uniqueValues("cost").map((value) => (

@@ -60,12 +60,12 @@ export default function TopicsPage() {
     return (
         <div className="min-h-screen bg-white">
             {/* Header */}
-            <div className="bg-slate-50 border-b border-slate-200 pt-32 pb-16">
+            <div className="bg-slate-50 border-b border-slate-200 pt-16 pb-10 md:pt-24 md:pb-16">
                 <div className="container mx-auto px-4 text-center">
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-4xl md:text-5xl font-bold text-brand-dark mb-4"
+                        className="text-[clamp(38px,11vw,56px)] font-bold text-brand-dark mb-4 leading-tight"
                     >
                         Ontdek Medical AI
                     </motion.h1>
@@ -95,22 +95,22 @@ export default function TopicsPage() {
                 </div>
             </div>
 
-            <div className="container mx-auto px-4 py-16 space-y-20 pb-64">
+            <div className="container mx-auto px-4 py-10 space-y-14 pb-16 md:py-16 md:space-y-20 md:pb-24">
 
                 {/* Clinical AI Section */}
-                <section className="mt-12">
-                    <div className="flex items-center gap-3 mb-8">
+                <section className="mt-6 md:mt-12">
+                    <div className="flex items-start gap-3 mb-8 sm:items-center">
                         <div className="p-2 bg-brand-primary/10 rounded-lg text-brand-primary">
                             <Activity size={24} />
                         </div>
-                        <h2 className="text-2xl font-bold text-brand-dark">Klinische AI & Methodologie</h2>
+                        <h2 className="text-2xl font-bold text-brand-dark leading-tight">Klinische AI & Methodologie</h2>
                     </div>
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {clinicalTopics.map((topic) => (
                             <Link href={`/topics/${topic.title}`} key={topic.title}>
                                 <motion.div
                                     whileHover={{ y: -5 }}
-                                    className={`p-6 rounded-2xl border ${topic.color} h-full transition-all hover:shadow-lg bg-opacity-50`}
+                                    className={`p-5 sm:p-6 rounded-2xl border ${topic.color} h-full transition-all hover:shadow-lg bg-opacity-50`}
                                 >
                                     <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-white shadow-sm text-current`}>
                                         {topic.icon}
@@ -121,7 +121,7 @@ export default function TopicsPage() {
                                     <p className="text-gray-600 text-sm mb-4">
                                         {topic.description}
                                     </p>
-                                    <div className="flex items-center gap-2 text-sm font-bold opacity-80">
+                                    <div className="flex min-h-11 items-center gap-2 text-sm font-bold opacity-80">
                                         Bekijk artikelen <ArrowRight size={16} />
                                     </div>
                                 </motion.div>
@@ -132,18 +132,18 @@ export default function TopicsPage() {
 
                 {/* Governance Section */}
                 <section>
-                    <div className="flex items-center gap-3 mb-8">
+                    <div className="flex items-start gap-3 mb-8 sm:items-center">
                         <div className="p-2 bg-brand-secondary/10 rounded-lg text-brand-secondary">
                             <Shield size={24} />
                         </div>
-                        <h2 className="text-2xl font-bold text-brand-dark">Governance, Ethiek & Wetgeving</h2>
+                        <h2 className="text-2xl font-bold text-brand-dark leading-tight">Governance, Ethiek & Wetgeving</h2>
                     </div>
                     <div className="grid md:grid-cols-3 gap-6">
                         {governanceTopics.map((topic) => (
                             <Link href={`/topics/${topic.title}`} key={topic.title}>
                                 <motion.div
                                     whileHover={{ y: -5 }}
-                                    className={`p-6 rounded-2xl border ${topic.color} h-full transition-all hover:shadow-lg bg-opacity-50`}
+                                    className={`p-5 sm:p-6 rounded-2xl border ${topic.color} h-full transition-all hover:shadow-lg bg-opacity-50`}
                                 >
                                     <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-white shadow-sm text-current`}>
                                         {topic.icon}
@@ -154,7 +154,7 @@ export default function TopicsPage() {
                                     <p className="text-gray-600 text-sm mb-4">
                                         {topic.description}
                                     </p>
-                                    <div className="flex items-center gap-2 text-sm font-bold opacity-80">
+                                    <div className="flex min-h-11 items-center gap-2 text-sm font-bold opacity-80">
                                         Bekijk artikelen <ArrowRight size={16} />
                                     </div>
                                 </motion.div>
@@ -162,9 +162,6 @@ export default function TopicsPage() {
                         ))}
                     </div>
                 </section>
-
-                {/* Spacer to ensure footer separation */}
-                <div className="h-40"></div>
 
             </div>
         </div>

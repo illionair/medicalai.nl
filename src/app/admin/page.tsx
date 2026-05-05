@@ -128,13 +128,14 @@ export default function AdminPage() {
     }
 
     return (
-        <div className="container section-padding">
+        <div className="container py-12 md:py-20 lg:py-28">
             <h1 className="mb-8">Admin Dashboard</h1>
 
-            <div className="flex gap-4 mb-6 border-b pb-4">
+            <div className="-mx-4 mb-6 overflow-x-auto border-b px-4 pb-4 sm:mx-0 sm:px-0">
+                <div className="flex min-w-max gap-2 sm:gap-4">
                 <button
                     onClick={() => setActiveTab("fetch")}
-                    className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${activeTab === "fetch"
+                    className={`min-h-11 px-4 py-2 rounded-lg font-medium transition-all duration-300 ${activeTab === "fetch"
                         ? "text-brand-primary border border-white/50 shadow-sm"
                         : "text-gray-500 hover:text-black hover:bg-white/30"
                         }`}
@@ -148,7 +149,7 @@ export default function AdminPage() {
                 </button>
                 <button
                     onClick={() => setActiveTab("doi")}
-                    className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${activeTab === "doi"
+                    className={`min-h-11 px-4 py-2 rounded-lg font-medium transition-all duration-300 ${activeTab === "doi"
                         ? "text-brand-primary border border-white/50 shadow-sm"
                         : "text-gray-500 hover:text-black hover:bg-white/30"
                         }`}
@@ -162,7 +163,7 @@ export default function AdminPage() {
                 </button>
                 <button
                     onClick={() => setActiveTab("manual")}
-                    className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${activeTab === "manual"
+                    className={`min-h-11 px-4 py-2 rounded-lg font-medium transition-all duration-300 ${activeTab === "manual"
                         ? "text-brand-primary border border-white/50 shadow-sm"
                         : "text-gray-500 hover:text-black hover:bg-white/30"
                         }`}
@@ -176,7 +177,7 @@ export default function AdminPage() {
                 </button>
                 <button
                     onClick={() => setActiveTab("ai")}
-                    className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${activeTab === "ai"
+                    className={`min-h-11 px-4 py-2 rounded-lg font-medium transition-all duration-300 ${activeTab === "ai"
                         ? "text-brand-primary border border-white/50 shadow-sm"
                         : "text-gray-500 hover:text-black hover:bg-white/30"
                         }`}
@@ -188,10 +189,11 @@ export default function AdminPage() {
                 >
                     AI Prompt
                 </button>
+                </div>
             </div>
 
             {activeTab === "fetch" && (
-                <div className="mb-8 flex gap-4 items-end">
+                <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end">
                     <div className="flex-grow">
                         <label className="block text-sm font-medium text-gray-700 mb-1">Search Query</label>
                         <input
@@ -205,7 +207,7 @@ export default function AdminPage() {
                     <button
                         onClick={handleFetch}
                         disabled={loading}
-                        className="px-6 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 h-[50px]"
+                        className="min-h-12 px-6 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 sm:h-[50px]"
                         style={{ backgroundColor: "var(--accent)" }}
                     >
                         {loading ? "Fetching..." : "Fetch"}
@@ -214,7 +216,7 @@ export default function AdminPage() {
             )}
 
             {activeTab === "doi" && (
-                <div className="mb-8 flex gap-4 items-end">
+                <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end">
                     <div className="flex-grow">
                         <label className="block text-sm font-medium text-gray-700 mb-1">DOI</label>
                         <input
@@ -228,7 +230,7 @@ export default function AdminPage() {
                     <button
                         onClick={handleDoiFetch}
                         disabled={loading}
-                        className="px-6 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 h-[50px]"
+                        className="min-h-12 px-6 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 sm:h-[50px]"
                         style={{ backgroundColor: "var(--accent)" }}
                     >
                         {loading ? "Fetching..." : "Fetch DOI"}
@@ -237,7 +239,7 @@ export default function AdminPage() {
             )}
 
             {activeTab === "manual" && (
-                <form onSubmit={handleManualSubmit} className="mb-8 p-6 rounded-2xl border border-gray-200 bg-gray-50">
+                <form onSubmit={handleManualSubmit} className="mb-8 p-5 sm:p-6 rounded-2xl border border-gray-200 bg-gray-50">
                     <div className="grid gap-4">
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
@@ -273,7 +275,7 @@ export default function AdminPage() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="px-6 py-2 bg-black text-white rounded-lg font-medium hover:bg-gray-800 transition-colors self-start"
+                            className="min-h-11 px-6 py-2 bg-black text-white rounded-lg font-medium hover:bg-gray-800 transition-colors self-start"
                         >
                             Add Article
                         </button>
@@ -282,7 +284,7 @@ export default function AdminPage() {
             )}
 
             {activeTab === "ai" && (
-                <form onSubmit={handleAiPromptSubmit} className="mb-8 p-6 rounded-2xl border border-blue-100 bg-blue-50/50">
+                <form onSubmit={handleAiPromptSubmit} className="mb-8 p-5 sm:p-6 rounded-2xl border border-blue-100 bg-blue-50/50">
                     <div className="grid gap-4">
                         <div>
                             <label className="block text-sm font-medium text-blue-900 mb-1">Topic / prompt</label>
@@ -336,7 +338,7 @@ export default function AdminPage() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="px-6 py-3 bg-blue-700 text-white rounded-xl font-medium hover:bg-blue-800 transition-colors disabled:opacity-50 self-start"
+                            className="min-h-12 px-6 py-3 bg-blue-700 text-white rounded-xl font-medium hover:bg-blue-800 transition-colors disabled:opacity-50 self-start"
                         >
                             {loading ? "Generating draft..." : "Generate AI Draft"}
                         </button>
@@ -356,7 +358,7 @@ export default function AdminPage() {
                 <PublishedList />
             </section>
 
-            <div className="flex justify-between items-end mb-4 gap-4">
+            <div className="flex flex-col justify-between mb-4 gap-4 lg:flex-row lg:items-end">
                 <div className="flex-grow">
                     <h2 className="text-xl font-semibold mb-2">Fetched Articles</h2>
                     <div className="bg-blue-50/50 p-4 rounded-xl border border-blue-100">
@@ -371,18 +373,18 @@ export default function AdminPage() {
                         />
                     </div>
                 </div>
-                <div className="flex gap-3 flex-col justify-end h-full pb-1">
+                <div className="flex gap-3 flex-col justify-end h-full pb-1 sm:flex-row lg:flex-col">
                     <button
                         onClick={handleCreateEmpty}
                         disabled={loading}
-                        className="px-6 py-3 bg-gray-800 text-white rounded-xl font-medium hover:bg-gray-900 transition-colors disabled:opacity-50 w-full"
+                        className="min-h-12 px-6 py-3 bg-gray-800 text-white rounded-xl font-medium hover:bg-gray-900 transition-colors disabled:opacity-50 w-full"
                     >
                         + New Manual Post
                     </button>
                     <button
                         onClick={handleGenerate}
                         disabled={selected.length === 0 || loading}
-                        className="px-6 py-3 bg-green-600 text-white rounded-xl font-medium hover:bg-green-700 transition-colors disabled:opacity-50 w-full shadow-sm"
+                        className="min-h-12 px-6 py-3 bg-green-600 text-white rounded-xl font-medium hover:bg-green-700 transition-colors disabled:opacity-50 w-full shadow-sm"
                     >
                         {loading ? "Generating..." : `Generate Blogs (${selected.length})`}
                     </button>
@@ -395,7 +397,7 @@ export default function AdminPage() {
                         key={article.id}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className={`p-6 rounded-2xl border transition-all ${selected.includes(article.id)
+                        className={`p-5 sm:p-6 rounded-2xl border transition-all ${selected.includes(article.id)
                             ? "border-blue-500 bg-blue-50/50"
                             : "border-gray-200 bg-white"
                             }`}
@@ -410,11 +412,11 @@ export default function AdminPage() {
                                 onChange={() => toggleSelect(article.id)}
                                 className="mt-1.5 w-5 h-5"
                             />
-                            <div>
+                            <div className="min-w-0 flex-1">
                                 <h3 className="text-lg font-semibold mb-2">{article.title}</h3>
                                 <p className="text-sm text-gray-400 mb-2">{article.authors} • {article.journal}</p>
                                 <p className="text-gray-600 line-clamp-3">{article.abstract}</p>
-                                <div className="mt-4 flex gap-4">
+                                <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
                                     {article.url ? (
                                         <a href={article.url} target="_blank" className="text-sm text-blue-600 hover:underline">
                                             View on PubMed

@@ -32,8 +32,8 @@ export default function MarkdownEditor({ value, onChange }: MarkdownEditorProps)
     return (
         <div className="flex flex-col h-full border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm">
             {/* Toolbar */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-gray-50/50 flex-wrap gap-2">
-                <div className="flex items-center gap-1 flex-wrap">
+            <div className="flex items-center justify-between px-3 sm:px-4 py-3 border-b border-gray-100 bg-gray-50/50 flex-wrap gap-2">
+                <div className="flex max-w-full items-center gap-1 overflow-x-auto">
                     <ToolbarButton icon={<Heading1 size={18} />} onClick={() => insertText("# ")} tooltip="Heading 1" />
                     <ToolbarButton icon={<Heading2 size={18} />} onClick={() => insertText("## ")} tooltip="Heading 2" />
                     <div className="w-px h-6 bg-gray-200 mx-2 hidden md:block" />
@@ -82,12 +82,12 @@ export default function MarkdownEditor({ value, onChange }: MarkdownEditorProps)
             <div className="flex-grow overflow-hidden relative flex">
                 {/* Write Pane */}
                 {(mode === "write" || mode === "split") && (
-                    <div className={`h-full ${mode === "split" ? "w-1/2 border-r border-gray-200" : "w-full"}`}>
+                    <div className={`h-full ${mode === "split" ? "hidden w-1/2 border-r border-gray-200 md:block" : "w-full"}`}>
                         <textarea
                             id="markdown-textarea"
                             value={value}
                             onChange={(e) => onChange(e.target.value)}
-                            className="w-full h-full p-6 resize-none focus:outline-none font-mono text-base leading-relaxed text-gray-800 bg-white"
+                            className="w-full h-full p-4 sm:p-6 resize-none focus:outline-none font-mono text-base leading-relaxed text-gray-800 bg-white"
                             placeholder="Start writing your masterpiece..."
                         />
                     </div>
@@ -95,8 +95,8 @@ export default function MarkdownEditor({ value, onChange }: MarkdownEditorProps)
 
                 {/* Preview Pane */}
                 {(mode === "preview" || mode === "split") && (
-                    <div className={`h-full overflow-y-auto bg-gray-50/30 ${mode === "split" ? "w-1/2" : "w-full"}`}>
-                        <div className="p-8 prose prose-lg prose-slate max-w-none prose-headings:font-bold prose-a:text-blue-600">
+                    <div className={`h-full overflow-y-auto bg-gray-50/30 ${mode === "split" ? "w-full md:w-1/2" : "w-full"}`}>
+                        <div className="p-4 sm:p-8 prose prose-lg prose-slate max-w-none prose-headings:font-bold prose-a:text-blue-600">
                             <ReactMarkdown>{value || "*Nothing to preview yet.*"}</ReactMarkdown>
                         </div>
                     </div>
@@ -111,7 +111,7 @@ function ToolbarButton({ icon, onClick, tooltip }: { icon: React.ReactNode, onCl
         <button
             onClick={onClick}
             title={tooltip}
-            className="p-2 text-gray-500 hover:text-black hover:bg-gray-200/50 rounded-lg transition-colors"
+            className="inline-flex h-10 w-10 shrink-0 items-center justify-center text-gray-500 hover:text-black hover:bg-gray-200/50 rounded-lg transition-colors"
         >
             {icon}
         </button>

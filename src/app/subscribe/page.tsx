@@ -13,11 +13,11 @@ export default function SubscribePage() {
     }
 
     return (
-        <div className="container section-padding min-h-screen flex items-center justify-center bg-slate-50">
+        <div className="container py-12 md:py-20 lg:py-28 min-h-screen flex items-center justify-center bg-slate-50">
             <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="max-w-md w-full bg-white text-brand-dark p-10 rounded-3xl text-center shadow-xl border border-brand-primary/10"
+                className="max-w-md w-full bg-white text-brand-dark p-5 sm:p-10 rounded-2xl sm:rounded-3xl text-center shadow-xl border border-brand-primary/10"
             >
                 {status === "subscribed" ? (
                     <div>
@@ -26,7 +26,7 @@ export default function SubscribePage() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                             </svg>
                         </div>
-                        <h2 className="text-2xl font-bold mb-2 text-brand-dark">You're Subscribed!</h2>
+                        <h2 className="text-2xl font-bold mb-2 text-brand-dark">You&apos;re Subscribed!</h2>
                         <p className="text-slate-500">Thanks for joining our newsletter.</p>
                     </div>
                 ) : (
@@ -41,11 +41,11 @@ export default function SubscribePage() {
                                 type="email"
                                 required
                                 placeholder="Enter your email"
-                                className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-brand-dark placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 transition-all"
+                                className="w-full min-h-11 px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-brand-dark placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 transition-all"
                             />
                             <button
                                 type="submit"
-                                className="w-full py-3 bg-brand-secondary text-white rounded-xl font-bold hover:bg-brand-primary transition-colors shadow-lg shadow-brand-secondary/20"
+                                className="w-full min-h-12 py-3 bg-brand-secondary text-white rounded-xl font-bold hover:bg-brand-primary transition-colors shadow-lg shadow-brand-secondary/20"
                             >
                                 Subscribe
                             </button>

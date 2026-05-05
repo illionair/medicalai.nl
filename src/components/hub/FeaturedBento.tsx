@@ -58,9 +58,9 @@ export default function FeaturedBento({ blogs }: FeaturedBentoProps) {
     if (blogs.length === 0) {
         return (
             <section className="flex flex-col gap-6">
-                <div className="flex justify-between items-end">
+                <div className="flex items-end justify-between gap-4">
                     <h2 className="headline-lg text-on-surface">Nieuwste onderzoek</h2>
-                    <Link href="/blog" className="label-sm brand-accent hover:text-[#003459] transition-colors flex items-center gap-1.5">
+                    <Link href="/blog" className="label-sm brand-accent hover:text-[#003459] transition-colors flex min-h-11 shrink-0 items-center gap-1.5">
                         Alle artikelen <MS name="arrow_forward" className="!text-[16px]" />
                     </Link>
                 </div>
@@ -76,9 +76,9 @@ export default function FeaturedBento({ blogs }: FeaturedBentoProps) {
 
     return (
         <section className="flex flex-col gap-6">
-            <div className="flex justify-between items-end">
+            <div className="flex items-end justify-between gap-4">
                 <h2 className="headline-lg text-on-surface">Nieuwste onderzoek</h2>
-                <Link href="/blog" className="label-sm brand-accent hover:text-[#003459] transition-colors flex items-center gap-1.5">
+                <Link href="/blog" className="label-sm brand-accent hover:text-[#003459] transition-colors flex min-h-11 shrink-0 items-center gap-1.5">
                     Alle artikelen <MS name="arrow_forward" className="!text-[16px]" />
                 </Link>
             </div>
@@ -88,18 +88,18 @@ export default function FeaturedBento({ blogs }: FeaturedBentoProps) {
                     href={`/blog/${main.id}`}
                     className="md:col-span-8 group glass-panel rounded-[24px] overflow-hidden ambient-shadow flex flex-col relative transition-transform duration-500 ease-out hover:-translate-y-0.5"
                 >
-                    <div className="h-72 overflow-hidden relative">
+                    <div className="h-52 overflow-hidden relative sm:h-64 md:h-72">
                         <img alt="" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" src={imageOf(main)} />
                         <div className="absolute top-5 left-5 z-10">
                             <CategoryPill>{main.category}</CategoryPill>
                         </div>
                     </div>
-                    <div className="p-7 md:p-8 flex-grow flex flex-col justify-between bg-white/70">
+                    <div className="p-5 sm:p-7 md:p-8 flex-grow flex flex-col justify-between bg-white/70">
                         <div>
                             <h3 className="headline-md text-on-surface mb-2 group-hover:text-[#007EA7] transition-colors">{main.title}</h3>
-                            <p className="body-md text-on-surface-variant line-clamp-2">{summaryOf(main)}</p>
+                            <p className="body-md text-on-surface-variant sm:line-clamp-2">{summaryOf(main)}</p>
                         </div>
-                        <div className="mt-5 flex items-center gap-3 text-outline label-sm">
+                        <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-outline label-sm">
                             <span>{authorOf(main)}</span>
                             <span>·</span>
                             <span>{readTime(summaryOf(main))} leestijd</span>
@@ -122,7 +122,7 @@ export default function FeaturedBento({ blogs }: FeaturedBentoProps) {
                             </div>
                             <div className="p-5 flex-grow flex flex-col justify-between bg-white/70">
                                 <h3 className="text-[16px] font-semibold text-on-surface leading-snug mb-1 group-hover:text-[#007EA7] transition-colors">{p.title}</h3>
-                                <p className="text-[13.5px] text-on-surface-variant line-clamp-2">{summaryOf(p)}</p>
+                                <p className="text-[13.5px] text-on-surface-variant sm:line-clamp-2">{summaryOf(p)}</p>
                             </div>
                         </Link>
                     ))}

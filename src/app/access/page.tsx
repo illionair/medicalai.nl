@@ -19,7 +19,7 @@ export default function AccessPage() {
     }
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 stage-bg overflow-auto">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 stage-bg overflow-auto">
             <img
                 alt=""
                 className="absolute inset-0 w-full h-full object-cover opacity-60"
@@ -28,7 +28,7 @@ export default function AccessPage() {
             <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/55 to-white/95" />
             <div className="absolute inset-0 bg-gradient-to-br from-[#003459]/15 via-transparent to-[#00A8E8]/10 mix-blend-soft-light" />
 
-            <div className="relative w-full max-w-md glass-panel ambient-shadow rounded-[28px] p-8 md:p-10 text-center">
+            <div className="relative w-full max-w-md glass-panel ambient-shadow rounded-[24px] md:rounded-[28px] p-5 sm:p-8 md:p-10 text-center">
                 <div className="flex justify-center mb-6">
                     <Image
                         src="/images/logo-medical-ai.png"
@@ -45,7 +45,7 @@ export default function AccessPage() {
                 </span>
 
                 <h1 className="headline-lg text-on-surface mb-3">
-                    Medical<span className="brand-accent">·</span>AI
+                    Medical<span className="brand-accent">·</span><span className="brand-ai-gradient">AI</span>
                 </h1>
 
                 <p className="body-md text-on-surface-variant mb-8">
@@ -61,7 +61,7 @@ export default function AccessPage() {
                             type="password"
                             name="code"
                             placeholder="Toegangscode"
-                            className="w-full pl-12 pr-4 py-3.5 rounded-full bg-white/75 border border-white/70 focus:outline-none focus:ring-2 focus:ring-[#007EA7]/20 focus:border-[#007EA7]/50 text-[15px] tracking-wide text-on-surface placeholder:text-outline backdrop-blur-md transition-all"
+                            className="w-full min-h-12 pl-12 pr-4 py-3.5 rounded-full bg-white/75 border border-white/70 focus:outline-none focus:ring-2 focus:ring-[#007EA7]/20 focus:border-[#007EA7]/50 text-[15px] tracking-wide text-on-surface placeholder:text-outline backdrop-blur-md transition-all"
                             required
                             autoComplete="off"
                             autoFocus
@@ -77,7 +77,7 @@ export default function AccessPage() {
                     <button
                         type="submit"
                         disabled={pending}
-                        className="w-full bg-[#003459] text-white label-sm px-5 py-3.5 rounded-full inline-flex items-center justify-center gap-2 hover:bg-[#00171F] transition-colors disabled:opacity-60"
+                        className="w-full min-h-12 bg-[#003459] text-white label-sm px-5 py-3.5 rounded-full inline-flex items-center justify-center gap-2 hover:bg-[#00171F] transition-colors disabled:opacity-60"
                     >
                         {pending ? "Bezig…" : "Toegang"}
                         <span className="material-symbols-outlined !text-[16px]">arrow_forward</span>

@@ -6,9 +6,9 @@ export default function TermsPage() {
     const { t } = useLanguage();
 
     return (
-        <div className="min-h-screen bg-white py-20">
+        <div className="min-h-screen bg-white py-12 md:py-20">
             <div className="container mx-auto px-4 max-w-3xl">
-                <h1 className="text-4xl font-bold text-brand-primary mb-4">{t.terms.title}</h1>
+                <h1 className="text-[clamp(36px,10vw,48px)] font-bold text-brand-primary mb-4 leading-tight">{t.terms.title}</h1>
                 <p className="text-sm text-gray-500 mb-8">{t.terms.last_updated}</p>
 
                 <p className="text-lg text-gray-700 mb-12 leading-relaxed">

@@ -29,7 +29,7 @@ export default function Footer() {
 
     return (
         <footer className="w-full mt-16 border-t border-[#E6E6E0] bg-white/60 backdrop-blur-md">
-            <div className="px-8 py-7 border-b border-[#E6E6E0]">
+            <div className="px-4 sm:px-8 py-7 border-b border-[#E6E6E0]">
                 <div className="max-w-[1280px] mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                     <div className="flex items-center gap-3">
                         <Image
@@ -41,7 +41,7 @@ export default function Footer() {
                         />
                         <div className="flex flex-col gap-0.5">
                             <span className="text-[16px] font-semibold text-on-surface tracking-tight">
-                                Medical<span className="brand-accent">·</span>AI
+                                Medical<span className="brand-accent">·</span><span className="brand-ai-gradient">AI</span>
                             </span>
                             <span className="text-[13px] text-on-surface-variant">
                                 Onafhankelijk kennisplatform voor verantwoorde AI in de zorg.
@@ -51,14 +51,14 @@ export default function Footer() {
                     <nav className="flex flex-wrap items-center gap-2">
                         <Link
                             href="/contact"
-                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#E6E6E0] hover:border-[#003459] hover:bg-[#FAFAF8] text-[13.5px] font-medium text-on-surface transition-colors"
+                            className="inline-flex min-h-11 items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#E6E6E0] hover:border-[#003459] hover:bg-[#FAFAF8] text-[13.5px] font-medium text-on-surface transition-colors"
                         >
                             <MS name="mail" className="!text-[18px] text-[#007EA7]" />
                             Contact
                         </Link>
                         <Link
                             href="/authors"
-                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#E6E6E0] hover:border-[#003459] hover:bg-[#FAFAF8] text-[13.5px] font-medium text-on-surface transition-colors"
+                            className="inline-flex min-h-11 items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#E6E6E0] hover:border-[#003459] hover:bg-[#FAFAF8] text-[13.5px] font-medium text-on-surface transition-colors"
                         >
                             <MS name="groups" className="!text-[18px] text-[#007EA7]" />
                             Auteurs
@@ -67,7 +67,7 @@ export default function Footer() {
                             href="https://www.linkedin.com/company/110109298/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#E6E6E0] hover:border-[#003459] hover:bg-[#FAFAF8] text-[13.5px] font-medium text-on-surface transition-colors"
+                            className="inline-flex min-h-11 items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#E6E6E0] hover:border-[#003459] hover:bg-[#FAFAF8] text-[13.5px] font-medium text-on-surface transition-colors"
                         >
                             <LinkedInIcon className="w-[15px] h-[15px] text-[#007EA7]" />
                             LinkedIn
@@ -75,7 +75,7 @@ export default function Footer() {
                     </nav>
                 </div>
             </div>
-            <div className="px-8 py-5">
+            <div className="px-4 sm:px-8 py-5">
                 <div className="max-w-[1280px] mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-3">
                     <span className="text-[12px] text-outline">© 2026 Medical AI · KvK 00000000</span>
                     <nav className="flex flex-wrap gap-x-5 gap-y-2">

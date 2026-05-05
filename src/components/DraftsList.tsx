@@ -33,17 +33,17 @@ export default function DraftsList() {
     return (
         <div className="grid gap-3">
             {drafts.map((draft) => (
-                <div key={draft.id} className="p-4 bg-white border border-yellow-200 rounded-xl flex items-center justify-between shadow-sm">
-                    <div>
+                <div key={draft.id} className="p-4 bg-white border border-yellow-200 rounded-xl flex flex-col gap-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+                    <div className="min-w-0">
                         <h3 className="font-medium">{draft.title}</h3>
                         <p className="text-xs text-gray-500">
                             Category: {draft.category} · Source: {SOURCE_LABELS[draft.source || "PUBMED"] || draft.source}
                         </p>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex flex-col gap-2 sm:flex-row">
                         <Link
                             href={`/admin/editor/${draft.id}`}
-                            className="px-4 py-2 text-sm font-medium text-black bg-yellow-100 rounded-lg hover:bg-yellow-200 transition-colors"
+                            className="inline-flex min-h-11 items-center justify-center px-4 py-2 text-sm font-medium text-black bg-yellow-100 rounded-lg hover:bg-yellow-200 transition-colors"
                         >
                             Edit & Publish
                         </Link>
@@ -54,7 +54,7 @@ export default function DraftsList() {
                                     window.location.reload();
                                 }
                             }}
-                            className="px-4 py-2 text-sm font-medium text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-colors"
+                            className="inline-flex min-h-11 items-center justify-center px-4 py-2 text-sm font-medium text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-colors"
                         >
                             Delete
                         </button>
