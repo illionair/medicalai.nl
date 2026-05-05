@@ -27,12 +27,27 @@ function flatText(children: React.ReactNode): string {
     return "";
 }
 
-type NodeProps = { node?: { properties?: Record<string, unknown> } };
+type MarkdownNode = {
+    properties?: Record<string, unknown>;
+    children?: Array<{
+        type?: string;
+        tagName?: string;
+        value?: string;
+    }>;
+};
+
+type NodeProps = { node?: MarkdownNode };
 
 function readAttr(node: NodeProps["node"], key: string): string | undefined {
     if (!node?.properties) return undefined;
     const v = node.properties[key];
     return typeof v === "string" ? v : undefined;
+}
+
+function paragraphWrapsBlockTag(node: NodeProps["node"]) {
+    const blockTags = new Set(["callout", "interactive", "keytakeaway", "tldr"]);
+    const meaningfulChildren = node?.children?.filter((child) => child.type !== "text" || child.value?.trim()) ?? [];
+    return meaningfulChildren.length === 1 && Boolean(meaningfulChildren[0].tagName && blockTags.has(meaningfulChildren[0].tagName));
 }
 
 export default function ArticleMarkdown({ content }: { content: string }) {
@@ -41,6 +56,12 @@ export default function ArticleMarkdown({ content }: { content: string }) {
             rehypePlugins={[rehypeRaw]}
             urlTransform={(value) => value}
             components={{
+                p: ({ node, children, ...props }: ComponentPropsWithoutRef<"p"> & NodeProps) => {
+                    if (paragraphWrapsBlockTag(node)) {
+                        return <>{children}</>;
+                    }
+                    return <p {...props}>{children}</p>;
+                },
                 h2: ({ children, ...props }: ComponentPropsWithoutRef<"h2">) => (
                     <h2 id={slugify(flatText(children))} {...props}>
                         {children}

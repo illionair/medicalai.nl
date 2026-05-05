@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import { AlertTriangle, CheckCircle2, FlaskConical, LineChart, LockKeyhole, RotateCcw, Search, ShieldCheck, SlidersHorizontal } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -47,23 +47,72 @@ function Shell({
     );
 }
 
-const AUC_POINTS = [
-    { score: 0.95, outcome: 1 },
-    { score: 0.9, outcome: 1 },
-    { score: 0.84, outcome: 0 },
-    { score: 0.78, outcome: 1 },
-    { score: 0.72, outcome: 1 },
-    { score: 0.66, outcome: 0 },
-    { score: 0.61, outcome: 1 },
-    { score: 0.55, outcome: 0 },
-    { score: 0.49, outcome: 0 },
-    { score: 0.43, outcome: 1 },
-    { score: 0.38, outcome: 0 },
-    { score: 0.31, outcome: 0 },
-    { score: 0.27, outcome: 0 },
-    { score: 0.2, outcome: 0 },
-    { score: 0.14, outcome: 0 },
-];
+type AucPoint = {
+    score: number;
+    outcome: 0 | 1;
+    id: string;
+};
+
+type AucDatasetId = "separated" | "unseparated" | "imbalanced";
+
+type AucDataset = {
+    id: AucDatasetId;
+    label: string;
+    shortLabel: string;
+    description: string;
+    clinicalHint: string;
+    defaultThreshold: number;
+    points: AucPoint[];
+};
+
+function makeAucPoints(negativeScores: number[], positiveScores: number[]): AucPoint[] {
+    return [
+        ...negativeScores.map((score, index) => ({ id: `n-${index}`, score, outcome: 0 as const })),
+        ...positiveScores.map((score, index) => ({ id: `p-${index}`, score, outcome: 1 as const })),
+    ].sort((a, b) => a.score - b.score || a.outcome - b.outcome);
+}
+
+const AUC_DATASETS: Record<AucDatasetId, AucDataset> = {
+    separated: {
+        id: "separated",
+        label: "Goed gescheiden",
+        shortLabel: "Gescheiden",
+        description: "Bijna alle patiënten mét de uitkomst krijgen duidelijk hogere scores dan patiënten zonder de uitkomst.",
+        clinicalHint: "Mooi voor uitleg, maar in echte klinische data zelden zo netjes.",
+        defaultThreshold: 55,
+        points: makeAucPoints(
+            [0.04, 0.07, 0.1, 0.13, 0.16, 0.18, 0.21, 0.24, 0.27, 0.3, 0.33, 0.36, 0.39, 0.42, 0.45],
+            [0.58, 0.61, 0.64, 0.67, 0.7, 0.73, 0.76, 0.79, 0.82, 0.85, 0.88, 0.91, 0.93, 0.95, 0.97],
+        ),
+    },
+    unseparated: {
+        id: "unseparated",
+        label: "Overlap",
+        shortLabel: "Overlap",
+        description: "De groepen schuiven door elkaar: er is signaal, maar sommige patiënten zonder uitkomst scoren hoger dan echte gevallen.",
+        clinicalHint: "Dit lijkt meer op praktijkdata: AUC kan redelijk zijn, terwijl drempelkeuze veel uitmaakt.",
+        defaultThreshold: 58,
+        points: makeAucPoints(
+            [0.02, 0.05, 0.07, 0.07, 0.1, 0.13, 0.15, 0.18, 0.2, 0.2, 0.22, 0.24, 0.27, 0.31, 0.34, 0.37, 0.4, 0.43, 0.43, 0.48, 0.51, 0.53, 0.56, 0.58, 0.6, 0.63, 0.66, 0.69, 0.72, 0.75, 0.79, 0.82, 0.86, 0.89, 0.92, 0.96],
+            [0.29, 0.34, 0.37, 0.38, 0.38, 0.43, 0.45, 0.5, 0.55, 0.59, 0.59, 0.62, 0.62, 0.62, 0.67, 0.7, 0.7, 0.75, 0.75, 0.8, 0.84, 0.87, 0.87, 0.91, 0.96, 0.98],
+        ),
+    },
+    imbalanced: {
+        id: "imbalanced",
+        label: "Scheef verdeeld",
+        shortLabel: "Imbalanced",
+        description: "De uitkomst is zeldzamer. De rangorde kan nog bruikbaar zijn, maar positief voorspellende waarde zakt snel bij vals alarm.",
+        clinicalHint: "Belangrijk voor screening en triage: veel oranje punten betekent dat PPV kwetsbaar is.",
+        defaultThreshold: 68,
+        points: makeAucPoints(
+            [0.01, 0.03, 0.04, 0.06, 0.08, 0.1, 0.11, 0.13, 0.14, 0.16, 0.18, 0.2, 0.21, 0.23, 0.25, 0.27, 0.29, 0.31, 0.33, 0.35, 0.37, 0.39, 0.41, 0.43, 0.45, 0.47, 0.49, 0.51, 0.53, 0.55, 0.58, 0.6, 0.62, 0.64, 0.66, 0.69, 0.72, 0.75, 0.79, 0.83, 0.88, 0.92],
+            [0.38, 0.52, 0.64, 0.7, 0.77, 0.82, 0.9, 0.96],
+        ),
+    },
+};
+
+const DEFAULT_AUC_DATASET_ID: AucDatasetId = "unseparated";
+const AUC_POINTS = AUC_DATASETS[DEFAULT_AUC_DATASET_ID].points;
 
 function ratio(numerator: number, denominator: number) {
     if (denominator === 0) return 0;
@@ -82,10 +131,10 @@ function formatDecimal(value: number, digits = 2) {
     return formatNumber(value, digits).replace(".", ",");
 }
 
-function thresholdStats(cut: number) {
-    const positives = AUC_POINTS.filter((point) => point.outcome === 1).length;
-    const negatives = AUC_POINTS.length - positives;
-    const predicted = AUC_POINTS.map((point) => ({ ...point, positive: point.score >= cut }));
+function thresholdStats(cut: number, points: AucPoint[] = AUC_POINTS) {
+    const positives = points.filter((point) => point.outcome === 1).length;
+    const negatives = points.length - positives;
+    const predicted = points.map((point) => ({ ...point, positive: point.score >= cut }));
     const tp = predicted.filter((point) => point.positive && point.outcome === 1).length;
     const fp = predicted.filter((point) => point.positive && point.outcome === 0).length;
     const tn = predicted.filter((point) => !point.positive && point.outcome === 0).length;
@@ -104,10 +153,10 @@ function thresholdStats(cut: number) {
     };
 }
 
-function rocPath() {
-    const thresholds = [1.01, ...Array.from(new Set(AUC_POINTS.map((point) => point.score))).sort((a, b) => b - a), -0.01];
+function rocPath(points: AucPoint[] = AUC_POINTS) {
+    const thresholds = [1.01, ...Array.from(new Set(points.map((point) => point.score))).sort((a, b) => b - a), -0.01];
     return thresholds.map((threshold) => {
-        const stats = thresholdStats(threshold);
+        const stats = thresholdStats(threshold, points);
         return {
             threshold,
             x: stats.fpr,
@@ -130,19 +179,167 @@ function svgPoint(point: { x: number; y: number }) {
     };
 }
 
+function aucForPoints(points: AucPoint[]) {
+    return areaUnderCurve(rocPath(points));
+}
+
+function getThresholdMarkers(points: AucPoint[]) {
+    return [75, 55, 35].map((markerThreshold) => ({
+        label: markerThreshold === 75 ? "A" : markerThreshold === 55 ? "B" : "C",
+        threshold: markerThreshold,
+        stats: thresholdStats(markerThreshold / 100, points),
+    }));
+}
+
+function DatasetSelector({
+    selected,
+    onChange,
+}: {
+    selected: AucDatasetId;
+    onChange: (id: AucDatasetId) => void;
+}) {
+    return (
+        <div className="rounded-2xl border border-slate-200 bg-white p-2">
+            <div className="grid gap-2 sm:grid-cols-3">
+                {Object.values(AUC_DATASETS).map((dataset) => {
+                    const active = dataset.id === selected;
+                    return (
+                        <button
+                            key={dataset.id}
+                            type="button"
+                            onClick={() => onChange(dataset.id)}
+                            className={
+                                "rounded-xl border px-3 py-2 text-left text-sm font-bold transition " +
+                                (active
+                                    ? "border-brand-primary bg-brand-primary text-white shadow-sm"
+                                    : "border-slate-200 bg-slate-50 text-slate-600 hover:border-brand-primary/40 hover:bg-white")
+                            }
+                            aria-pressed={active}
+                        >
+                            {dataset.shortLabel}
+                        </button>
+                    );
+                })}
+            </div>
+        </div>
+    );
+}
+
+function ScoreDistributionPlot({
+    points,
+    threshold,
+    showThreshold = false,
+    height = 190,
+}: {
+    points: AucPoint[];
+    threshold?: number;
+    showThreshold?: boolean;
+    height?: number;
+}) {
+    const gradientId = useId().replace(/:/g, "");
+    const plotLeft = 22;
+    const plotRight = 478;
+    const plotWidth = plotRight - plotLeft;
+    const axisY = height - 24;
+    const markerSize = points.length > 50 ? 12 : 14;
+    const stackGap = points.length > 50 ? 12 : 14;
+    const stackCounts = new Map<string, number>();
+    const sorted = [...points].sort((a, b) => a.score - b.score || a.outcome - b.outcome || a.id.localeCompare(b.id));
+    const stacked = sorted.map((point) => {
+        const bucket = Math.round(point.score * 40).toString();
+        const stack = stackCounts.get(bucket) ?? 0;
+        stackCounts.set(bucket, stack + 1);
+        return {
+            ...point,
+            x: plotLeft + point.score * plotWidth,
+            y: axisY - 14 - stack * stackGap,
+            predictedPositive: threshold === undefined ? false : point.score >= threshold,
+        };
+    });
+    const thresholdX = threshold === undefined ? plotLeft : plotLeft + threshold * plotWidth;
+
+    return (
+        <svg viewBox={`0 0 500 ${height}`} className="h-auto w-full" role="img" aria-label="Verdeling van modelscores per echte uitkomst">
+            <defs>
+                <linearGradient id={gradientId} x1="0%" x2="100%" y1="0%" y2="0%">
+                    <stop offset="0%" stopColor="#f8fafc" />
+                    <stop offset="55%" stopColor="#fff7ed" />
+                    <stop offset="100%" stopColor="#f5f3ff" />
+                </linearGradient>
+            </defs>
+            <rect x="10" y="12" width="480" height={height - 44} rx="12" fill={`url(#${gradientId})`} />
+            {showThreshold && threshold !== undefined && (
+                <>
+                    <rect x={thresholdX} y="12" width={plotRight - thresholdX} height={height - 44} fill="#6d28d9" opacity="0.08" />
+                    <line x1={thresholdX} y1="12" x2={thresholdX} y2={axisY + 8} stroke="#0059b5" strokeWidth="2.5" />
+                    <text x={Math.min(438, thresholdX + 8)} y="30" className="fill-brand-primary text-[11px] font-black">
+                        drempel {Math.round(threshold * 100)}%
+                    </text>
+                </>
+            )}
+            {stacked.map((point) =>
+                point.outcome === 1 ? (
+                    <g key={point.id} opacity={showThreshold && !point.predictedPositive ? 0.72 : 1}>
+                        <rect
+                            x={point.x - markerSize / 2}
+                            y={point.y - markerSize / 2}
+                            width={markerSize}
+                            height={markerSize}
+                            rx="2"
+                            fill="#7c3aed"
+                            stroke="#ffffff"
+                            strokeWidth="1.5"
+                        />
+                        <path
+                            d={`M${point.x - markerSize / 3},${point.y - markerSize / 3} L${point.x + markerSize / 3},${point.y + markerSize / 3} M${point.x + markerSize / 3},${point.y - markerSize / 3} L${point.x - markerSize / 3},${point.y + markerSize / 3}`}
+                            stroke="#ffffff"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                        />
+                    </g>
+                ) : (
+                    <circle
+                        key={point.id}
+                        cx={point.x}
+                        cy={point.y}
+                        r={markerSize / 2}
+                        fill="#f59e0b"
+                        stroke="#ffffff"
+                        strokeWidth="1.5"
+                        opacity={showThreshold && !point.predictedPositive ? 0.72 : 1}
+                    />
+                ),
+            )}
+            <line x1={plotLeft} y1={axisY} x2={plotRight} y2={axisY} stroke="#94a3b8" strokeWidth="1.5" />
+            {[0, 0.25, 0.5, 0.75, 1].map((tick) => {
+                const x = plotLeft + tick * plotWidth;
+                return (
+                    <g key={tick}>
+                        <line x1={x} y1={axisY} x2={x} y2={axisY + 6} stroke="#94a3b8" />
+                        <text x={x} y={axisY + 18} textAnchor="middle" className="fill-slate-500 text-[10px]">
+                            {formatDecimal(tick)}
+                        </text>
+                    </g>
+                );
+            })}
+        </svg>
+    );
+}
+
 export function AucPlayground() {
     const [threshold, setThreshold] = useState(55);
     const [pairIndex, setPairIndex] = useState(0);
+    const points = AUC_DATASETS[DEFAULT_AUC_DATASET_ID].points;
 
     const metrics = useMemo(() => {
-        return thresholdStats(threshold / 100);
-    }, [threshold]);
+        return thresholdStats(threshold / 100, points);
+    }, [points, threshold]);
 
-    const path = useMemo(() => rocPath(), []);
+    const path = useMemo(() => rocPath(points), [points]);
     const auc = useMemo(() => areaUnderCurve(path), [path]);
     const pairs = useMemo(() => {
-        const positives = AUC_POINTS.filter((point) => point.outcome === 1);
-        const negatives = AUC_POINTS.filter((point) => point.outcome === 0);
+        const positives = points.filter((point) => point.outcome === 1);
+        const negatives = points.filter((point) => point.outcome === 0);
         return positives.flatMap((positive, positiveIndex) =>
             negatives.map((negative, negativeIndex) => ({
                 id: `${positiveIndex}-${negativeIndex}`,
@@ -152,15 +349,11 @@ export function AucPlayground() {
                 tied: positive.score === negative.score,
             })),
         );
-    }, []);
+    }, [points]);
     const correctPairs = pairs.filter((pair) => pair.correct).length;
     const tiedPairs = pairs.filter((pair) => pair.tied).length;
     const pair = pairs[pairIndex % pairs.length];
-    const thresholdMarkers = [75, 55, 35].map((markerThreshold) => ({
-        label: markerThreshold === 75 ? "A" : markerThreshold === 55 ? "B" : "C",
-        threshold: markerThreshold,
-        stats: thresholdStats(markerThreshold / 100),
-    }));
+    const thresholdMarkers = getThresholdMarkers(points);
     const currentX = 24 + (1 - metrics.specificity) * 212;
     const currentY = 236 - metrics.sensitivity * 212;
     const linePoints = path.map((point) => {
@@ -221,45 +414,14 @@ export function AucPlayground() {
                                 <span>Modelscore</span>
                                 <span>hoog risico</span>
                             </div>
-                            <div className="rounded-2xl bg-gradient-to-r from-cyan-50 via-white to-rose-50 p-3">
-                                <div className="mb-3 grid grid-cols-[1fr_auto_1fr] items-center gap-2 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-500">
-                                    <span>negatief voorspeld</span>
-                                    <span className="rounded-full bg-white px-2 py-1 text-brand-primary shadow-sm">drempel {threshold}%</span>
-                                    <span className="text-right">positief voorspeld</span>
-                                </div>
-                                <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
-                                    {AUC_POINTS.map((point, index) => {
-                                        const predictedPositive = point.score * 100 >= threshold;
-                                        return (
-                                            <div
-                                                key={`${point.score}-${index}`}
-                                                className={
-                                                    "min-h-[64px] rounded-2xl border p-2 text-center shadow-sm transition " +
-                                                    (predictedPositive
-                                                        ? "border-brand-primary/40 bg-white"
-                                                        : "border-slate-200 bg-white/60")
-                                                }
-                                                title={`Score ${Math.round(point.score * 100)}%, ${point.outcome === 1 ? "uitkomst aanwezig" : "geen uitkomst"}`}
-                                            >
-                                                <div
-                                                    className={
-                                                        "mx-auto mb-1 flex h-7 w-7 items-center justify-center rounded-full border-2 border-white text-[11px] font-black shadow-sm " +
-                                                        (point.outcome === 1 ? "bg-brand-secondary text-white" : "bg-slate-300 text-slate-700")
-                                                    }
-                                                >
-                                                    {point.outcome === 1 ? "+" : "-"}
-                                                </div>
-                                                <div className="text-sm font-black tabular-nums text-brand-dark">{Math.round(point.score * 100)}%</div>
-                                                <div className={"mt-0.5 text-[10px] font-bold " + (predictedPositive ? "text-brand-primary" : "text-slate-400")}>
-                                                    {predictedPositive ? "alarm" : "rust"}
-                                                </div>
-                                            </div>
-                                        );
-                                    })}
-                                </div>
+                            <div className="mb-2 grid grid-cols-[1fr_auto_1fr] items-center gap-2 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-500">
+                                <span>negatief voorspeld</span>
+                                <span className="rounded-full bg-white px-2 py-1 text-brand-primary shadow-sm">drempel {threshold}%</span>
+                                <span className="text-right">positief voorspeld</span>
                             </div>
+                            <ScoreDistributionPlot points={points} threshold={threshold / 100} showThreshold height={180} />
                             <p className="mt-3 text-xs leading-5 text-slate-500">
-                                Elke tegel is een fictieve patiënt. Het plus/min-teken is de echte uitkomst; de rand laat zien of de score boven de drempel valt. Zo blijft de verdeling leesbaar, ook bij dicht bij elkaar liggende scores.
+                                Elke marker is een fictieve patiënt. Paars is de uitkomst aanwezig; oranje is geen uitkomst. Rechts van de drempel wordt het model positief.
                             </p>
                         </div>
                     </div>
@@ -395,63 +557,54 @@ export function AucPlayground() {
 }
 
 export function AucScores() {
-    const positives = AUC_POINTS.filter((p) => p.outcome === 1);
-    const negatives = AUC_POINTS.filter((p) => p.outcome === 0);
+    const [datasetId, setDatasetId] = useState<AucDatasetId>(DEFAULT_AUC_DATASET_ID);
+    const dataset = AUC_DATASETS[datasetId];
+    const positives = dataset.points.filter((p) => p.outcome === 1);
+    const negatives = dataset.points.filter((p) => p.outcome === 0);
     const meanPos = positives.reduce((s, p) => s + p.score, 0) / positives.length;
     const meanNeg = negatives.reduce((s, p) => s + p.score, 0) / negatives.length;
+    const auc = aucForPoints(dataset.points);
 
     return (
         <Shell
-            title="Vijftien patiënten, vijftien scores"
-            subtitle="Het model kent elke patiënt een score tussen 0 en 1 toe. Plus = uitkomst aanwezig, min = niet. Liggen de plusjes vooral rechts?"
+            title="Patiënten op één score-as"
+            subtitle="Het model kent elke patiënt een score tussen 0 en 1 toe. De paarse vierkantjes zijn patiënten mét uitkomst; de oranje rondjes zonder. AUC kijkt of paars meestal rechts van oranje ligt."
         >
-            <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6">
-                <div className="mb-3 flex justify-between text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
-                    <span>laag risico</span>
-                    <span>hoog risico</span>
-                </div>
-                <div className="relative h-28 rounded-2xl bg-gradient-to-r from-cyan-50 via-white to-rose-50">
-                    <div className="absolute inset-x-3 inset-y-0">
-                        {AUC_POINTS.map((p, i) => (
-                            <div
-                                key={`${p.score}-${i}`}
-                                className="absolute"
-                                style={{
-                                    left: `${p.score * 100}%`,
-                                    top: p.outcome === 1 ? "22%" : "62%",
-                                    transform: "translate(-50%, -50%)",
-                                }}
-                                title={`Score ${Math.round(p.score * 100)}% · ${p.outcome === 1 ? "uitkomst" : "geen uitkomst"}`}
-                            >
-                                <div
-                                    className={
-                                        "flex h-9 w-9 items-center justify-center rounded-full border-2 border-white text-sm font-black shadow-md " +
-                                        (p.outcome === 1 ? "bg-brand-secondary text-white" : "bg-slate-300 text-slate-700")
-                                    }
-                                >
-                                    {p.outcome === 1 ? "+" : "−"}
-                                </div>
-                            </div>
-                        ))}
+            <div className="grid gap-4 lg:grid-cols-[0.8fr_1.2fr]">
+                <div className="space-y-3">
+                    <DatasetSelector selected={datasetId} onChange={setDatasetId} />
+                    <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                        <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Dataset</p>
+                        <p className="mt-2 text-sm font-bold text-brand-dark">{dataset.label}</p>
+                        <p className="mt-1 text-sm leading-6 text-slate-600">{dataset.description}</p>
+                        <p className="mt-3 text-xs leading-5 text-slate-500">{dataset.clinicalHint}</p>
                     </div>
                 </div>
-                <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-slate-500">
-                    <span className="inline-flex items-center gap-2">
-                        <span className="inline-block h-3 w-3 rounded-full bg-brand-secondary" />
-                        uitkomst aanwezig
-                    </span>
-                    <span className="inline-flex items-center gap-2">
-                        <span className="inline-block h-3 w-3 rounded-full bg-slate-300" />
-                        geen uitkomst
-                    </span>
+                <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
+                    <div className="mb-2 flex justify-between text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
+                        <span>score 0: laag risico</span>
+                        <span>score 1: hoog risico</span>
+                    </div>
+                    <ScoreDistributionPlot points={dataset.points} />
+                    <div className="mt-3 flex flex-wrap items-center gap-4 text-xs text-slate-500">
+                        <span className="inline-flex items-center gap-2">
+                            <span className="inline-block h-3 w-3 rounded-full bg-amber-500" />
+                            geen uitkomst
+                        </span>
+                        <span className="inline-flex items-center gap-2">
+                            <span className="inline-block h-3 w-3 rounded-sm bg-violet-600" />
+                            uitkomst aanwezig
+                        </span>
+                    </div>
                 </div>
             </div>
-            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+            <div className="mt-5 grid gap-3 sm:grid-cols-3">
+                <MetricCard label="AUC" value={formatDecimal(auc)} hint="rangschikkingskans" />
                 <MetricCard label="Gemiddelde score positieven" value={formatDecimal(meanPos)} hint={`${positives.length} patiënten met de uitkomst`} />
                 <MetricCard label="Gemiddelde score negatieven" value={formatDecimal(meanNeg)} hint={`${negatives.length} patiënten zonder de uitkomst`} />
             </div>
             <p className="mt-4 text-sm leading-6 text-slate-600">
-                In dit voorbeeld liggen de plusjes gemiddeld duidelijk hoger dan de minnetjes. Het model pikt dus signaal op. AUC vat dat verschil straks in één getal samen.
+                De verticale stapeling betekent alleen: meerdere patiënten hebben bijna dezelfde score. De horizontale volgorde is het belangrijkst: hoe vaker een paarse patiënt rechts van een oranje patiënt staat, hoe hoger de AUC.
             </p>
         </Shell>
     );
@@ -465,95 +618,78 @@ export function AucThreshold({
     showHint?: boolean;
 } = {}) {
     const clamped = Math.round(Math.min(0.95, Math.max(0.05, initialThreshold)) * 100);
+    const [datasetId, setDatasetId] = useState<AucDatasetId>(DEFAULT_AUC_DATASET_ID);
+    const dataset = AUC_DATASETS[datasetId];
     const [threshold, setThreshold] = useState(clamped);
-    const metrics = useMemo(() => thresholdStats(threshold / 100), [threshold]);
+    const thresholdValue = threshold / 100;
+    const metrics = useMemo(() => thresholdStats(thresholdValue, dataset.points), [dataset.points, thresholdValue]);
+    const auc = useMemo(() => aucForPoints(dataset.points), [dataset.points]);
+
+    function handleDatasetChange(id: AucDatasetId) {
+        setDatasetId(id);
+        setThreshold(AUC_DATASETS[id].defaultThreshold);
+    }
 
     return (
         <Shell
             title="Verschuif de drempel"
-            subtitle="Elke patiënt is één blokje. Groen = uitkomst aanwezig, grijs = geen uitkomst. Sleep de drempel: alles rechts ervan voorspelt het model positief, alles links negatief."
+            subtitle="Kies een dataset en sleep de drempel. Alles rechts van de lijn voorspelt het model positief; de score-as blijft zichtbaar zodat je ziet waarom de matrix verandert."
         >
             <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-7">
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                    <label className="text-sm font-bold text-slate-800" htmlFor="auc-thr-threshold">
-                        Beslisdrempel
-                    </label>
-                    <span className="rounded-full bg-white px-3 py-1 text-sm font-black tabular-nums text-brand-primary shadow-sm">
-                        {threshold}%
-                    </span>
-                </div>
-                <input
-                    id="auc-thr-threshold"
-                    type="range"
-                    min="5"
-                    max="95"
-                    value={threshold}
-                    onChange={(event) => setThreshold(Number(event.target.value))}
-                    className="mt-3 w-full accent-brand-secondary"
-                />
-
-                <div className="mt-6 rounded-2xl border border-white bg-white p-4 sm:p-6">
-                    <div className="relative">
-                        <div className="grid grid-cols-2 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500">
-                            <span className="pl-1">voorspelt: geen uitkomst</span>
-                            <span className="pr-1 text-right">voorspelt: uitkomst</span>
+                <div className="grid gap-4 lg:grid-cols-[0.82fr_1.18fr]">
+                    <div className="space-y-3">
+                        <DatasetSelector selected={datasetId} onChange={handleDatasetChange} />
+                        <div className="rounded-2xl border border-slate-200 bg-white p-4">
+                            <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Huidige dataset</p>
+                            <p className="mt-2 text-sm font-bold text-brand-dark">{dataset.label}</p>
+                            <p className="mt-1 text-sm leading-6 text-slate-600">{dataset.description}</p>
+                            {(showHint || datasetId === "imbalanced") && (
+                                <p className="mt-3 text-xs leading-5 text-slate-500">{dataset.clinicalHint}</p>
+                            )}
                         </div>
-                        <div className="relative mt-2 h-40 overflow-hidden rounded-xl">
-                            <div
-                                className="absolute inset-y-0 left-0 bg-slate-100/70"
-                                style={{ width: `${threshold}%` }}
-                            />
-                            <div
-                                className="absolute inset-y-0 right-0 bg-brand-primary/10"
-                                style={{ width: `${100 - threshold}%` }}
-                            />
-                            <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-slate-200" />
-                            <div
-                                className="pointer-events-none absolute inset-y-0 z-20"
-                                style={{ left: `${threshold}%`, transform: "translateX(-50%)" }}
-                            >
-                                <div className="absolute inset-y-0 left-1/2 w-0.5 -translate-x-1/2 bg-brand-primary" />
-                            </div>
-                            {AUC_POINTS.map((point, index) => {
-                                const isPositive = point.outcome === 1;
-                                return (
-                                    <div
-                                        key={`${point.score}-${index}`}
-                                        className="absolute z-10"
-                                        style={{
-                                            left: `${point.score * 100}%`,
-                                            top: isPositive ? "26%" : "70%",
-                                            transform: "translate(-50%, -50%)",
-                                        }}
-                                        title={`Score ${Math.round(point.score * 100)}% · ${isPositive ? "uitkomst aanwezig" : "geen uitkomst"}`}
-                                    >
-                                        <div
-                                            className={
-                                                "h-7 w-7 rounded-md border-2 border-white shadow-sm transition-colors sm:h-8 sm:w-8 " +
-                                                (isPositive ? "bg-emerald-500" : "bg-slate-400")
-                                            }
-                                        />
-                                    </div>
-                                );
-                            })}
-                        </div>
-                        <div className="mt-2 flex justify-between text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">
-                            <span>score 0%</span>
-                            <span>score 50%</span>
-                            <span>score 100%</span>
+                        <div className="grid grid-cols-2 gap-3">
+                            <MetricCard label="AUC" value={formatDecimal(auc)} hint="blijft drempelvrij" />
+                            <MetricCard label="Drempel" value={`${threshold}%`} hint="bepaalt de actie" />
                         </div>
                     </div>
-                </div>
 
-                <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-600">
-                    <span className="inline-flex items-center gap-2">
-                        <span className="inline-block h-3 w-3 rounded-sm bg-emerald-500" />
-                        uitkomst aanwezig
-                    </span>
-                    <span className="inline-flex items-center gap-2">
-                        <span className="inline-block h-3 w-3 rounded-sm bg-slate-400" />
-                        geen uitkomst
-                    </span>
+                    <div className="rounded-2xl border border-white bg-white p-4 sm:p-5">
+                        <div className="flex flex-wrap items-center justify-between gap-3">
+                            <label className="text-sm font-bold text-slate-800" htmlFor="auc-thr-threshold">
+                                Beslisdrempel
+                            </label>
+                            <span className="rounded-full bg-brand-primary px-3 py-1 text-sm font-black tabular-nums text-white shadow-sm">
+                                {threshold}%
+                            </span>
+                        </div>
+                        <input
+                            id="auc-thr-threshold"
+                            type="range"
+                            min="5"
+                            max="95"
+                            value={threshold}
+                            onChange={(event) => setThreshold(Number(event.target.value))}
+                            className="mt-3 w-full accent-brand-secondary"
+                        />
+                        <div className="mt-4 grid grid-cols-2 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500">
+                            <span>voorspelt geen uitkomst</span>
+                            <span className="text-right">voorspelt uitkomst</span>
+                        </div>
+                        <ScoreDistributionPlot points={dataset.points} threshold={thresholdValue} showThreshold height={210} />
+                        <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-600">
+                            <span className="inline-flex items-center gap-2">
+                                <span className="inline-block h-3 w-3 rounded-full bg-amber-500" />
+                                werkelijk geen uitkomst
+                            </span>
+                            <span className="inline-flex items-center gap-2">
+                                <span className="inline-block h-3 w-3 rounded-sm bg-violet-600" />
+                                werkelijk uitkomst
+                            </span>
+                            <span className="inline-flex items-center gap-2 text-brand-primary">
+                                rechts van de lijn = alarm
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -569,8 +705,8 @@ export function AucThreshold({
                             voorspelt uitkomst
                         </div>
 
-                        <div className="flex items-center justify-end border-b border-slate-200 bg-slate-50 p-3 text-right text-[11px] font-bold uppercase tracking-[0.14em] text-emerald-700">
-                            <span className="mr-2 inline-block h-3 w-3 rounded-sm bg-emerald-500" />
+                        <div className="flex items-center justify-end border-b border-slate-200 bg-slate-50 p-3 text-right text-[11px] font-bold uppercase tracking-[0.14em] text-violet-700">
+                            <span className="mr-2 inline-block h-3 w-3 rounded-sm bg-violet-600" />
                             werkelijk uitkomst
                         </div>
                         <div className="border-b border-r border-slate-200 bg-amber-50 p-4 text-center">
@@ -582,8 +718,8 @@ export function AucThreshold({
                             <p className="mt-1 text-3xl font-black tabular-nums text-emerald-900">{metrics.tp}</p>
                         </div>
 
-                        <div className="flex items-center justify-end bg-slate-50 p-3 text-right text-[11px] font-bold uppercase tracking-[0.14em] text-slate-600">
-                            <span className="mr-2 inline-block h-3 w-3 rounded-sm bg-slate-400" />
+                        <div className="flex items-center justify-end bg-slate-50 p-3 text-right text-[11px] font-bold uppercase tracking-[0.14em] text-amber-700">
+                            <span className="mr-2 inline-block h-3 w-3 rounded-full bg-amber-500" />
                             werkelijk geen uitkomst
                         </div>
                         <div className="border-r border-slate-200 bg-slate-50 p-4 text-center">
@@ -609,9 +745,11 @@ export function AucThreshold({
 }
 
 export function AucRoc() {
-    const [threshold, setThreshold] = useState(55);
-    const metrics = useMemo(() => thresholdStats(threshold / 100), [threshold]);
-    const path = useMemo(() => rocPath(), []);
+    const [datasetId, setDatasetId] = useState<AucDatasetId>(DEFAULT_AUC_DATASET_ID);
+    const dataset = AUC_DATASETS[datasetId];
+    const [threshold, setThreshold] = useState(dataset.defaultThreshold);
+    const metrics = useMemo(() => thresholdStats(threshold / 100, dataset.points), [dataset.points, threshold]);
+    const path = useMemo(() => rocPath(dataset.points), [dataset.points]);
     const auc = useMemo(() => areaUnderCurve(path), [path]);
     const linePoints = path.map((point) => {
         const pointOnSvg = svgPoint(point);
@@ -620,11 +758,12 @@ export function AucRoc() {
     const areaPoints = ["24,236", ...linePoints, "236,236"].join(" ");
     const currentX = 24 + (1 - metrics.specificity) * 212;
     const currentY = 236 - metrics.sensitivity * 212;
-    const thresholdMarkers = [75, 55, 35].map((markerThreshold) => ({
-        label: markerThreshold === 75 ? "A" : markerThreshold === 55 ? "B" : "C",
-        threshold: markerThreshold,
-        stats: thresholdStats(markerThreshold / 100),
-    }));
+    const thresholdMarkers = getThresholdMarkers(dataset.points);
+
+    function handleDatasetChange(id: AucDatasetId) {
+        setDatasetId(id);
+        setThreshold(AUC_DATASETS[id].defaultThreshold);
+    }
 
     return (
         <Shell
@@ -635,7 +774,7 @@ export function AucRoc() {
                 <div>
                     <p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-secondary">Oppervlakte onder de curve</p>
                     <p className="mt-1 text-sm leading-6 text-slate-600">
-                        Vat alle drempels samen in één getal. Hoe dichter bij 1, hoe beter het model rangschikt.
+                        Vat alle drempels samen in één getal. Hoe dichter bij 1, hoe beter het model rangschikt. Dataset: <strong>{dataset.shortLabel}</strong>.
                     </p>
                 </div>
                 <div className="text-left sm:text-right">
@@ -644,6 +783,9 @@ export function AucRoc() {
                         {formatDecimal(auc)}
                     </p>
                 </div>
+            </div>
+            <div className="mb-6">
+                <DatasetSelector selected={datasetId} onChange={handleDatasetChange} />
             </div>
             <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
                 <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
@@ -662,6 +804,9 @@ export function AucRoc() {
                     <div className="mt-5 grid gap-3 sm:grid-cols-2">
                         <MetricCard label="Sensitiviteit" value={pct(metrics.sensitivity)} hint="y-as" />
                         <MetricCard label="1 − specificiteit" value={pct(metrics.fpr)} hint="x-as" />
+                    </div>
+                    <div className="mt-5 rounded-2xl border border-white bg-white p-3">
+                        <ScoreDistributionPlot points={dataset.points} threshold={threshold / 100} showThreshold height={150} />
                     </div>
                     <p className="mt-4 text-xs leading-5 text-slate-500">
                         Het groene puntje rechts beweegt mee. A, B en C zijn vaste drempels: A streng, B gemiddeld, C ruim. Linksboven is sterker, maar wat klopt hangt af van wat de fout kost.
@@ -720,10 +865,12 @@ type PairTrial = {
 };
 
 export function AucPairs() {
-    const path = useMemo(() => rocPath(), []);
+    const [datasetId, setDatasetId] = useState<AucDatasetId>(DEFAULT_AUC_DATASET_ID);
+    const dataset = AUC_DATASETS[datasetId];
+    const path = useMemo(() => rocPath(dataset.points), [dataset.points]);
     const auc = useMemo(() => areaUnderCurve(path), [path]);
-    const positives = useMemo(() => AUC_POINTS.filter((point) => point.outcome === 1), []);
-    const negatives = useMemo(() => AUC_POINTS.filter((point) => point.outcome === 0), []);
+    const positives = useMemo(() => dataset.points.filter((point) => point.outcome === 1), [dataset.points]);
+    const negatives = useMemo(() => dataset.points.filter((point) => point.outcome === 0), [dataset.points]);
     const allPairs = useMemo(() => {
         return positives.flatMap((positive) =>
             negatives.map((negative) => ({
@@ -739,6 +886,11 @@ export function AucPairs() {
     const trueRankProb = (correctPairs + tiedPairs * 0.5) / allPairs.length;
 
     const [trials, setTrials] = useState<PairTrial[]>([]);
+
+    function handleDatasetChange(id: AucDatasetId) {
+        setDatasetId(id);
+        setTrials([]);
+    }
 
     function drawPair() {
         const positive = positives[Math.floor(Math.random() * positives.length)];
@@ -803,7 +955,7 @@ export function AucPairs() {
             note: "diagonaal: kop of munt",
         },
         {
-            label: "Deze demo",
+            label: dataset.shortLabel,
             auc: formatDecimal(auc),
             points: path,
             note: "een paar paren gaan fout",
@@ -816,6 +968,12 @@ export function AucPairs() {
             subtitle="Pak willekeurig één patiënt mét uitkomst en één zonder. Geeft het model de juiste de hogere score? Trek genoeg paren en het percentage 'goed' kruipt naar AUC."
         >
             <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
+                <div className="mb-5 grid gap-4 lg:grid-cols-[0.78fr_1.22fr]">
+                    <DatasetSelector selected={datasetId} onChange={handleDatasetChange} />
+                    <div className="rounded-2xl border border-white bg-white p-4 text-sm leading-6 text-slate-600">
+                        <strong className="text-brand-dark">{dataset.label}:</strong> {dataset.description}
+                    </div>
+                </div>
                 <div className="flex flex-wrap items-center justify-between gap-3">
                     <p className="text-sm font-bold text-slate-800">Trek willekeurige paren</p>
                     <button

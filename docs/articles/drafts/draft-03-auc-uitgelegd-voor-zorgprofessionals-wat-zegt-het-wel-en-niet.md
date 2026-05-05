@@ -24,11 +24,11 @@ Hieronder bouwen we het in vier stappen op, in dezelfde volgorde als de Google R
 
 Een sepsis-, bloeding- of heropnamemodel geeft zelden ja/nee terug. Het geeft een score tussen 0 en 1. Een patiënt met 0,91 staat hoger op de lijst dan eentje met 0,18. Zonder drempel heb je dus geen diagnose — je hebt een rangorde.
 
-Daar begint AUC. De vraag is simpel: krijgen patiënten mét de uitkomst gemiddeld hogere scores dan patiënten zonder? Hieronder zie je vijftien fictieve patiënten op de risicobalk. De plusjes zijn echte gevallen, de minnetjes niet.
+Daar begint AUC. De vraag is simpel: krijgen patiënten mét de uitkomst gemiddeld hogere scores dan patiënten zonder? Hieronder zie je fictieve patiënten op één score-as. Paarse vierkantjes zijn echte gevallen, oranje rondjes niet.
 
 <interactive name="auc-scores"></interactive>
 
-Vallen de plusjes vooral rechts? Goed teken — er zit signaal in de scores. Liggen ze willekeurig door elkaar? Dan valt er weinig te halen, hoe je de drempel ook legt.
+Vallen de paarse markers vooral rechts? Goed teken — er zit signaal in de scores. Liggen paars en oranje door elkaar? Dan valt er weinig te halen, hoe je de drempel ook legt.
 
 <keytakeaway>Score is een rangorde, geen diagnose. Wat je ermee doet, hangt af van waar je de drempel legt.</keytakeaway>
 
@@ -38,9 +38,9 @@ In de kliniek moet je iets dóen. Vanaf welke score alarmeer je het sepsisteam? 
 
 Lage drempel: je noemt veel patiënten positief. Je mist minder echte gevallen (sensitiviteit omhoog), maar je krijgt ook meer vals alarm. Hoge drempel: omgekeerd. Daarom horen sensitiviteit, specificiteit, <term def="Positive Predictive Value — kans dat een patiënt met positief modelresultaat ook echt de uitkomst heeft. Hangt sterk af van prevalentie.">PPV</term> en <term def="Negative Predictive Value — kans dat een patiënt met negatief modelresultaat ook echt geen uitkomst heeft.">NPV</term> altíjd bij een gekozen drempel — niet bij het model in zijn geheel.
 
-<interactive name="auc-threshold" data-props='{"initialThreshold":0.45}'></interactive>
+<interactive name="auc-threshold" data-props='{"initialThreshold":0.58}'></interactive>
 
-Schuif zelf en zie welke patiënten van vakje wisselen, en wat dat doet met fout-positieven en gemiste gevallen.
+Schuif zelf en wissel tussen gescheiden, overlappende en scheef verdeelde data. Zo zie je welke patiënten over de drempellijn vallen, en wat dat doet met fout-positieven en gemiste gevallen.
 
 <keytakeaway>Drempelkeuze is geen statistiek-puzzel. Het is afwegen wat een fout-positief versus een fout-negatief in jouw setting kost.</keytakeaway>
 
