@@ -437,10 +437,11 @@ p:empty::before {
   text-decoration: underline;
 }
 
-.article-flow p,
-.article-flow ul,
-.article-flow ol {
-  max-width: none;
+.article-flow > h1,
+.article-flow > h2,
+.article-flow > h3,
+.article-flow > h4 {
+  max-width: 860px;
 }
 
 .article-flow,
@@ -467,6 +468,7 @@ p:empty::before {
 
 .article-interactive-slot {
   clear: right;
+  max-width: 64rem;
 }
 
 /* Apply to Tiptap Editor */

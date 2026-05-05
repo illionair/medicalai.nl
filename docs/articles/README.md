@@ -22,6 +22,7 @@ Additional recovered interactive notes are stored in
 - [Data leakage: de stille killer van AI-studies](drafts/draft-17-data-leakage-de-stille-killer-van-ai-studies.md)
 - [Wat is hyperparametertuning?](drafts/draft-18-wat-is-hyperparametertuning.md)
 - [Wat voor soorten AI-modellen bestaan er?](drafts/draft-19-wat-voor-soorten-ai-modellen-bestaan-er.md)
+- [AI 101 voor zorgprofessionals: ChatGPT en AI op de werkvloer](drafts/draft-20-ai-101-voor-zorgprofessionals-chatgpt-op-de-werkvloer.md)
 
 ## Superseded drafts
 - [Draft 07](drafts/draft-07-ai-als-medisch-hulpmiddel-wanneer-valt-software-onder-mdr.md) is verwerkt in draft 06.

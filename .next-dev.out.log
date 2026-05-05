@@ -225,3 +225,4 @@ Creating turbopack project {
  GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 703ms (next.js: 362ms, proxy.ts: 45ms, application-code: 297ms)
  GET /blog/article-auc-uitgelegd-zorgprofessionals 200 in 443ms (next.js: 199ms, proxy.ts: 44ms, application-code: 200ms)
  GET /access 200 in 254ms (next.js: 154ms, proxy.ts: 5ms, application-code: 96ms)
+✓ Compiled in 405ms

@@ -123,7 +123,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
             </div >
 
             {/* Main Content Layout */}
-            <div className="container mx-auto px-4 max-w-7xl py-8 md:py-12">
+            <div className="container mx-auto px-4 max-w-5xl py-8 md:py-12">
                 {heroImage && (
                     <figure className="mb-8 md:mb-10 overflow-hidden rounded-2xl md:rounded-[28px] border border-slate-200 bg-white shadow-xl shadow-slate-900/5">
                         <Image
