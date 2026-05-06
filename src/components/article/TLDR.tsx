@@ -16,7 +16,10 @@ export default function TLDR({ children }: TLDRProps) {
                     In 30 seconden
                 </p>
             </div>
-            <ul className="space-y-2 text-[15px] leading-7 text-slate-800 [&>li]:relative [&>li]:pl-5 [&>li]:before:absolute [&>li]:before:left-0 [&>li]:before:top-3 [&>li]:before:h-1.5 [&>li]:before:w-1.5 [&>li]:before:rounded-full [&>li]:before:bg-brand-secondary">
+            <ul
+                className="list-none space-y-2 pl-0 text-[15px] leading-7 text-slate-800 [&>li]:relative [&>li]:pl-5 [&>li]:before:absolute [&>li]:before:left-0 [&>li]:before:top-3 [&>li]:before:h-1.5 [&>li]:before:w-1.5 [&>li]:before:rounded-full [&>li]:before:bg-brand-secondary"
+                style={{ listStyleType: "none", paddingLeft: 0 }}
+            >
                 {children}
             </ul>
         </aside>

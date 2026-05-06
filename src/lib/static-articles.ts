@@ -417,6 +417,18 @@ export function mergeWithStaticArticles<T extends { id: string; title: string; c
     });
 }
 
+export function mergeWithSelectedStaticArticles<T extends { id: string; title: string; createdAt: Date | string }>(
+    selectedStaticArticles: StaticArticle[],
+    databaseBlogs: T[],
+) {
+    const databaseTitles = new Set(databaseBlogs.map((blog) => normalizeTitle(blog.title)));
+    const staticArticles = selectedStaticArticles.filter((article) => !databaseTitles.has(normalizeTitle(article.title)));
+
+    return [...staticArticles, ...databaseBlogs].sort((a, b) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
+}
+
 export function staticArticleMatchesTopic(article: StaticArticle, topic: string) {
     const normalizedTopic = topic.trim().toLowerCase();
     if (!normalizedTopic) return true;
@@ -425,4 +437,12 @@ export function staticArticleMatchesTopic(article: StaticArticle, topic: string)
         article.specialism?.toLowerCase() === normalizedTopic ||
         article.tags.some((tag) => tag.name.toLowerCase() === normalizedTopic)
     );
+}
+
+export function staticArticleMatchesCategory(article: StaticArticle, category: string) {
+    return article.category.toLowerCase() === category.trim().toLowerCase();
+}
+
+export function staticArticleMatchesTag(article: StaticArticle, tagName: string) {
+    return article.tags.some((tag) => tag.name.toLowerCase() === tagName.trim().toLowerCase());
 }

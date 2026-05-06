@@ -1780,176 +1780,135 @@ export function RagChunkingDemo() {
     );
 }
 
-type TuningModelKey = "Neuraal netwerk" | "Random forest" | "XGBoost" | "CNN";
+type TuningPresetId = "simple" | "balanced" | "memorizing";
 
-const TUNING_MODELS: Record<TuningModelKey, {
-    metaphor: string;
-    complexityLabel: string;
-    tempoLabel: string;
-    regularizationLabel: string;
-    examples: string[];
-    idealComplexity: number;
-    idealTempo: number;
-    idealRegularization: number;
+const TUNING_PRESETS: Record<TuningPresetId, {
+    label: string;
+    shortLabel: string;
+    description: string;
+    train: number;
+    validation: number;
+    overfit: number;
+    complexity: number;
+    summary: string;
+    lesson: string;
 }> = {
-    "Neuraal netwerk": {
-        metaphor: "Een flexibel netwerk dat tussenrepresentaties leert. De kunst is genoeg capaciteit geven zonder trainingsdata uit het hoofd te leren.",
-        complexityLabel: "lagen en neuronen",
-        tempoLabel: "learning rate",
-        regularizationLabel: "dropout / weight decay",
-        examples: ["aantal hidden layers", "units per laag", "learning rate", "batch size", "dropout"],
-        idealComplexity: 58,
-        idealTempo: 42,
-        idealRegularization: 52,
+    simple: {
+        label: "Te simpel",
+        shortLabel: "te simpel",
+        description: "Het model krijgt weinig vrijheid en mist daardoor echte patronen.",
+        train: 62,
+        validation: 58,
+        overfit: 12,
+        complexity: 25,
+        summary: "De oefenscore is laag en de score op nieuwe data ook. Dit heet underfitting: het model is te grof afgesteld.",
+        lesson: "Meer complexiteit kan helpen, zolang je de onafhankelijke testset nog niet gebruikt om te kiezen.",
     },
-    "Random forest": {
-        metaphor: "Veel beslisbomen stemmen samen. Tuning bepaalt hoe diep bomen mogen denken en hoeveel variatie ze krijgen.",
-        complexityLabel: "boomdiepte",
-        tempoLabel: "aantal bomen",
-        regularizationLabel: "min. samples per blad",
-        examples: ["n_estimators", "max_depth", "min_samples_leaf", "max_features", "class_weight"],
-        idealComplexity: 48,
-        idealTempo: 62,
-        idealRegularization: 58,
+    balanced: {
+        label: "In balans",
+        shortLabel: "balans",
+        description: "Het model leert genoeg patroon, maar krijgt niet alle vrijheid om ruis na te tekenen.",
+        train: 84,
+        validation: 81,
+        overfit: 22,
+        complexity: 55,
+        summary: "Training en validatie liggen dicht bij elkaar. Dit is meestal de zone waar tuning naar zoekt.",
+        lesson: "Kies deze instelling op validatiedata en bewaar de testset voor de eindcontrole.",
     },
-    XGBoost: {
-        metaphor: "Een reeks kleine bomen die elkaar corrigeren. Sterk op tabulaire data, maar gevoelig voor te gretig leren.",
-        complexityLabel: "max_depth",
-        tempoLabel: "learning_rate / eta",
-        regularizationLabel: "gamma, alpha, lambda",
-        examples: ["learning_rate", "n_estimators", "max_depth", "subsample", "reg_lambda"],
-        idealComplexity: 44,
-        idealTempo: 35,
-        idealRegularization: 64,
-    },
-    CNN: {
-        metaphor: "Een beeldmodel dat eerst lokale patronen leert en die laag voor laag combineert tot grotere structuren.",
-        complexityLabel: "filters en blokken",
-        tempoLabel: "learning rate",
-        regularizationLabel: "augmentatie / dropout",
-        examples: ["aantal filters", "kernel size", "convolutionele blokken", "pooling", "data augmentation"],
-        idealComplexity: 64,
-        idealTempo: 38,
-        idealRegularization: 68,
+    memorizing: {
+        label: "Te precies op oefendata",
+        shortLabel: "overfit",
+        description: "Het model past bijna perfect op de oefendata, maar leert ook toevallige ruis mee.",
+        train: 96,
+        validation: 67,
+        overfit: 78,
+        complexity: 88,
+        summary: "De oefenscore is indrukwekkend, maar de validatiescore zakt. Dit is het klassieke overfitting-signaal.",
+        lesson: "Rem het model af, probeer minder complexiteit, of gebruik sterkere validatie zoals cross-validatie.",
     },
 };
 
-function tuningOutcome(model: TuningModelKey, complexity: number, tempo: number, regularization: number) {
-    const profile = TUNING_MODELS[model];
-    const distance =
-        Math.abs(complexity - profile.idealComplexity) * 0.28 +
-        Math.abs(tempo - profile.idealTempo) * 0.22 +
-        Math.abs(regularization - profile.idealRegularization) * 0.2;
-    const overfit = Math.max(0, complexity - regularization - 15) + Math.max(0, tempo - 70) * 0.5;
-    const underfit = Math.max(0, regularization - complexity - 28) + Math.max(0, 18 - tempo) * 0.7;
-    const train = Math.min(96, Math.max(55, 61 + complexity * 0.35 + tempo * 0.08 - regularization * 0.04));
-    const validation = Math.min(94, Math.max(48, 90 - distance - overfit * 0.18 - underfit * 0.16));
-    const runtime = Math.min(98, Math.max(18, complexity * 0.55 + tempo * 0.18 + (model === "CNN" ? 22 : model === "XGBoost" ? 12 : 5)));
-    const label = overfit > 24 ? "overfit-risico" : underfit > 18 ? "underfit-risico" : validation > 78 ? "goede balans" : "zoek verder";
-
-    return { train, validation, runtime, label };
+function scoreY(score: number) {
+    return 188 - score * 1.45;
 }
 
 export function HyperparameterTuningLab() {
-    const [model, setModel] = useState<TuningModelKey>("XGBoost");
-    const [complexity, setComplexity] = useState(52);
-    const [tempo, setTempo] = useState(38);
-    const [regularization, setRegularization] = useState(58);
-    const profile = TUNING_MODELS[model];
-    const outcome = tuningOutcome(model, complexity, tempo, regularization);
-    const curve = [15, 30, 45, 60, 75, 90].map((value) => ({
-        complexity: value,
-        train: tuningOutcome(model, value, tempo, regularization).train,
-        validation: tuningOutcome(model, value, tempo, regularization).validation,
-    }));
-    const trainPoints = curve.map((point, index) => `${34 + index * 44},${190 - point.train * 1.45}`).join(" ");
-    const validationPoints = curve.map((point, index) => `${34 + index * 44},${190 - point.validation * 1.45}`).join(" ");
-
-    const controls = [
-        { id: "tune-complexity", label: profile.complexityLabel, value: complexity, set: setComplexity },
-        { id: "tune-tempo", label: profile.tempoLabel, value: tempo, set: setTempo },
-        { id: "tune-regularization", label: profile.regularizationLabel, value: regularization, set: setRegularization },
-    ];
+    const [preset, setPreset] = useState<TuningPresetId>("balanced");
+    const active = TUNING_PRESETS[preset];
+    const orderedPresets = Object.entries(TUNING_PRESETS) as Array<[TuningPresetId, typeof active]>;
+    const trainPoints = orderedPresets.map(([, item], index) => `${44 + index * 96},${scoreY(item.train)}`).join(" ");
+    const validationPoints = orderedPresets.map(([, item], index) => `${44 + index * 96},${scoreY(item.validation)}`).join(" ");
 
     return (
         <Shell
             title="Hyperparameter tuning-lab"
-            subtitle="Kies eerst het modeltype. Pas daarna hebben de knoppen betekenis: bij een CNN tune je andere dingen dan bij XGBoost of een random forest."
+            subtitle="Klik door drie afstellingen. Het belangrijkste idee: de hoogste score op oefendata is niet automatisch de beste keuze voor nieuwe patiënten."
         >
-            <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
+            <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
                 <div>
-                    <div className="grid gap-2 sm:grid-cols-2">
-                        {(Object.keys(TUNING_MODELS) as TuningModelKey[]).map((name) => (
+                    <div className="grid gap-3">
+                        {orderedPresets.map(([id, item]) => (
                             <button
-                                key={name}
+                                key={id}
                                 type="button"
-                                onClick={() => setModel(name)}
-                                className={`rounded-2xl border p-4 text-left transition ${model === name ? "border-brand-secondary bg-brand-secondary/5" : "border-slate-200 bg-white hover:bg-slate-50"}`}
+                                onClick={() => setPreset(id)}
+                                className={`rounded-2xl border p-4 text-left transition ${preset === id ? "border-brand-secondary bg-brand-secondary/5 shadow-sm" : "border-slate-200 bg-white hover:bg-slate-50"}`}
                             >
-                                <span className="block text-sm font-bold text-brand-dark">{name}</span>
-                                <span className="mt-1 block text-xs leading-5 text-slate-500">{TUNING_MODELS[name].complexityLabel}</span>
+                                <span className="flex items-center justify-between gap-3">
+                                    <span className="text-sm font-bold text-brand-dark">{item.label}</span>
+                                    <span className="rounded-full bg-white px-2.5 py-1 text-xs font-bold text-brand-primary shadow-sm">
+                                        complexiteit {item.complexity}%
+                                    </span>
+                                </span>
+                                <span className="mt-2 block text-sm leading-6 text-slate-600">{item.description}</span>
                             </button>
                         ))}
                     </div>
 
                     <div className="mt-5 rounded-3xl border border-slate-200 bg-slate-50 p-5">
-                        <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Model eerst begrijpen</p>
-                        <p className="mt-2 text-sm leading-6 text-slate-700">{profile.metaphor}</p>
-                    </div>
-
-                    <div className="mt-5 grid gap-4">
-                        {controls.map((control) => (
-                            <label key={control.id} className="rounded-2xl border border-slate-200 bg-white p-4" htmlFor={control.id}>
-                                <span className="flex items-center justify-between gap-3 text-sm font-bold text-slate-800">
-                                    {control.label}
-                                    <span className="tabular-nums text-brand-primary">{control.value}%</span>
-                                </span>
-                                <input
-                                    id={control.id}
-                                    type="range"
-                                    min="0"
-                                    max="100"
-                                    value={control.value}
-                                    onChange={(event) => control.set(Number(event.target.value))}
-                                    className="mt-3 w-full accent-brand-secondary"
-                                />
-                            </label>
-                        ))}
+                        <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Wat betekent tuning?</p>
+                        <p className="mt-2 text-sm leading-6 text-slate-700">
+                            Je kiest vooraf hoe vrij of voorzichtig een model mag leren. Daarna vergelijk je instellingen op validatiedata, niet op de uiteindelijke testset.
+                        </p>
                     </div>
                 </div>
 
                 <div className="rounded-3xl border border-slate-200 bg-white p-5">
                     <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
                         <div>
-                            <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Validatiecurve</p>
-                            <h4 className="mt-1 text-xl font-bold text-brand-dark">{outcome.label}</h4>
+                            <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Gekozen afstelling</p>
+                            <h4 className="mt-1 text-xl font-bold text-brand-dark">{active.label}</h4>
                         </div>
                         <span className="rounded-full bg-brand-primary/10 px-3 py-1 text-xs font-bold text-brand-primary">
-                            validatie {Math.round(outcome.validation)}%
+                            validatie {active.validation}%
                         </span>
                     </div>
-                    <svg viewBox="0 0 300 220" className="h-64 w-full rounded-2xl bg-slate-50">
+                    <svg viewBox="0 0 300 220" className="h-64 w-full rounded-2xl bg-slate-50" aria-label="Training en validatiescore per afstelling">
                         <line x1="34" y1="190" x2="260" y2="190" stroke="#64748b" />
                         <line x1="34" y1="190" x2="34" y2="34" stroke="#64748b" />
                         <polyline points={trainPoints} fill="none" stroke="#94a3b8" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
                         <polyline points={validationPoints} fill="none" stroke="#007EA7" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-                        <text x="84" y="208" className="fill-slate-500 text-[10px]">meer complexiteit</text>
+                        {orderedPresets.map(([id, item], index) => {
+                            const x = 44 + index * 96;
+                            return (
+                                <g key={id}>
+                                    <circle cx={x} cy={scoreY(item.train)} r={preset === id ? 6 : 4} fill="#94a3b8" />
+                                    <circle cx={x} cy={scoreY(item.validation)} r={preset === id ? 7 : 4} fill="#007EA7" />
+                                    <text x={x - 20} y="208" className="fill-slate-500 text-[10px]">{item.shortLabel}</text>
+                                </g>
+                            );
+                        })}
                         <text x="6" y="120" transform="rotate(-90 10 120)" className="fill-slate-500 text-[10px]">score</text>
                     </svg>
                     <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                        <MetricCard label="Train" value={`${Math.round(outcome.train)}%`} hint="kan stijgen door memoriseren" />
-                        <MetricCard label="Validatie" value={`${Math.round(outcome.validation)}%`} hint="belangrijker voor tuning" />
-                        <MetricCard label="Rekentijd" value={`${Math.round(outcome.runtime)}%`} hint="workflow en budget" />
+                        <MetricCard label="Training" value={`${active.train}%`} hint="score op oefendata" />
+                        <MetricCard label="Validatie" value={`${active.validation}%`} hint="score op nieuwe voorbeelddata" />
+                        <MetricCard label="Overfit-risico" value={`${active.overfit}%`} hint="hoger is kwetsbaarder" />
                     </div>
                     <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                        <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Voorbeelden bij {model}</p>
-                        <div className="mt-3 flex flex-wrap gap-2">
-                            {profile.examples.map((example) => (
-                                <span key={example} className="rounded-full bg-white px-3 py-1 text-xs font-bold text-slate-700 shadow-sm">
-                                    {example}
-                                </span>
-                            ))}
-                        </div>
+                        <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Interpretatie</p>
+                        <p className="mt-2 text-sm leading-6 text-slate-700">{active.summary}</p>
+                        <p className="mt-3 text-sm font-semibold leading-6 text-brand-dark">{active.lesson}</p>
                     </div>
                 </div>
             </div>

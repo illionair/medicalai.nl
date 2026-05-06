@@ -6,11 +6,19 @@ import { specialisms } from "@/lib/constants";
 import {
     getStaticArticles,
     getStaticArticleById,
+    mergeWithSelectedStaticArticles,
     mergeWithStaticArticles,
+    staticArticleMatchesCategory,
+    staticArticleMatchesTag,
     staticArticleMatchesTopic,
 } from "@/lib/static-articles";
 
 const HUB_CATEGORIES = ["Predictie", "Diagnostiek", "Methodisch", "Ethiek"] as const;
+const DIRECTORY_CATEGORIES = [...HUB_CATEGORIES, "Prognostiek", "AI-regelgeving", "Richtlijnen"] as const;
+
+function isDirectoryCategory(topic: string) {
+    return DIRECTORY_CATEGORIES.some((category) => category.toLowerCase() === topic.trim().toLowerCase());
+}
 
 function logBlogLoadFailure(scope: string, error: unknown) {
     const message = error instanceof Error ? error.message : String(error);
@@ -41,7 +49,7 @@ export async function getPublishedBlogsByCategory(category: string) {
         const databaseBlogs = await prisma.blogPost.findMany({
             where: {
                 published: true,
-                category: category,
+                category: { equals: category, mode: "insensitive" },
                 OR: [
                     { scheduledFor: null },
                     { scheduledFor: { lte: new Date() } }
@@ -49,11 +57,11 @@ export async function getPublishedBlogsByCategory(category: string) {
             },
             orderBy: { createdAt: "desc" },
         });
-        const staticBlogs = getStaticArticles().filter((blog) => blog.category === category);
-        return mergeWithStaticArticles([...staticBlogs, ...databaseBlogs]);
+        const staticBlogs = getStaticArticles().filter((blog) => staticArticleMatchesCategory(blog, category));
+        return mergeWithSelectedStaticArticles(staticBlogs, databaseBlogs);
     } catch (error) {
         logBlogLoadFailure("Failed to load blogs by category", error);
-        return getStaticArticles().filter((blog) => blog.category === category);
+        return getStaticArticles().filter((blog) => staticArticleMatchesCategory(blog, category));
     }
 }
 
@@ -73,6 +81,10 @@ export async function getCategoryCounts() {
 }
 
 export async function getBlogsForTopic(topic: string) {
+    if (isDirectoryCategory(topic)) {
+        return getPublishedBlogsByCategory(topic);
+    }
+
     const isSpecialism = specialisms.includes(topic);
 
     const whereClause: Prisma.BlogPostWhereInput = {
@@ -103,7 +115,7 @@ export async function getBlogsForTopic(topic: string) {
             include: { tags: true }
         });
         const staticBlogs = getStaticArticles().filter((blog) => staticArticleMatchesTopic(blog, topic));
-        return mergeWithStaticArticles([...staticBlogs, ...databaseBlogs]);
+        return mergeWithSelectedStaticArticles(staticBlogs, databaseBlogs);
     } catch (error) {
         logBlogLoadFailure("Failed to load blogs for topic", error);
         return getStaticArticles().filter((blog) => staticArticleMatchesTopic(blog, topic));
@@ -141,10 +153,10 @@ export async function getPublishedBlogsByTag(tagName: string) {
             orderBy: { createdAt: "desc" },
             include: { tags: true }
         });
-        const staticBlogs = getStaticArticles().filter((blog) => staticArticleMatchesTopic(blog, tagName));
-        return mergeWithStaticArticles([...staticBlogs, ...databaseBlogs]);
+        const staticBlogs = getStaticArticles().filter((blog) => staticArticleMatchesTag(blog, tagName));
+        return mergeWithSelectedStaticArticles(staticBlogs, databaseBlogs);
     } catch (error) {
         logBlogLoadFailure("Failed to load blogs by tag", error);
-        return getStaticArticles().filter((blog) => staticArticleMatchesTopic(blog, tagName));
+        return getStaticArticles().filter((blog) => staticArticleMatchesTag(blog, tagName));
     }
 }

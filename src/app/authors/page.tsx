@@ -14,7 +14,7 @@ const authors = [
     {
         name: "A. de Jong",
         role: "Auteur",
-        bio: "Achtergrond in ethiek in AI en interdisciplinaire sociologie. Ze werkt daarnaast bij de Gemeente Amsterdam en volgt een master aan de TU Delft en Wageningen University & Research.",
+        bio: "Achtergrond in ethiek in AI en interdisciplinaire sociale wetenschappen. Ze werkt daarnaast bij de Gemeente Amsterdam en volgt een master aan de TU Delft en Wageningen University & Research.",
         initials: "AJ"
     }
 ];
