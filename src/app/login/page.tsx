@@ -4,8 +4,19 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { requestMagicLink } from "@/app/actions";
 
+const LOGIN_ERROR_MESSAGES: Record<string, string> = {
+    "missing-token": "Deze loginlink mist een token. Vraag een nieuwe loginlink aan.",
+    "rate-limited": "Te veel pogingen. Probeer het later opnieuw.",
+    "invalid-link": "Deze loginlink is verlopen of al gebruikt. Vraag een nieuwe loginlink aan.",
+    "db-unavailable": "Inloggen is tijdelijk niet beschikbaar: de database is niet als Postgres geconfigureerd.",
+};
+
 export default function LoginPage() {
-    const [error, setError] = useState("");
+    const [error, setError] = useState(() => {
+        if (typeof window === "undefined") return "";
+        const errorCode = new URLSearchParams(window.location.search).get("error");
+        return errorCode ? LOGIN_ERROR_MESSAGES[errorCode] || "Inloggen is mislukt. Vraag een nieuwe loginlink aan." : "";
+    });
     const [sentTo, setSentTo] = useState("");
 
     async function handleSubmit(formData: FormData) {

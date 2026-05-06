@@ -1,5 +1,14 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { assertEnv, getAdminEmails, getRequiredEnv, isAdminEmail, normalizeSiteUrl, resolveSiteUrl } from "@/lib/env";
+import {
+    assertEnv,
+    getAdminEmails,
+    getRequiredEnv,
+    hasPostgresDatabaseConfig,
+    isAdminEmail,
+    isPostgresDatabaseUrl,
+    normalizeSiteUrl,
+    resolveSiteUrl,
+} from "@/lib/env";
 
 const REQUIRED_VALUES = {
     SITE_ACCESS_CODE: "site-code",
@@ -72,5 +81,18 @@ describe("env helpers", () => {
         vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://medicalai.nl/");
 
         expect(resolveSiteUrl()).toBe("https://medical-ai.nl");
+    });
+
+    it("detects valid Postgres database configuration", () => {
+        expect(isPostgresDatabaseUrl("postgresql://user:pass@example.com:5432/db")).toBe(true);
+        expect(isPostgresDatabaseUrl("postgres://user:pass@example.com:5432/db")).toBe(true);
+        expect(isPostgresDatabaseUrl("file:./dev.db")).toBe(false);
+
+        vi.stubEnv("DATABASE_URL", "postgresql://user:pass@example.com:5432/db");
+        vi.stubEnv("DIRECT_URL", "postgres://user:pass@example.com:5432/db");
+        expect(hasPostgresDatabaseConfig()).toBe(true);
+
+        vi.stubEnv("DIRECT_URL", "file:./dev.db");
+        expect(hasPostgresDatabaseConfig()).toBe(false);
     });
 });

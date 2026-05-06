@@ -287,6 +287,10 @@ function stripMarkdown(value: string) {
         .trim();
 }
 
+function hasInteractiveTag(content: string, name: string) {
+    return new RegExp(`<interactive\\s+name=["']${name}["']`, "i").test(content);
+}
+
 function extractSummary(content: string) {
     const beforeSources = content.split(/\n## (Bronnen|Referenties)\b/)[0];
     const paragraph = beforeSources.split(/\n{2,}/).map(stripMarkdown).find((part) => part.length > 80);
@@ -309,12 +313,11 @@ function cleanMarkdown(raw: string, interactive: string) {
         .replace(/```html\s*\n<interactive name="[^"]+"><\/interactive>\s*\n```/g, "")
         .trim();
 
-    const isMigrated = /<tldr[\s>]/i.test(body) || /<callout[\s>]/i.test(body);
     const interactiveTag = `<interactive name="${interactive}"></interactive>`;
-    const hasAnyInteractive = /<interactive\s+name="/i.test(body);
-    if (!isMigrated && !hasAnyInteractive && !body.includes(interactiveTag)) {
+    if (!hasInteractiveTag(body, interactive)) {
         const blocks = body.split(/\n{2,}/);
-        const insertAfter = Math.min(2, Math.max(1, blocks.findIndex((block) => block.startsWith("## ")) || 2));
+        const firstSectionIndex = blocks.findIndex((block) => block.startsWith("## "));
+        const insertAfter = firstSectionIndex > 0 ? firstSectionIndex : Math.min(2, blocks.length);
         blocks.splice(insertAfter, 0, interactiveTag);
         body = blocks.join("\n\n");
     }

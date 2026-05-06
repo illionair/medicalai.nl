@@ -644,47 +644,48 @@ export function AucThreshold({
     return (
         <Shell
             title="Verschuif de drempel"
-            subtitle="Kies een dataset en sleep de drempel. Alles rechts van de lijn voorspelt het model positief; de score-as blijft zichtbaar zodat je ziet waarom de matrix verandert."
+            subtitle="Sleep de drempel en kijk meteen wat er gebeurt met gemiste gevallen en vals-positieve signalen."
         >
-            <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-7">
-                <div className="grid gap-4 lg:grid-cols-[0.82fr_1.18fr]">
-                    <div className="space-y-3">
-                        <DatasetSelector selected={datasetId} onChange={handleDatasetChange} />
-                        <div className="rounded-2xl border border-slate-200 bg-white p-4">
-                            <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Huidige dataset</p>
-                            <p className="mt-2 text-sm font-bold text-brand-dark">{dataset.label}</p>
-                            <p className="mt-1 text-sm leading-6 text-slate-600">{dataset.description}</p>
-                            {(showHint || datasetId === "imbalanced") && (
-                                <p className="mt-3 text-xs leading-5 text-slate-500">{dataset.clinicalHint}</p>
-                            )}
-                        </div>
-                        <div className="grid grid-cols-2 gap-3">
-                            <MetricCard label="AUC" value={formatDecimal(auc)} hint="blijft drempelvrij" />
-                            <MetricCard label="Drempel" value={`${threshold}%`} hint="bepaalt de actie" />
-                        </div>
-                    </div>
+            <div className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-end">
+                <div>
+                    <DatasetSelector selected={datasetId} onChange={handleDatasetChange} />
+                    <p className="mt-3 text-sm leading-6 text-slate-600">
+                        <strong className="text-brand-dark">{dataset.label}.</strong> {dataset.description}
+                    </p>
+                    {(showHint || datasetId === "imbalanced") && (
+                        <p className="mt-2 text-xs leading-5 text-slate-500">{dataset.clinicalHint}</p>
+                    )}
+                </div>
+                <div className="grid grid-cols-2 gap-3 lg:w-64">
+                    <MetricCard label="AUC" value={formatDecimal(auc)} hint="blijft gelijk" />
+                    <MetricCard label="Drempel" value={`${threshold}%`} hint="stuurt de matrix" />
+                </div>
+            </div>
 
-                    <figure className="rounded-2xl border border-white bg-white p-4 sm:p-5">
-                        <div className="flex flex-wrap items-center justify-between gap-3">
-                            <label className="text-sm font-bold text-slate-800" htmlFor="auc-thr-threshold">
-                                Beslisdrempel
-                            </label>
-                            <span className="rounded-full bg-brand-primary px-3 py-1 text-sm font-black tabular-nums text-white shadow-sm">
-                                {threshold}%
-                            </span>
-                        </div>
-                        <input
-                            id="auc-thr-threshold"
-                            type="range"
-                            min="5"
-                            max="95"
-                            value={threshold}
-                            onChange={(event) => setThreshold(Number(event.target.value))}
-                            className="mt-3 w-full accent-brand-secondary"
-                        />
-                        <div className="mt-4 grid grid-cols-2 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500">
-                            <span>voorspelt geen uitkomst</span>
-                            <span className="text-right">voorspelt uitkomst</span>
+            <figure className="mt-6 rounded-3xl border border-slate-200 bg-slate-50 p-4 sm:p-6">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                    <label className="text-sm font-bold text-slate-800" htmlFor="auc-thr-threshold">
+                        Beslisdrempel
+                    </label>
+                    <span className="rounded-full bg-brand-primary px-3 py-1 text-sm font-black tabular-nums text-white shadow-sm">
+                        {threshold}%
+                    </span>
+                </div>
+                <input
+                    id="auc-thr-threshold"
+                    type="range"
+                    min="5"
+                    max="95"
+                    value={threshold}
+                    onChange={(event) => setThreshold(Number(event.target.value))}
+                    className="mt-3 w-full accent-brand-secondary"
+                />
+
+                <div className="mt-5 grid gap-5 xl:grid-cols-[minmax(0,1.35fr)_minmax(300px,0.85fr)] xl:items-start">
+                    <div className="rounded-2xl border border-white bg-white p-4">
+                        <div className="mb-2 grid grid-cols-2 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500">
+                            <span>onder drempel</span>
+                            <span className="text-right">boven drempel</span>
                         </div>
                         <ScoreDistributionPlot points={dataset.points} threshold={thresholdValue} showThreshold height={210} />
                         <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-600">
@@ -697,56 +698,46 @@ export function AucThreshold({
                                 werkelijk uitkomst
                             </span>
                             <span className="inline-flex items-center gap-2 text-brand-primary">
-                                rechts van de lijn = alarm
+                                rechts van de lijn = positief modelresultaat
                             </span>
                         </div>
-                        <AucCaption>
-                            De drempel bepaalt wie in de workflow terechtkomt. Dezelfde AUC kan bij een andere drempel veel meer gemiste gevallen of vals alarm geven.
-                        </AucCaption>
-                    </figure>
-                </div>
-            </div>
+                    </div>
 
-            <div className="mt-6">
-                <p className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Confusion matrix bij deze drempel</p>
-                <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-                    <div className="grid grid-cols-[auto_1fr_1fr]">
-                        <div className="border-b border-slate-200 bg-slate-50" />
-                        <div className="border-b border-r border-slate-200 bg-slate-50 p-3 text-center text-[11px] font-bold uppercase tracking-[0.14em] text-slate-600">
-                            voorspelt geen uitkomst
+                    <div className="rounded-2xl border border-white bg-white p-4">
+                        <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Wat verandert bij deze drempel?</p>
+                        <div className="mt-3 overflow-hidden rounded-2xl border border-slate-200">
+                            <div className="grid grid-cols-2">
+                                <div className="border-b border-r border-slate-200 bg-amber-50 p-4 text-center">
+                                    <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-amber-700">FN</p>
+                                    <p className="mt-1 text-3xl font-black tabular-nums text-amber-900">{metrics.fn}</p>
+                                    <p className="mt-1 text-xs leading-5 text-amber-900">uitkomst aanwezig, onder drempel</p>
+                                </div>
+                                <div className="border-b border-slate-200 bg-emerald-50 p-4 text-center">
+                                    <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-emerald-700">TP</p>
+                                    <p className="mt-1 text-3xl font-black tabular-nums text-emerald-900">{metrics.tp}</p>
+                                    <p className="mt-1 text-xs leading-5 text-emerald-900">uitkomst aanwezig, boven drempel</p>
+                                </div>
+                                <div className="border-r border-slate-200 bg-slate-50 p-4 text-center">
+                                    <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-slate-600">TN</p>
+                                    <p className="mt-1 text-3xl font-black tabular-nums text-slate-800">{metrics.tn}</p>
+                                    <p className="mt-1 text-xs leading-5 text-slate-600">geen uitkomst, onder drempel</p>
+                                </div>
+                                <div className="bg-rose-50 p-4 text-center">
+                                    <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-rose-700">FP</p>
+                                    <p className="mt-1 text-3xl font-black tabular-nums text-rose-900">{metrics.fp}</p>
+                                    <p className="mt-1 text-xs leading-5 text-rose-900">geen uitkomst, boven drempel</p>
+                                </div>
+                            </div>
                         </div>
-                        <div className="border-b border-slate-200 bg-slate-50 p-3 text-center text-[11px] font-bold uppercase tracking-[0.14em] text-slate-600">
-                            voorspelt uitkomst
-                        </div>
-
-                        <div className="flex items-center justify-end border-b border-slate-200 bg-slate-50 p-3 text-right text-[11px] font-bold uppercase tracking-[0.14em] text-violet-700">
-                            <span className="mr-2 inline-block h-3 w-3 rounded-sm bg-violet-600" />
-                            werkelijk uitkomst
-                        </div>
-                        <div className="border-b border-r border-slate-200 bg-amber-50 p-4 text-center">
-                            <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-amber-700">FN — gemist</p>
-                            <p className="mt-1 text-3xl font-black tabular-nums text-amber-900">{metrics.fn}</p>
-                        </div>
-                        <div className="border-b border-slate-200 bg-emerald-50 p-4 text-center">
-                            <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-emerald-700">TP — terecht actie</p>
-                            <p className="mt-1 text-3xl font-black tabular-nums text-emerald-900">{metrics.tp}</p>
-                        </div>
-
-                        <div className="flex items-center justify-end bg-slate-50 p-3 text-right text-[11px] font-bold uppercase tracking-[0.14em] text-amber-700">
-                            <span className="mr-2 inline-block h-3 w-3 rounded-full bg-amber-500" />
-                            werkelijk geen uitkomst
-                        </div>
-                        <div className="border-r border-slate-200 bg-slate-50 p-4 text-center">
-                            <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-600">TN — terecht rust</p>
-                            <p className="mt-1 text-3xl font-black tabular-nums text-slate-800">{metrics.tn}</p>
-                        </div>
-                        <div className="bg-rose-50 p-4 text-center">
-                            <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-rose-700">FP — vals alarm</p>
-                            <p className="mt-1 text-3xl font-black tabular-nums text-rose-900">{metrics.fp}</p>
-                        </div>
+                        <p className="mt-3 text-xs leading-5 text-slate-500">
+                            Sleep naar links: minder gemiste gevallen, meestal meer FP. Sleep naar rechts: minder FP, meestal meer gemiste gevallen.
+                        </p>
                     </div>
                 </div>
-            </div>
+                <AucCaption>
+                    De lijn op de score-as en de matrix horen bij dezelfde drempel. Zo zie je direct welke patiënten van vak veranderen wanneer je de drempel verschuift.
+                </AucCaption>
+            </figure>
 
             <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 <MetricCard label="Sensitiviteit" value={pct(metrics.sensitivity)} hint="hoeveel echte gevallen vang je?" />

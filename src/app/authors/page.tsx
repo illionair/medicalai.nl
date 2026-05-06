@@ -10,6 +10,12 @@ const authors = [
         role: "Hoofdauteur & Oprichter",
         bio: "Arts-onderzoeker (PhD) met een passie voor het bouwen van bruggen tussen technologie en de klinische praktijk.",
         initials: "SM"
+    },
+    {
+        name: "Anjeliek de Jong",
+        role: "Auteur",
+        bio: "Achtergrond in ethiek in AI en interdisciplinaire sociologie. Ze werkt daarnaast bij de Gemeente Amsterdam en volgt een master aan de TU Delft en Wageningen University & Research.",
+        initials: "AJ"
     }
 ];
 

@@ -1,21 +1,21 @@
 ---
 status: draft
-title: "AUC 0,89 — en toch onveilig?"
-seoTitle: "AUC uitgelegd voor zorgprofessionals: wat zegt het wel en niet?"
+title: "AUC uitgelegd: wat zegt het wel en niet?"
+seoTitle: "AUC uitgelegd: wat zegt het wel en niet?"
 subtitle: "Wat AUC wel en niet vertelt over je model"
 difficulty: middel
 readingMinutes: 8
 coverConcept: roc-curve
 ---
 
-# AUC 0,89 — en toch onveilig?
+# AUC uitgelegd: wat zegt het wel en niet?
 
-"Het model behaalde een AUC van 0,89." Dat klinkt geruststellend, maar voor de zorgvloer is het nog geen antwoord. AUC zegt vooral of een model patiënten met meer risico gemiddeld hoger op de lijst zet dan patiënten met minder risico. Het zegt niet vanzelf of je bij de juiste patiënt gaat handelen, of de getoonde kans klopt, of het model in jouw workflow veilig helpt.
+"Het model behaalde een AUC van 0,89." Dat klinkt geruststellend, maar het is nog geen volledig antwoord. AUC zegt vooral of een model patiënten met de uitkomst gemiddeld hoger op de lijst zet dan patiënten zonder die uitkomst. Het zegt niet vanzelf of de gekozen drempel logisch is, of de getoonde kans klopt, of het model past bij de beoogde toepassing.
 
 
 Denk daarom vroeg aan drie praktische vragen:
 
-1. Wie is getest: lijkt de validatieset op jouw patiënten, afdeling en meetmoment?
+1. Wie is getest: lijkt de validatieset op de patiënten, context en het meetmoment waarvoor je het model wilt begrijpen?
 2. Bij welke drempel wordt gehandeld: wanneer leidt een score tot bellen, plannen, controleren of behandelen?
 3. Wat gebeurt er als het model fout zit: wat kost een vals alarm, en wat kost een gemiste patiënt?
 
@@ -24,7 +24,7 @@ Pas daarna krijgt <term def="Area Under the ROC Curve — drempelvrije rangordem
 <tldr>
 <li>AUC meet rangschikking, niet kalibratie of klinische winst.</li>
 <li>Sensitiviteit, specificiteit, PPV en NPV horen altijd bij een gekozen drempel — niet bij het model als geheel.</li>
-<li>Externe validatie, kalibratie en decision curve analysis zijn nodig vóór je AUC vertaalt naar veilige zorg.</li>
+<li>Externe validatie, kalibratie en decision curve analysis helpen om AUC te vertalen naar mogelijke waarde in de praktijk.</li>
 </tldr>
 
 Hieronder bouwen we het in vier stappen op: eerst scores, dan drempels, dan de ROC-curve, dan AUC zelf. De voorbeelden zijn bedoeld als oefensituatie; de denkstappen zijn dezelfde als bij een echt model.
@@ -43,7 +43,7 @@ Vallen de paarse markers vooral rechts? Goed teken — er zit signaal in de scor
 
 ## 2. Een drempel maakt van scores beslissingen
 
-In de kliniek moet je iets dóen. Vanaf welke score alarmeer je het sepsisteam? Vanaf welke score markeer je een CT als urgent?
+Een score krijgt pas betekenis wanneer er een drempel aan hangt. Vanaf welke score noem je het modelresultaat positief? En wat betekent positief dan: extra controle, aanvullende diagnostiek, eerder bespreken of juist niets doen zonder andere informatie?
 
 Lage drempel: je noemt veel patiënten positief. Je mist minder echte gevallen (sensitiviteit omhoog), maar je krijgt ook meer vals alarm. Hoge drempel: omgekeerd. Daarom horen sensitiviteit, specificiteit, <term def="Positive Predictive Value — kans dat een patiënt met positief modelresultaat ook echt de uitkomst heeft. Hangt sterk af van prevalentie.">PPV</term> en <term def="Negative Predictive Value — kans dat een patiënt met negatief modelresultaat ook echt geen uitkomst heeft.">NPV</term> altíjd bij een gekozen drempel — niet bij het model in zijn geheel.
 
@@ -51,9 +51,9 @@ Lage drempel: je noemt veel patiënten positief. Je mist minder echte gevallen (
 
 Schuif zelf en wissel tussen gescheiden, overlappende en scheef verdeelde data. Zo zie je welke patiënten over de drempellijn vallen, en wat dat doet met fout-positieven en gemiste gevallen.
 
-Een mini-rekenvoorbeeld maakt de drempel concreet. Stel: op een SEH-populatie van 1.000 patiënten heeft 10% de uitkomst, dus 100 patiënten. Bij een gekozen drempel haalt het model 80% sensitiviteit en 90% specificiteit. Dan vang je 80 echte gevallen, mis je 20, en krijg je 90 vals-positieve alarmsignalen onder de 900 patiënten zonder uitkomst. De PPV is dan 80 / (80 + 90) = 47%. Het alarm is dus bijna de helft van de tijd terecht. Als dezelfde test wordt gebruikt in een populatie met 2% prevalentie, daalt de PPV sterk, ook al blijven sensitiviteit en specificiteit gelijk.
+Een mini-rekenvoorbeeld maakt de drempel concreet. Stel: in een groep van 1.000 patiënten heeft 10% de uitkomst, dus 100 patiënten. Bij een gekozen drempel haalt het model 80% sensitiviteit en 90% specificiteit. Dan vang je 80 echte gevallen, mis je 20, en krijg je 90 vals-positieve signalen onder de 900 patiënten zonder uitkomst. De PPV is dan 80 / (80 + 90) = 47%. Een positief modelresultaat is dus bijna de helft van de tijd terecht. Als dezelfde test wordt gebruikt in een populatie met 2% prevalentie, daalt de PPV sterk, ook al blijven sensitiviteit en specificiteit gelijk.
 
-<keytakeaway>Drempelkeuze is klinisch beleid. Je weegt wat een fout-positief versus een fout-negatief in jouw setting kost.</keytakeaway>
+<keytakeaway>Drempelkeuze bepaalt de consequenties. Je weegt wat een fout-positief versus een fout-negatief in de beoogde toepassing kost.</keytakeaway>
 
 ## 3. ROC: alle drempels tegelijk
 
@@ -63,7 +63,7 @@ Een sterk model duikt naar linksboven: veel echte gevallen vangen, weinig vals a
 
 <interactive name="auc-roc"></interactive>
 
-Linksboven is meestal het beste, maar niet altijd. Bij selectie voor een belastende biopsie weegt een fout-positief zwaar. Bij triage van iets levensbedreigends weegt een gemiste casus zwaar. Welke drempel klopt, hangt af van wat de fout kost.
+Linksboven is meestal het beste, maar niet altijd. Bij selectie voor een belastende test weegt een fout-positief zwaar. Bij vroege herkenning van een ernstige uitkomst weegt een gemiste casus zwaar. Welke drempel klopt, hangt af van wat de fout kost.
 
 ## 4. AUC: oppervlakte onder de curve
 
@@ -83,22 +83,22 @@ Let op: AUC verandert niet als je alle scores herschaalt. Verschuif de schaal, b
 
 <callout type="warning" title="Drie dingen die AUC niét vertelt">
 <p><strong>Geen <term def="Mate waarin voorspelde kansen overeenkomen met werkelijke uitkomsten — bv. krijgen patiënten met 20% voorspeld risico ook echt 20% events?">kalibratie</term>.</strong> Een model kan keurig rangschikken en toch consequent te hoog of te laag inschatten. Honderd patiënten met "20% risico" en in werkelijkheid vijftig events? Klinisch onveilig, ook bij AUC 0,90.</p>
-<p><strong>Geen prevalentie.</strong> PPV en NPV verschuiven flink tussen IC, SEH, polikliniek en screening. Hetzelfde model met dezelfde sensitiviteit produceert op een laag-prevalente afdeling vooral vals alarm — alarmmoeheid en onnodige diagnostiek.</p>
-<p><strong>Geen workflow.</strong> AUC 0,92 is waardeloos als de output te laat komt, niemand verantwoordelijk is, of het model precies de patiënten markeert waar de arts toch al actie zou ondernemen.</p>
+<p><strong>Geen prevalentie.</strong> PPV en NPV verschuiven flink tussen populaties met veel of weinig patiënten met de uitkomst. Hetzelfde model met dezelfde sensitiviteit kan bij lage prevalentie vooral vals-positieve signalen geven.</p>
+<p><strong>Geen praktische waarde.</strong> AUC 0,92 zegt niet of de uitslag op tijd komt, iets toevoegt aan bestaande informatie of leidt tot een betere vervolgstap.</p>
 </callout>
 
 ## Drempels kiezen met klinische kosten in gedachten
 
-Drempelkeuze is een klinische keuze. Bij triage van iets levensbedreigends weegt een gemiste casus zwaarder dan een extra beoordeling. Bij selectie voor een belastende biopsie ligt dat andersom.
+Drempelkeuze is een inhoudelijke keuze. Bij vroege herkenning van een ernstige uitkomst weegt een gemiste casus vaak zwaarder dan een extra beoordeling. Bij selectie voor een belastende test kan dat andersom liggen.
 
 <term def="Decision Curve Analysis — methode die voor elke drempel netto klinische winst toont, vergeleken met 'behandel iedereen' en 'behandel niemand'.">Decision curve analysis</term> maakt dat expliciet: welke drempels leveren netto winst op, vergeleken met simpele strategieën als "behandel iedereen" of "behandel niemand"? Zo zie je of het model in het klinisch relevante drempelgebied meer goed dan kwaad doet.
 
-Neem een sepsismodel dat elke 15 minuten een score geeft. Een werkbare afspraak kan zijn: bij score ≥ 0,70 krijgt de verpleegkundige een melding; binnen 10 minuten beoordeelt de arts vitale parameters, lactaat en klinisch beeld; alleen bij bevestiging volgt het sepsisprotocol. Dan hoort de evaluatie niet alleen te vragen "wat is de AUC?", maar ook: hoeveel meldingen per dienst zijn er, hoeveel waren terecht, hoeveel patiënten werden alsnog gemist, en kwam de melding vroeg genoeg om beleid te veranderen?
+Neem een model dat risico op een ernstige uitkomst voorspelt. Een artikel met alleen AUC laat dan nog veel open. Je wilt ook weten wat er bij een gekozen drempel gebeurt: hoeveel patiënten worden positief gemarkeerd, hoeveel daarvan hebben werkelijk de uitkomst, hoeveel worden gemist, en komt de voorspelling vroeg genoeg om iets zinvols te doen?
 
 ## Snelle check bij elke AUC die je tegenkomt
 
 1. Externe validatieset, of intern getest?
-2. Lijkt die populatie op jouw patiënten en workflow?
+2. Lijkt die populatie op de patiënten en context waarvoor je het artikel leest?
 3. Worden sensitiviteit, specificiteit, PPV en NPV bij relevante drempels getoond?
 4. Is kalibratie onderzocht (plot, intercept, slope)?
 5. Zijn er subgroepresultaten?
@@ -107,7 +107,7 @@ Neem een sepsismodel dat elke 15 minuten een score geeft. Een werkbare afspraak 
 
 ## Tot slot
 
-AUC vertelt hoe goed een model rangschikt. Dat is nuttig, maar het is een startpunt, geen groen licht. Voor veilige inzet in de zorg horen drempels, kalibratie, prevalentie, subgroepen, workflow en klinische winst er allemaal bij.
+AUC vertelt hoe goed een model rangschikt. Dat is nuttig, maar het is een startpunt, geen groen licht. Voor veilige toepassing horen drempels, kalibratie, prevalentie, subgroepen, praktische bruikbaarheid en klinische winst er allemaal bij.
 
 ## Bronnen
 

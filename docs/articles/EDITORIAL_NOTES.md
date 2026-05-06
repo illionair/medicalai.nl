@@ -5,7 +5,9 @@ Deze notitie legt vast wat we tijdens de revisie van artikel 1 hebben geleerd. G
 ## Wat We Tot Nu Toe Hebben Aangepast
 
 - **Geen visual om de visual.** Een visual hoort bij de titel of moet inhoudelijk iets uitleggen in de tekst, bijvoorbeeld als tabel, figuur of interactieve module. Een grote losse "voorbeeldvisual" onder de titel voelt decoratief en moet weg of compacter.
+- **Visuals moeten inhoudelijk kloppen én in één oogopslag werken.** Controleer of de visual het concept echt duidelijker maakt: staan oorzaak en gevolg dicht genoeg bij elkaar, verandert de relevante uitkomst zichtbaar mee, zijn labels concreet, en zie je zonder zoeken wat er gebeurt? Bij interactieve uitleg, zoals AUC en drempels, moeten slider, scoreverdeling en FN/FP/TP/TN logisch bij elkaar staan.
 - **"In het kort" mag de intro niet herhalen.** Gebruik een eigen korte samenvatting in frontmatter. De inleiding moet daarna inhoudelijk verder gaan, niet dezelfde tekst opnieuw zeggen.
+- **Vermijd doelgroepverdubbeling in titels.** De site is primair voor zorg, maar artikelen moeten ook leesbaar zijn voor studenten en andere geïnteresseerden. Zet daarom niet onnodig "voor zorgprofessionals" in titels als de context van de site dat al duidelijk maakt.
 - **Geen triage-taal voor artikelen.** Gebruik liever "snelle eerste scan", "snelle oriëntatie" of "eerste beoordeling".
 - **Geen aannames over gebruikssituaties.** Vermijd opsommingen zoals journal club, inkoop, richtlijnwerk of lokale implementatie tenzij het artikel daar expliciet over gaat. Gebruik neutraler: "verdere inhoudelijke beoordeling".
 - **Geen belerende volgorde.** Zinnen als "ga daarna pas systematisch beoordelen" klinken dwingend. Schrijf rustiger: "kun je daarna de volledige richtlijnen en supplementen erbij pakken".

@@ -12,7 +12,7 @@ The intended reading path is tracked in [`LEESROUTE.md`](LEESROUTE.md).
 ## Drafts
 - [Hoe beoordeel je een AI-artikel in 10 minuten?](drafts/draft-01-hoe-beoordeel-je-een-ai-artikel-in-10-minuten.md)
 - [Interne versus externe validatie: waarom een hoge AUC vaak misleidend is](drafts/draft-02-interne-versus-externe-validatie-waarom-een-hoge-auc-vaak-misleidend-is.md)
-- [AUC uitgelegd voor zorgprofessionals: wat zegt het wel en niet?](drafts/draft-03-auc-uitgelegd-voor-zorgprofessionals-wat-zegt-het-wel-en-niet.md)
+- [AUC uitgelegd: wat zegt het wel en niet?](drafts/draft-03-auc-uitgelegd-voor-zorgprofessionals-wat-zegt-het-wel-en-niet.md)
 - [Calibratie: de vergeten maat bij AI in de zorg](drafts/draft-04-calibratie-de-vergeten-maat-bij-ai-in-de-zorg.md)
 - [Eerlijk genoeg voor de kliniek? Bias en fairness in medische AI](drafts/draft-05-eerlijk-genoeg-voor-de-kliniek-bias-en-fairness-in-medische-ai.md)
 - [Wanneer wordt AI een medisch hulpmiddel? De MDR-bril voor software in de zorg](drafts/draft-06-wanneer-wordt-ai-een-medisch-hulpmiddel-de-mdr-bril-voor-software-in-de-zorg.md)

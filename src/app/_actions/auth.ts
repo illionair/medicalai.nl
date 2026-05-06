@@ -6,8 +6,12 @@ import { COOKIE_NAME_SITE_ACCESS } from "@/lib/auth";
 import { clearUserSession, createMagicLinkToken } from "@/lib/user-auth";
 import { buildMagicLink, sendMagicLinkEmail } from "@/lib/magic-link-mail";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
+import { hasPostgresDatabaseConfig } from "@/lib/env";
 
 const RATE_LIMIT_ERROR = { error: "Te veel pogingen. Probeer het later opnieuw." } as const;
+const DATABASE_CONFIG_ERROR = {
+    error: "Inloggen is tijdelijk niet beschikbaar: de database is niet als Postgres geconfigureerd.",
+} as const;
 
 export async function verifySiteAccess(formData: FormData) {
     const code = formData.get("code") as string;
@@ -39,6 +43,11 @@ export async function requestMagicLink(formData: FormData) {
 
     if (!name) return { error: "Vul je naam in." };
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return { error: "Vul een geldig e-mailadres in." };
+
+    if (!hasPostgresDatabaseConfig()) {
+        console.error("[auth] Cannot request magic link because DATABASE_URL or DIRECT_URL is not a Postgres URL.");
+        return DATABASE_CONFIG_ERROR;
+    }
 
     const ip = await getClientIp();
     const ipRl = await rateLimit({ key: `magic-link-ip:${ip}`, limit: 20, windowSec: 60 * 60 });
