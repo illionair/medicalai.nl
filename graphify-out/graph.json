@@ -2374,7 +2374,7 @@
       "label": "parseFrontmatter()",
       "file_type": "code",
       "source_file": "src\\lib\\static-articles.ts",
-      "source_location": "L14",
+      "source_location": "L15",
       "id": "lib_static_articles_parsefrontmatter",
       "community": 2,
       "norm_label": "parsefrontmatter()"
@@ -2383,7 +2383,7 @@
       "label": "slugify()",
       "file_type": "code",
       "source_file": "src\\lib\\static-articles.ts",
-      "source_location": "L265",
+      "source_location": "L268",
       "id": "lib_static_articles_slugify",
       "community": 2,
       "norm_label": "slugify()"
@@ -2392,7 +2392,7 @@
       "label": "normalizeTitle()",
       "file_type": "code",
       "source_file": "src\\lib\\static-articles.ts",
-      "source_location": "L274",
+      "source_location": "L277",
       "id": "lib_static_articles_normalizetitle",
       "community": 2,
       "norm_label": "normalizetitle()"
@@ -2401,7 +2401,7 @@
       "label": "stripMarkdown()",
       "file_type": "code",
       "source_file": "src\\lib\\static-articles.ts",
-      "source_location": "L278",
+      "source_location": "L281",
       "id": "lib_static_articles_stripmarkdown",
       "community": 2,
       "norm_label": "stripmarkdown()"
@@ -2410,7 +2410,7 @@
       "label": "extractSummary()",
       "file_type": "code",
       "source_file": "src\\lib\\static-articles.ts",
-      "source_location": "L287",
+      "source_location": "L290",
       "id": "lib_static_articles_extractsummary",
       "community": 2,
       "norm_label": "extractsummary()"
@@ -2419,7 +2419,7 @@
       "label": "cleanMarkdown()",
       "file_type": "code",
       "source_file": "src\\lib\\static-articles.ts",
-      "source_location": "L294",
+      "source_location": "L297",
       "id": "lib_static_articles_cleanmarkdown",
       "community": 2,
       "norm_label": "cleanmarkdown()"
@@ -2428,7 +2428,7 @@
       "label": "readArticle()",
       "file_type": "code",
       "source_file": "src\\lib\\static-articles.ts",
-      "source_location": "L322",
+      "source_location": "L325",
       "id": "lib_static_articles_readarticle",
       "community": 2,
       "norm_label": "readarticle()"
@@ -2437,7 +2437,7 @@
       "label": "getStaticArticles()",
       "file_type": "code",
       "source_file": "src\\lib\\static-articles.ts",
-      "source_location": "L390",
+      "source_location": "L393",
       "id": "lib_static_articles_getstaticarticles",
       "community": 2,
       "norm_label": "getstaticarticles()"
@@ -2446,7 +2446,7 @@
       "label": "getStaticArticleById()",
       "file_type": "code",
       "source_file": "src\\lib\\static-articles.ts",
-      "source_location": "L397",
+      "source_location": "L400",
       "id": "lib_static_articles_getstaticarticlebyid",
       "community": 2,
       "norm_label": "getstaticarticlebyid()"
@@ -2455,7 +2455,7 @@
       "label": "isStaticArticleId()",
       "file_type": "code",
       "source_file": "src\\lib\\static-articles.ts",
-      "source_location": "L401",
+      "source_location": "L404",
       "id": "lib_static_articles_isstaticarticleid",
       "community": 2,
       "norm_label": "isstaticarticleid()"
@@ -2464,7 +2464,7 @@
       "label": "mergeWithStaticArticles()",
       "file_type": "code",
       "source_file": "src\\lib\\static-articles.ts",
-      "source_location": "L405",
+      "source_location": "L408",
       "id": "lib_static_articles_mergewithstaticarticles",
       "community": 2,
       "norm_label": "mergewithstaticarticles()"
@@ -2473,7 +2473,7 @@
       "label": "staticArticleMatchesTopic()",
       "file_type": "code",
       "source_file": "src\\lib\\static-articles.ts",
-      "source_location": "L414",
+      "source_location": "L417",
       "id": "lib_static_articles_staticarticlematchestopic",
       "community": 2,
       "norm_label": "staticarticlematchestopic()"
@@ -3500,9 +3500,9 @@
       "source_file": "src\\app\\guidelines\\page.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_guidelines_page_tsx",
-      "target": "lib_env_haspostgresdatabaseconfig",
-      "confidence_score": 1.0
+      "target": "lib_env_haspostgresdatabaseconfig"
     },
     {
       "relation": "contains",
@@ -6206,9 +6206,9 @@
       "source_file": "src\\lib\\env.ts",
       "source_location": "L77",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_lib_env_ts",
-      "target": "lib_env_haspostgresdatabaseconfig",
-      "confidence_score": 1.0
+      "target": "lib_env_haspostgresdatabaseconfig"
     },
     {
       "relation": "contains",
@@ -6359,9 +6359,9 @@
       "source_file": "src\\lib\\env.ts",
       "source_location": "L78",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_env_haspostgresdatabaseconfig",
-      "target": "lib_env_ispostgresdatabaseurl",
-      "confidence_score": 1.0
+      "target": "lib_env_ispostgresdatabaseurl"
     },
     {
       "relation": "imports",

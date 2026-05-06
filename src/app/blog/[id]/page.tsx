@@ -78,45 +78,61 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                         )}
                     </div>
 
-                    <h1 className="hyphens-auto break-words text-[clamp(38px,11vw,56px)] font-bold text-brand-dark mb-4 leading-tight">
-                        {blog.title}
-                    </h1>
-                    {blog.subtitle && (
-                        <p className="text-lg md:text-2xl text-slate-500 mb-6 font-light leading-relaxed">
-                            {blog.subtitle}
-                        </p>
-                    )}
+                    <div className={heroImage ? "grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start" : ""}>
+                        <div>
+                            <h1 className="hyphens-none break-words text-[clamp(38px,11vw,56px)] font-bold text-brand-dark mb-4 leading-tight">
+                                {blog.title}
+                            </h1>
+                            {blog.subtitle && (
+                                <p className="text-lg md:text-2xl text-slate-500 mb-6 font-light leading-relaxed">
+                                    {blog.subtitle}
+                                </p>
+                            )}
 
-                    {trustBadges.length > 0 && (
-                        <div className="mb-6 flex flex-wrap gap-2">
-                            {trustBadges}
+                            {trustBadges.length > 0 && (
+                                <div className="mb-6 flex flex-wrap gap-2">
+                                    {trustBadges}
+                                </div>
+                            )}
+
+                            {/* Subtitle/Summary if available, or just meta */}
+                            <div className="flex flex-wrap items-center gap-2 text-slate-600 text-sm font-medium">
+                                <span className="inline-flex min-h-9 items-center gap-2 rounded-full bg-white px-3 py-1.5 ring-1 ring-slate-200">
+                                    <Calendar size={16} />
+                                    {new Date(blog.createdAt).toLocaleDateString("nl-NL", {
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric'
+                                    })}
+                                </span>
+                                <span className="inline-flex min-h-9 items-center rounded-full bg-white px-3 py-1.5 ring-1 ring-slate-200">{blog.category}</span>
+                                <span className="inline-flex min-h-9 items-center gap-2 rounded-full bg-white px-3 py-1.5 ring-1 ring-slate-200">
+                                    <User size={16} />
+                                    {blog.article?.authors || "Drs. S. S. Mahes"}
+                                </span>
+                                {readingMinutes && (
+                                    <span className="inline-flex min-h-9 items-center rounded-full bg-white px-3 py-1.5 ring-1 ring-slate-200">
+                                        <ReadingTime minutes={readingMinutes} />
+                                    </span>
+                                )}
+                                {difficulty && (
+                                    <span className="inline-flex min-h-9 items-center">
+                                        <DifficultyBadge level={difficulty} />
+                                    </span>
+                                )}
+                            </div>
                         </div>
-                    )}
-
-                    {/* Subtitle/Summary if available, or just meta */}
-                    <div className="flex flex-wrap items-center gap-2 text-slate-600 text-sm font-medium">
-                        <span className="inline-flex min-h-9 items-center gap-2 rounded-full bg-white px-3 py-1.5 ring-1 ring-slate-200">
-                            <Calendar size={16} />
-                            {new Date(blog.createdAt).toLocaleDateString("nl-NL", {
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric'
-                            })}
-                        </span>
-                        <span className="inline-flex min-h-9 items-center rounded-full bg-white px-3 py-1.5 ring-1 ring-slate-200">{blog.category}</span>
-                        <span className="inline-flex min-h-9 items-center gap-2 rounded-full bg-white px-3 py-1.5 ring-1 ring-slate-200">
-                            <User size={16} />
-                            {blog.article?.authors || "Drs. S. S. Mahes"}
-                        </span>
-                        {readingMinutes && (
-                            <span className="inline-flex min-h-9 items-center rounded-full bg-white px-3 py-1.5 ring-1 ring-slate-200">
-                                <ReadingTime minutes={readingMinutes} />
-                            </span>
-                        )}
-                        {difficulty && (
-                            <span className="inline-flex min-h-9 items-center">
-                                <DifficultyBadge level={difficulty} />
-                            </span>
+                        {heroImage && (
+                            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg shadow-slate-900/5">
+                                <Image
+                                    src={heroImage}
+                                    alt=""
+                                    width={720}
+                                    height={405}
+                                    unoptimized
+                                    className="aspect-video w-full object-cover"
+                                />
+                            </div>
                         )}
                     </div>
                 </div >
@@ -124,22 +140,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
 
             {/* Main Content Layout */}
             <div className="container mx-auto px-4 max-w-5xl py-8 md:py-12">
-                {heroImage && (
-                    <figure className="mb-8 md:mb-10 overflow-hidden rounded-2xl md:rounded-[28px] border border-slate-200 bg-white shadow-xl shadow-slate-900/5">
-                        <Image
-                            src={heroImage}
-                            alt=""
-                            width={1200}
-                            height={675}
-                            unoptimized
-                            className="h-auto max-h-[420px] w-full object-contain md:h-96 md:object-cover"
-                        />
-                        <figcaption className="border-t border-slate-100 bg-slate-50 px-5 py-3 text-xs font-medium text-slate-500">
-                            Voorbeeldvisual bij dit educatieve artikel. Interactieve figuren staan in de tekst.
-                        </figcaption>
-                    </figure>
-                )}
-
                 <div className="flow-root">
                     <aside className="hidden lg:block float-right mb-8 ml-10 w-72 xl:ml-12">
                         <div className="sticky top-24 space-y-6">

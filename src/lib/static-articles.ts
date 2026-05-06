@@ -6,6 +6,7 @@ type Frontmatter = {
     title?: string;
     seoTitle?: string;
     subtitle?: string;
+    summary?: string;
     difficulty?: "basis" | "middel" | "diep";
     readingMinutes?: number;
     coverConcept?: string;
@@ -39,6 +40,8 @@ function parseFrontmatter(raw: string): { frontmatter: Frontmatter; body: string
             frontmatter.seoTitle = value;
         } else if (key === "subtitle") {
             frontmatter.subtitle = value;
+        } else if (key === "summary") {
+            frontmatter.summary = value;
         } else if (key === "coverConcept") {
             frontmatter.coverConcept = value;
         }
@@ -316,7 +319,7 @@ function cleanMarkdown(raw: string, interactive: string) {
         body = blocks.join("\n\n");
     }
 
-    return { title, content: body, summary: extractSummary(body), frontmatter };
+    return { title, content: body, summary: frontmatter.summary || extractSummary(body), frontmatter };
 }
 
 function readArticle(config: StaticArticleConfig, index: number): StaticArticle {

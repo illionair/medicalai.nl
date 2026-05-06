@@ -5,6 +5,10 @@ Recovered from `codex-recovered-articles.md` on 2026-05-04.
 Additional recovered interactive notes are stored in
 [`recovered-interactives-source.md`](recovered-interactives-source.md).
 
+Planned future topics are tracked in [`TODO.md`](TODO.md).
+Editorial preferences are tracked in [`EDITORIAL_NOTES.md`](EDITORIAL_NOTES.md).
+The intended reading path is tracked in [`LEESROUTE.md`](LEESROUTE.md).
+
 ## Drafts
 - [Hoe beoordeel je een AI-artikel in 10 minuten?](drafts/draft-01-hoe-beoordeel-je-een-ai-artikel-in-10-minuten.md)
 - [Interne versus externe validatie: waarom een hoge AUC vaak misleidend is](drafts/draft-02-interne-versus-externe-validatie-waarom-een-hoge-auc-vaak-misleidend-is.md)

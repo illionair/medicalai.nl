@@ -12,6 +12,7 @@ coverConcept: roc-curve
 
 "Het model behaalde een AUC van 0,89." Dat klinkt geruststellend, maar voor de zorgvloer is het nog geen antwoord. AUC zegt vooral of een model patiënten met meer risico gemiddeld hoger op de lijst zet dan patiënten met minder risico. Het zegt niet vanzelf of je bij de juiste patiënt gaat handelen, of de getoonde kans klopt, of het model in jouw workflow veilig helpt.
 
+
 Denk daarom vroeg aan drie praktische vragen:
 
 1. Wie is getest: lijkt de validatieset op jouw patiënten, afdeling en meetmoment?
